@@ -1,0 +1,153 @@
+---
+title: "Quercus: European Oak Species Distribution Data"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_title: "Contents"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  eval = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+```
+
+## Overview
+
+The `quercus` dataset contains **6,946 records** of eight European Quercus (oak) species along with absence points, combined with 31 environmental predictor variables. This dataset is designed for multi-class species distribution modeling across Europe.
+
+The dataset includes presence records for eight oak species:
+
+- *Quercus robur* (English oak)
+- *Quercus petraea* (Sessile oak)
+- *Quercus ilex* (Holm oak)
+- *Quercus cerris* (Turkey oak)
+- *Quercus faginea* (Portuguese oak)
+- *Quercus pubescens* (Downy oak)
+- *Quercus pyrenaica* (Pyrenean oak)
+- *Quercus suber* (Cork oak)
+
+## Loading the Data
+
+```{r setup}
+library(spatialData)
+
+# Load the main dataset
+data(quercus)
+
+# Load helper vectors
+data(quercus_response)
+data(quercus_predictors)
+
+# View helper vectors
+quercus_response
+quercus_predictors
+```
+
+## Data Structure
+
+The `quercus` dataset is an **sf data frame** with point geometries in WGS84 (EPSG:4326):
+
+```{r structure}
+class(quercus)
+dim(quercus)
+str(quercus, give.attr = FALSE)
+```
+
+## Response Variable
+
+The response variable is `species`, a categorical variable with 9 levels (8 species + absence):
+
+```{r response}
+table(quercus$species)
+```
+
+## Predictor Variables
+
+The dataset includes **31 predictor variables** organized into six categories:
+
+### Bioclimatic Variables (17 variables)
+
+Standard WorldClim bioclimatic variables:
+
+| Variable | Description |
+|----------|-------------|
+| `bio1` | Annual mean temperature |
+| `bio2` | Mean diurnal range |
+| `bio3` | Isothermality |
+| `bio4` | Temperature seasonality |
+| `bio5` | Max temperature of warmest month |
+| `bio6` | Min temperature of coldest month |
+| `bio7` | Temperature annual range |
+| `bio10` | Mean temperature of warmest quarter |
+| `bio11` | Mean temperature of coldest quarter |
+| `bio12` | Annual precipitation |
+| `bio13` | Precipitation of wettest month |
+| `bio14` | Precipitation of driest month |
+| `bio15` | Precipitation seasonality |
+| `bio16` | Precipitation of wettest quarter |
+| `bio17` | Precipitation of driest quarter |
+| `bio18` | Precipitation of warmest quarter |
+| `bio19` | Precipitation of coldest quarter |
+
+### Topographic Variables (2 variables)
+
+| Variable | Description |
+|----------|-------------|
+| `topo_slope` | Terrain slope |
+| `diversidad_topo` | Topographic diversity index |
+
+### Land Cover Variables (3 variables)
+
+| Variable | Description |
+|----------|-------------|
+| `landcover_veg_bare` | Bare ground cover percentage |
+| `landcover_veg_herb` | Herbaceous vegetation cover percentage |
+| `landcover_veg_tree` | Tree vegetation cover percentage |
+
+### NDVI Variables (4 variables)
+
+| Variable | Description |
+|----------|-------------|
+| `ndvi_average` | Average NDVI |
+| `ndvi_maximum` | Maximum NDVI |
+| `ndvi_minimum` | Minimum NDVI |
+| `ndvi_range` | NDVI range |
+
+### Solar Radiation Variables (4 variables)
+
+| Variable | Description |
+|----------|-------------|
+| `sun_rad_average` | Average solar radiation |
+| `sun_rad_maximum` | Maximum solar radiation |
+| `sun_rad_minimum` | Minimum solar radiation |
+| `sun_rad_range` | Solar radiation range |
+
+### Human Impact Variables (1 variable)
+
+| Variable | Description |
+|----------|-------------|
+| `human_footprint` | Human footprint index |
+
+### Summary Statistics
+
+```{r predictors}
+summary(quercus[, quercus_predictors])
+```
+
+## Interactive Map
+
+The map below shows the spatial distribution of oak species and absence points across Europe:
+
+```{r map, message=FALSE}
+library(mapview)
+
+mapview(
+  quercus,
+  zcol = "species",
+  layer.name = "Species"
+)
+```

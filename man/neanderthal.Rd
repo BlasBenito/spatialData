@@ -53,7 +53,10 @@ Other data:
 \code{\link{neanderthal_response}},
 \code{\link{plants}},
 \code{\link{plants_predictors}},
-\code{\link{plants_response}}
+\code{\link{plants_response}},
+\code{\link{quercus}},
+\code{\link{quercus_predictors}},
+\code{\link{quercus_response}}
 }
 \concept{data}
 \keyword{datasets}

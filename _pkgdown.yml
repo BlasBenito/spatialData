@@ -60,6 +60,7 @@ articles:
     contents:
     - articles/neanderthal
     - articles/plants
+    - articles/quercus
     - articles/vi
 
 # See pkgdown documentation for more options:
