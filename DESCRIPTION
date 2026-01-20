@@ -1,9 +1,14 @@
 Package: spatialData
-Title: Spatial Datasets
+Title: Spatial Datasets for Ecological Modeling
 Version: 0.1.0
-Authors@R: 
+Authors@R:
     person("First", "Last", , "blasbenito@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: Provides spatial datasets for ecological and environmental
+    analysis, including species distribution modeling and biodiversity research.
+    Contains Neanderthal presence-absence records with paleoclimate predictors,
+    vascular plant richness data for American ecoregions, and global vegetation
+    index records with multiple response encodings. All datasets include
+    pre-processed environmental predictors ready for statistical modeling.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
@@ -11,7 +16,9 @@ Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
 RoxygenNote: 7.3.3
 Imports:
 Suggests:
+    mapview,
     roxyglobals,
+    sf,
     spelling,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

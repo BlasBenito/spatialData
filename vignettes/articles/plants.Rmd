@@ -1,0 +1,143 @@
+---
+title: "Plants: Vascular Plant Richness of American Ecoregions"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_title: "Contents"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  eval = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+```
+
+## Overview
+
+The `plants` dataset contains **227 records** of vascular plant species richness aggregated by ecoregion across the Americas. Data were obtained from GBIF occurrence records and aggregated using the [Ecoregions 2017](https://ecoregions2017.appspot.com/) framework.
+
+This dataset is designed for regression modeling with a continuous count response variable and environmental predictors spanning climate, connectivity, human impact, and landscape fragmentation.
+
+## Loading the Data
+
+```{r setup}
+library(spatialData)
+
+# Load the main dataset
+data(plants)
+
+# Load helper vectors
+data(plants_response)
+data(plants_predictors)
+
+# View helper vectors
+plants_response
+plants_predictors
+```
+
+## Data Structure
+
+The `plants` dataset is a standard data frame with coordinates stored in `x` (longitude) and `y` (latitude) columns:
+
+```{r structure}
+class(plants)
+dim(plants)
+str(plants)
+```
+
+## Response Variable
+
+The response variable is `richness_species_vascular`, representing the number of vascular plant species recorded in each ecoregion:
+
+```{r response}
+summary(plants$richness_species_vascular)
+hist(
+  plants$richness_species_vascular,
+  main = "Distribution of Vascular Plant Richness",
+  xlab = "Species Count",
+  col = "steelblue",
+  border = "white"
+)
+```
+
+## Predictor Variables
+
+The dataset includes **17 predictor variables** organized into five categories:
+
+### Sampling Bias Variables (2 variables)
+
+| Variable | Description |
+|----------|-------------|
+| `bias_area_km2` | Ecoregion area in square kilometers |
+| `bias_species_per_record` | Species count divided by GBIF spatial records |
+
+### Climate Variables (5 variables)
+
+| Variable | Description |
+|----------|-------------|
+| `climate_aridity_index_average` | Average aridity index |
+| `climate_hypervolume` | Climatic envelope volume (computed with hypervolume package) |
+| `climate_velocity_lgm_average` | Average climate velocity since Last Glacial Maximum |
+| `climate_bio1_average` | Average mean annual temperature |
+| `climate_bio15_minimum` | Minimum precipitation seasonality |
+
+### Connectivity Variables (3 variables)
+
+| Variable | Description |
+|----------|-------------|
+| `neighbors_count` | Number of immediate neighboring ecoregions |
+| `neighbors_percent_shared_edge` | Percentage of perimeter shared with neighbors |
+| `neighbors_area` | Total area of immediate neighbors |
+
+### Human Impact Variables (3 variables)
+
+| Variable | Description |
+|----------|-------------|
+| `human_population_density` | Human population density |
+| `human_population` | Total human population |
+| `human_footprint_average` | Average human footprint index |
+
+### Landscape Variables (4 variables)
+
+| Variable | Description |
+|----------|-------------|
+| `topography_elevation_average` | Average elevation |
+| `landcover_herbs_percent_average` | Average herb cover (MODIS VCF) |
+| `fragmentation_cohesion` | Cohesion index (landscapemetrics package) |
+| `fragmentation_division` | Division index (landscapemetrics package) |
+
+### Summary Statistics
+
+```{r predictors}
+summary(plants[, plants_predictors])
+```
+
+## Interactive Map
+
+The map below shows the spatial distribution of ecoregion centroids, colored by vascular plant richness:
+
+```{r map, message=FALSE}
+library(sf)
+library(mapview)
+
+# Convert to sf object
+plants_sf <- st_as_sf(
+  plants,
+  coords = c("x", "y"),
+  crs = 4326
+)
+
+mapview(
+  plants_sf,
+  zcol = "richness_species_vascular",
+  layer.name = "Species Richness"
+)
+```
+
+## Data Sources
+
+- **Species occurrence data:** [Global Biodiversity Information Facility (GBIF)](https://www.gbif.org/)
+- **Ecoregion boundaries:** [Ecoregions 2017](https://ecoregions2017.appspot.com/)

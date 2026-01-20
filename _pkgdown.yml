@@ -54,16 +54,13 @@ template:
 #     href: https://yourproject.com
 
 # Articles (vignettes) organization
-# articles:
-#   - title: "Getting Started"
-#     navbar: ~
-#     contents:
-#     - intro
-#   - title: "Advanced Topics"
-#     navbar: Advanced
-#     contents:
-#     - advanced-usage
-#     - performance-tuning
+articles:
+  - title: "Datasets"
+    navbar: Datasets
+    contents:
+    - articles/neanderthal
+    - articles/plants
+    - articles/vi
 
 # See pkgdown documentation for more options:
 # https://pkgdown.r-lib.org/reference/build_site.html

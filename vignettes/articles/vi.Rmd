@@ -1,0 +1,170 @@
+---
+title: "VI: Global Vegetation Index with Multiple Response Encodings"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_title: "Contents"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  eval = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+```
+
+## Overview
+
+The `vi` dataset contains **30,000 global records** of Normalized Difference Vegetation Index (NDVI) values with environmental predictors. This dataset is designed to demonstrate different response variable encodings and model types, making it useful for tutorials on regression, classification, and count models.
+
+## Loading the Data
+
+```{r setup}
+library(spatialData)
+
+# Load the main dataset
+data(vi)
+
+# Load helper vectors
+data(vi_responses)
+data(vi_predictors)
+data(vi_predictors_numeric)
+data(vi_predictors_categorical)
+
+# View helper vectors
+vi_responses
+length(vi_predictors)
+length(vi_predictors_numeric)
+length(vi_predictors_categorical)
+```
+
+## Data Structure
+
+The `vi` dataset is a data frame with coordinates stored in `x` (longitude) and `y` (latitude) columns:
+
+```{r structure}
+class(vi)
+dim(vi)
+names(vi)[1:15]  # First 15 column names
+```
+
+## Response Variables
+
+The dataset provides **5 different encodings** of the same underlying vegetation index, enabling different modeling approaches:
+
+| Variable | Type | Description | Use Case |
+|----------|------|-------------|----------|
+| `vi_numeric` | Continuous (0-1) | Raw NDVI values | Linear regression, GAM |
+| `vi_counts` | Integer | `vi_numeric * 1000` as integer | Poisson/negative binomial regression |
+| `vi_binomial` | Binary (0/1) | Thresholded to 0 or 1 | Logistic regression, classification |
+| `vi_categorical` | Character | 5 categories based on quantiles | Multinomial models |
+| `vi_factor` | Factor | `vi_categorical` as ordered factor | Ordinal regression |
+
+### Response Distribution
+
+```{r responses}
+# Continuous response
+summary(vi$vi_numeric)
+
+# Count response
+summary(vi$vi_counts)
+
+# Binary response
+table(vi$vi_binomial)
+
+# Categorical response
+table(vi$vi_categorical)
+```
+
+## Predictor Variables
+
+The dataset includes **58 predictor variables**:
+
+- **47 numeric predictors** (`vi_predictors_numeric`)
+- **11 categorical predictors** (`vi_predictors_categorical`)
+
+### Numeric Predictors
+
+```{r numeric_predictors}
+vi_predictors_numeric
+```
+
+### Categorical Predictors
+
+```{r categorical_predictors}
+vi_predictors_categorical
+```
+
+### Summary of Selected Predictors
+
+```{r predictors_summary}
+# Summary of first 6 numeric predictors
+summary(vi[, vi_predictors_numeric[1:6]])
+
+# Distribution of categorical predictors
+lapply(vi[, vi_predictors_categorical[1:3]], table)
+```
+
+## Interactive Map
+
+Due to the large dataset size (30,000 records), the map displays a random sample of 2,000 points for performance:
+
+```{r map, message=FALSE}
+library(sf)
+library(mapview)
+
+# Sample for visualization
+set.seed(42)
+vi_sample <- vi[sample(nrow(vi), 2000), ]
+
+# Convert to sf object
+vi_sf <- st_as_sf(
+  vi_sample,
+  coords = c("x", "y"),
+  crs = 4326
+)
+
+mapview(
+  vi_sf,
+  zcol = "vi_categorical",
+  layer.name = "Vegetation Index"
+)
+```
+
+**Note:** The map shows a subset of 2,000 randomly sampled points from the full 30,000 record dataset for browser performance.
+
+## Example Usage
+
+### Continuous Response (Regression)
+
+```{r example_continuous, eval=FALSE}
+# Linear model with numeric predictors
+model_lm <- lm(
+  vi_numeric ~ .,
+  data = vi[, c("vi_numeric", vi_predictors_numeric[1:5])]
+)
+```
+
+### Binary Response (Classification)
+
+```{r example_binary, eval=FALSE}
+# Logistic regression
+model_glm <- glm(
+  vi_binomial ~ .,
+  data = vi[, c("vi_binomial", vi_predictors_numeric[1:5])],
+  family = binomial()
+)
+```
+
+### Count Response (Poisson Regression)
+
+```{r example_count, eval=FALSE}
+# Poisson model for counts
+model_pois <- glm(
+  vi_counts ~ .,
+  data = vi[, c("vi_counts", vi_predictors_numeric[1:5])],
+  family = poisson()
+)
+```
