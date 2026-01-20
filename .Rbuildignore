@@ -143,3 +143,6 @@
 # LICENSE.md contains full license text for GitHub display
 # The LICENSE file (not ignored) contains the license template for R CMD check
 ^LICENSE\.md$
+
+dev_scripts/
+extra_data/
