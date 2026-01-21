@@ -25,7 +25,7 @@ An sf data frame with 6,946 rows and 33 columns:
 \item \code{bio17}: Precipitation of driest quarter (BioClim).
 \item \code{bio18}: Precipitation of warmest quarter (BioClim).
 \item \code{bio19}: Precipitation of coldest quarter (BioClim).
-\item \code{diversidad_topo}: Topographic diversity index.
+\item \code{topographic_diversity}: Topographic diversity index.
 \item \code{human_footprint}: Human footprint index.
 \item \code{landcover_veg_bare}: Bare ground vegetation cover percentage.
 \item \code{landcover_veg_herb}: Herbaceous vegetation cover percentage.
@@ -52,6 +52,9 @@ vegetation, and human impact metrics.
 }
 \seealso{
 Other data: 
+\code{\link{drylands}},
+\code{\link{drylands_predictors}},
+\code{\link{drylands_responses}},
 \code{\link{neanderthal}},
 \code{\link{neanderthal_predictors}},
 \code{\link{neanderthal_response}},

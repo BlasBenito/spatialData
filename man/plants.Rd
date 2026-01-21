@@ -39,6 +39,9 @@ Vascular plant richness obtained from GBIF for the American ecoregions as define
 }
 \seealso{
 Other data: 
+\code{\link{drylands}},
+\code{\link{drylands_predictors}},
+\code{\link{drylands_responses}},
 \code{\link{neanderthal}},
 \code{\link{neanderthal_predictors}},
 \code{\link{neanderthal_response}},

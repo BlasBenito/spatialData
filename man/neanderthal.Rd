@@ -49,6 +49,9 @@ Data sourced from Benito et al. (2017) \url{doi:10.1111/jbi.12845}.
 }
 \seealso{
 Other data: 
+\code{\link{drylands}},
+\code{\link{drylands_predictors}},
+\code{\link{drylands_responses}},
 \code{\link{neanderthal_predictors}},
 \code{\link{neanderthal_response}},
 \code{\link{plants}},
