@@ -175,7 +175,7 @@
 #'   \item `bio17`: Precipitation of driest quarter (BioClim).
 #'   \item `bio18`: Precipitation of warmest quarter (BioClim).
 #'   \item `bio19`: Precipitation of coldest quarter (BioClim).
-#'   \item `diversidad_topo`: Topographic diversity index.
+#'   \item `topographic_diversity`: Topographic diversity index.
 #'   \item `human_footprint`: Human footprint index.
 #'   \item `landcover_veg_bare`: Bare ground vegetation cover percentage.
 #'   \item `landcover_veg_herb`: Herbaceous vegetation cover percentage.
