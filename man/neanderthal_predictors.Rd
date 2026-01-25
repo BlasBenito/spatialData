@@ -20,9 +20,6 @@ Other data:
 \code{\link{drylands_responses}},
 \code{\link{neanderthal}},
 \code{\link{neanderthal_response}},
-\code{\link{plants}},
-\code{\link{plants_predictors}},
-\code{\link{plants_response}},
 \code{\link{quercus}},
 \code{\link{quercus_predictors}},
 \code{\link{quercus_response}}
