@@ -130,3 +130,4 @@ rsconnect/
 VOICE.md
 CLAUDE.md
 dev_scripts/*
+extra_data/*
