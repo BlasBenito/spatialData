@@ -243,9 +243,44 @@ An sf data frame with 662 rows (ecoregions) and 155 columns:
 }
 }
 \source{
+\strong{Biodiversity data:}
 \itemize{
 \item GBIF Plantae Dataset (September 15, 2020). \doi{10.15468/dl.xh5y5g}
+}
+
+\strong{Spatial boundaries:}
+\itemize{
 \item Dinerstein, E., et al. (2017). An Ecoregion-Based Approach to Protecting Half the Terrestrial Realm. \emph{BioScience}, 67(6), 534-545. \doi{10.1093/biosci/bix014}
+}
+
+\strong{Climate predictors (precipitation, temperature, atmospheric):}
+\itemize{
+\item Karger, D.N., et al. (2021). Climatologies at high resolution for the earth's land surface areas. EnviDat. \doi{10.16904/envidat.228.v2.1}
+}
+
+\strong{Soil properties:}
+\itemize{
+\item Hengl, T., et al. (2017). SoilGrids250m: Global gridded soil information based on machine learning. \emph{PLOS ONE}, 12(2), e0169748. \doi{10.1371/journal.pone.0169748}
+}
+
+\strong{Soil temperature:}
+\itemize{
+\item Lembrechts, J.J., et al. (2021). Mismatches between soil and air temperature. \emph{Global Change Biology}. \doi{10.1111/gcb.16060}
+}
+
+\strong{NDVI:}
+\itemize{
+\item Copernicus Global Land Service: NDVI Long Term Statistics v3 (1999-2019). \url{https://land.copernicus.eu/global/products/ndvi}
+}
+
+\strong{Landcover and fragmentation:}
+\itemize{
+\item Buchhorn, M., et al. (2020). Copernicus Global Land Service: Land Cover 100m: collection 3: epoch 2019: Globe. Zenodo. \doi{10.5281/zenodo.3939050}
+}
+
+\strong{Topographic/geographic features:}
+\itemize{
+\item CGIAR-CSI SRTM 90m Digital Elevation Database. \url{https://srtm.csi.cgiar.org/}
 }
 }
 \usage{

@@ -16,8 +16,6 @@ Vector of all predictor names in \code{vi}
 \seealso{
 Other example_data: 
 \code{\link{vi}},
-\code{\link{vi_predictors_categorical}},
-\code{\link{vi_predictors_numeric}},
 \code{\link{vi_responses}}
 }
 \concept{example_data}

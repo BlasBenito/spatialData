@@ -1,5 +1,5 @@
 ---
-title: "VI: Global Vegetation Index with Multiple Response Encodings"
+title: "VI: Vegetation Index"
 output:
   rmarkdown::html_document:
     toc: true
@@ -17,42 +17,101 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-The `vi` dataset contains **30,000 global records** of Normalized Difference Vegetation Index (NDVI) values with environmental predictors. This dataset is designed to demonstrate different response variable encodings and model types, making it useful for tutorials on regression, classification, and count models.
+The `vi` dataset contains several thousand records of Normalized Difference Vegetation Index (NDVI) with different encodings (see `vi_responses`) and a large set of numeric and categorical predictors.
 
-## Loading the Data
+It's main features are:
+
+- *Complete case study* - No missing values, clean data ready for analysis.
+- *Global scope* - 6 continents, all major climate zones, 12 biomes.
+- *Scale considerations* - Supports regional, continental, and global analyses.
+- *Grouped/stratified analysis* - Multiple hierarchical groupings available.
+
+This dataset was built to support a wide range of analytical approaches:
+
+**Response Variable Modeling**
+
+- *Linear regression* - `vi_numeric` (continuous 0.03-0.82).
+- *Count models* (Poisson, negative binomial) - `vi_counts` (integer 30-820).
+- *Binary classification / logistic regression* - `vi_binomial` (0/1).
+- *Ordinal regression* - `vi_factor` (ordered: very_low → very_high).
+- *Multi-class classification* - `vi_categorical` / `vi_factor` (5 levels).
+
+**Statistical and Machine Learning Methods**
+
+- *Multicollinearity selection* - Many predictor sets with mean/max/min/range patterns (e.g., `temperature_*`, `rainfall_*`, `swi_*`).
+- *Variable importance / feature selection* - 50+ numeric predictors.
+- *Dimensionality reduction* (PCA, UMAP) - High-dimensional predictor space.
+- *Random forests / gradient boosting* - Mixed numeric and categorical predictors.
+- *Mixed-effects models* - Natural grouping by continent, biome, climate zone.
+
+**Spatial Analysis**
+
+- *Spatial thinning* - 9,265 unique global coordinates.
+- *Spatial interpolation* (kriging, IDW) - Global coverage with continuous response.
+- *Spatial cross-validation* - Stratify by continent, region, biome, or climate.
+- *Spatial autocorrelation analysis* - Dense enough for variogram estimation.
+- *Geographically weighted regression* (GWR) - Explore spatial non-stationarity.
+
+**Ecological and Environmental Modeling**
+
+- *Species distribution modeling* (SDM) analogues - using `vi_binomial` as repsonse.
+- *Climate-vegetation relationships* - Rich climate predictors vs. vegetation index.
+- *Soil-vegetation interactions* - Multiple soil variables available.
+
+
+## Setup
+
+The following R libraries are required to run this tutorial:
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
+library(spatialData)
+library(sf)
+library(mapview)
+library(DT)
+library(dplyr)
+library(spatialRF)
+library(collinear)
+library(viridis)
+```
+
+The code below loads the example data.
 
 ```{r setup}
-library(spatialData)
-
-# Load the main dataset
-data(vi)
-
-# Load helper vectors
-data(vi_responses)
-data(vi_predictors)
-data(vi_predictors_numeric)
-data(vi_predictors_categorical)
-
-# View helper vectors
-vi_responses
-length(vi_predictors)
-length(vi_predictors_numeric)
-length(vi_predictors_categorical)
+data(
+  vi,
+  vi_responses,
+  vi_predictors,
+  package = "spatialData"
+  )
 ```
 
 ## Data Structure
 
-The `vi` dataset is a data frame with coordinates stored in `x` (longitude) and `y` (latitude) columns:
+The dataset is an `sf` data frame with `r nrow(vi)` rows and `r ncol(vi)` columns, and no empty data. The first 100 records and all columns but `geometry` are shown below.
 
-```{r structure}
-class(vi)
-dim(vi)
-names(vi)[1:15]  # First 15 column names
+```{r}
+DT::datatable(
+  data = head(sf::st_drop_geometry(vi), n = 100),
+  rownames = FALSE
+  )
 ```
+
+The spatial distribution of the data is irregular, and excludes regions with little to no vegetation activity (`vi$vi_numeric > 0`).
+
+
+```{r}
+mapview::mapview(
+  vi,
+  zcol = "vi_numeric",
+  layer.name = "vi"
+)
+```
+
+
 
 ## Response Variables
 
-The dataset provides **5 different encodings** of the same underlying vegetation index, enabling different modeling approaches:
+The dataset provides **5 different encodings** (see `vi_responses`) of the same underlying vegetation index, enabling different modeling approaches:
 
 | Variable | Type | Description | Use Case |
 |----------|------|-------------|----------|
@@ -62,109 +121,110 @@ The dataset provides **5 different encodings** of the same underlying vegetation
 | `vi_categorical` | Character | 5 categories based on quantiles | Multinomial models |
 | `vi_factor` | Factor | `vi_categorical` as ordered factor | Ordinal regression |
 
-### Response Distribution
-
-```{r responses}
-# Continuous response
-summary(vi$vi_numeric)
-
-# Count response
-summary(vi$vi_counts)
-
-# Binary response
-table(vi$vi_binomial)
-
-# Categorical response
-table(vi$vi_categorical)
-```
-
 ## Predictor Variables
 
-The dataset includes **58 predictor variables**:
+The dataset includes **58 predictor variables from 11 datasources**, of which 47 are numeric and 11 are categorical.
 
-- **47 numeric predictors** (`vi_predictors_numeric`)
-- **11 categorical predictors** (`vi_predictors_categorical`)
-
-### Numeric Predictors
-
-```{r numeric_predictors}
-vi_predictors_numeric
+```{r}
+vi |> 
+  sf::st_drop_geometry() |> 
+  dplyr::select(
+    dplyr::all_of(vi_predictors)
+  ) |> 
+  head(n = 5) |> 
+  dplyr::glimpse()
 ```
-
-### Categorical Predictors
-
-```{r categorical_predictors}
-vi_predictors_categorical
-```
-
-### Summary of Selected Predictors
-
-```{r predictors_summary}
-# Summary of first 6 numeric predictors
-summary(vi[, vi_predictors_numeric[1:6]])
-
-# Distribution of categorical predictors
-lapply(vi[, vi_predictors_categorical[1:3]], table)
-```
-
-## Interactive Map
-
-Due to the large dataset size (30,000 records), the map displays a random sample of 2,000 points for performance:
-
-```{r map, message=FALSE}
-library(sf)
-library(mapview)
-
-# Sample for visualization
-set.seed(42)
-vi_sample <- vi[sample(nrow(vi), 2000), ]
-
-# Convert to sf object
-vi_sf <- st_as_sf(
-  vi_sample,
-  coords = c("x", "y"),
-  crs = 4326
-)
-
-mapview(
-  vi_sf,
-  zcol = "vi_categorical",
-  layer.name = "Vegetation Index"
-)
-```
-
-**Note:** The map shows a subset of 2,000 randomly sampled points from the full 30,000 record dataset for browser performance.
 
 ## Example Usage
 
-### Continuous Response (Regression)
+### Selection of Numeric Predictors
 
-```{r example_continuous, eval=FALSE}
-# Linear model with numeric predictors
-model_lm <- lm(
-  vi_numeric ~ .,
-  data = vi[, c("vi_numeric", vi_predictors_numeric[1:5])]
+The `vi_predictors` vector contains both numeric and categorical variables. Before multicollinearity analysis, we extract only the numeric predictors using `collinear::identify_numeric_variables()`.
+
+```{r}
+vi_predictors_numeric <- collinear::identify_numeric_variables(
+    df = sf::st_drop_geometry(vi),
+    predictors = vi_predictors
+  )$valid
+
+vi_predictors_numeric
+```
+
+### Multicollinearity Filtering
+
+Many predictors in this dataset are highly correlated (e.g., `temperature_mean`, `temperature_max`, `temperature_min`). The `collinear::collinear()` function selects a non-redundant subset that maximizes predictive power for the response variable.
+
+```{r}
+predictors_selection <- collinear::collinear(
+  df = vi,
+  responses = "vi_numeric",
+  predictors = vi_predictors_numeric,
+  f = collinear::f_numeric_rf,
+  quiet = TRUE
+)
+
+predictors_selection$vi_numeric$selection
+```
+
+### Scatterplot
+
+Before modeling, we visualize the relationship between the response and each selected predictor. The loess smoothers help identify non-linear patterns.
+
+```{r, fig.width=8, fig.height=7, warning = FALSE, message = FALSE}
+spatialRF::plot_training_df(
+  data = vi,
+  dependent.variable.name = "vi_numeric",
+  predictor.variable.names = predictors_selection$vi_numeric$selection,
+  point.color = viridis::viridis(n = 100),
+  method = "loess",
+  ncol = 3
 )
 ```
 
-### Binary Response (Classification)
+### Random Forest Model
 
-```{r example_binary, eval=FALSE}
-# Logistic regression
-model_glm <- glm(
-  vi_binomial ~ .,
-  data = vi[, c("vi_binomial", vi_predictors_numeric[1:5])],
-  family = binomial()
+We fit a random forest model using the `spatialRF` package. This model predicts `vi_numeric` from the selected predictors without considering spatial structure.
+
+```{r}
+m <- spatialRF::rf(
+  data = sf::st_drop_geometry(vi),
+  dependent.variable.name = "vi_numeric",
+  predictor.variable.names = predictors_selection$vi_numeric$selection,
+  verbose = FALSE
 )
 ```
 
-### Count Response (Poisson Regression)
+### Residuals Diagnostics
 
-```{r example_count, eval=FALSE}
-# Poisson model for counts
-model_pois <- glm(
-  vi_counts ~ .,
-  data = vi[, c("vi_counts", vi_predictors_numeric[1:5])],
-  family = poisson()
+Residual diagnostics help assess model fit. We look for homoscedasticity (constant variance) and normality of residuals.
+
+```{r, fig.width=6, fig.height=4}
+p <- spatialRF::plot_residuals_diagnostics(
+  model = m,
+  point.color = viridis::viridis(n = 100),
+  fill.color = viridis::viridis(n = 101)
 )
 ```
+
+### Variable Importance
+
+Variable importance scores reveal which predictors contribute most to the model. Higher values indicate stronger influence on vegetation index predictions.
+
+```{r, fig.width=6, fig.height=4}
+spatialRF::plot_importance(
+  m = m,
+  fill.color = viridis::viridis(n = 100)
+)
+```
+
+## Conclusion
+
+This article demonstrated how to work with the `vi` dataset:
+
+- Explored the data structure and spatial distribution
+- Identified numeric predictors and filtered multicollinearity
+- Built a random forest model using `spatialRF`
+- Analyzed residuals and variable importance
+
+The `vi` dataset also supports binary classification (`vi_binomial`), count models (`vi_counts`), and ordinal regression (`vi_factor`). Categorical predictors like `continent`, `biogeo_biome`, and `koppen_zone` enable grouped and stratified analyses.
+

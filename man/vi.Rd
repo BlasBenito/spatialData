@@ -5,7 +5,139 @@
 \alias{vi}
 \title{30.000 Global NDVI Records and Environmental Predictors}
 \format{
-Data frame with 30,000 rows and 65 columns.
+Data frame with 30,000 rows and 65 columns:
+
+\strong{Response variables (5):}
+\itemize{
+\item \code{vi_numeric}: Continuous vegetation index values (0-1).
+\item \code{vi_counts}: Simulated counts (\code{vi_numeric} × 1000, integer).
+\item \code{vi_binomial}: Simulated binary (0/1) from \code{vi_numeric}.
+\item \code{vi_categorical}: Categories: "very_low", "low", "medium", "high", "very_high".
+\item \code{vi_factor}: Factor version of \code{vi_categorical}.
+}
+
+\strong{Categorical predictors - Koppen climate (3):}
+\itemize{
+\item \code{koppen_zone}: #TODO
+\item \code{koppen_group}: #TODO
+\item \code{koppen_description}: #TODO
+}
+
+\strong{Categorical predictors - Soil (1):}
+\itemize{
+\item \code{soil_type}: #TODO
+}
+
+\strong{Categorical predictors - Biogeography (3):}
+\itemize{
+\item \code{biogeo_ecoregion}: #TODO
+\item \code{biogeo_biome}: #TODO
+\item \code{biogeo_realm}: #TODO
+}
+
+\strong{Categorical predictors - Location (4):}
+\itemize{
+\item \code{country_name}: #TODO
+\item \code{continent}: #TODO
+\item \code{region}: #TODO
+\item \code{subregion}: #TODO
+}
+
+\strong{Predictor variables - Topography (3):}
+\itemize{
+\item \code{topo_slope}: #TODO
+\item \code{topo_diversity}: #TODO
+\item \code{topo_elevation}: #TODO
+}
+
+\strong{Predictor variables - Soil water index (4):}
+\itemize{
+\item \code{swi_mean}: #TODO
+\item \code{swi_max}: #TODO
+\item \code{swi_min}: #TODO
+\item \code{swi_range}: #TODO
+}
+
+\strong{Predictor variables - Solar radiation (4):}
+\itemize{
+\item \code{solar_rad_mean}: #TODO
+\item \code{solar_rad_max}: #TODO
+\item \code{solar_rad_min}: #TODO
+\item \code{solar_rad_range}: #TODO
+}
+
+\strong{Predictor variables - Growing season (4):}
+\itemize{
+\item \code{growing_season_length}: #TODO
+\item \code{growing_season_temperature}: #TODO
+\item \code{growing_season_rainfall}: #TODO
+\item \code{growing_degree_days}: #TODO
+}
+
+\strong{Predictor variables - Temperature (5):}
+\itemize{
+\item \code{temperature_mean}: Mean annual temperature.
+\item \code{temperature_max}: #TODO
+\item \code{temperature_min}: #TODO
+\item \code{temperature_range}: Annual temperature range.
+\item \code{temperature_seasonality}: Temperature seasonality.
+}
+
+\strong{Predictor variables - Rainfall (4):}
+\itemize{
+\item \code{rainfall_mean}: #TODO
+\item \code{rainfall_max}: #TODO
+\item \code{rainfall_min}: #TODO
+\item \code{rainfall_range}: #TODO
+}
+
+\strong{Predictor variables - Evapotranspiration (4):}
+\itemize{
+\item \code{evapotranspiration_mean}: Mean evapotranspiration.
+\item \code{evapotranspiration_max}: Maximum evapotranspiration.
+\item \code{evapotranspiration_min}: Minimum evapotranspiration.
+\item \code{evapotranspiration_range}: Evapotranspiration range.
+}
+
+\strong{Predictor variables - Cloud cover (4):}
+\itemize{
+\item \code{cloud_cover_mean}: Mean cloud cover.
+\item \code{cloud_cover_max}: Maximum cloud cover.
+\item \code{cloud_cover_min}: Minimum cloud cover.
+\item \code{cloud_cover_range}: Cloud cover range.
+}
+
+\strong{Predictor variables - Aridity and humidity (5):}
+\itemize{
+\item \code{aridity_index}: Mean aridity index.
+\item \code{humidity_mean}: Mean air humidity.
+\item \code{humidity_max}: Maximum air humidity.
+\item \code{humidity_min}: Minimum air humidity.
+\item \code{humidity_range}: Air humidity range.
+}
+
+\strong{Predictor variables - Soil properties (6):}
+\itemize{
+\item \code{soil_clay}: Soil clay content.
+\item \code{soil_sand}: Soil sand content.
+\item \code{soil_silt}: Soil silt content.
+\item \code{soil_ph}: Soil pH.
+\item \code{soil_soc}: Soil organic carbon content.
+\item \code{soil_nitrogen}: Soil nitrogen content.
+}
+
+\strong{Predictor variables - Soil temperature (4):}
+\itemize{
+\item \code{soil_temperature_mean}: Mean soil temperature.
+\item \code{soil_temperature_max}: Maximum soil temperature.
+\item \code{soil_temperature_min}: Minimum soil temperature.
+\item \code{soil_temperature_range}: Soil temperature range.
+}
+
+\strong{Geometry:}
+\itemize{
+\item \code{geometry}: Point geometry (WGS84, EPSG:4326).
+}
 }
 \usage{
 data(vi)
@@ -25,8 +157,6 @@ The names of all predictors (continuous, integer, character, and factors) are in
 \seealso{
 Other example_data: 
 \code{\link{vi_predictors}},
-\code{\link{vi_predictors_categorical}},
-\code{\link{vi_predictors_numeric}},
 \code{\link{vi_responses}}
 }
 \concept{example_data}
