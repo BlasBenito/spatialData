@@ -15,9 +15,6 @@ Character vector of predictor variable names from \code{neanderthal} (19 bioclim
 }
 \seealso{
 Other data: 
-\code{\link{drylands}},
-\code{\link{drylands_predictors}},
-\code{\link{drylands_responses}},
 \code{\link{neanderthal}},
 \code{\link{neanderthal_response}},
 \code{\link{plantae}},

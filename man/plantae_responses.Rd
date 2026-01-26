@@ -18,9 +18,6 @@ Metrics are available for all plants, trees, and grasses at species, genus, and 
 }
 \seealso{
 Other data: 
-\code{\link{drylands}},
-\code{\link{drylands_predictors}},
-\code{\link{drylands_responses}},
 \code{\link{neanderthal}},
 \code{\link{neanderthal_predictors}},
 \code{\link{neanderthal_response}},
