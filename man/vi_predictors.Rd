@@ -15,6 +15,9 @@ Vector of all predictor names in \code{vi}
 }
 \seealso{
 Other example_data: 
+\code{\link{quercus}},
+\code{\link{quercus_predictors}},
+\code{\link{quercus_response}},
 \code{\link{vi}},
 \code{\link{vi_responses}}
 }

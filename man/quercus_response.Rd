@@ -3,26 +3,23 @@
 \docType{data}
 \name{quercus_response}
 \alias{quercus_response}
-\title{Response variable name for Quercus distribution examples}
+\title{Response Variable Name for \code{quercus}}
 \format{
-A character string of length 1.
+Character string of length 1.
 }
 \usage{
 data(quercus_response)
 }
 \description{
-Character string containing the name of the response variable in \code{quercus}: "species".
+Character string with the name of the response variable in \link{quercus}: \code{"species"}.
 }
 \seealso{
-Other data: 
-\code{\link{neanderthal}},
-\code{\link{neanderthal_predictors}},
-\code{\link{neanderthal_response}},
-\code{\link{plantae}},
-\code{\link{plantae_predictors}},
-\code{\link{plantae_responses}},
+Other example_data: 
 \code{\link{quercus}},
-\code{\link{quercus_predictors}}
+\code{\link{quercus_predictors}},
+\code{\link{vi}},
+\code{\link{vi_predictors}},
+\code{\link{vi_responses}}
 }
-\concept{data}
+\concept{example_data}
 \keyword{datasets}

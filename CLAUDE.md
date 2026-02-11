@@ -2,6 +2,16 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Critical Safety Rules
+
+**FILE DELETION**: Never delete, remove, or `rm` any file without explicit user confirmation. This includes:
+- Source files
+- Test files  
+- Configuration files
+- "Temporary" or "backup" files
+
+When deletion seems appropriate, ASK FIRST and explain why.
+
 ## Package Overview
 
 spatialData is a data-only R package providing spatial datasets for ecological and environmental analysis. It contains pre-processed datasets with response variables and predictors for use in examples and tutorials.

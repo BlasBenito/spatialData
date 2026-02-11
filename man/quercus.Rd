@@ -3,63 +3,69 @@
 \docType{data}
 \name{quercus}
 \alias{quercus}
-\title{European Quercus (oak) species presence/absence with environmental predictors}
+\title{European Quercus (Oak) Species Distribution with Environmental Predictors}
 \format{
-An sf data frame with 6,946 rows and 33 columns:
-\itemize{
-\item \code{species}: Species name or "ausencia" for absence points (response variable).
-\item \code{bio1}: Annual mean temperature (BioClim).
-\item \code{bio2}: Mean diurnal range (BioClim).
-\item \code{bio3}: Isothermality (BioClim).
-\item \code{bio4}: Temperature seasonality (BioClim).
-\item \code{bio5}: Max temperature of warmest month (BioClim).
-\item \code{bio6}: Min temperature of coldest month (BioClim).
-\item \code{bio7}: Temperature annual range (BioClim).
-\item \code{bio10}: Mean temperature of warmest quarter (BioClim).
-\item \code{bio11}: Mean temperature of coldest quarter (BioClim).
-\item \code{bio12}: Annual precipitation (BioClim).
-\item \code{bio13}: Precipitation of wettest month (BioClim).
-\item \code{bio14}: Precipitation of driest month (BioClim).
-\item \code{bio15}: Precipitation seasonality (BioClim).
-\item \code{bio16}: Precipitation of wettest quarter (BioClim).
-\item \code{bio17}: Precipitation of driest quarter (BioClim).
-\item \code{bio18}: Precipitation of warmest quarter (BioClim).
-\item \code{bio19}: Precipitation of coldest quarter (BioClim).
-\item \code{topographic_diversity}: Topographic diversity index.
-\item \code{human_footprint}: Human footprint index.
-\item \code{landcover_veg_bare}: Bare ground vegetation cover percentage.
-\item \code{landcover_veg_herb}: Herbaceous vegetation cover percentage.
-\item \code{landcover_veg_tree}: Tree vegetation cover percentage.
-\item \code{ndvi_average}: Average NDVI (Normalized Difference Vegetation Index).
-\item \code{ndvi_maximum}: Maximum NDVI.
-\item \code{ndvi_minimum}: Minimum NDVI.
-\item \code{ndvi_range}: NDVI range.
-\item \code{sun_rad_average}: Average solar radiation.
-\item \code{sun_rad_maximum}: Maximum solar radiation.
-\item \code{sun_rad_minimum}: Minimum solar radiation.
-\item \code{sun_rad_range}: Solar radiation range.
-\item \code{topo_slope}: Terrain slope.
-\item \code{geometry}: Point geometry (WGS84, EPSG:4326).
-}
+sf data.frame
 }
 \usage{
 data(quercus)
 }
 \description{
-Presence and absence records of eight Quercus (oak) species across Europe,
-combined with 31 environmental predictor variables including bioclimatic, topographic,
-vegetation, and human impact metrics.
+\code{sf} dataframe with \code{POINT} geometry containing 6,728 records of eight European Quercus (oak) species and absence points, 1 response variable (see \link{quercus_response}), and 31 numeric predictors (see \link{quercus_predictors}).
+
+\strong{Response}
+
+The response variable \code{species} is a character column with 9 levels:
+\itemize{
+\item \code{"absence"}: Background absence points.
+\item \code{"Quercus robur"}: \emph{Quercus robur} L. (English oak).
+\item \code{"Quercus petraea"}: \emph{Quercus petraea} (Matt.) Liebl. (Sessile oak).
+\item \code{"Quercus ilex"}: \emph{Quercus ilex} L. (Holm oak).
+\item \code{"Quercus cerris"}: \emph{Quercus cerris} L. (Turkey oak).
+\item \code{"Quercus faginea"}: \emph{Quercus faginea} Lam. (Portuguese oak).
+\item \code{"Quercus pubescens"}: \emph{Quercus pubescens} Willd. (Downy oak).
+\item \code{"Quercus pyrenaica"}: \emph{Quercus pyrenaica} Willd. (Pyrenean oak).
+\item \code{"Quercus suber"}: \emph{Quercus suber} L. (Cork oak).
+}
+
+\strong{Predictors}
+
+\itemize{
+\item \code{bio1}, \code{bio2}, ..., \code{bio19}: WorldClim bioclimatic variables (17 variables, excluding bio8 and bio9).
+\item \code{ndvi_average}, \code{ndvi_maximum}, \code{ndvi_minimum}, \code{ndvi_range}: MODIS NDVI statistics.
+\item \code{sun_rad_average}, \code{sun_rad_maximum}, \code{sun_rad_minimum}, \code{sun_rad_range}: WorldClim solar radiation statistics.
+\item \code{landcover_veg_bare}, \code{landcover_veg_herb}, \code{landcover_veg_tree}: MODIS Vegetation Continuous Fields (MOD44B) land cover percentages.
+\item \code{topographic_diversity}: Number of unique combinations of elevation, slope, and aspect classes within a neighborhood.
+\item \code{topo_slope}: Topographic slope in degrees.
+\item \code{human_footprint}: Human footprint index.
+}
+
+\strong{Geometry:}
+\itemize{
+\item \code{geometry}: Point geometry (WGS84, EPSG:4326).
+}
+
+\strong{Data sources}
+\itemize{
+\item \strong{Species occurrences}: GBIF.org. Global Biodiversity Information Facility. \url{https://www.gbif.org/}.
+\item \strong{Bioclimatic variables and solar radiation}: Fick, S.E. and Hijmans, R.J., 2017. WorldClim 2: new 1-km spatial resolution climate surfaces for global land areas. International Journal of Climatology, 37(12), pp.4302-4315. \doi{10.1002/joc.5086}
+\item \strong{Human footprint}: Venter, O., Sanderson, E.W., Magrach, A., Allan, J.R., Beher, J., Jones, K.R., Possingham, H.P., Laurance, W.F., Wood, P., Fekete, B.M., Levy, M.A. and Watson, J.E., 2016. Global terrestrial Human Footprint maps for 1993 and 2009. Scientific Data, 3, p.160067. \doi{10.1038/sdata.2016.67}
+\item \strong{Land cover}: DiMiceli, C., Carroll, M., Sohlberg, R., Kim, D.H., Kelly, M., and Townshend, J.R.G. (2015). MOD44B MODIS/Terra Vegetation Continuous Fields Yearly L3 Global 250m SIN Grid V006. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD44B.006}
+\item \strong{NDVI}: Didan, K. (2015). MOD13A2 MODIS/Terra Vegetation Indices 16-Day L3 Global 1km SIN Grid V006. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD13A2.006}
+\item \strong{Elevation and topography}: Jarvis A., H.I. Reuter, A. Nelson, E. Guevara, 2008. Hole-filled seamless SRTM data V4, International Centre for Tropical Agriculture (CIAT). \url{https://srtm.csi.cgiar.org}.
+}
+}
+\examples{
+data(quercus)
+head(quercus)
 }
 \seealso{
-Other data: 
-\code{\link{neanderthal}},
-\code{\link{neanderthal_predictors}},
-\code{\link{neanderthal_response}},
-\code{\link{plantae}},
-\code{\link{plantae_predictors}},
-\code{\link{plantae_responses}},
+Other example_data: 
 \code{\link{quercus_predictors}},
-\code{\link{quercus_response}}
+\code{\link{quercus_response}},
+\code{\link{vi}},
+\code{\link{vi_predictors}},
+\code{\link{vi_responses}}
 }
-\concept{data}
+\concept{example_data}
 \keyword{datasets}

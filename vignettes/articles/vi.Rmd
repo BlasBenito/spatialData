@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 The `vi` dataset contains several thousand records of Normalized Difference Vegetation Index (NDVI) with different encodings (see `vi_responses`) and a large set of numeric and categorical predictors (see `vi_predictors`) with consistent naming patterns (e.g., `temperature_*`, `rainfall_*`, `swi_*`).
 
-It's main features are:
+Its main features are:
 
 - *Complete case study* - No missing values, clean data ready for analysis.
 - *Global scope* - 6 continents, all major climate zones, 12 biomes.
@@ -53,7 +53,7 @@ This dataset was built to support a wide range of analytical approaches:
 
 **Ecological and Environmental Modeling**
 
-- *Species distribution modeling* (SDM) analogues - using `vi_binomial` as repsonse.
+- *Species distribution modeling* (SDM) analogues - using `vi_binomial` as response.
 - *Climate-vegetation relationships* - Rich climate predictors vs. vegetation index.
 - *Soil-vegetation interactions* - Multiple soil variables available.
 
@@ -86,7 +86,7 @@ data(
 
 ## Data Structure
 
-The dataset is an `sf` data frame with `r nrow(vi)` rows and `r ncol(vi)` columns, and no empty data. The first 100 records and all columns but `geometry` are shown below.
+The dataset is an `sf` data frame with `r nrow(vi)` rows and `r ncol(vi)` columns, and no missing data. The first 10 records and all columns but `geometry` are shown below.
 
 ```{r}
 DT::datatable(
@@ -136,7 +136,7 @@ vi |>
 
 ## Example Usage
 
-This brief example shows how `vi` can be used to train random forest model. It is 
+This brief example shows how `vi` can be used to train a random forest model.
 
 ### Selection of Numeric Predictors
 
@@ -195,9 +195,9 @@ spatialRF::plot_importance(
 )
 ```
 
-## Local Variable Importance
+### Local Variable Importance
 
-The code below assigns to each observation the name of the predictor matters most for that specific location's prediction to reveal geographic patterns in variable relevance.
+The code below assigns to each observation the name of the predictor that matters most for that specific location's prediction, revealing geographic patterns in variable relevance.
 
 ```{r}
 local_importance <- m$importance$local
@@ -207,7 +207,7 @@ mapview::mapview(
   vi,
   zcol = "most_local_importance",
   layer.name = "Most important predictor",
-  col.regions = viridis::turbo(n = length(unique(vi$local_importance)))
+  col.regions = viridis::turbo(n = length(unique(vi$most_local_importance)))
 )
 ```
 
@@ -236,9 +236,4 @@ spatialRF::plot_response_surface(
 )
 ```
 
-## Final Remarks
-
-The usage example above is only one of the many modelling approaches that can be applied to `vi`. 
-
-The dataset also supports binary classification (`vi_binomial`), count models (`vi_counts`), and ordinal regression (`vi_factor`). Categorical predictors like `continent`, `biogeo_biome`, and `koppen_zone` enable grouped and stratified analyses. The nature of the different predictors 
-
+The usage example above is only one of the many modeling approaches that can be applied to `vi`. The dataset also supports binary classification (`vi_binomial`), count models (`vi_counts`), and ordinal regression (`vi_factor`). Categorical predictors like `continent`, `biogeo_biome`, and `koppen_zone` enable grouped and stratified analyses.

@@ -3,26 +3,23 @@
 \docType{data}
 \name{quercus_predictors}
 \alias{quercus_predictors}
-\title{Predictor variable names for Quercus distribution examples}
+\title{Predictor Variable Names for \code{quercus}}
 \format{
-A character vector of length 31.
+Character vector of length 31.
 }
 \usage{
 data(quercus_predictors)
 }
 \description{
-Character vector of predictor variable names from \code{quercus} (17 bioclimatic, 2 topographic, 3 landcover, 4 NDVI, 4 solar radiation, and 1 human footprint variable).
+Character vector with the names of the 31 predictor variables in \link{quercus}: 17 bioclimatic, 4 NDVI, 4 solar radiation, 3 land cover, 2 topographic, and 1 human footprint variable.
 }
 \seealso{
-Other data: 
-\code{\link{neanderthal}},
-\code{\link{neanderthal_predictors}},
-\code{\link{neanderthal_response}},
-\code{\link{plantae}},
-\code{\link{plantae_predictors}},
-\code{\link{plantae_responses}},
+Other example_data: 
 \code{\link{quercus}},
-\code{\link{quercus_response}}
+\code{\link{quercus_response}},
+\code{\link{vi}},
+\code{\link{vi_predictors}},
+\code{\link{vi_responses}}
 }
-\concept{data}
+\concept{example_data}
 \keyword{datasets}
