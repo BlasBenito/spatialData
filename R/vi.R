@@ -2,7 +2,7 @@
 #'
 #' @description
 #'
-#' `sf` dataframe with `POINT` geometry records representing 9265 global locations, 5 response variables with different encodings (see [vi_responses]), and 58 numeric and categorical predictors (see [vi_predictors]).
+#' `sf` dataframe with `POINT` geometry records representing 9265 global locations, 5 response variables with different encodings (see [vi_responses]), and 58 numeric and categorical predictors (see [vi_predictors]). Use [vi_extra()] to download an extended version with 30,000 rows.
 #'
 #' **Responses**
 #'
@@ -66,7 +66,7 @@
 #'   \item **Soil Water Index**: Generated using European Union's Copernicus Land Monitoring Service information; \doi{10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda}.
 #'   \item **Climate**: Brun, P., Zimmermann, N. E., Hari, C., Pellissier, L., Karger, D. N. (2022). CHELSA-BIOCLIM+ A novel set of global climate-related predictors at kilometre-resolution. EnviDat. \doi{10.16904/envidat.332}.
 #'   \item **Soil type and chemistry**: Hengl T, Mendes de Jesus J, Heuvelink GBM, Ruiperez Gonzalez M, Kilibarda M, Blagotić A, et al. (2017) SoilGrids250m: Global gridded soil information based on machine learning. PLoS ONE 12(2): e0169748. \doi{10.1371/journal.pone.0169748}
-#'   \item **Soil Temperature**: Wan, Z., Hook, S., Hulley, G. (2015). MOD11A2 MODIS/Terra Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006 [Data set]. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD11A2.006} (Zenodo: \url{https://zenodo.org/records/1435938})
+#'   \item **Soil Temperature**: Wan, Z., Hook, S., Hulley, G. (2015). MOD11A2 MODIS/Terra Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD11A2.006} (Zenodo: \url{https://zenodo.org/records/1435938})
 #'   \item **Ecoregions**: Eric Dinerstein, David Olson, Anup Joshi, Carly Vynne, Neil D. Burgess, Eric Wikramanayake, Nathan Hahn, Suzanne Palminteri, Prashant Hedao, Reed Noss, Matt Hansen, Harvey Locke, Erle C Ellis, Benjamin Jones, Charles Victor Barber, Randy Hayes, Cyril Kormos, Vance Martin, Eileen Crist, Wes Sechrest, Lori Price, Jonathan E. M. Baillie, Don Weeden, Kierán Suckling, Crystal Davis, Nigel Sizer, Rebecca Moore, David Thau, Tanya Birch, Peter Potapov, Svetlana Turubanova, Alexandra Tyukavina, Nadia de Souza, Lilian Pintea, José C. Brito, Othman A. Llewellyn, Anthony G. Miller, Annette Patzelt, Shahina A. Ghazanfar, Jonathan Timberlake, Heinz Klöser, Yara Shennan-Farpón, Roeland Kindt, Jens-Peter Barnekow Lillesø, Paulo van Breugel, Lars Graudal, Maianna Voge, Khalaf F. Al-Shammari, Muhammad Saleem, An Ecoregion-Based Approach to Protecting Half the Terrestrial Realm, BioScience, Volume 67, Issue 6, June 2017, Pages 534–545, \doi{10.1093/biosci/bix014}
 #'   \item **Elevation and topography**: Jarvis A., H.I. Reuter, A. Nelson, E. Guevara, 2008, Hole-filled seamless SRTM data V4, International Centre for Tropical Agriculture (CIAT), available from \url{https://srtm.csi.cgiar.org}.
 #'   \item **Aridity**: Zomer, R.J., Xu, J. & Trabucco, A. Version 3 of the Global Aridity Index and Potential Evapotranspiration Database. Sci Data 9, 409 (2022). \doi{10.1038/s41597-022-01493-1}
@@ -97,3 +97,57 @@
 #' @format Character vector of length 58.
 #' @family example_data
 "vi_predictors"
+
+#' Download Extended vi Dataset
+#'
+#' @description
+#' Downloads and reads the extended version of the [vi] dataset (30,000 rows)
+#' from the
+#' [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
+#' See [vi] for details on the response variables, predictors, and data sources.
+#'
+#' @autoglobal
+#' @param dir (optional, character) Directory to save the file. Defaults to
+#'   the current working directory.
+#' @param quiet (optional, logical) If `TRUE` (default), suppresses
+#'   `sf::st_read()` messages.
+#' @return sf data.frame with 30,000 rows and 64 columns (POINT geometry, WGS84).
+#' @family example_data
+#' @examples
+#' \dontrun{
+#' vi_extended <- vi_extra()
+#' nrow(vi_extended)
+#' }
+#' @export
+vi_extra <- function(
+  dir = ".",
+  quiet = TRUE
+) {
+  path <- file.path(dir, "vi.gpkg")
+
+  if (!file.exists(path)) {
+    url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/vi.gpkg"
+    if (quiet == FALSE) {
+      message("spatialData::vi_extra(): Downloading vi.gpkg to '", dir, "'.")
+    }
+    tryCatch(
+      utils::download.file(url, path, mode = "wb", quiet = TRUE),
+      error = function(e) {
+        unlink(path)
+        stop(
+          "spatialData::vi_extra(): Download of \nURL: '",
+          url,
+          "' failed.",
+          call. = FALSE
+        )
+      }
+    )
+  }
+
+  out <- sf::st_read(
+    dsn = path,
+    quiet = quiet
+  )
+
+  out
+}

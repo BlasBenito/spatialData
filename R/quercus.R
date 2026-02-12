@@ -2,7 +2,7 @@
 #'
 #' @description
 #'
-#' `sf` dataframe with `POINT` geometry containing 6,728 records of eight European Quercus (oak) species and absence points, 1 response variable (see [quercus_response]), and 31 numeric predictors (see [quercus_predictors]).
+#' `sf` dataframe with `POINT` geometry containing 6,728 records of eight European Quercus (oak) species and absence points, 1 response variable (see [quercus_response]), and 31 numeric predictors (see [quercus_predictors]). Use [quercus_extra()] to download the associated environmental raster.
 #'
 #' **Response**
 #'
@@ -72,3 +72,65 @@
 #' @format Character vector of length 31.
 #' @family example_data
 "quercus_predictors"
+
+#' Download Environmental Raster for quercus
+#'
+#' @description
+#' Downloads and reads the environmental raster associated with the [quercus]
+#' dataset from the
+#' [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
+#' Requires the \pkg{terra} package.
+#'
+#' @autoglobal
+#' @param dir (optional, character) Directory to save the file. Defaults to
+#'   the current working directory.
+#' @param quiet (optional, logical) If `TRUE` (default), suppresses
+#'   download messages.
+#' @return SpatRaster object.
+#' @family example_data
+#' @examples
+#' \dontrun{
+#' quercus_env <- quercus_extra()
+#' quercus_env
+#' }
+#' @export
+quercus_extra <- function(
+  dir = ".",
+  quiet = TRUE
+) {
+  if (!requireNamespace("terra", quietly = TRUE)) {
+    stop(
+      "spatialData::quercus_extra(): The package 'terra' is required to run quercus_extra().",
+      call. = FALSE
+    )
+  }
+
+  path <- file.path(dir, "quercus_env.tiff")
+
+  if (!file.exists(path)) {
+    url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/quercus_env.tif"
+    if (quiet == FALSE) {
+      message(
+        "spatialData::quercus_extra(): Downloading quercus_env.tif to '",
+        dir,
+        "'."
+      )
+    }
+    tryCatch(
+      utils::download.file(url, path, mode = "wb", quiet = TRUE),
+      error = function(e) {
+        unlink(path)
+        stop(
+          "spatialData::quercus_extra(): Download of \nURL: '",
+          url,
+          "' failed.",
+          call. = FALSE
+        )
+      }
+    )
+  }
+
+  out <- terra::rast(path)
+
+  out
+}

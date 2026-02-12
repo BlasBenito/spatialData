@@ -16,9 +16,11 @@ Vector of response names in \code{vi}
 \seealso{
 Other example_data: 
 \code{\link{quercus}},
+\code{\link{quercus_extra}()},
 \code{\link{quercus_predictors}},
 \code{\link{quercus_response}},
 \code{\link{vi}},
+\code{\link{vi_extra}()},
 \code{\link{vi_predictors}}
 }
 \concept{example_data}

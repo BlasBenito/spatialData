@@ -11,7 +11,7 @@ sf data.frame
 data(quercus)
 }
 \description{
-\code{sf} dataframe with \code{POINT} geometry containing 6,728 records of eight European Quercus (oak) species and absence points, 1 response variable (see \link{quercus_response}), and 31 numeric predictors (see \link{quercus_predictors}).
+\code{sf} dataframe with \code{POINT} geometry containing 6,728 records of eight European Quercus (oak) species and absence points, 1 response variable (see \link{quercus_response}), and 31 numeric predictors (see \link{quercus_predictors}). Use \code{\link[=quercus_extra]{quercus_extra()}} to download the associated environmental raster.
 
 \strong{Response}
 
@@ -61,9 +61,11 @@ head(quercus)
 }
 \seealso{
 Other example_data: 
+\code{\link{quercus_extra}()},
 \code{\link{quercus_predictors}},
 \code{\link{quercus_response}},
 \code{\link{vi}},
+\code{\link{vi_extra}()},
 \code{\link{vi_predictors}},
 \code{\link{vi_responses}}
 }

@@ -13,22 +13,19 @@ knitr::opts_chunk$set(
 )
 ```
 
-# blankpkg_template: Complete R Package Template
+# `spatialData`: Spatial Modelling Datasets
 
 <!-- CRAN badges: start
 
 Replace `mypackage` with your package's name
 
-[![CRAN status](https://www.r-pkg.org/badges/version/mypackage)](https://cran.r-project.org/package=mypackage)
-[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/grand-total/mypackage)](https://CRAN.R-project.org/package=mypackage)
+[![CRAN status](https://www.r-pkg.org/badges/version/spatialData)](https://cran.r-project.org/package=spatialData)
+[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/grand-total/spatialData)](https://CRAN.R-project.org/package=spatialData)
 
 CRAN badges end -->
 
 <!-- GITHUB ACTIONS badges: start
 
-Replace `mygithubuser` with your Github user name, and mypackage with the repository name.
-This badge is populated by the Github action `.github/workflows/R-CMD-check.yaml` which will be triggered on push to the branch `main`.
-
-[![R-CMD-check](https://github.com/mygithubuser/mypackage/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mygithubuser/mypackage/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/blasbenito/spatialData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/blasbenito/spatialData/actions/workflows/R-CMD-check.yaml)
 
 end -->

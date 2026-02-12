@@ -1,75 +1,26 @@
-# Template Users: Update the URL below to your GitHub Pages URL
-# Format: https://YOUR-USERNAME.github.io/YOUR-PACKAGE/
-url: ~
-
+title: spatialData
+home:
+  title: "spatialData: Spatial Modelling Datasets"
+url: https://blasbenito.github.io/spatialData/
 template:
   bootstrap: 5
-  # bootswatch: cerulean  # Uncomment and choose a theme: https://bootswatch.com/
-  # bslib:
-  #   primary: "#0054AD"
-  #   border-radius: 0.5rem
-  #   btn-border-radius: 0.25rem
+  fonts:
+    heading: Montserrat
+    body: Montserrat
+  includes:
+    in_header: |
+      <link rel="stylesheet" href="extra.css"
 
-# Customize navbar
-# navbar:
-#   structure:
-#     left:  [intro, reference, articles, tutorials, news]
-#     right: [search, github]
-#   components:
-#     articles:
-#       text: Articles
-#       menu:
-#       - text: Getting Started
-#         href: articles/intro.html
+authors:
+  Blas M. Benito:
+    href: https://blasbenito.com
 
-# Organize function reference into categories
-# reference:
-#   - title: "Data Processing"
-#     desc: "Functions for processing and transforming data"
-#     contents:
-#     - starts_with("data_")
-#   - title: "Plotting"
-#     desc: "Functions for creating visualizations"
-#     contents:
-#     - starts_with("plot_")
-#   - title: "Utilities"
-#     desc: "Helper and utility functions"
-#     contents:
-#     - starts_with("utils_")
-
-# Footer customization
-# footer:
-#   structure:
-#     left: developed_by
-#     right: built_with
-#   components:
-#     developed_by: "Developed by [Your Name](https://yourwebsite.com)"
-
-# Home page customization
-# home:
-#   title: "Your Package Name"
-#   description: "Brief description for SEO"
-#   links:
-#   - text: Learn more
-#     href: https://yourproject.com
-
-# Articles (vignettes) organization
 articles:
-  - title: "Datasets"
-    navbar: Datasets
-    contents:
-    - articles/neanderthal
-    - articles/plants
-    - articles/quercus
-    - articles/vi
-
-# See pkgdown documentation for more options:
-# https://pkgdown.r-lib.org/reference/build_site.html
-
-build:
-  extra_packages:
-    - ggplot2
-    - cranlogs
+- title: "Datasets"
+  navbar: "Datasets"
+  contents:
+  - articles/vi
+  - articles/quercus
 
 on:
   push:
@@ -81,3 +32,4 @@ on:
   workflow_dispatch:  # allows manual triggering
   schedule:
     - cron: '0 0 1 * *'  # runs at midnight UTC on the 1st of each month
+

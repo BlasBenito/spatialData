@@ -26,32 +26,22 @@ Its main features are:
 - *European scope* - Records spanning western, central, and southern Europe.
 - *Ecological predictors* - Climate, topography, vegetation indices, land cover, and human footprint.
 
-This dataset was built to support a range of analytical approaches:
-
-**Species Distribution Modeling**
-
-- *Multi-class classification* - Predict which oak species is most likely at a location.
-- *Binary presence/absence* - Filter to a single species for logistic regression or SDM.
-- *Niche modeling* - Characterize environmental niches of co-occurring species.
-
-**Statistical Methods**
-
-- *Multicollinearity selection* - 31 numeric predictors with correlated groups.
-- *Decision trees* - Classify species based on environmental thresholds.
-- *Random forests / gradient boosting* - All-numeric predictor set.
-
-**Spatial Analysis**
-
-- *Spatial cross-validation* - Stratify by species or geographic region.
-- *Niche overlap analysis* - Compare environmental ranges among species.
+This dataset was built to support a range of analytical approaches, such as binary and multi-class classification, niche modelling, and niche overlap analysis.
 
 ## Setup
 
 The following R libraries are required to run this tutorial:
 
+```{r, include = FALSE}
+packages <- c("sf", "mapview", "DT", "dplyr", "collinear", "rpart", "rpart.plot", "viridis", "terra")
+installed <- vapply(packages, requireNamespace, logical(1), quietly = TRUE)
+if (any(!installed)) install.packages(packages[!installed])
+```
+
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
 library(spatialData)
 library(sf)
+library(terra)
 library(mapview)
 library(DT)
 library(dplyr)
@@ -104,15 +94,6 @@ The dataset includes **31 predictor variables** organized into six categories:
 | Topographic (2) | `topo_slope`, `topographic_diversity` | SRTM |
 | Human impact (1) | `human_footprint` | Venter et al. 2016 |
 
-```{r}
-quercus |>
-  sf::st_drop_geometry() |>
-  dplyr::select(
-    dplyr::all_of(quercus_predictors)
-  ) |>
-  head(n = 5) |>
-  dplyr::glimpse()
-```
 
 ## Interactive Map
 
@@ -132,7 +113,7 @@ This example shows how `quercus` can be used to identify the environmental condi
 
 ### Multicollinearity Filtering
 
-Many predictors in this dataset are correlated (e.g., `bio5`, `bio6`, `bio7` are all derived from temperature extremes). The `collinear::collinear()` function selects a non-redundant subset that maximizes predictive power for the response variable.
+Many predictors in this dataset are correlated (e.g., `bio5`, `bio6`, `bio7` are all derived from temperature extremes). The `collinear::collinear()` function from the R package [`collinear`](https://blasbenito.github.io/collinear/) selects a non-redundant subset that maximizes predictive power for the response variable.
 
 ```{r}
 predictors_selection <- collinear::collinear(
@@ -176,9 +157,12 @@ rpart.plot::rpart.plot(
 )
 ```
 
+The figure shows how different combinations of environmental conditions lead to the dominance of each Quercus species.
+
 ### Prediction Map
 
-Assigning tree predictions back to the spatial data reveals the geographic pattern of predicted species:
+Assigning tree predictions back to the spatial data reveals the locations where each species has the highest probability to appear.
+
 
 ```{r, message = FALSE}
 quercus$predicted <- predict(
@@ -199,23 +183,34 @@ mapview::mapview(
 
 ### Species Probability Map
 
-The decision tree also assigns a class probability to each observation for every species. The map below shows the fitted probability of *Quercus petraea* across Europe.
+The package provides the raster dataset `quercus_env` to predict models based on the `quercus` data.
 
-```{r, message = FALSE}
-probs <- predict(
-  object = m,
-  newdata = sf::st_drop_geometry(quercus),
-  type = "prob"
-)
-
-quercus$prob_petraea <- round(x = probs[, "Quercus petraea"], digits = 3)
-
-mapview::mapview(
-  quercus,
-  zcol = "prob_petraea",
-  layer.name = "P(Q. petraea)",
-  col.regions = viridis::viridis(n = length(unique(quercus$prob_petraea)))
-)
+```{r}
+quercus_env <- spatialData::quercus_extra()
+class(quercus_env)
+names(quercus_env)
+```
+```{r, fig.width=5, fig.height=5}
+plot(
+  x = quercus_env[["bio1"]],
+  col = viridis::turbo(n = 100)
+  )
 ```
 
-The decision tree provides interpretable rules for species separation, but more flexible methods like random forests or gradient boosting may achieve higher accuracy. The dataset also supports binary modeling by filtering to a single species and its absence points.
+The map below shows the fitted probability of *Quercus petraea* across Europe.
+
+```{r, fig.width=5, fig.height=5}
+quercus_probability <- predict(
+  object = quercus_env,
+  model = m,
+  type = "prob",
+  na.rm = TRUE
+)
+
+plot(
+  x = quercus_probability[["Quercus.petraea"]],
+  col = viridis::viridis(n = 5)
+  )
+```
+
+The decision tree provides interpretable rules for species separation, but more flexible methods like random forests or gradient boosting may achieve higher accuracy and more visually pleasant results. 

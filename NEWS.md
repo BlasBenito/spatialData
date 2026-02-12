@@ -1,3 +1,3 @@
-Replace this file with your own version history when you customize the template. Document your package's features, bug fixes, and changes over time.
+# 0.0.1
 
-# pkgname 0.0.0.9000
+- Adds datasets `vi` and `quercus`.

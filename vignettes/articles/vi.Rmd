@@ -1,5 +1,5 @@
 ---
-title: "VI: Vegetation Index"
+title: "vi: Global NDVI and Environmental Predictors"
 output:
   rmarkdown::html_document:
     toc: true
@@ -17,50 +17,27 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-The `vi` dataset contains several thousand records of Normalized Difference Vegetation Index (NDVI) with different encodings (see `vi_responses`) and a large set of numeric and categorical predictors (see `vi_predictors`) with consistent naming patterns (e.g., `temperature_*`, `rainfall_*`, `swi_*`).
+The `vi` dataset contains ~10k records of Normalized Difference Vegetation Index (NDVI) with different encodings (see `vi_responses`) and a large set of numeric and categorical predictors (see `vi_predictors`) with consistent naming patterns (e.g., `temperature_*`, `rainfall_*`, `swi_*`).
 
 Its main features are:
 
 - *Complete case study* - No missing values, clean data ready for analysis.
 - *Global scope* - 6 continents, all major climate zones, 12 biomes.
-- *Scale considerations* - Supports regional, continental, and global analyses.
 - *Grouped/stratified analysis* - Multiple hierarchical groupings available.
 
-This dataset was built to support a wide range of analytical approaches:
+This dataset has several versions of the same response (see [vi_responses]) to support a wide range of analytical approaches: linear, count and ordinal regression, binary and multiclass classification, and mixed-effects models. 
 
-**Response Variable Modeling**
-
-- *Linear regression* - `vi_numeric` (continuous 0.03-0.82).
-- *Count models* (Poisson, negative binomial) - `vi_counts` (integer 30-820).
-- *Binary classification / logistic regression* - `vi_binomial` (0/1).
-- *Ordinal regression* - `vi_factor` (ordered: very_low → very_high).
-- *Multi-class classification* - `vi_categorical` / `vi_factor` (5 levels).
-
-**Statistical and Machine Learning Methods**
-
-- *Multicollinearity selection* - 50+ numeric predictors.
-- *Dimensionality reduction* (PCA, UMAP) - High-dimensional predictor space.
-- *Random forests / gradient boosting* - Mixed numeric and categorical predictors.
-- *Mixed-effects models* - Natural grouping by continent, biome, climate zone.
-
-**Spatial Analysis**
-
-- *Spatial thinning* - `r nrow(vi)` unique global coordinates.
-- *Spatial interpolation* (kriging, IDW) - Global coverage with continuous response.
-- *Spatial cross-validation* - Stratify by continent, region, biome, or climate.
-- *Spatial autocorrelation analysis* - Dense enough for variogram estimation.
-- *Geographically weighted regression* (GWR) - Explore spatial non-stationarity.
-
-**Ecological and Environmental Modeling**
-
-- *Species distribution modeling* (SDM) analogues - using `vi_binomial` as response.
-- *Climate-vegetation relationships* - Rich climate predictors vs. vegetation index.
-- *Soil-vegetation interactions* - Multiple soil variables available.
-
+It's large number of predictors allows testing dimensionality reduction and multicollinearity filtering methods, while it's dense point cloud helps test thinning, interpolation, spatial cross-validation, and spatial autocorrelation analyses.
 
 ## Setup
 
 The following R libraries are required to run this tutorial:
+
+```{r, include = FALSE}
+packages <- c("sf", "mapview", "DT", "dplyr", "spatialRF", "collinear", "viridis")
+installed <- vapply(packages, requireNamespace, logical(1), quietly = TRUE)
+if (any(!installed)) install.packages(packages[!installed])
+```
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
 library(spatialData)
@@ -84,6 +61,13 @@ data(
   )
 ```
 
+If you wish to work with a larger version (~30k) records of `vi`, you can download it with [vi_extra()].
+
+```{r, eval = FALSE}
+vi <- spatialData::vi_extra()
+```
+
+
 ## Data Structure
 
 The dataset is an `sf` data frame with `r nrow(vi)` rows and `r ncol(vi)` columns, and no missing data. The first 10 records and all columns but `geometry` are shown below.
@@ -105,7 +89,6 @@ mapview::mapview(
   layer.name = "vi"
 )
 ```
-
 
 
 ## Response Variables
@@ -154,7 +137,7 @@ vi_predictors_numeric
 
 ### Multicollinearity Filtering
 
-Many predictors in this dataset are highly correlated (e.g., `temperature_mean`, `temperature_max`, `temperature_min`). The `collinear::collinear()` function selects a non-redundant subset that maximizes predictive power for the response variable.
+Many predictors in this dataset are highly correlated (e.g., `temperature_mean`, `temperature_max`, `temperature_min`). The `collinear::collinear()` function from the R package [`collinear`](https://blasbenito.github.io/collinear/) selects a non-redundant subset that maximizes predictive power for the response variable.
 
 ```{r}
 predictors_selection <- collinear::collinear(
@@ -170,7 +153,7 @@ predictors_selection$vi_numeric$selection
 
 ### Random Forest Model
 
-The response `vi_numeric` and the selected predictors are used below to train a random forest model.
+The response `vi_numeric` and the selected predictors are used below to train a random forest model using the R package [`spatialRF`](https://blasbenito.github.io/spatialRF/).
 
 ```{r}
 m <- spatialRF::rf(
@@ -201,13 +184,13 @@ The code below assigns to each observation the name of the predictor that matter
 
 ```{r}
 local_importance <- m$importance$local
-vi$most_local_importance <- colnames(local_importance)[max.col(local_importance)]
+vi$most_important <- colnames(local_importance)[max.col(local_importance)]
 
 mapview::mapview(
   vi,
-  zcol = "most_local_importance",
+  zcol = "most_important",
   layer.name = "Most important predictor",
-  col.regions = viridis::turbo(n = length(unique(vi$most_local_importance)))
+  col.regions = viridis::turbo(n = length(unique(vi$most_important)))
 )
 ```
 
@@ -216,24 +199,25 @@ mapview::mapview(
 The response curves below show how the response `vi_numeric` changes across the values of the most important predictors when all other predictors are set to their quantile 0.5.
 
 
-```{r}
+```{r, fig.width=8, fig.height=6}
 spatialRF::plot_response_curves(
   model = m,
   quantiles = 0.5
 )
 ```
+
 Finally, the response surface below shows how `rainfall_mean` and `soil_temperature_max` interact with each other to predict `vi_numeric`. The grey dots represent the actual observations of `vi_numeric`.
 
 
-```{r}
+```{r, fig.width=5, fig.height=3.5}
 spatialRF::plot_response_surface(
   m = m,
   a = "rainfall_mean",
   b = "soil_temperature_max",
   fill.color = viridis::viridis(n = 100),
-  point.alpha = 0.2,
-  point.size.range = c(0.1, 1.5)
+  point.alpha = 0.05,
+  point.size.range = c(0.05, 1)
 )
 ```
 
-The usage example above is only one of the many modeling approaches that can be applied to `vi`. The dataset also supports binary classification (`vi_binomial`), count models (`vi_counts`), and ordinal regression (`vi_factor`). Categorical predictors like `continent`, `biogeo_biome`, and `koppen_zone` enable grouped and stratified analyses.
+The usage example above is only one of the many modeling approaches that can be applied to `vi`. Have fun with it!
