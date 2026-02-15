@@ -15,6 +15,10 @@ Character vector with the names of the 31 predictor variables in \link{quercus}:
 }
 \seealso{
 Other example_data: 
+\code{\link{neanderthal}},
+\code{\link{neanderthal_extra}()},
+\code{\link{neanderthal_predictors}},
+\code{\link{neanderthal_response}},
 \code{\link{quercus}},
 \code{\link{quercus_extra}()},
 \code{\link{quercus_response}},

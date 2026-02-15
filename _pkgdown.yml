@@ -21,6 +21,7 @@ articles:
   contents:
   - articles/vi
   - articles/quercus
+  - articles/neanderthal
 
 on:
   push:

@@ -33,9 +33,8 @@ This dataset was built to support a range of analytical approaches, such as bina
 The following R libraries are required to run this tutorial:
 
 ```{r, include = FALSE}
-packages <- c("sf", "mapview", "DT", "dplyr", "collinear", "rpart", "rpart.plot", "viridis", "terra")
-installed <- vapply(packages, requireNamespace, logical(1), quietly = TRUE)
-if (any(!installed)) install.packages(packages[!installed])
+if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak")
+pak::pkg_install(c("sf", "mapview", "DT", "dplyr", "collinear", "rpart", "rpart.plot", "viridis", "terra"))
 ```
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}

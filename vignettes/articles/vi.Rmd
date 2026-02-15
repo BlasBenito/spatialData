@@ -34,9 +34,8 @@ It's large number of predictors allows testing dimensionality reduction and mult
 The following R libraries are required to run this tutorial:
 
 ```{r, include = FALSE}
-packages <- c("sf", "mapview", "DT", "dplyr", "spatialRF", "collinear", "viridis")
-installed <- vapply(packages, requireNamespace, logical(1), quietly = TRUE)
-if (any(!installed)) install.packages(packages[!installed])
+if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak")
+pak::pkg_install(c("sf", "mapview", "DT", "dplyr", "spatialRF", "collinear", "viridis"))
 ```
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}

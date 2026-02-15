@@ -3,23 +3,29 @@
 \docType{data}
 \name{neanderthal_response}
 \alias{neanderthal_response}
-\title{Response variable name for Neanderthal distribution examples}
+\title{Response Variable Name for \code{neanderthal}}
 \format{
-A character string of length 1.
+Character string of length 1.
 }
 \usage{
 data(neanderthal_response)
 }
 \description{
-Character string containing the name of the response variable in \code{neanderthal}: "presence".
+Character string with the name of the response variable in \link{neanderthal}: \code{"presence"}.
 }
 \seealso{
-Other data: 
+Other example_data: 
 \code{\link{neanderthal}},
+\code{\link{neanderthal_extra}()},
 \code{\link{neanderthal_predictors}},
-\code{\link{plantae}},
-\code{\link{plantae_predictors}},
-\code{\link{plantae_responses}}
+\code{\link{quercus}},
+\code{\link{quercus_extra}()},
+\code{\link{quercus_predictors}},
+\code{\link{quercus_response}},
+\code{\link{vi}},
+\code{\link{vi_extra}()},
+\code{\link{vi_predictors}},
+\code{\link{vi_responses}}
 }
-\concept{data}
+\concept{example_data}
 \keyword{datasets}

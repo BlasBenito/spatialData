@@ -3,23 +3,29 @@
 \docType{data}
 \name{neanderthal_predictors}
 \alias{neanderthal_predictors}
-\title{Predictor variable names for Neanderthal distribution examples}
+\title{Predictor Variable Names for \code{neanderthal}}
 \format{
-A character vector of length 25.
+Character vector of length 25.
 }
 \usage{
 data(neanderthal_predictors)
 }
 \description{
-Character vector of predictor variable names from \code{neanderthal} (19 bioclimatic and 6 topographic variables).
+Character vector with the names of the 25 predictor variables in \link{neanderthal}: 19 bioclimatic and 6 topographic variables.
 }
 \seealso{
-Other data: 
+Other example_data: 
 \code{\link{neanderthal}},
+\code{\link{neanderthal_extra}()},
 \code{\link{neanderthal_response}},
-\code{\link{plantae}},
-\code{\link{plantae_predictors}},
-\code{\link{plantae_responses}}
+\code{\link{quercus}},
+\code{\link{quercus_extra}()},
+\code{\link{quercus_predictors}},
+\code{\link{quercus_response}},
+\code{\link{vi}},
+\code{\link{vi_extra}()},
+\code{\link{vi_predictors}},
+\code{\link{vi_responses}}
 }
-\concept{data}
+\concept{example_data}
 \keyword{datasets}

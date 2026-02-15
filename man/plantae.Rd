@@ -295,9 +295,6 @@ converted to point centroids to reduce file size while preserving spatial contex
 }
 \seealso{
 Other data: 
-\code{\link{neanderthal}},
-\code{\link{neanderthal_predictors}},
-\code{\link{neanderthal_response}},
 \code{\link{plantae_predictors}},
 \code{\link{plantae_responses}}
 }

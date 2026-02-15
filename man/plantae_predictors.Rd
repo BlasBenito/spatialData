@@ -18,9 +18,6 @@ soil properties (6), soil temperature (4), and NDVI (4).
 }
 \seealso{
 Other data: 
-\code{\link{neanderthal}},
-\code{\link{neanderthal_predictors}},
-\code{\link{neanderthal_response}},
 \code{\link{plantae}},
 \code{\link{plantae_responses}}
 }
