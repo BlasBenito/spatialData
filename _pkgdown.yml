@@ -4,6 +4,8 @@ home:
   title: "spatialData: Cool Spatial Datasets"
 url: https://blasbenito.github.io/spatialData/
 
+llms: false
+
 template:
   bootstrap: 5
   fonts:
