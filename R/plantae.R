@@ -282,7 +282,7 @@
 #' \itemize{
 #'   \item CGIAR-CSI SRTM 90m Digital Elevation Database. \url{https://srtm.csi.cgiar.org/}
 #' }
-#' @family data
+#' @family plantae
 "plantae"
 
 #' @title Response variable names for plantae dataset
@@ -292,7 +292,7 @@
 #' Metrics are available for all plants, trees, and grasses at species, genus, and family levels.
 #' @usage data(plantae_responses)
 #' @format A character vector of length 53.
-#' @family data
+#' @family plantae
 "plantae_responses"
 
 #' @title Predictor variable names for plantae dataset
@@ -302,5 +302,5 @@
 #' soil properties (6), soil temperature (4), and NDVI (4).
 #' @usage data(plantae_predictors)
 #' @format A character vector of length 96.
-#' @family data
+#' @family plantae
 "plantae_predictors"

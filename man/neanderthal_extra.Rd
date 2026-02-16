@@ -29,17 +29,9 @@ neanderthal_env
 }
 }
 \seealso{
-Other example_data: 
+Other neanderthal: 
 \code{\link{neanderthal}},
 \code{\link{neanderthal_predictors}},
-\code{\link{neanderthal_response}},
-\code{\link{quercus}},
-\code{\link{quercus_extra}()},
-\code{\link{quercus_predictors}},
-\code{\link{quercus_response}},
-\code{\link{vi}},
-\code{\link{vi_extra}()},
-\code{\link{vi_predictors}},
-\code{\link{vi_responses}}
+\code{\link{neanderthal_response}}
 }
-\concept{example_data}
+\concept{neanderthal}

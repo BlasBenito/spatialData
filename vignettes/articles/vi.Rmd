@@ -1,5 +1,5 @@
 ---
-title: "vi: Global NDVI and Environmental Predictors"
+title: "vi"
 output:
   rmarkdown::html_document:
     toc: true
@@ -34,15 +34,26 @@ It's large number of predictors allows testing dimensionality reduction and mult
 The following R libraries are required to run this tutorial:
 
 ```{r, include = FALSE}
-if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak")
-pak::pkg_install(c("sf", "mapview", "DT", "dplyr", "spatialRF", "collinear", "viridis"))
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak")
+}
+pak::pkg_install(
+  c(
+    "sf",
+    "mapview",
+    "dplyr",
+    "spatialRF",
+    "collinear",
+    "viridis"
+  ),
+  ask = FALSE
+)
 ```
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
 library(spatialData)
 library(sf)
 library(mapview)
-library(DT)
 library(dplyr)
 library(spatialRF)
 library(collinear)
@@ -72,10 +83,10 @@ vi <- spatialData::vi_extra()
 The dataset is an `sf` data frame with `r nrow(vi)` rows and `r ncol(vi)` columns, and no missing data. The first 10 records and all columns but `geometry` are shown below.
 
 ```{r}
-DT::datatable(
-  data = head(sf::st_drop_geometry(vi), n = 10),
-  rownames = FALSE
-  )
+vi |>
+  sf::st_drop_geometry() |>
+  head(n = 10) |>
+  dplyr::glimpse()
 ```
 
 The spatial distribution of the data is irregular, and excludes regions with little to no vegetation activity (`vi$vi_numeric > 0`).

@@ -294,9 +294,9 @@ at species, genus, and family taxonomic levels. Ecoregion boundaries are derived
 converted to point centroids to reduce file size while preserving spatial context.
 }
 \seealso{
-Other data: 
+Other plantae: 
 \code{\link{plantae_predictors}},
 \code{\link{plantae_responses}}
 }
-\concept{data}
+\concept{plantae}
 \keyword{datasets}

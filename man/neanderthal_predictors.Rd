@@ -14,18 +14,10 @@ data(neanderthal_predictors)
 Character vector with the names of the 25 predictor variables in \link{neanderthal}: 19 bioclimatic and 6 topographic variables.
 }
 \seealso{
-Other example_data: 
+Other neanderthal: 
 \code{\link{neanderthal}},
 \code{\link{neanderthal_extra}()},
-\code{\link{neanderthal_response}},
-\code{\link{quercus}},
-\code{\link{quercus_extra}()},
-\code{\link{quercus_predictors}},
-\code{\link{quercus_response}},
-\code{\link{vi}},
-\code{\link{vi_extra}()},
-\code{\link{vi_predictors}},
-\code{\link{vi_responses}}
+\code{\link{neanderthal_response}}
 }
-\concept{example_data}
+\concept{neanderthal}
 \keyword{datasets}

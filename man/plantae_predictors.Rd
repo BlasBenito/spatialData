@@ -17,9 +17,9 @@ landcover (3), fragmentation (19), atmospheric (13), precipitation (8), temperat
 soil properties (6), soil temperature (4), and NDVI (4).
 }
 \seealso{
-Other data: 
+Other plantae: 
 \code{\link{plantae}},
 \code{\link{plantae_responses}}
 }
-\concept{data}
+\concept{plantae}
 \keyword{datasets}

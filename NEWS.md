@@ -1,3 +1,3 @@
-# 0.0.1
+# spatialData 0.0.1
 
-- Adds datasets `vi` and `quercus`.
+- Adds datasets `vi`, `neanderthal`, and `quercus`.

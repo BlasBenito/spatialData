@@ -14,18 +14,10 @@ data(vi_predictors)
 Vector of all predictor names in \code{vi}
 }
 \seealso{
-Other example_data: 
-\code{\link{neanderthal}},
-\code{\link{neanderthal_extra}()},
-\code{\link{neanderthal_predictors}},
-\code{\link{neanderthal_response}},
-\code{\link{quercus}},
-\code{\link{quercus_extra}()},
-\code{\link{quercus_predictors}},
-\code{\link{quercus_response}},
+Other vi: 
 \code{\link{vi}},
 \code{\link{vi_extra}()},
 \code{\link{vi_responses}}
 }
-\concept{example_data}
+\concept{vi}
 \keyword{datasets}

@@ -49,7 +49,7 @@
 #' @format sf data.frame
 #'
 #' @usage data(quercus)
-#' @family example_data
+#' @family quercus
 #' @examples
 #' data(quercus)
 #' head(quercus)
@@ -61,7 +61,7 @@
 #'
 #' @usage data(quercus_response)
 #' @format Character string of length 1.
-#' @family example_data
+#' @family quercus
 "quercus_response"
 
 #' Predictor Variable Names for `quercus`
@@ -70,7 +70,7 @@
 #'
 #' @usage data(quercus_predictors)
 #' @format Character vector of length 31.
-#' @family example_data
+#' @family quercus
 "quercus_predictors"
 
 #' Download Environmental Raster for quercus
@@ -87,7 +87,7 @@
 #' @param quiet (optional, logical) If `TRUE` (default), suppresses
 #'   download messages.
 #' @return SpatRaster object.
-#' @family example_data
+#' @family quercus
 #' @examples
 #' \dontrun{
 #' quercus_env <- quercus_extra()

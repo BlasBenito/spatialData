@@ -11,11 +11,7 @@ sf data.frame
 data(neanderthal)
 }
 \description{
-\code{sf} dataframe with \code{POINT} geometry containing 245 records of Neanderthal
-presence and pseudo-absence sites from Marine Isotope Stage 5e (Last
-Interglacial) in Europe and the Near East, 1 response variable (see
-\link{neanderthal_response}), and 25 predictors (see \link{neanderthal_predictors}).
-Use \code{\link[=neanderthal_extra]{neanderthal_extra()}} to download the associated environmental raster.
+\code{sf} dataframe with \code{POINT} geometry containing 245 records of Neanderthal presence and pseudo-absence sites from Marine Isotope Stage 5e (Last Interglacial) in Europe and the Near East, 1 response variable (see \link{neanderthal_response}), and 25 predictors (see \link{neanderthal_predictors}). Use \code{\link[=neanderthal_extra]{neanderthal_extra()}} to download the associated environmental raster.
 
 \strong{Response}
 
@@ -28,7 +24,7 @@ The response variable \code{presence} is a binary integer:
 \strong{Predictors}
 
 \itemize{
-\item \code{bio1}, \code{bio2}, ..., \code{bio19}: Palaeoclimatic bioclimatic variables from a WorldClim-style interpolation of the Last Interglacial GCM simulation (19 variables).
+\item \code{bio1}, \code{bio2}, ..., \code{bio19}: Palaeoclimatic variables from a Last Interglacial GCM simulation (19 variables).
 \item \code{topo_aspect}, \code{topo_diversity_local}, \code{topo_diversity}, \code{topo_elev}, \code{topo_slope}, \code{topo_wetness}: SRTM-derived topographic variables.
 }
 
@@ -50,18 +46,10 @@ data(neanderthal)
 head(neanderthal)
 }
 \seealso{
-Other example_data: 
+Other neanderthal: 
 \code{\link{neanderthal_extra}()},
 \code{\link{neanderthal_predictors}},
-\code{\link{neanderthal_response}},
-\code{\link{quercus}},
-\code{\link{quercus_extra}()},
-\code{\link{quercus_predictors}},
-\code{\link{quercus_response}},
-\code{\link{vi}},
-\code{\link{vi_extra}()},
-\code{\link{vi_predictors}},
-\code{\link{vi_responses}}
+\code{\link{neanderthal_response}}
 }
-\concept{example_data}
+\concept{neanderthal}
 \keyword{datasets}

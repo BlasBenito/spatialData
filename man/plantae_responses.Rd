@@ -17,9 +17,9 @@ indices including raw turnover (16), Sorensen (8), and Simpson (8) dissimilariti
 Metrics are available for all plants, trees, and grasses at species, genus, and family levels.
 }
 \seealso{
-Other data: 
+Other plantae: 
 \code{\link{plantae}},
 \code{\link{plantae_predictors}}
 }
-\concept{data}
+\concept{plantae}
 \keyword{datasets}

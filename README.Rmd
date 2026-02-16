@@ -13,19 +13,30 @@ knitr::opts_chunk$set(
 )
 ```
 
-# `spatialData`: Spatial Modelling Datasets
+# spatialData
 
-<!-- CRAN badges: start
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/BlasBenito/spatialData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/BlasBenito/spatialData/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
 
-Replace `mypackage` with your package's name
+`spatialData` provides ready-to-use spatial datasets for ecological and environmental modeling in R. Each dataset includes pre-processed response variables and environmental predictors, making it easy to jump straight into species distribution modeling, biodiversity analysis, or spatial statistics.
 
-[![CRAN status](https://www.r-pkg.org/badges/version/spatialData)](https://cran.r-project.org/package=spatialData)
-[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/grand-total/spatialData)](https://CRAN.R-project.org/package=spatialData)
+## Installation
 
-CRAN badges end -->
+You can install the development version of `spatialData` from [GitHub](https://github.com/blasbenito/spatialData):
 
-<!-- GITHUB ACTIONS badges: start
+```r
+# install.packages("remotes")
+remotes::install_github("blasbenito/spatialData")
+```
 
-[![R-CMD-check](https://github.com/blasbenito/spatialData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/blasbenito/spatialData/actions/workflows/R-CMD-check.yaml)
+## Datasets
 
-end -->
+| Dataset | Description | Records | Responses | Predictors | Article |
+|:--------|:------------|--------:|----------:|-----------:|:--------|
+| `neanderthal` | Neanderthal presence/absence records with paleoclimate and topographic predictors | 245 | 1 | 25 | [link](https://blasbenito.github.io/spatialData/articles/neanderthal.html) |
+| `quercus` | European oak species distribution records with bioclimatic and land cover predictors | 6,728 | 1 | 31 | [link](https://blasbenito.github.io/spatialData/articles/quercus.html) |
+| `vi` | Global NDVI records with climate, soil, and topographic predictors | 9,265 | 5 | 58 | [link](https://blasbenito.github.io/spatialData/articles/vi.html) |
+| `plantae` | Plant diversity metrics for global ecoregions with environmental predictors | 662 | 53 | 96 | -- |
+
+All datasets are `sf` data frames with point or polygon geometries, loaded lazily via `data()`.

@@ -1,7 +1,9 @@
 title: spatialData
+
 home:
-  title: "spatialData: Spatial Modelling Datasets"
+  title: "spatialData: Cool Spatial Datasets"
 url: https://blasbenito.github.io/spatialData/
+
 template:
   bootstrap: 5
   fonts:
@@ -16,21 +18,41 @@ authors:
     href: https://blasbenito.com
 
 articles:
-- title: "Datasets"
-  navbar: "Datasets"
+- title: "Tutorials"
+  navbar: "Tutorials"
   contents:
   - articles/vi
   - articles/quercus
   - articles/neanderthal
 
-on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
-  release:
-    types: [published]
-  workflow_dispatch:  # allows manual triggering
-  schedule:
-    - cron: '0 0 1 * *'  # runs at midnight UTC on the 1st of each month
+reference:
+  - title: "neanderthal"
+    desc: "Neanderthal presence/absence records with paleoclimate and topographic predictors."
+    contents:
+      - neanderthal
+      - neanderthal_response
+      - neanderthal_predictors
+      - neanderthal_extra
 
+  - title: "plantae"
+    desc: "Plant diversity metrics for global ecoregions with environmental predictors."
+    contents:
+      - plantae
+      - plantae_responses
+      - plantae_predictors
+
+  - title: "quercus"
+    desc: "European oak species distribution records with bioclimatic and land cover predictors."
+    contents:
+      - quercus
+      - quercus_response
+      - quercus_predictors
+      - quercus_extra
+
+  - title: "vi"
+    desc: "Global NDVI records with climate, soil, and topographic predictors."
+    contents:
+      - vi
+      - vi_responses
+      - vi_predictors
+      - vi_extra

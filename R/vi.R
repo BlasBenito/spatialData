@@ -76,7 +76,7 @@
 #' @format sf data.frame
 #'
 #' @usage data(vi)
-#' @family example_data
+#' @family vi
 #' @examples
 #' data(vi)
 #' head(vi)
@@ -87,7 +87,7 @@
 #' @usage data(vi_responses)
 #'
 #' @format Character vector with response names.
-#' @family example_data
+#' @family vi
 "vi_responses"
 
 #' Vector of all predictor names in `vi`
@@ -95,7 +95,7 @@
 #' @usage data(vi_predictors)
 #'
 #' @format Character vector of length 58.
-#' @family example_data
+#' @family vi
 "vi_predictors"
 
 #' Download Extended vi Dataset
@@ -112,7 +112,7 @@
 #' @param quiet (optional, logical) If `TRUE` (default), suppresses
 #'   `sf::st_read()` messages.
 #' @return sf data.frame with 30,000 rows and 64 columns (POINT geometry, WGS84).
-#' @family example_data
+#' @family vi
 #' @examples
 #' \dontrun{
 #' vi_extended <- vi_extra()

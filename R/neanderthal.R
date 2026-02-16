@@ -35,7 +35,7 @@
 #' @format sf data.frame
 #'
 #' @usage data(neanderthal)
-#' @family example_data
+#' @family neanderthal
 #' @examples
 #' data(neanderthal)
 #' head(neanderthal)
@@ -47,7 +47,7 @@
 #'
 #' @usage data(neanderthal_response)
 #' @format Character string of length 1.
-#' @family example_data
+#' @family neanderthal
 "neanderthal_response"
 
 #' Predictor Variable Names for `neanderthal`
@@ -56,7 +56,7 @@
 #'
 #' @usage data(neanderthal_predictors)
 #' @format Character vector of length 25.
-#' @family example_data
+#' @family neanderthal
 "neanderthal_predictors"
 
 #' Download Environmental Raster for neanderthal
@@ -73,7 +73,7 @@
 #' @param quiet (optional, logical) If `TRUE` (default), suppresses
 #'   download messages.
 #' @return SpatRaster object.
-#' @family example_data
+#' @family neanderthal
 #' @examples
 #' \dontrun{
 #' neanderthal_env <- neanderthal_extra()
