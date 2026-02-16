@@ -1,0 +1,115 @@
+# spatialData
+
+`spatialData` provides ready-to-use spatial datasets for ecological and
+environmental modeling in R. Each dataset includes pre-processed
+response variables and environmental predictors, making it easy to jump
+straight into species distribution modeling, biodiversity analysis, or
+spatial statistics.
+
+## Installation
+
+You can install the development version of `spatialData` from
+[GitHub](https://github.com/blasbenito/spatialData):
+
+``` r
+# install.packages("remotes")
+remotes::install_github("blasbenito/spatialData")
+```
+
+## Datasets
+
+| Dataset       | Description                                                                          | Records | Responses | Predictors | Article                                                                    |
+|:--------------|:-------------------------------------------------------------------------------------|--------:|----------:|-----------:|:---------------------------------------------------------------------------|
+| `neanderthal` | Neanderthal presence/absence records with paleoclimate and topographic predictors    |     245 |         1 |         25 | [link](https://blasbenito.github.io/spatialData/articles/neanderthal.html) |
+| `quercus`     | European oak species distribution records with bioclimatic and land cover predictors |   6,728 |         1 |         31 | [link](https://blasbenito.github.io/spatialData/articles/quercus.html)     |
+| `vi`          | Global NDVI records with climate, soil, and topographic predictors                   |   9,265 |         5 |         58 | [link](https://blasbenito.github.io/spatialData/articles/vi.html)          |
+| `plantae`     | Plant diversity metrics for global ecoregions with environmental predictors          |     662 |        53 |         96 | –                                                                          |
+
+All datasets are `sf` data frames with point or polygon geometries,
+loaded lazily via [`data()`](https://rdrr.io/r/utils/data.html).
+
+# Package index
+
+## neanderthal
+
+Neanderthal presence/absence records with paleoclimate and topographic
+predictors.
+
+- [`neanderthal`](https://blasbenito.github.io/spatialData/reference/neanderthal.md)
+  : Neanderthal Presence and Pseudo-Absence Records with Environmental
+  Predictors
+
+- [`neanderthal_response`](https://blasbenito.github.io/spatialData/reference/neanderthal_response.md)
+  :
+
+  Response Variable Name for `neanderthal`
+
+- [`neanderthal_predictors`](https://blasbenito.github.io/spatialData/reference/neanderthal_predictors.md)
+  :
+
+  Predictor Variable Names for `neanderthal`
+
+- [`neanderthal_extra()`](https://blasbenito.github.io/spatialData/reference/neanderthal_extra.md)
+  : Download Environmental Raster for neanderthal
+
+## plantae
+
+Plant diversity metrics for global ecoregions with environmental
+predictors.
+
+- [`plantae`](https://blasbenito.github.io/spatialData/reference/plantae.md)
+  : Plant diversity metrics for global ecoregions
+- [`plantae_responses`](https://blasbenito.github.io/spatialData/reference/plantae_responses.md)
+  : Response variable names for plantae dataset
+- [`plantae_predictors`](https://blasbenito.github.io/spatialData/reference/plantae_predictors.md)
+  : Predictor variable names for plantae dataset
+
+## quercus
+
+European oak species distribution records with bioclimatic and land
+cover predictors.
+
+- [`quercus`](https://blasbenito.github.io/spatialData/reference/quercus.md)
+  : European Quercus (Oak) Species Distribution with Environmental
+  Predictors
+
+- [`quercus_response`](https://blasbenito.github.io/spatialData/reference/quercus_response.md)
+  :
+
+  Response Variable Name for `quercus`
+
+- [`quercus_predictors`](https://blasbenito.github.io/spatialData/reference/quercus_predictors.md)
+  :
+
+  Predictor Variable Names for `quercus`
+
+- [`quercus_extra()`](https://blasbenito.github.io/spatialData/reference/quercus_extra.md)
+  : Download Environmental Raster for quercus
+
+## vi
+
+Global NDVI records with climate, soil, and topographic predictors.
+
+- [`vi`](https://blasbenito.github.io/spatialData/reference/vi.md) :
+  Global NDVI Records and Environmental Predictors
+
+- [`vi_responses`](https://blasbenito.github.io/spatialData/reference/vi_responses.md)
+  :
+
+  Vector of response names in `vi`
+
+- [`vi_predictors`](https://blasbenito.github.io/spatialData/reference/vi_predictors.md)
+  :
+
+  Vector of all predictor names in `vi`
+
+- [`vi_extra()`](https://blasbenito.github.io/spatialData/reference/vi_extra.md)
+  : Download Extended vi Dataset
+
+# Articles
+
+### Tutorials
+
+- [vi](https://blasbenito.github.io/spatialData/articles/vi.md):
+- [quercus](https://blasbenito.github.io/spatialData/articles/quercus.md):
+- [neanderthal](https://blasbenito.github.io/spatialData/articles/neanderthal.md):

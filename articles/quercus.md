@@ -1,0 +1,249 @@
+# quercus
+
+## Overview
+
+The `quercus` dataset contains presence and absence records of eight
+European Quercus (oak) species combined with 31 environmental predictor
+variables covering bioclimatic, topographic, vegetation, and human
+impact dimensions.
+
+Its main features are:
+
+- *Complete case study* - No missing values, clean data ready for
+  analysis.
+- *Multi-class classification* - Eight oak species plus absence points
+  (9 levels).
+- *European scope* - Records spanning western, central, and southern
+  Europe.
+- *Ecological predictors* - Climate, topography, vegetation indices,
+  land cover, and human footprint.
+
+This dataset was built to support a range of analytical approaches, such
+as binary and multi-class classification, niche modelling, and niche
+overlap analysis.
+
+## Setup
+
+The following R libraries are required to run this tutorial:
+
+The code below loads the example data.
+
+``` r
+data(
+  quercus,
+  quercus_response,
+  quercus_predictors,
+  package = "spatialData"
+)
+```
+
+## Data Structure
+
+The dataset is an `sf` data frame with 6728 rows and 33 columns, and no
+missing data. The first 10 records and all columns but `geometry` are
+shown below.
+
+``` r
+DT::datatable(
+  data = head(sf::st_drop_geometry(quercus), n = 10),
+  rownames = FALSE
+)
+```
+
+## Response Variable
+
+The response variable is `species`, a categorical variable with 9 levels
+(8 species + absence):
+
+``` r
+table(quercus$species)
+#> 
+#>           absence    Quercus cerris   Quercus faginea      Quercus ilex 
+#>              1899               394               287               627 
+#>   Quercus petraea Quercus pubescens Quercus pyrenaica     Quercus robur 
+#>              1445               225               133              1660 
+#>     Quercus suber 
+#>                58
+```
+
+## Predictor Variables
+
+The dataset includes **31 predictor variables** organized into six
+categories:
+
+| Category            | Variables                                                                | Source             |
+|---------------------|--------------------------------------------------------------------------|--------------------|
+| Bioclimatic (17)    | `bio1`, `bio2`, …, `bio19` (excluding bio8, bio9)                        | WorldClim          |
+| NDVI (4)            | `ndvi_average`, `ndvi_maximum`, `ndvi_minimum`, `ndvi_range`             | MODIS              |
+| Solar radiation (4) | `sun_rad_average`, `sun_rad_maximum`, `sun_rad_minimum`, `sun_rad_range` | WorldClim          |
+| Land cover (3)      | `landcover_veg_bare`, `landcover_veg_herb`, `landcover_veg_tree`         | MODIS MOD44B       |
+| Topographic (2)     | `topo_slope`, `topographic_diversity`                                    | SRTM               |
+| Human impact (1)    | `human_footprint`                                                        | Venter et al. 2016 |
+
+## Interactive Map
+
+The map below shows the spatial distribution of oak species and absence
+points across Europe:
+
+``` r
+mapview::mapview(
+  quercus,
+  zcol = "species",
+  layer.name = "Species"
+)
+```
+
+## Example Usage
+
+This example shows how `quercus` can be used to identify the
+environmental conditions that distinguish oak species using
+multicollinearity filtering and a decision tree.
+
+### Multicollinearity Filtering
+
+Many predictors in this dataset are correlated (e.g., `bio5`, `bio6`,
+`bio7` are all derived from temperature extremes). The
+[`collinear::collinear()`](https://blasbenito.github.io/collinear/reference/collinear.html)
+function from the R package
+[`collinear`](https://blasbenito.github.io/collinear/) selects a
+non-redundant subset that maximizes predictive power for the response
+variable.
+
+``` r
+predictors_selection <- collinear::collinear(
+  df = quercus,
+  responses = "species",
+  predictors = quercus_predictors,
+  f = collinear::f_categorical_rf,
+  quiet = TRUE
+)
+
+predictors_selection$species$selection
+#> [1] "sun_rad_minimum"       "bio14"                 "bio4"                 
+#> [4] "landcover_veg_bare"    "ndvi_maximum"          "topographic_diversity"
+#> [7] "bio16"                 "human_footprint"       "landcover_veg_tree"   
+#> attr(,"validated")
+#> [1] TRUE
+```
+
+### Decision Tree Model
+
+Species occurrence counts are imbalanced — *Q. robur* has 1,660 records
+while *Q. suber* has only 58. Without correction, rare species get
+absorbed into leaves dominated by common ones. The
+[`collinear::case_weights()`](https://blasbenito.github.io/collinear/reference/case_weights.html)
+function generates inverse-frequency weights so that each species
+contributes equally to the tree splits.
+
+``` r
+m <- rpart::rpart(
+  formula = predictors_selection$species$formulas$classification,
+  data = sf::st_drop_geometry(quercus),
+  method = "class",
+  weights = collinear::case_weights(x = quercus$species)
+)
+```
+
+### Tree Visualization
+
+The decision tree below shows which environmental variables and
+thresholds best separate oak species. Each split represents a condition
+(e.g., “bio6 \< -2.3”), and each leaf shows the most likely species at
+that combination of conditions.
+
+``` r
+rpart.plot::rpart.plot(
+  m,
+  type = 0,
+  extra = 8,
+  fallen.leaves = TRUE,
+  roundint = FALSE,
+  cex = 0.7,
+  box.palette = as.list(viridis::turbo(n = 9, alpha = 0.5)),
+  main = "Decision Tree: European Oak Species Classification"
+)
+```
+
+![](quercus_files/figure-html/unnamed-chunk-8-1.png)
+
+The figure shows how different combinations of environmental conditions
+lead to the dominance of each Quercus species.
+
+### Prediction Map
+
+Assigning tree predictions back to the spatial data reveals the
+locations where each species has the highest probability to appear.
+
+``` r
+quercus$predicted <- predict(
+  object = m,
+  newdata = sf::st_drop_geometry(quercus),
+  type = "class"
+)
+
+mapview::mapview(
+  quercus,
+  zcol = "predicted",
+  layer.name = "Predicted species",
+  col.regions = viridis::turbo(
+    n = length(unique(quercus$predicted))
+  )
+)
+```
+
+### Species Probability Map
+
+The package provides the raster dataset `quercus_env` to predict models
+based on the `quercus` data.
+
+``` r
+quercus_env <- spatialData::quercus_extra()
+class(quercus_env)
+#> [1] "SpatRaster"
+#> attr(,"package")
+#> [1] "terra"
+names(quercus_env)
+#>  [1] "bio1"                  "bio10"                 "bio11"                
+#>  [4] "bio12"                 "bio13"                 "bio14"                
+#>  [7] "bio15"                 "bio16"                 "bio17"                
+#> [10] "bio18"                 "bio19"                 "bio2"                 
+#> [13] "bio3"                  "bio4"                  "bio5"                 
+#> [16] "bio6"                  "bio7"                  "human_footprint"      
+#> [19] "landcover_veg_bare"    "landcover_veg_herb"    "landcover_veg_tree"   
+#> [22] "ndvi_average"          "ndvi_maximum"          "ndvi_minimum"         
+#> [25] "ndvi_range"            "sun_rad_average"       "sun_rad_maximum"      
+#> [28] "sun_rad_minimum"       "sun_rad_range"         "topo_slope"           
+#> [31] "topographic_diversity"
+```
+
+``` r
+plot(
+  x = quercus_env[["bio1"]],
+  col = viridis::turbo(n = 100)
+  )
+```
+
+![](quercus_files/figure-html/unnamed-chunk-11-1.png)
+
+The map below shows the fitted probability of *Quercus petraea* across
+Europe.
+
+``` r
+quercus_probability <- predict(
+  object = quercus_env,
+  model = m,
+  type = "prob",
+  na.rm = TRUE
+)
+
+plot(
+  x = quercus_probability[["Quercus.petraea"]],
+  col = viridis::viridis(n = 5)
+  )
+```
+
+![](quercus_files/figure-html/unnamed-chunk-12-1.png)
+
+The decision tree provides interpretable rules for species separation,
+but more flexible methods like random forests or gradient boosting may
+achieve higher accuracy and more visually pleasant results.
