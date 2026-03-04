@@ -5,7 +5,7 @@
 \alias{plantae}
 \title{Plant diversity metrics for global ecoregions}
 \format{
-An sf data frame with 662 rows (ecoregions) and 155 columns:
+An sf data frame with 662 rows (ecoregions) and 143 columns:
 
 \strong{Identifier columns:}
 \itemize{
@@ -31,88 +31,78 @@ An sf data frame with 662 rows (ecoregions) and 155 columns:
 
 \strong{Response variables - Rarity-weighted richness (6):}
 \itemize{
-\item \code{rarity_weighted_richness_species}: Rarity-weighted richness for species (Williams et al. 1996).
-\item \code{rarity_weighted_richness_genera}: Rarity-weighted richness for genera.
-\item \code{rarity_weighted_richness_species_trees}: Rarity-weighted richness for tree species.
-\item \code{rarity_weighted_richness_genera_trees}: Rarity-weighted richness for tree genera.
-\item \code{rarity_weighted_richness_species_grasses}: Rarity-weighted richness for grass species.
-\item \code{rarity_weighted_richness_genera_grasses}: Rarity-weighted richness for grass genera.
+\item \code{rarity_weighted_richness_species}: Rarity-weighted richness for species (sum of inverse spatial presence record counts per taxon; Williams et al. 1996).
+\item \code{rarity_weighted_richness_genera}: Rarity-weighted richness for genera (sum of inverse spatial presence record counts per taxon).
+\item \code{rarity_weighted_richness_species_trees}: Rarity-weighted richness for tree species (sum of inverse spatial presence record counts per taxon).
+\item \code{rarity_weighted_richness_genera_trees}: Rarity-weighted richness for tree genera (sum of inverse spatial presence record counts per taxon).
+\item \code{rarity_weighted_richness_species_grasses}: Rarity-weighted richness for grass species (sum of inverse spatial presence record counts per taxon).
+\item \code{rarity_weighted_richness_genera_grasses}: Rarity-weighted richness for grass genera (sum of inverse spatial presence record counts per taxon).
 }
 
 \strong{Response variables - Mean rarity (6):}
 \itemize{
-\item \code{mean_rarity_species}: Mean rarity index for species.
-\item \code{mean_rarity_genera}: Mean rarity index for genera.
-\item \code{mean_rarity_species_trees}: Mean rarity index for tree species.
-\item \code{mean_rarity_genera_trees}: Mean rarity index for tree genera.
-\item \code{mean_rarity_species_grasses}: Mean rarity index for grass species.
-\item \code{mean_rarity_genera_grasses}: Mean rarity index for grass genera.
+\item \code{mean_rarity_species}: Mean rarity index for species (mean of inverse spatial presence record counts per taxon).
+\item \code{mean_rarity_genera}: Mean rarity index for genera (mean of inverse spatial presence record counts per taxon).
+\item \code{mean_rarity_species_trees}: Mean rarity index for tree species (mean of inverse spatial presence record counts per taxon).
+\item \code{mean_rarity_genera_trees}: Mean rarity index for tree genera (mean of inverse spatial presence record counts per taxon).
+\item \code{mean_rarity_species_grasses}: Mean rarity index for grass species (mean of inverse spatial presence record counts per taxon).
+\item \code{mean_rarity_genera_grasses}: Mean rarity index for grass genera (mean of inverse spatial presence record counts per taxon).
 }
 
-\strong{Response variables - Beta diversity R (raw turnover) (16):}
+\strong{Response variables - Beta diversity R (absolute richness difference) (16):}
 \itemize{
-\item \code{betadiversity_R_species}: Raw turnover count for species.
-\item \code{betadiversity_R_percent_species}: Raw turnover percentage for species.
-\item \code{betadiversity_R_genera}: Raw turnover count for genera.
-\item \code{betadiversity_R_percent_genera}: Raw turnover percentage for genera.
-\item \code{betadiversity_R_families}: Raw turnover count for families.
-\item \code{betadiversity_R_percent_families}: Raw turnover percentage for families.
-\item \code{betadiversity_R_species_trees}: Raw turnover count for tree species.
-\item \code{betadiversity_R_percent_species_trees}: Raw turnover percentage for tree species.
-\item \code{betadiversity_R_genera_trees}: Raw turnover count for tree genera.
-\item \code{betadiversity_R_percent_genera_trees}: Raw turnover percentage for tree genera.
-\item \code{betadiversity_R_families_trees}: Raw turnover count for tree families.
-\item \code{betadiversity_R_percent_families_trees}: Raw turnover percentage for tree families.
-\item \code{betadiversity_R_species_grasses}: Raw turnover count for grass species.
-\item \code{betadiversity_R_percent_species_grasses}: Raw turnover percentage for grass species.
-\item \code{betadiversity_R_genera_grasses}: Raw turnover count for grass genera.
-\item \code{betadiversity_R_percent_genera_grasses}: Raw turnover percentage for grass genera.
+\item \code{betadiversity_R_species}: Absolute richness difference between ecoregion and neighbors for species.
+\item \code{betadiversity_R_percent_species}: Absolute richness difference as percentage for species.
+\item \code{betadiversity_R_genera}: Absolute richness difference between ecoregion and neighbors for genera.
+\item \code{betadiversity_R_percent_genera}: Absolute richness difference as percentage for genera.
+\item \code{betadiversity_R_families}: Absolute richness difference between ecoregion and neighbors for families.
+\item \code{betadiversity_R_percent_families}: Absolute richness difference as percentage for families.
+\item \code{betadiversity_R_species_trees}: Absolute richness difference between ecoregion and neighbors for tree species.
+\item \code{betadiversity_R_percent_species_trees}: Absolute richness difference as percentage for tree species.
+\item \code{betadiversity_R_genera_trees}: Absolute richness difference between ecoregion and neighbors for tree genera.
+\item \code{betadiversity_R_percent_genera_trees}: Absolute richness difference as percentage for tree genera.
+\item \code{betadiversity_R_families_trees}: Absolute richness difference between ecoregion and neighbors for tree families.
+\item \code{betadiversity_R_percent_families_trees}: Absolute richness difference as percentage for tree families.
+\item \code{betadiversity_R_species_grasses}: Absolute richness difference between ecoregion and neighbors for grass species.
+\item \code{betadiversity_R_percent_species_grasses}: Absolute richness difference as percentage for grass species.
+\item \code{betadiversity_R_genera_grasses}: Absolute richness difference between ecoregion and neighbors for grass genera.
+\item \code{betadiversity_R_percent_genera_grasses}: Absolute richness difference as percentage for grass genera.
 }
 
 \strong{Response variables - Beta diversity Sorensen (8):}
 \itemize{
-\item \code{betadiversity_sorensen_species}: Sorensen dissimilarity for species.
-\item \code{betadiversity_sorensen_genera}: Sorensen dissimilarity for genera.
-\item \code{betadiversity_sorensen_families}: Sorensen dissimilarity for families.
-\item \code{betadiversity_sorensen_species_trees}: Sorensen dissimilarity for tree species.
-\item \code{betadiversity_sorensen_genera_trees}: Sorensen dissimilarity for tree genera.
-\item \code{betadiversity_sorensen_families_trees}: Sorensen dissimilarity for tree families.
-\item \code{betadiversity_sorensen_species_grasses}: Sorensen dissimilarity for grass species.
-\item \code{betadiversity_sorensen_genera_grasses}: Sorensen dissimilarity for grass genera.
+\item \code{betadiversity_sorensen_species}: Sorensen dissimilarity for species (Bsor = 1 - 2a/(2a+b+c); Koleff et al. 2003).
+\item \code{betadiversity_sorensen_genera}: Sorensen dissimilarity for genera (Bsor = 1 - 2a/(2a+b+c)).
+\item \code{betadiversity_sorensen_families}: Sorensen dissimilarity for families (Bsor = 1 - 2a/(2a+b+c)).
+\item \code{betadiversity_sorensen_species_trees}: Sorensen dissimilarity for tree species (Bsor = 1 - 2a/(2a+b+c)).
+\item \code{betadiversity_sorensen_genera_trees}: Sorensen dissimilarity for tree genera (Bsor = 1 - 2a/(2a+b+c)).
+\item \code{betadiversity_sorensen_families_trees}: Sorensen dissimilarity for tree families (Bsor = 1 - 2a/(2a+b+c)).
+\item \code{betadiversity_sorensen_species_grasses}: Sorensen dissimilarity for grass species (Bsor = 1 - 2a/(2a+b+c)).
+\item \code{betadiversity_sorensen_genera_grasses}: Sorensen dissimilarity for grass genera (Bsor = 1 - 2a/(2a+b+c)).
 }
 
 \strong{Response variables - Beta diversity Simpson (8):}
 \itemize{
-\item \code{betadiversity_simpson_species}: Simpson dissimilarity for species.
-\item \code{betadiversity_simpson_genera}: Simpson dissimilarity for genera.
-\item \code{betadiversity_simpson_families}: Simpson dissimilarity for families.
-\item \code{betadiversity_simpson_species_trees}: Simpson dissimilarity for tree species.
-\item \code{betadiversity_simpson_genera_trees}: Simpson dissimilarity for tree genera.
-\item \code{betadiversity_simpson_families_trees}: Simpson dissimilarity for tree families.
-\item \code{betadiversity_simpson_species_grasses}: Simpson dissimilarity for grass species.
-\item \code{betadiversity_simpson_genera_grasses}: Simpson dissimilarity for grass genera.
+\item \code{betadiversity_simpson_species}: Simpson dissimilarity for species (Bsim = min(b,c)/(min(b,c)+a); Koleff et al. 2003).
+\item \code{betadiversity_simpson_genera}: Simpson dissimilarity for genera (Bsim = min(b,c)/(min(b,c)+a)).
+\item \code{betadiversity_simpson_families}: Simpson dissimilarity for families (Bsim = min(b,c)/(min(b,c)+a)).
+\item \code{betadiversity_simpson_species_trees}: Simpson dissimilarity for tree species (Bsim = min(b,c)/(min(b,c)+a)).
+\item \code{betadiversity_simpson_genera_trees}: Simpson dissimilarity for tree genera (Bsim = min(b,c)/(min(b,c)+a)).
+\item \code{betadiversity_simpson_families_trees}: Simpson dissimilarity for tree families (Bsim = min(b,c)/(min(b,c)+a)).
+\item \code{betadiversity_simpson_species_grasses}: Simpson dissimilarity for grass species (Bsim = min(b,c)/(min(b,c)+a)).
+\item \code{betadiversity_simpson_genera_grasses}: Simpson dissimilarity for grass genera (Bsim = min(b,c)/(min(b,c)+a)).
 }
 
-\strong{Predictor variables - Sampling bias (7):}
+\strong{Predictor variables - Sampling bias (1):}
 \itemize{
-\item \code{bias_records}: Total GBIF records in ecoregion.
-\item \code{bias_records_km2}: GBIF records per square kilometer.
-\item \code{bias_species_record}: Species per record ratio.
-\item \code{bias_species_record_per_km2}: Species per record ratio per square kilometer.
-\item \code{bias_log_records_km2}: Log-transformed records per square kilometer.
-\item \code{bias_log_species_record_per_km2}: Log-transformed species per record ratio per square kilometer.
-\item \code{bias_sampling}: Sampling bias index.
+\item \code{bias_log_records}: Logarithm of the total GBIF records in ecoregion.
 }
 
-\strong{Predictor variables - Geographic/geometric (14):}
+\strong{Predictor variables - Geographic/geometric (10):}
 \itemize{
 \item \code{geo_neighbors_count}: Number of neighboring ecoregions.
 \item \code{geo_neighbors_area_km2}: Total area of neighboring ecoregions in square kilometers.
 \item \code{geo_neighbors_aridity_mean}: Mean aridity of neighboring ecoregions.
-\item \code{geo_latitude_mean}: Mean latitude of ecoregion centroid.
-\item \code{geo_latitude_range}: Latitudinal extent of ecoregion.
-\item \code{geo_longitude_mean}: Mean longitude of ecoregion centroid.
-\item \code{geo_longitude_range}: Longitudinal extent of ecoregion.
 \item \code{geo_area_km2}: Ecoregion area in square kilometers.
 \item \code{geo_polygons_count}: Number of polygons in multipolygon geometry.
 \item \code{geo_perimeter_km}: Ecoregion perimeter in kilometers.
@@ -122,19 +112,49 @@ An sf data frame with 662 rows (ecoregions) and 155 columns:
 \item \code{geo_elevation_mean}: Mean elevation in meters.
 }
 
-\strong{Predictor variables - Human impact (5):}
+\strong{Predictor variables - Human impact (3):}
 \itemize{
 \item \code{human_population}: Total human population in ecoregion.
 \item \code{human_population_density}: Human population density per square kilometer.
-\item \code{human_footprint_minimum}: Minimum human footprint index.
-\item \code{human_footprint_maximum}: Maximum human footprint index.
 \item \code{human_footprint_mean}: Mean human footprint index.
 }
 
-\strong{Predictor variables - Climate change (2):}
+\strong{Predictor variables - Climate (34):}
 \itemize{
 \item \code{climate_velocity_lgm_mean}: Mean climate velocity since Last Glacial Maximum.
-\item \code{climate_hypervolume}: Climate hypervolume (niche space size).
+\item \code{climate_hypervolume}: Climate hypervolume (niche space size), computed with \code{hypervolume::hypervolume_svm()}.
+\item \code{air_humidity_max}: Maximum near-surface relative humidity (\%).
+\item \code{air_humidity_mean}: Mean near-surface relative humidity (\%).
+\item \code{air_humidity_min}: Minimum near-surface relative humidity (\%).
+\item \code{air_humidity_range}: Near-surface relative humidity range (\%).
+\item \code{aridity_mean}: Mean aridity (1 minus aridity index; higher values indicate greater aridity).
+\item \code{cloud_cover_max}: Maximum cloud cover (\%).
+\item \code{cloud_cover_mean}: Mean cloud cover (\%).
+\item \code{cloud_cover_min}: Minimum cloud cover (\%).
+\item \code{cloud_cover_range}: Cloud cover range (\%).
+\item \code{evapotranspiration_max}: Maximum potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
+\item \code{evapotranspiration_mean}: Mean potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
+\item \code{evapotranspiration_min}: Minimum potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
+\item \code{evapotranspiration_range}: Potential evapotranspiration range (kg m-2 month-1; Penman-Monteith).
+\item \code{precipitation_seasonality}: Precipitation seasonality (coefficient of variation of monthly estimates; CHELSA bio15).
+\item \code{precipitation_total}: Total annual precipitation (kg m-2 year-1; CHELSA bio12).
+\item \code{precipitation_coldest_quarter}: Precipitation of coldest quarter (kg m-2; CHELSA bio19).
+\item \code{precipitation_driest_month}: Precipitation of driest month (kg m-2; CHELSA bio14).
+\item \code{precipitation_driest_quarter}: Precipitation of driest quarter (kg m-2; CHELSA bio17).
+\item \code{precipitation_warmest_quarter}: Precipitation of warmest quarter (kg m-2; CHELSA bio18).
+\item \code{precipitation_wettest_month}: Precipitation of wettest month (kg m-2; CHELSA bio13).
+\item \code{precipitation_wettest_quarter}: Precipitation of wettest quarter (kg m-2; CHELSA bio16).
+\item \code{temperature_isothermality}: Isothermality: ratio of diurnal to annual temperature variation (degrees C; CHELSA bio3).
+\item \code{temperature_mean_daily_range}: Mean diurnal temperature range (degrees C; CHELSA bio2).
+\item \code{temperature_mean}: Mean annual temperature (degrees C; CHELSA bio1).
+\item \code{temperature_range}: Annual temperature range (degrees C; CHELSA bio7).
+\item \code{temperature_seasonality}: Temperature seasonality as standard deviation of monthly means (degrees C; CHELSA bio4).
+\item \code{temperature_coldest_month}: Minimum temperature of coldest month (degrees C; CHELSA bio6).
+\item \code{temperature_coldest_quarter}: Mean temperature of coldest quarter (degrees C; CHELSA bio11).
+\item \code{temperature_driest_quarter}: Mean temperature of driest quarter (degrees C; CHELSA bio9).
+\item \code{temperature_warmest_month}: Maximum temperature of warmest month (degrees C; CHELSA bio5).
+\item \code{temperature_warmest_quarter}: Mean temperature of warmest quarter (degrees C; CHELSA bio10).
+\item \code{temperature_wettest_quarter}: Mean temperature of wettest quarter (degrees C; CHELSA bio8).
 }
 
 \strong{Predictor variables - Landcover (3):}
@@ -145,6 +165,8 @@ An sf data frame with 662 rows (ecoregions) and 155 columns:
 }
 
 \strong{Predictor variables - Fragmentation (19):}
+Computed at 5 km resolution in Lambert Azimuthal Equal-Area projection using
+\code{landscapemetrics} (Hesselbarth et al. 2019).
 \itemize{
 \item \code{fragmentation_ai}: Aggregation index.
 \item \code{fragmentation_area_mn}: Mean patch area.
@@ -167,66 +189,18 @@ An sf data frame with 662 rows (ecoregions) and 155 columns:
 \item \code{fragmentation_te}: Total edge.
 }
 
-\strong{Predictor variables - Atmospheric (13):}
+\strong{Predictor variables - Soil (10):}
 \itemize{
-\item \code{air_humidity_max}: Maximum air humidity.
-\item \code{air_humidity_mean}: Mean air humidity.
-\item \code{air_humidity_min}: Minimum air humidity.
-\item \code{air_humidity_range}: Air humidity range.
-\item \code{aridity_mean}: Mean aridity index.
-\item \code{cloud_cover_max}: Maximum cloud cover.
-\item \code{cloud_cover_mean}: Mean cloud cover.
-\item \code{cloud_cover_min}: Minimum cloud cover.
-\item \code{cloud_cover_range}: Cloud cover range.
-\item \code{evapotranspiration_max}: Maximum evapotranspiration.
-\item \code{evapotranspiration_mean}: Mean evapotranspiration.
-\item \code{evapotranspiration_min}: Minimum evapotranspiration.
-\item \code{evapotranspiration_range}: Evapotranspiration range.
-}
-
-\strong{Predictor variables - Precipitation (8):}
-\itemize{
-\item \code{precipitation_seasonality}: Precipitation seasonality (coefficient of variation).
-\item \code{precipitation_total}: Total annual precipitation.
-\item \code{precipitation_coldest_quarter}: Precipitation of coldest quarter.
-\item \code{precipitation_driest_month}: Precipitation of driest month.
-\item \code{precipitation_driest_quarter}: Precipitation of driest quarter.
-\item \code{precipitation_warmest_quarter}: Precipitation of warmest quarter.
-\item \code{precipitation_wettest_month}: Precipitation of wettest month.
-\item \code{precipitation_wettest_quarter}: Precipitation of wettest quarter.
-}
-
-\strong{Predictor variables - Temperature (11):}
-\itemize{
-\item \code{temperature_isothermality}: Temperature isothermality.
-\item \code{temperature_mean_daily_range}: Mean daily temperature range.
-\item \code{temperature_mean}: Mean annual temperature.
-\item \code{temperature_range}: Annual temperature range.
-\item \code{temperature_seasonality}: Temperature seasonality.
-\item \code{temperature_coldest_month}: Mean temperature of coldest month.
-\item \code{temperature_coldest_quarter}: Mean temperature of coldest quarter.
-\item \code{temperature_driest_quarter}: Mean temperature of driest quarter.
-\item \code{temperature_warmest_month}: Mean temperature of warmest month.
-\item \code{temperature_warmest_quarter}: Mean temperature of warmest quarter.
-\item \code{temperature_wettest_quarter}: Mean temperature of wettest quarter.
-}
-
-\strong{Predictor variables - Soil properties (6):}
-\itemize{
-\item \code{soil_clay}: Soil clay content.
-\item \code{soil_nitrogen}: Soil nitrogen content.
-\item \code{soil_organic_carbon}: Soil organic carbon content.
+\item \code{soil_clay}: Soil clay content (\%).
+\item \code{soil_nitrogen}: Soil nitrogen content (\%).
+\item \code{soil_organic_carbon}: Soil organic carbon content (\%).
 \item \code{soil_ph}: Soil pH.
-\item \code{soil_sand}: Soil sand content.
-\item \code{soil_silt}: Soil silt content.
-}
-
-\strong{Predictor variables - Soil temperature (4):}
-\itemize{
-\item \code{soil_temperature_max}: Maximum soil temperature.
-\item \code{soil_temperature_mean}: Mean soil temperature.
-\item \code{soil_temperature_min}: Minimum soil temperature.
-\item \code{soil_temperature_range}: Soil temperature range.
+\item \code{soil_sand}: Soil sand content (\%).
+\item \code{soil_silt}: Soil silt content (\%).
+\item \code{soil_temperature_max}: Maximum soil temperature (degrees C).
+\item \code{soil_temperature_mean}: Mean soil temperature (degrees C).
+\item \code{soil_temperature_min}: Minimum soil temperature (degrees C).
+\item \code{soil_temperature_range}: Soil temperature range (degrees C).
 }
 
 \strong{Predictor variables - NDVI (4):}
@@ -239,7 +213,7 @@ An sf data frame with 662 rows (ecoregions) and 155 columns:
 
 \strong{Geometry:}
 \itemize{
-\item \code{geometry}: Point centroid geometry (WGS84, EPSG:4326).
+\item \code{geometry}: Ecoregion centroids, POINT geometry (WGS84, EPSG:4326).
 }
 }
 \source{
@@ -282,21 +256,80 @@ An sf data frame with 662 rows (ecoregions) and 155 columns:
 \itemize{
 \item CGIAR-CSI SRTM 90m Digital Elevation Database. \url{https://srtm.csi.cgiar.org/}
 }
+
+\strong{Aridity index:}
+\itemize{
+\item Trabucco, A. & Zomer, R.J. (2019). Global Aridity Index and Potential Evapotranspiration Climate Database v2. CGIAR-CSI. \doi{10.6084/m9.figshare.7504448.v3}
+}
+
+\strong{Tree species identification:}
+\itemize{
+\item BGCI (2020). GlobalTreeSearch online database. Botanic Gardens Conservation International. \url{https://tools.bgci.org/global_tree_search.php}
+}
+
+\strong{Fragmentation metrics:}
+\itemize{
+\item Hesselbarth, M.H.K., et al. (2019). landscapemetrics: an open-source R tool to calculate landscape metrics. \emph{Ecography}, 42(10), 1648-1657. \doi{10.1111/ecog.04617}
+}
+
+\strong{Beta diversity methodology:}
+\itemize{
+\item Koleff, P., Gaston, K.J. & Lennon, J.J. (2003). Measuring beta diversity for presence-absence data. \emph{Journal of Animal Ecology}, 72(3), 367-382. \doi{10.1046/j.1365-2656.2003.00710.x}
+}
+
+\strong{Rarity-weighted richness:}
+\itemize{
+\item Williams, P.H., et al. (1996). A comparison of richness hotspots, rarity hotspots, and complementary areas for conserving diversity of British birds. \emph{Conservation Biology}, 10(1), 155-174.
+}
+
+\strong{Human footprint:}
+\itemize{
+\item Venter, O., et al. (2016). Global terrestrial Human Footprint maps for 1993 and 2009. \emph{Scientific Data}, 3, 160067. \doi{10.1038/sdata.2016.67}
+}
 }
 \usage{
 data(plantae)
 }
 \description{
-Plant diversity metrics (richness, rarity, endemism, beta diversity) obtained from
+Plant diversity metrics (richness, rarity, beta diversity) obtained from
 GBIF Plantae records for global ecoregions. Includes metrics for all plants, trees, and grasses
 at species, genus, and family taxonomic levels. Ecoregion boundaries are derived from
 \href{https://ecoregions2017.appspot.com/}{Ecoregions 2017}. Original polygon geometries have been
 converted to point centroids to reduce file size while preserving spatial context.
+Use \code{\link[=plantae_extra]{plantae_extra()}} to download the version with original polygon geometries.
+
+The GBIF download comprised \strong{244,830,168 records from 4,741 datasets}, filtered to records
+with coordinates, no geospatial issues, and occurrence status "present".
+
+\strong{Tree species} were identified by cross-referencing GBIF records with the BGCI Global Tree
+Search database (BGCI 2020). \strong{Grasses} were defined as members of family Poaceae.
+
+\strong{Rarity-weighted richness} (Williams et al. 1996): each taxon is scored with the inverse of
+its number of spatial presence records in GBIF, then scores are summed per ecoregion.
+\strong{Mean rarity} is the mean of these inverse presence record counts per taxon in an ecoregion.
+
+\strong{Beta diversity} was computed between each ecoregion and its immediate neighboring ecoregions.
+Sorensen dissimilarity: Bsor = 1 - 2a/(2a+b+c). Simpson dissimilarity:
+Bsim = min(b,c)/(min(b,c)+a), following Koleff et al. (2003).
+
+\strong{Fragmentation metrics} were computed with the R package \code{landscapemetrics}
+(Hesselbarth et al. 2019) at 5 km resolution in Lambert Azimuthal Equal-Area projection.
+
+\strong{Climate hypervolume} was computed using \code{hypervolume::hypervolume_svm()}.
+
+\strong{Aridity} is computed as 1 minus the aridity index of Trabucco and Zomer (2019), so maximum
+aridity is coded as 1.
+
+Environmental predictors were extracted as mean pixel values per ecoregion from rasters at
+1 km resolution.
 }
 \seealso{
 Other plantae: 
+\code{\link{plantae_east}()},
+\code{\link{plantae_extra}()},
 \code{\link{plantae_predictors}},
-\code{\link{plantae_responses}}
+\code{\link{plantae_responses}},
+\code{\link{plantae_west}()}
 }
 \concept{plantae}
 \keyword{datasets}

@@ -1,22 +1,56 @@
-#' Neanderthal Presence and Pseudo-Absence Records with Environmental Predictors
+#' @title Neanderthal Presence and Pseudo-Absence Records with Environmental Predictors
 #'
 #' @description
+#' `sf` data frame with `POINT` geometry containing 245 records of Neanderthal presence
+#' and pseudo-absence sites from Marine Isotope Stage 5e (Last Interglacial) in Europe
+#' and the Near East, 1 response variable (see [neanderthal_response]), and 25 predictors
+#' (see [neanderthal_predictors]).
+#' Use [neanderthal_extra()] to download the associated environmental raster.
 #'
-#' `sf` dataframe with `POINT` geometry containing 245 records of Neanderthal presence and pseudo-absence sites from Marine Isotope Stage 5e (Last Interglacial) in Europe and the Near East, 1 response variable (see [neanderthal_response]), and 25 predictors (see [neanderthal_predictors]). Use [neanderthal_extra()] to download the associated environmental raster.
+#' @usage data(neanderthal)
+#' @format An sf data frame with 245 rows (presence and pseudo-absence sites) and 27 columns:
 #'
-#' **Response**
-#'
-#' The response variable `presence` is a binary integer:
+#' **Response variable (1):**
 #' \itemize{
-#'   \item `1`: Neanderthal presence site.
-#'   \item `0`: Pseudo-absence site.
+#'   \item `presence`: Binary integer (1 = Neanderthal presence site, 0 = pseudo-absence site).
 #' }
 #'
-#' **Predictors**
+#' **Predictor variables - Palaeoclimatic (19):**
 #'
+#' Bioclimatic variables derived from a Last Interglacial GCM simulation
+#' (Otto-Bliesner et al. 2006), downscaled following the method of Hijmans et al. (2005).
+#' These are analogous to the standard WorldClim bioclimatic variables but represent
+#' Last Interglacial (MIS 5e) conditions rather than modern climate:
 #' \itemize{
-#'   \item `bio1`, `bio2`, ..., `bio19`: Palaeoclimatic variables from a Last Interglacial GCM simulation (19 variables).
-#'   \item `topo_aspect`, `topo_diversity_local`, `topo_diversity`, `topo_elev`, `topo_slope`, `topo_wetness`: SRTM-derived topographic variables.
+#'   \item `bio1`: Annual mean temperature (degrees C).
+#'   \item `bio2`: Mean diurnal range (degrees C).
+#'   \item `bio3`: Isothermality (bio2/bio7 * 100).
+#'   \item `bio4`: Temperature seasonality (standard deviation * 100).
+#'   \item `bio5`: Max temperature of warmest month (degrees C).
+#'   \item `bio6`: Min temperature of coldest month (degrees C).
+#'   \item `bio7`: Temperature annual range (degrees C).
+#'   \item `bio8`: Mean temperature of wettest quarter (degrees C).
+#'   \item `bio9`: Mean temperature of driest quarter (degrees C).
+#'   \item `bio10`: Mean temperature of warmest quarter (degrees C).
+#'   \item `bio11`: Mean temperature of coldest quarter (degrees C).
+#'   \item `bio12`: Annual precipitation (mm).
+#'   \item `bio13`: Precipitation of wettest month (mm).
+#'   \item `bio14`: Precipitation of driest month (mm).
+#'   \item `bio15`: Precipitation seasonality (coefficient of variation).
+#'   \item `bio16`: Precipitation of wettest quarter (mm).
+#'   \item `bio17`: Precipitation of driest quarter (mm).
+#'   \item `bio18`: Precipitation of warmest quarter (mm).
+#'   \item `bio19`: Precipitation of coldest quarter (mm).
+#' }
+#'
+#' **Predictor variables - Topography (6):**
+#' \itemize{
+#'   \item `topo_aspect`: Aspect in degrees.
+#'   \item `topo_diversity_local`: Local topographic diversity.
+#'   \item `topo_diversity`: Regional topographic diversity.
+#'   \item `topo_elev`: Elevation in meters.
+#'   \item `topo_slope`: Slope in degrees.
+#'   \item `topo_wetness`: Topographic wetness index.
 #' }
 #'
 #' **Geometry:**
@@ -24,38 +58,42 @@
 #'   \item `geometry`: Point geometry (WGS84, EPSG:4326).
 #' }
 #'
-#' **Data sources**
+#' @source
+#' **Presence data:**
 #' \itemize{
-#'   \item **Presence data**: Benito, B.M., Svenning, J.-C., Kellberg-Nielsen, T., Riede, F., Gil-Romera, G., Mailund, T., Kjaergaard, P.C. and Sandel, B.S. (2017), The ecological niche and distribution of Neanderthals during the Last Interglacial. J. Biogeogr., 44: 51-61. \doi{10.1111/jbi.12845}
-#'   \item **Palaeoclimatic variables (GCM simulation)**: Otto-Bliesner, B.L., Marshall, S.J., Overpeck, J.T., Miller, G.H. & Hu, A. (2006) Simulating arctic climate warmth and icefield retreat in the last interglaciation. Science, 311, 1751-1753.
-#'   \item **Palaeoclimatic variables (interpolation)**: Hijmans, R.J., Cameron, S.E., Parra, J.L., Jones, P.G. & Jarvis, A. (2005) Very high resolution interpolated climate surfaces for global land areas. International Journal of Climatology, 25, 1965-1978.
-#'   \item **Elevation and topography**: Jarvis A., H.I. Reuter, A. Nelson, E. Guevara, 2008. Hole-filled seamless SRTM data V4, International Centre for Tropical Agriculture (CIAT). \url{https://srtm.csi.cgiar.org}.
+#'   \item Benito, B.M., et al. (2017). The ecological niche and distribution of Neanderthals during the Last Interglacial. \emph{Journal of Biogeography}, 44, 51-61. \doi{10.1111/jbi.12845}
 #' }
 #'
-#' @format sf data.frame
+#' **Palaeoclimatic variables (GCM simulation):**
+#' \itemize{
+#'   \item Otto-Bliesner, B.L., Marshall, S.J., Overpeck, J.T., Miller, G.H. & Hu, A. (2006). Simulating arctic climate warmth and icefield retreat in the last interglaciation. \emph{Science}, 311, 1751-1753.
+#' }
 #'
-#' @usage data(neanderthal)
+#' **Palaeoclimatic variables (interpolation):**
+#' \itemize{
+#'   \item Hijmans, R.J., Cameron, S.E., Parra, J.L., Jones, P.G. & Jarvis, A. (2005). Very high resolution interpolated climate surfaces for global land areas. \emph{International Journal of Climatology}, 25, 1965-1978.
+#' }
+#'
+#' **Elevation and topography:**
+#' \itemize{
+#'   \item Jarvis, A., Reuter, H.I., Nelson, A., & Guevara, E. (2008). Hole-filled seamless SRTM data V4. International Centre for Tropical Agriculture (CIAT). \url{https://srtm.csi.cgiar.org}
+#' }
 #' @family neanderthal
-#' @examples
-#' data(neanderthal)
-#' head(neanderthal)
 "neanderthal"
 
-#' Response Variable Name for `neanderthal`
-#'
-#' @description Character string with the name of the response variable in [neanderthal]: `"presence"`.
-#'
+#' @title Response variable name for neanderthal dataset
+#' @description Character string with the name of the response variable in [neanderthal]: `"presence"`,
+#' a binary integer (1 = presence, 0 = pseudo-absence).
 #' @usage data(neanderthal_response)
-#' @format Character string of length 1.
+#' @format A character string of length 1.
 #' @family neanderthal
 "neanderthal_response"
 
-#' Predictor Variable Names for `neanderthal`
-#'
-#' @description Character vector with the names of the 25 predictor variables in [neanderthal]: 19 bioclimatic and 6 topographic variables.
-#'
+#' @title Predictor variable names for neanderthal dataset
+#' @description Character vector of 25 predictor variable names from [neanderthal], covering
+#' palaeoclimatic (19) and topography (6).
 #' @usage data(neanderthal_predictors)
-#' @format Character vector of length 25.
+#' @format A character vector of length 25.
 #' @family neanderthal
 "neanderthal_predictors"
 
@@ -97,7 +135,7 @@ neanderthal_extra <- function(
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/neanderthal_env.tif"
     if (quiet == FALSE) {
       message(
-        "spatialData::neanderthal_extra(): Downloading neanderthal_env.tif to '",
+        "spatialData::neanderthal_extra(): Downloading 'neanderthal_env.tif' to '",
         dir,
         "'."
       )
@@ -113,6 +151,10 @@ neanderthal_extra <- function(
           call. = FALSE
         )
       }
+    )
+  } else {
+    message(
+      "spatialData::neanderthal_extra(): Loading local copy of 'neanderthal_env.tif'."
     )
   }
 

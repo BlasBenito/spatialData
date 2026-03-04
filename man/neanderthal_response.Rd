@@ -3,15 +3,16 @@
 \docType{data}
 \name{neanderthal_response}
 \alias{neanderthal_response}
-\title{Response Variable Name for \code{neanderthal}}
+\title{Response variable name for neanderthal dataset}
 \format{
-Character string of length 1.
+A character string of length 1.
 }
 \usage{
 data(neanderthal_response)
 }
 \description{
-Character string with the name of the response variable in \link{neanderthal}: \code{"presence"}.
+Character string with the name of the response variable in \link{neanderthal}: \code{"presence"},
+a binary integer (1 = presence, 0 = pseudo-absence).
 }
 \seealso{
 Other neanderthal: 

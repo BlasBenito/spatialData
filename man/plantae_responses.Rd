@@ -19,7 +19,10 @@ Metrics are available for all plants, trees, and grasses at species, genus, and 
 \seealso{
 Other plantae: 
 \code{\link{plantae}},
-\code{\link{plantae_predictors}}
+\code{\link{plantae_east}()},
+\code{\link{plantae_extra}()},
+\code{\link{plantae_predictors}},
+\code{\link{plantae_west}()}
 }
 \concept{plantae}
 \keyword{datasets}

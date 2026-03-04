@@ -1,0 +1,345 @@
+---
+title: "plantae"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_title: "Contents"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  eval = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+```
+
+## Overview
+
+The `plantae` dataset contains plant diversity metrics for **662 global ecoregions**, derived from **244M+ GBIF plant presence records** and a large set of environmental predictors (see `plantae_predictors`).
+
+Its main features are:
+
+- *Complete case study*: No missing values, clean data ready for analysis.
+- *Global scope*: All major biomes and biogeographic realms.
+- *Multiple responses*: 53 response variables (see `plantae_responses`) covering richness, rarity, and beta diversity.
+- *Large number of predictors*: The 84 predictors (see `plantae_predictors`) span 12 categories (temperature, precipitation, atmospheric, soil, fragmentation, human impact, and more).
+
+The dataset is designed to support a wide range of ecological modeling approaches.
+
+## Setup
+
+
+```{r, include = FALSE}
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak")
+}
+pak::pkg_install(
+  c(
+    "sf",
+    "mapview",
+    "dplyr",
+    "ggplot2",
+    "collinear",
+    "patchwork",
+    "spatialRF",
+    "units",
+    "viridis"
+  ),
+  ask = FALSE
+)
+```
+
+The following R libraries and example data are required to run this tutorial.
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
+library(spatialData)
+library(sf)
+library(mapview)
+library(dplyr)
+library(collinear)
+library(spatialRF)
+library(units)
+library(viridis)
+library(ggplot2)
+library(patchwork)
+
+data(
+  plantae,
+  plantae_responses,
+  plantae_predictors,
+  package = "spatialData"
+  )
+```
+
+
+## Description
+
+The dataset is an `sf` data frame with `r nrow(plantae)` rows and `r ncol(plantae)` columns, and no missing data. The first 10 records and all columns but `geometry` are shown below.
+
+```{r}
+plantae |>
+  head(n = 10) |>
+  dplyr::glimpse()
+```
+
+The spatial distribution of ecoregion centroids covers all continents:
+
+```{r}
+mapview::mapview(
+  plantae,
+  zcol = "richness_species",
+  layer.name = "Species richness",
+  col.regions = viridis::magma(
+    n = length(unique(plantae$richness_species)), 
+    direction = -1
+    ),
+  cex = sqrt(plantae$richness_species)/10
+)
+```
+
+A version with the original ecoregion geometries instead of point centroids can be downloaded with [plantae_extra()].
+
+```{r, message = FALSE}
+plantae_polygons <- spatialData::plantae_extra()
+
+mapview::mapview(
+  plantae_polygons,
+  zcol = "richness_species",
+  layer.name = "Species richness",
+  col.regions = viridis::magma(
+    n = length(unique(plantae$richness_species)), 
+    direction = -1
+    )
+  )
+```
+
+Smaller subsets filtered by hemisphere with `richness_species` as the only response variable are also available via [plantae_west()] (Americas) and [plantae_east()] (Old World).
+
+```{r}
+plantae_w <- spatialData::plantae_west()
+nrow(plantae_w)
+
+plantae_e <- spatialData::plantae_east()
+nrow(plantae_e)
+```
+
+## Response Variables
+
+The dataset provides **53 response variables** (see `plantae_responses`) across 6 categories:
+
+| Category | Count | Description |
+|----------|------:|-------------|
+| Richness | 9 | Species, genus, family, and class counts for all plants, trees, and grasses |
+| Rarity-weighted richness | 6 | Sum of inverse presence-record counts per taxon (Williams et al. 1996) |
+| Mean rarity | 6 | Mean of inverse presence-record counts per taxon |
+| Beta diversity (raw turnover) | 16 | Absolute richness differences between ecoregion and neighbors |
+| Beta diversity (Sorensen) | 8 | Sorensen dissimilarity (Bsor = 1 - 2a/(2a+b+c); Koleff et al. 2003) |
+| Beta diversity (Simpson) | 8 | Simpson dissimilarity (Bsim = min(b,c)/(min(b,c)+a); Koleff et al. 2003) |
+
+
+## Predictor Variables
+
+The dataset includes **84 predictor variables from 12 categories**.
+
+| Category | Count | Prefix |
+|----------|------:|--------|
+| Sampling bias | 1 | `bias_log_records` |
+| Geographic/geometric | 10 | `geo_*` |
+| Human impact | 3 | `human_*` |
+| Climate | 34 | `climate_*`, `precipitation_*`, `air_*`, `aridity_*`, `cloud_*`, `evapotranspiration_*`, `temperature_*` |
+| Landcover | 3 | `landcover_*` |
+| Fragmentation | 19 | `fragmentation_*` |
+| Soil | 10 | `soil_*clay*`, `soil_temperature_*` |
+| NDVI | 4 | `ndvi_*` |
+
+
+```{r, echo = FALSE}
+rm(
+  plantae_e,
+  plantae_w,
+  plantae_polygons,
+  plantae_responses
+)
+```
+
+
+## Example Usage
+
+This example uses `plantae` to identify predictors driving the plant richness of the World's ecoregions. 
+
+- *Multicollinearity Analysis*: aims to limit redundancy in the predictors and focus on the most promising ones.
+- *Spatial Autocorrelation Analysis*: to help understand the importance of the spatial structure of the data.
+- *Spatial Modelling*: training of a spatial Random Forest models fitted with [`spatialRF`](https://blasbenito.github.io/spatialRF/).
+- *Model Analysis*: to assess the relative importance of the spatial versus the environmental predictors, and understand how plant richness responds to environmental gradients.
+
+### Multicollinearity Analysis
+
+The `plantae` dataset has `r length(plantae_predictors)` predictors with varying levels of redundancy. To manage multicollinearity in `plantae` we use [`collinear::collinear()`](https://blasbenito.github.io/collinear/reference/collinear.html). 
+
+The function prioritizes the predictors in `preference_order` as requested by the user, while the remaining ones are ranked by the R-squared of univariate random forest models fitted against the response. The predictors are then evaluated one by one for selection following this ranking: if the variance inflation factor of the candidate predictor against the selected predictors is lower than 2.5, the predictor is added to the selection. Otherwise it is ignored, and the next predictor is evaluated.
+
+Notice how the argument `preference_order` is used below to *protect* predictors that are known to influence plant species richness.
+
+
+```{r}
+plantae_selection <- collinear::collinear(
+  df = plantae,
+  responses = "richness_species",
+  predictors = plantae_predictors,
+  f = collinear::f_count_rf,
+  preference_order = c(
+    "bias_log_records", #logarithm of the GBIF records used to compute richness
+    "geo_area_km2", #ecoregion area
+    "climate_velocity_lgm_mean", #climate stability since Last Glacial Maximum
+    "climate_hypervolume", #relative size of the ecoregion's climate envelope
+    "temperature_mean", #mean temperature
+    "precipitation_total", #total rainfall
+    "human_footprint_mean", #average human footprint in the ecoregion
+    "human_population_density" #inhabitants per square kilometer
+  ),
+  max_vif = 2.5,
+  quiet = TRUE
+)
+```
+
+The function returns a list full of useful data, but here we focus on the character vector with the selected predictor names.
+
+
+```{r}
+plantae_selection$richness_species$selection
+```
+
+
+### Spatial Autocorrelation Analysis
+
+The spatial autocorrelation (SAC) analysis of the response and the selected predictors requires a distance matrix between all pairs of ecoregions. 
+
+**Something to take in mind**: The distance between ecoregions may vary depending on the geometry used in the computation. The distance between neighboring ecoregions will be zero when using the polygons resulting from `plantae_extra()`, while they will be larger than zero when using the point geometry (ecoregion's centroid) in `spatialData::plantae`. 
+
+The code below uses the ecoregion centroids in `spatialData::plantae` to compute the distance matrix in kilometers.
+
+```{r}
+plantae_distance <- sf::st_distance(
+  x = plantae
+) |> 
+  units::set_units(value = "km") |> 
+  units::drop_units() |> 
+  floor()
+
+plantae_distance[1:5, 1:5]
+```
+
+This distance matrix is required to assess the SAC of any variable in `plantae`. The code below analyzes SAC for the response and all predictors at once for a range of neighborhood distances.
+
+```{r}
+plantae_distances_km <- c(100, 1000, 2000, 4000, 8000)
+
+spatialRF::plot_training_df_moran(
+  data = plantae,
+  dependent.variable.name = "richness_species",
+  predictor.variable.names = plantae_selection$richness_species$selection,
+  distance.matrix = plantae_distance,
+  distance.thresholds = plantae_distances_km
+)
+```
+
+Notice how the autocorrelation of most predictors peaks at 1000 km, and remains positive for most of them across the entire distance span. This analysis suggests that the data has a strong spatial structure, and is likely not suited for non-spatial modelling.
+
+We can transform this intuition into a fact by training a regular random forest model via [`spatialRF::rf()`](https://blasbenito.github.io/spatialRF/reference/rf.html) and assessing the spatial autocorrelation of the residuals.
+
+```{r, fig.width=6, fig.height=3.5}
+plantae_rf <- spatialRF::rf(
+  data = sf::st_drop_geometry(plantae),
+  dependent.variable.name = "richness_species",
+  predictor.variable.names = plantae_selection$richness_species$selection,
+  distance.matrix = plantae_distance,
+  distance.thresholds = c(100, 1000, 2000), #more about this later!
+  verbose = FALSE
+)
+```
+
+The model has a good performance on the out-of-bag data (RMSE = `r round(plantae_rf$performance$rmse.oob, digits = 2)`; R-squared =  `r round(plantae_rf$performance$r.squared.oob, digits = 2)`), as most random forest models do, but let's take a look at the SAC of the model residuals.
+
+```{r, fig.width=6, fig.height=3}
+spatialRF::moran_multithreshold(
+  x = plantae_rf$residuals$values,
+  distance.matrix = plantae_distance,
+  distance.thresholds = plantae_distances_km,
+  verbose = FALSE
+)$plot
+```
+
+The SAC of the residuals peaks at ~1000km and remains positive over long distances, indicating that this model is missing predictors accounting for the spatial structure of the data.
+
+### Spatial Modelling
+
+The function [`spatialRF::rf_spatial()`](https://blasbenito.github.io/spatialRF/reference/rf_spatial.html) takes the model above, adds *spatial predictors* (namely *Moran's Eigenvector Maps* or MEMs) to the training data. MEMs are synthetic predictors derived from the distance matrix. Each MEM captures a distinct spatial pattern at a different scale, from broad continental gradients to finer regional structures. By selecting the MEMs that reduce residual SAC the most, `spatialRF::rf_spatial()` captures spatial variation in plant richness that the environmental predictors alone cannot explain. Think of biogeographic legacies, dispersal barriers, or unknown environmental gradients. 
+
+Since we used `distance.thresholds = c(100, 1000, 2000)` in the non-spatial model `plantae_rf`, the function `spatialRF::rf_spatial()` will generate and select spatial predictors for the neighborhood distances 100, 1000, and 2000 km.
+
+```{r, fig.width=6, fig.height=3.5}
+plantae_rf_spatial <- spatialRF::rf_spatial(
+  model = plantae_rf,
+  verbose = FALSE
+)
+```
+
+The spatial model has performance very similar to the non-spatial one (RMSE = `r round(plantae_rf_spatial$performance$rmse.oob, digits = 2)`; R-squared =  `r round(plantae_rf_spatial$performance$r.squared.oob, digits = 2)`). 
+
+Now, let's take a look at the SAC of the model residuals.
+
+
+```{r, fig.width=6, fig.height=3}
+spatialRF::moran_multithreshold(
+  x = plantae_rf_spatial$residuals$values,
+  distance.matrix = plantae_distance,
+  distance.thresholds = plantae_distances_km,
+  verbose = FALSE
+)$plot
+```
+
+Notice the values in the vertical axis: the SAC of the model residuals is still significant for the distance thresholds 1000 and 2000km, but it is an order of magnitude smaller than in the non-spatial model.
+
+### Model Analysis
+
+The figure below shows how model error increases when a given predictor is randomly shuffled. Higher values indicate stronger predictive relevance. 
+
+```{r}
+spatialRF::plot_importance(
+  model = plantae_rf_spatial
+)
+```
+
+The high importance of `bias_log_records` reflects the extent to which ecoregions with more records tend to have higher observed richness, independent of true biodiversity. 
+
+Once bias is taken into account, there are several `spatial_predictors` (MEMs) with high relative importance, reflecting processes operating at broad scales that no single environmental variable can fully capture.
+
+Once spatial structure is considered, four predictors remain more important than all others: 
+
++ `geo_perimeter_km` and `geo_area_km2` represent the importance of the ecoregion size.
++ `climate_hypervolume` represents the relative size of the climate space in the ecoregion.
++ `human_population` indicates the importance of the human factor on plant species richness.
+
+
+The figure below shows how predicted richness changes across the range of these predictor when all others are held at their median (quantile 0.5).
+
+
+```{r, fig.width=8, fig.height=4}
+spatialRF::plot_response_curves(
+  model = plantae_rf_spatial,
+  variables = c(
+    "geo_perimeter_km", 
+    "geo_area_km2", 
+    "climate_hypervolume", 
+    "human_population"
+    ),
+  quantiles = 0.5
+)
+```
+In the context of a spatial model with MEMs, these curves represent the *environmental* component of richness after bias and spatial structure are accounted for. This means the relationships shown reflect genuine environmental gradients rather than geographic clustering artefacts, making them more interpretable than those from a non-spatial model.
+
+The spatial random forest above demonstrates one modeling approach for `richness_species`, one of 53 response variables available in `plantae`. The dataset supports a much wider range of ecological modeling experiments, from rarity-weighted richness and beta diversity analyses to spatial cross-validation and path analysis. 
+
+Have fun with it!

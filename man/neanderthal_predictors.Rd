@@ -3,15 +3,16 @@
 \docType{data}
 \name{neanderthal_predictors}
 \alias{neanderthal_predictors}
-\title{Predictor Variable Names for \code{neanderthal}}
+\title{Predictor variable names for neanderthal dataset}
 \format{
-Character vector of length 25.
+A character vector of length 25.
 }
 \usage{
 data(neanderthal_predictors)
 }
 \description{
-Character vector with the names of the 25 predictor variables in \link{neanderthal}: 19 bioclimatic and 6 topographic variables.
+Character vector of 25 predictor variable names from \link{neanderthal}, covering
+palaeoclimatic (19) and topography (6).
 }
 \seealso{
 Other neanderthal: 

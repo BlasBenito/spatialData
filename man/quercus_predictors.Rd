@@ -3,15 +3,17 @@
 \docType{data}
 \name{quercus_predictors}
 \alias{quercus_predictors}
-\title{Predictor Variable Names for \code{quercus}}
+\title{Predictor variable names for quercus dataset}
 \format{
-Character vector of length 31.
+A character vector of length 31.
 }
 \usage{
 data(quercus_predictors)
 }
 \description{
-Character vector with the names of the 31 predictor variables in \link{quercus}: 17 bioclimatic, 4 NDVI, 4 solar radiation, 3 land cover, 2 topographic, and 1 human footprint variable.
+Character vector of 31 predictor variable names from \link{quercus}, covering
+bioclimatic (17), NDVI (4), solar radiation (4), land cover (3), topography (2),
+and human footprint (1).
 }
 \seealso{
 Other quercus: 

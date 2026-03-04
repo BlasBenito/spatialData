@@ -5,86 +5,218 @@
 \alias{vi}
 \title{Global NDVI Records and Environmental Predictors}
 \format{
-sf data.frame
-}
-\usage{
-data(vi)
-}
-\description{
-\code{sf} dataframe with \code{POINT} geometry records representing 9265 global locations, 5 response variables with different encodings (see \link{vi_responses}), and 58 numeric and categorical predictors (see \link{vi_predictors}). Use \code{\link[=vi_extra]{vi_extra()}} to download an extended version with 30,000 rows.
+An sf data frame with 9265 rows (locations) and 64 columns:
 
-\strong{Responses}
-
-The response variables represent different encodings of the average NDVI between 1999 and 2019 at 1km resolution:
+\strong{Response variables (5):}
 \itemize{
-\item \code{vi_numeric}: continuous vegetation index values in the range 0-1.
-\item \code{vi_counts}: simulated integer counts created by multiplying \code{vi_numeric} by 1000 and coercing the result to integer.
-\item \code{vi_binomial}: simulated integer binomial variable created by transforming \code{vi_numeric} to zeros and ones using an arbitrary threshold (\code{vi_numeric > 0.5}).
-\item \code{vi_categorical}: character variable with the categories "very_low", "low", "medium", "high", and "very_high", with thresholds located at the quantiles of \code{vi_numeric}.
-\item \code{vi_factor}: \code{vi_categorical} converted to factor.
+\item \code{vi_numeric}: Continuous NDVI value (0-1).
+\item \code{vi_counts}: Integer count encoding of NDVI (vi_numeric * 1000).
+\item \code{vi_binomial}: Binary encoding of NDVI (1 if vi_numeric > 0.5, else 0).
+\item \code{vi_categorical}: Categorical encoding of NDVI ("very_low", "low", "medium", "high", "very_high").
+\item \code{vi_factor}: Factor encoding of NDVI (vi_categorical as factor).
 }
 
-\strong{Predictors}
-
+\strong{Predictor variables - Climate classification (3):}
 \itemize{
-\item \code{koppen_zone} (character): Koppen zone codes from Beck et al. (2018) (see References)
-\item \code{koppen_group} (character): Koppen group names.
-\item \code{koppen_description} (character): Climate description.
-\item \code{soil_type} (character): Soil classification type.
-\item \code{biogeo_ecoregion} (character): Ecoregion name.
-\item \code{biogeo_biome} (character): Biome name.
-\item \code{biogeo_realm} (character): Ecological realm name.
-\item \code{country_name} (character): Country name.
-\item \code{continent} (character): Continent name.
-\item \code{region} (character): UN region name.
-\item \code{subregion} (character): UN sub-region name.
+\item \code{koppen_zone}: Koppen climate zone code (Beck et al. 2018).
+\item \code{koppen_group}: Koppen climate group name.
+\item \code{koppen_description}: Koppen climate description.
+}
+
+\strong{Predictor variables - Soil type (1):}
+\itemize{
+\item \code{soil_type}: Soil classification type.
+}
+
+\strong{Predictor variables - Topography (3):}
+\itemize{
 \item \code{topo_slope}: Topographic slope in degrees.
-\item \code{topo_diversity}: Number of combinations of different elevations, slopes, and aspects in a radius of 5km around each  1km cell.
-\item \code{topo_elevation}: Elevation in meters
-\item \code{swi_...}: Annual soil water index stats.
-\item \code{solar_rad_...}: Annual radiation stats.
-\item \code{temperature_...}: Annual air temperature stats.
-\item \code{temperature_seasonality}: Coefficient of variation of monthly air temperatures.
-\item \code{rainfall_...}: Annual rainfall stats.
-\item \code{evapotranspiration_...}: Annual evapotranspiration stats.
-\item \code{cloud_cover_...}: Annual cloud cover stats.
-\item \code{growing_season_length}: Length of the growing season.
-\item \code{growing_season_temperature}: Average temperature of the growing season.
-\item \code{growing_season_rainfall}: Accumulated rainfall of the growing season.
-\item \code{growing_degree_days}: Heat sum of all days above the 0°C temperature accumulated over 1 year.
-\item \code{aridity_index}: Mean aridity index.
-\item \code{humidity_...}: Annual air humidity stats.
-\item \code{soil_clay}: Soil clay content.
-\item \code{soil_sand}: Soil sand content.
-\item \code{soil_silt}: Soil silt content.
+\item \code{topo_diversity}: Number of combinations of different elevations, slopes, and aspects in a 5 km radius around each 1 km cell.
+\item \code{topo_elevation}: Elevation in meters.
+}
+
+\strong{Predictor variables - Soil water index (4):}
+\itemize{
+\item \code{swi_mean}: Mean annual soil water index (unitless, 0-100 cm depth).
+\item \code{swi_max}: Maximum annual soil water index (unitless, 0-100 cm depth).
+\item \code{swi_min}: Minimum annual soil water index (unitless, 0-100 cm depth).
+\item \code{swi_range}: Annual soil water index range (unitless, 0-100 cm depth).
+}
+
+\strong{Predictor variables - Soil temperature (4):}
+\itemize{
+\item \code{soil_temperature_mean}: Mean annual land surface temperature (degrees C).
+\item \code{soil_temperature_max}: Maximum annual land surface temperature (degrees C).
+\item \code{soil_temperature_min}: Minimum annual land surface temperature (degrees C).
+\item \code{soil_temperature_range}: Annual land surface temperature range (degrees C).
+}
+
+\strong{Predictor variables - Soil properties (6):}
+\itemize{
+\item \code{soil_sand}: Soil sand content (\%).
+\item \code{soil_clay}: Soil clay content (\%).
+\item \code{soil_silt}: Soil silt content (\%).
 \item \code{soil_ph}: Soil pH.
-\item \code{soil_soc}: Soil organic carbon content.
-\item \code{soil_nitrogen}: Soil nitrogen content.
-\item \code{soil_temperature_...}: Annual land surface temperature stats.
+\item \code{soil_soc}: Soil organic carbon content (\%).
+\item \code{soil_nitrogen}: Soil nitrogen content (\%).
+}
+
+\strong{Predictor variables - Solar radiation (4):}
+\itemize{
+\item \code{solar_rad_mean}: Mean annual solar radiation (kJ m-2).
+\item \code{solar_rad_max}: Maximum annual solar radiation (kJ m-2).
+\item \code{solar_rad_min}: Minimum annual solar radiation (kJ m-2).
+\item \code{solar_rad_range}: Annual solar radiation range (kJ m-2).
+}
+
+\strong{Predictor variables - Growing season (4):}
+\itemize{
+\item \code{growing_season_length}: Length of the growing season (days).
+\item \code{growing_season_temperature}: Mean temperature of the growing season (degrees C).
+\item \code{growing_season_rainfall}: Accumulated precipitation of the growing season (kg m-2).
+\item \code{growing_degree_days}: Growing degree days above 0 degrees C accumulated over one year (degree-days).
+}
+
+\strong{Predictor variables - Temperature (5):}
+\itemize{
+\item \code{temperature_mean}: Mean annual air temperature (degrees C; CHELSA bio1).
+\item \code{temperature_max}: Maximum temperature of warmest month (degrees C; CHELSA bio5).
+\item \code{temperature_min}: Minimum temperature of coldest month (degrees C; CHELSA bio6).
+\item \code{temperature_range}: Annual air temperature range (degrees C; CHELSA bio7).
+\item \code{temperature_seasonality}: Temperature seasonality as standard deviation of monthly means (degrees C; CHELSA bio4).
+}
+
+\strong{Predictor variables - Rainfall (4):}
+\itemize{
+\item \code{rainfall_mean}: Mean annual rainfall (kg m-2).
+\item \code{rainfall_min}: Minimum monthly rainfall (kg m-2).
+\item \code{rainfall_max}: Maximum monthly rainfall (kg m-2).
+\item \code{rainfall_range}: Annual rainfall range (kg m-2).
+}
+
+\strong{Predictor variables - Evapotranspiration (4):}
+\itemize{
+\item \code{evapotranspiration_mean}: Mean annual potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
+\item \code{evapotranspiration_max}: Maximum monthly potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
+\item \code{evapotranspiration_min}: Minimum monthly potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
+\item \code{evapotranspiration_range}: Annual potential evapotranspiration range (kg m-2 month-1; Penman-Monteith).
+}
+
+\strong{Predictor variables - Cloud cover (4):}
+\itemize{
+\item \code{cloud_cover_mean}: Mean annual total cloud cover (\%).
+\item \code{cloud_cover_max}: Maximum monthly total cloud cover (\%).
+\item \code{cloud_cover_min}: Minimum monthly total cloud cover (\%).
+\item \code{cloud_cover_range}: Annual total cloud cover range (\%).
+}
+
+\strong{Predictor variables - Aridity (1):}
+\itemize{
+\item \code{aridity_index}: Mean aridity index (unitless ratio; higher values indicate wetter conditions).
+}
+
+\strong{Predictor variables - Humidity (4):}
+\itemize{
+\item \code{humidity_mean}: Mean annual near-surface relative humidity (\%).
+\item \code{humidity_max}: Maximum monthly near-surface relative humidity (\%).
+\item \code{humidity_min}: Minimum monthly near-surface relative humidity (\%).
+\item \code{humidity_range}: Annual near-surface relative humidity range (\%).
+}
+
+\strong{Predictor variables - Biogeography (3):}
+\itemize{
+\item \code{biogeo_ecoregion}: Ecoregion name.
+\item \code{biogeo_biome}: Biome name.
+\item \code{biogeo_realm}: Ecological realm name.
+}
+
+\strong{Predictor variables - Administrative (4):}
+\itemize{
+\item \code{country_name}: Country name.
+\item \code{continent}: Continent name.
+\item \code{region}: UN region name.
+\item \code{subregion}: UN sub-region name.
 }
 
 \strong{Geometry:}
 \itemize{
 \item \code{geometry}: Point geometry (WGS84, EPSG:4326).
 }
-
-\strong{Data sources}
+}
+\source{
+\strong{Response variables (NDVI):}
 \itemize{
-\item \strong{Response variables (NDVI)}: Normalised Difference Vegetation Index (Long Term Statistics) 1999-2019 (raster 1 km), global, 10-daily – version 3 (\url{https://sdi.eea.europa.eu/catalogue/srv/api/records/290e81fb-4c84-42ad-ae12-f663312b0eda})
-\item \strong{Koppen Climate}: Beck, H. E. et al., Present and future Köppen-Geiger climate classification maps at 1-km resolution. Sci. Data. 5:180214 \doi{10.1038/sdata.2018.214} (2018).
-\item \strong{Soil Water Index}: Generated using European Union's Copernicus Land Monitoring Service information; \doi{10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda}.
-\item \strong{Climate}: Brun, P., Zimmermann, N. E., Hari, C., Pellissier, L., Karger, D. N. (2022). CHELSA-BIOCLIM+ A novel set of global climate-related predictors at kilometre-resolution. EnviDat. \doi{10.16904/envidat.332}.
-\item \strong{Soil type and chemistry}: Hengl T, Mendes de Jesus J, Heuvelink GBM, Ruiperez Gonzalez M, Kilibarda M, Blagotić A, et al. (2017) SoilGrids250m: Global gridded soil information based on machine learning. PLoS ONE 12(2): e0169748. \doi{10.1371/journal.pone.0169748}
-\item \strong{Soil Temperature}: Wan, Z., Hook, S., Hulley, G. (2015). MOD11A2 MODIS/Terra Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD11A2.006} (Zenodo: \url{https://zenodo.org/records/1435938})
-\item \strong{Ecoregions}: Eric Dinerstein, David Olson, Anup Joshi, Carly Vynne, Neil D. Burgess, Eric Wikramanayake, Nathan Hahn, Suzanne Palminteri, Prashant Hedao, Reed Noss, Matt Hansen, Harvey Locke, Erle C Ellis, Benjamin Jones, Charles Victor Barber, Randy Hayes, Cyril Kormos, Vance Martin, Eileen Crist, Wes Sechrest, Lori Price, Jonathan E. M. Baillie, Don Weeden, Kierán Suckling, Crystal Davis, Nigel Sizer, Rebecca Moore, David Thau, Tanya Birch, Peter Potapov, Svetlana Turubanova, Alexandra Tyukavina, Nadia de Souza, Lilian Pintea, José C. Brito, Othman A. Llewellyn, Anthony G. Miller, Annette Patzelt, Shahina A. Ghazanfar, Jonathan Timberlake, Heinz Klöser, Yara Shennan-Farpón, Roeland Kindt, Jens-Peter Barnekow Lillesø, Paulo van Breugel, Lars Graudal, Maianna Voge, Khalaf F. Al-Shammari, Muhammad Saleem, An Ecoregion-Based Approach to Protecting Half the Terrestrial Realm, BioScience, Volume 67, Issue 6, June 2017, Pages 534–545, \doi{10.1093/biosci/bix014}
-\item \strong{Elevation and topography}: Jarvis A., H.I. Reuter, A. Nelson, E. Guevara, 2008, Hole-filled seamless SRTM data V4, International Centre for Tropical Agriculture (CIAT), available from \url{https://srtm.csi.cgiar.org}.
-\item \strong{Aridity}: Zomer, R.J., Xu, J. & Trabucco, A. Version 3 of the Global Aridity Index and Potential Evapotranspiration Database. Sci Data 9, 409 (2022). \doi{10.1038/s41597-022-01493-1}
-\item \strong{Country, continent, region, and subregion}: Natural Earth. Free vector and raster map data. \url{https://www.naturalearthdata.com/}.
+\item Copernicus Global Land Service: Normalised Difference Vegetation Index Long Term Statistics v3 (1999-2019, 1 km resolution). \url{https://sdi.eea.europa.eu/catalogue/srv/api/records/290e81fb-4c84-42ad-ae12-f663312b0eda}
+}
+
+\strong{Climate classification:}
+\itemize{
+\item Beck, H.E., et al. (2018). Present and future Koppen-Geiger climate classification maps at 1-km resolution. \emph{Scientific Data}, 5, 180214. \doi{10.1038/sdata.2018.214}
+}
+
+\strong{Soil water index:}
+\itemize{
+\item Copernicus Land Monitoring Service: Soil Water Index. \doi{10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda}
+}
+
+\strong{Climate predictors (temperature, rainfall, solar radiation, growing season, evapotranspiration, cloud cover, humidity):}
+\itemize{
+\item Brun, P., Zimmermann, N.E., Hari, C., Pellissier, L., & Karger, D.N. (2022). CHELSA-BIOCLIM+ A novel set of global climate-related predictors at kilometre-resolution. EnviDat. \doi{10.16904/envidat.332}
+}
+
+\strong{Soil type and properties:}
+\itemize{
+\item Hengl, T., et al. (2017). SoilGrids250m: Global gridded soil information based on machine learning. \emph{PLOS ONE}, 12(2), e0169748. \doi{10.1371/journal.pone.0169748}
+}
+
+\strong{Soil temperature:}
+\itemize{
+\item Wan, Z., Hook, S., & Hulley, G. (2015). MOD11A2 MODIS/Terra Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD11A2.006}
+}
+
+\strong{Ecoregions and biogeography:}
+\itemize{
+\item Dinerstein, E., et al. (2017). An Ecoregion-Based Approach to Protecting Half the Terrestrial Realm. \emph{BioScience}, 67(6), 534-545. \doi{10.1093/biosci/bix014}
+}
+
+\strong{Elevation and topography:}
+\itemize{
+\item Jarvis, A., Reuter, H.I., Nelson, A., & Guevara, E. (2008). Hole-filled seamless SRTM data V4. International Centre for Tropical Agriculture (CIAT). \url{https://srtm.csi.cgiar.org}
+}
+
+\strong{Aridity index:}
+\itemize{
+\item Zomer, R.J., Xu, J., & Trabucco, A. (2022). Version 3 of the Global Aridity Index and Potential Evapotranspiration Database. \emph{Scientific Data}, 9, 409. \doi{10.1038/s41597-022-01493-1}
+}
+
+\strong{Country, continent, region, and subregion:}
+\itemize{
+\item Natural Earth. Free vector and raster map data. \url{https://www.naturalearthdata.com/}
 }
 }
-\examples{
+\usage{
 data(vi)
-head(vi)
+}
+\description{
+\code{sf} data frame with \code{POINT} geometry representing 9,265 global locations with
+5 response variables encoding the Normalized Difference Vegetation Index (NDVI) and
+58 environmental predictors (47 numeric, 11 categorical).
+Use \code{\link[=vi_extra]{vi_extra()}} to download an extended version with 30,000 rows.
+
+NDVI values are derived from the Copernicus Global Land Service Long Term Statistics
+product (1999-2019) at 1 km resolution. Locations were spatially thinned to reduce
+spatial autocorrelation.
+
+\strong{Response variable encodings:}
+\itemize{
+\item \code{vi_numeric}: continuous NDVI values in the range 0-1.
+\item \code{vi_counts}: simulated integer counts created by multiplying \code{vi_numeric} by 1000 and coercing to integer.
+\item \code{vi_binomial}: simulated binary variable created by thresholding \code{vi_numeric} at 0.5.
+\item \code{vi_categorical}: character variable with categories "very_low", "low", "medium", "high", and "very_high", with thresholds at quantiles of \code{vi_numeric}.
+\item \code{vi_factor}: \code{vi_categorical} converted to factor.
+}
+
+Environmental predictors were extracted as pixel values from rasters at 1 km resolution.
 }
 \seealso{
 Other vi: 

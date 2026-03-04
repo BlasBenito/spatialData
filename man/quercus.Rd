@@ -5,38 +5,76 @@
 \alias{quercus}
 \title{European Quercus (Oak) Species Distribution with Environmental Predictors}
 \format{
-sf data.frame
-}
-\usage{
-data(quercus)
-}
-\description{
-\code{sf} dataframe with \code{POINT} geometry containing 6,728 records of eight European Quercus (oak) species and absence points, 1 response variable (see \link{quercus_response}), and 31 numeric predictors (see \link{quercus_predictors}). Use \code{\link[=quercus_extra]{quercus_extra()}} to download the associated environmental raster.
+An sf data frame with 6728 rows (species occurrences and absences) and 33 columns:
 
-\strong{Response}
-
-The response variable \code{species} is a character column with 9 levels:
+\strong{Response variable (1):}
 \itemize{
-\item \code{"absence"}: Background absence points.
-\item \code{"Quercus robur"}: \emph{Quercus robur} L. (English oak).
-\item \code{"Quercus petraea"}: \emph{Quercus petraea} (Matt.) Liebl. (Sessile oak).
-\item \code{"Quercus ilex"}: \emph{Quercus ilex} L. (Holm oak).
-\item \code{"Quercus cerris"}: \emph{Quercus cerris} L. (Turkey oak).
-\item \code{"Quercus faginea"}: \emph{Quercus faginea} Lam. (Portuguese oak).
-\item \code{"Quercus pubescens"}: \emph{Quercus pubescens} Willd. (Downy oak).
-\item \code{"Quercus pyrenaica"}: \emph{Quercus pyrenaica} Willd. (Pyrenean oak).
-\item \code{"Quercus suber"}: \emph{Quercus suber} L. (Cork oak).
+\item \code{species}: Character column with 9 levels:
+\code{"absence"} (background absence points),
+\code{"Quercus robur"} (English oak),
+\code{"Quercus petraea"} (Sessile oak),
+\code{"Quercus ilex"} (Holm oak),
+\code{"Quercus cerris"} (Turkey oak),
+\code{"Quercus faginea"} (Portuguese oak),
+\code{"Quercus pubescens"} (Downy oak),
+\code{"Quercus pyrenaica"} (Pyrenean oak),
+\code{"Quercus suber"} (Cork oak).
 }
 
-\strong{Predictors}
+\strong{Predictor variables - Bioclimatic (17):}
 
+WorldClim v2 bioclimatic variables (excludes bio8 and bio9):
 \itemize{
-\item \code{bio1}, \code{bio2}, ..., \code{bio19}: WorldClim bioclimatic variables (17 variables, excluding bio8 and bio9).
-\item \code{ndvi_average}, \code{ndvi_maximum}, \code{ndvi_minimum}, \code{ndvi_range}: MODIS NDVI statistics.
-\item \code{sun_rad_average}, \code{sun_rad_maximum}, \code{sun_rad_minimum}, \code{sun_rad_range}: WorldClim solar radiation statistics.
-\item \code{landcover_veg_bare}, \code{landcover_veg_herb}, \code{landcover_veg_tree}: MODIS Vegetation Continuous Fields (MOD44B) land cover percentages.
+\item \code{bio1}: Annual mean temperature (degrees C).
+\item \code{bio2}: Mean diurnal range (degrees C).
+\item \code{bio3}: Isothermality (bio2/bio7 * 100).
+\item \code{bio4}: Temperature seasonality (standard deviation * 100).
+\item \code{bio5}: Max temperature of warmest month (degrees C).
+\item \code{bio6}: Min temperature of coldest month (degrees C).
+\item \code{bio7}: Temperature annual range (degrees C).
+\item \code{bio10}: Mean temperature of warmest quarter (degrees C).
+\item \code{bio11}: Mean temperature of coldest quarter (degrees C).
+\item \code{bio12}: Annual precipitation (mm).
+\item \code{bio13}: Precipitation of wettest month (mm).
+\item \code{bio14}: Precipitation of driest month (mm).
+\item \code{bio15}: Precipitation seasonality (coefficient of variation).
+\item \code{bio16}: Precipitation of wettest quarter (mm).
+\item \code{bio17}: Precipitation of driest quarter (mm).
+\item \code{bio18}: Precipitation of warmest quarter (mm).
+\item \code{bio19}: Precipitation of coldest quarter (mm).
+}
+
+\strong{Predictor variables - NDVI (4):}
+\itemize{
+\item \code{ndvi_average}: Average NDVI.
+\item \code{ndvi_maximum}: Maximum NDVI.
+\item \code{ndvi_minimum}: Minimum NDVI.
+\item \code{ndvi_range}: NDVI range.
+}
+
+\strong{Predictor variables - Solar radiation (4):}
+\itemize{
+\item \code{sun_rad_average}: Average solar radiation (kJ m-2 day-1).
+\item \code{sun_rad_maximum}: Maximum solar radiation (kJ m-2 day-1).
+\item \code{sun_rad_minimum}: Minimum solar radiation (kJ m-2 day-1).
+\item \code{sun_rad_range}: Solar radiation range (kJ m-2 day-1).
+}
+
+\strong{Predictor variables - Land cover (3):}
+\itemize{
+\item \code{landcover_veg_bare}: Percentage of bare ground.
+\item \code{landcover_veg_herb}: Percentage of herbaceous vegetation.
+\item \code{landcover_veg_tree}: Percentage of tree cover.
+}
+
+\strong{Predictor variables - Topography (2):}
+\itemize{
 \item \code{topographic_diversity}: Number of unique combinations of elevation, slope, and aspect classes within a neighborhood.
 \item \code{topo_slope}: Topographic slope in degrees.
+}
+
+\strong{Predictor variables - Human impact (1):}
+\itemize{
 \item \code{human_footprint}: Human footprint index.
 }
 
@@ -44,20 +82,46 @@ The response variable \code{species} is a character column with 9 levels:
 \itemize{
 \item \code{geometry}: Point geometry (WGS84, EPSG:4326).
 }
-
-\strong{Data sources}
+}
+\source{
+\strong{Species occurrences:}
 \itemize{
-\item \strong{Species occurrences}: GBIF.org. Global Biodiversity Information Facility. \url{https://www.gbif.org/}.
-\item \strong{Bioclimatic variables and solar radiation}: Fick, S.E. and Hijmans, R.J., 2017. WorldClim 2: new 1-km spatial resolution climate surfaces for global land areas. International Journal of Climatology, 37(12), pp.4302-4315. \doi{10.1002/joc.5086}
-\item \strong{Human footprint}: Venter, O., Sanderson, E.W., Magrach, A., Allan, J.R., Beher, J., Jones, K.R., Possingham, H.P., Laurance, W.F., Wood, P., Fekete, B.M., Levy, M.A. and Watson, J.E., 2016. Global terrestrial Human Footprint maps for 1993 and 2009. Scientific Data, 3, p.160067. \doi{10.1038/sdata.2016.67}
-\item \strong{Land cover}: DiMiceli, C., Carroll, M., Sohlberg, R., Kim, D.H., Kelly, M., and Townshend, J.R.G. (2015). MOD44B MODIS/Terra Vegetation Continuous Fields Yearly L3 Global 250m SIN Grid V006. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD44B.006}
-\item \strong{NDVI}: Didan, K. (2015). MOD13A2 MODIS/Terra Vegetation Indices 16-Day L3 Global 1km SIN Grid V006. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD13A2.006}
-\item \strong{Elevation and topography}: Jarvis A., H.I. Reuter, A. Nelson, E. Guevara, 2008. Hole-filled seamless SRTM data V4, International Centre for Tropical Agriculture (CIAT). \url{https://srtm.csi.cgiar.org}.
+\item GBIF.org. Global Biodiversity Information Facility. \url{https://www.gbif.org/}
+}
+
+\strong{Bioclimatic variables and solar radiation:}
+\itemize{
+\item Fick, S.E. & Hijmans, R.J. (2017). WorldClim 2: new 1-km spatial resolution climate surfaces for global land areas. \emph{International Journal of Climatology}, 37(12), 4302-4315. \doi{10.1002/joc.5086}
+}
+
+\strong{NDVI:}
+\itemize{
+\item Didan, K. (2015). MOD13A2 MODIS/Terra Vegetation Indices 16-Day L3 Global 1km SIN Grid V006. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD13A2.006}
+}
+
+\strong{Land cover:}
+\itemize{
+\item DiMiceli, C., et al. (2015). MOD44B MODIS/Terra Vegetation Continuous Fields Yearly L3 Global 250m SIN Grid V006. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD44B.006}
+}
+
+\strong{Elevation and topography:}
+\itemize{
+\item Jarvis, A., Reuter, H.I., Nelson, A., & Guevara, E. (2008). Hole-filled seamless SRTM data V4. International Centre for Tropical Agriculture (CIAT). \url{https://srtm.csi.cgiar.org}
+}
+
+\strong{Human footprint:}
+\itemize{
+\item Venter, O., et al. (2016). Global terrestrial Human Footprint maps for 1993 and 2009. \emph{Scientific Data}, 3, 160067. \doi{10.1038/sdata.2016.67}
 }
 }
-\examples{
+\usage{
 data(quercus)
-head(quercus)
+}
+\description{
+\code{sf} data frame with \code{POINT} geometry containing 6,728 records of eight European
+Quercus (oak) species and absence points, 1 response variable (see \link{quercus_response}),
+and 31 numeric predictors (see \link{quercus_predictors}).
+Use \code{\link[=quercus_extra]{quercus_extra()}} to download the associated environmental raster.
 }
 \seealso{
 Other quercus: 

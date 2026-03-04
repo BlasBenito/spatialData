@@ -13,8 +13,11 @@ RoxygenNote: 7.3.3
 Imports:
     sf
 Suggests:
+    lavaan,
     mapview,
+    pdp,
     roxyglobals,
+    semPlot,
     spelling,
     terra,
     testthat (>= 3.0.0)

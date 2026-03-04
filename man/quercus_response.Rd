@@ -3,15 +3,16 @@
 \docType{data}
 \name{quercus_response}
 \alias{quercus_response}
-\title{Response Variable Name for \code{quercus}}
+\title{Response variable name for quercus dataset}
 \format{
-Character string of length 1.
+A character string of length 1.
 }
 \usage{
 data(quercus_response)
 }
 \description{
-Character string with the name of the response variable in \link{quercus}: \code{"species"}.
+Character string with the name of the response variable in \link{quercus}: \code{"species"},
+a character column with 9 levels (absence + 8 Quercus species).
 }
 \seealso{
 Other quercus: 

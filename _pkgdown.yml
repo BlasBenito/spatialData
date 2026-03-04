@@ -24,6 +24,7 @@ articles:
   navbar: "Tutorials"
   contents:
   - articles/vi
+  - articles/plantae
   - articles/quercus
   - articles/neanderthal
 
@@ -42,6 +43,9 @@ reference:
       - plantae
       - plantae_responses
       - plantae_predictors
+      - plantae_west
+      - plantae_east
+      - plantae_extra
 
   - title: "quercus"
     desc: "European oak species distribution records with bioclimatic and land cover predictors."
