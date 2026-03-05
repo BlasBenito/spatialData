@@ -5,7 +5,7 @@
 \alias{trees}
 \title{Tree Species Richness and Environmental Predictors}
 \format{
-An sf data frame with 3429 rows (hexagonal cells) and 53 columns:
+An sf data frame with 3373 rows (hexagonal cells) and 53 columns:
 
 \strong{Identifier (1):}
 \itemize{
@@ -153,7 +153,7 @@ An sf data frame with 3429 rows (hexagonal cells) and 53 columns:
 data(trees)
 }
 \description{
-\code{sf} data frame with \code{POLYGON} geometry representing 3,429 hexagonal grid
+\code{sf} data frame with \code{POLYGON} geometry representing 3,373 hexagonal grid
 cells across the Americas, with 1 response variable encoding tree species
 richness and 50 numeric environmental predictors.
 

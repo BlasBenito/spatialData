@@ -1,0 +1,226 @@
+---
+title: "trees"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_title: "Contents"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  eval = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+```
+
+## Overview
+
+The `trees` dataset contains tree species richness for **3,373 hexagonal grid cells** across the Americas, derived from **GBIF** and the **Tree Biodiversity Network (BIOTREE-NET)**, combined with 50 environmental predictor variables.
+
+Its main features are:
+
+- *Americas scope*: Hexagonal cells covering longitudes -125.3° to -34.3° and latitudes -34.4° to 49.9°.
+- *Single response*: `trees`, an integer count of tree species richness per hexagonal cell.
+- *Rich environmental predictors*: 50 predictors spanning 10 categories (climate, soil, vegetation, geography, and more).
+
+The dataset is designed to support regression modelling, multicollinearity filtering, and spatial analysis of tree diversity patterns.
+
+## Setup
+
+```{r, include = FALSE}
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak")
+}
+pak::pkg_install(
+  c(
+    "sf",
+    "mapview",
+    "dplyr",
+    "collinear",
+    "rpart",
+    "rpart.plot",
+    "viridis"
+  ),
+  ask = FALSE
+)
+```
+
+The following R libraries and example data are required to run this tutorial.
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
+library(spatialData)
+library(sf)
+library(mapview)
+library(dplyr)
+library(collinear)
+library(rpart)
+library(rpart.plot)
+library(viridis)
+
+data(
+  trees,
+  trees_response,
+  trees_predictors,
+  package = "spatialData"
+)
+```
+
+## Description
+
+The dataset is an `sf` data frame with `r nrow(trees)` rows and `r ncol(trees)` columns, and 989 cells with `NA` in the `trees` response variable (cells where environmental data is valid but no tree species were recorded). The first 10 records and all columns but `geometry` are shown below.
+
+```{r}
+trees |>
+  head(n = 10) |>
+  dplyr::glimpse()
+```
+
+The hexagonal grid cells cover the Americas between latitudes 50°N and 35°S. The map below shows the grid coloured by log of the tree richness.
+
+```{r}
+mapview::mapview(
+  trees |> 
+    dplyr::mutate(
+      trees = log(trees)
+    ),
+  zcol = "trees",
+  layer.name = "log(trees)",
+  col.regions = viridis::turbo(
+    n = 100,
+    direction = 1
+  ),
+  color = NULL
+)
+```
+
+## Response Variable
+
+The response variable `trees` (named in the vector `trees_response`) is an **integer count** of tree species richness per hexagonal cell, derived from GBIF and BIOTREE-NET occurrence records acquired *circa* 2013.
+
+```{r}
+summary(trees$trees)
+```
+
+
+The dataset includes **50 numeric predictors**, named in the vector `trees_predictors`.
+
+```{r}
+trees |> 
+  sf::st_drop_geometry() |> 
+  dplyr::select(
+    dplyr::all_of(trees_predictors)
+  ) |> 
+  head(n = 5) |> 
+  dplyr::glimpse()
+```
+
+
+## Example Usage
+
+This example uses `trees` to identify the environmental predictors driving tree species richness across the Americas.
+
+- *Multicollinearity Analysis*: selects a non-redundant subset of predictors focused on ecologically meaningful variables.
+- *Regression Tree Model*: fits an interpretable decision tree to explain tree richness patterns.
+- *Tree Visualization*: displays the decision rules as a readable diagram.
+- *Variable Importance*: ranks predictors by their contribution to the model.
+- *Prediction Map*: maps the model predictions back to the hexagonal grid.
+
+### Multicollinearity Analysis
+
+The `trees` dataset has `r length(trees_predictors)` predictors with varying levels of redundancy (e.g., many temperature and precipitation variables are correlated). The [`collinear::collinear()`](https://blasbenito.github.io/collinear/reference/collinear.html) function selects a non-redundant subset by prioritizing predictors by their predictive power for the response via [`collinear::f_count_rf`](https://blasbenito.github.io/collinear/reference/f_count_rf.html), which uses random forest, a tree-based approach.
+
+```{r}
+trees_selection <- collinear::collinear(
+  df = trees,
+  responses = "trees",
+  predictors = trees_predictors,
+  f = collinear::f_count_rf,
+  preference_order = c(
+    "temperature_mean",
+    "precipitation_sum",
+    "temperature_coldest_month_minimum",
+    "temperature_warmest_month_maximum",
+    "precipitation_driest_quarter_sum",
+    "temperature_seasonality",
+    "precipitation_seasonality"
+  ),
+  quiet = TRUE
+)
+```
+
+The selected predictors for `trees` are:
+
+```{r}
+trees_selection$trees$selection
+```
+
+The function also returns a linear formula ready for use.
+
+```{r}
+trees_selection$trees$formulas$linear
+```
+
+
+### Regression Tree Model
+
+A regression decision tree provides an interpretable summary of how the selected predictors interact to explain tree species richness. The model is fitted with [`rpart::rpart()`](https://cran.r-project.org/package=rpart) using the `anova` method for regression.
+
+```{r}
+trees_model <- rpart::rpart(
+  formula = trees_selection$trees$formulas$linear,
+  data = sf::st_drop_geometry(trees),
+  control = rpart.control(
+    minbucket = 10 #minimum cases in a terminal leaf
+  )
+)
+```
+
+### Tree Visualization
+
+The decision tree below shows the sequence of environmental thresholds that best explain differences in tree species richness. Each internal node shows the splitting variable and threshold; each leaf shows the predicted richness value and the percentage of cells reaching that node.
+
+```{r, fig.width = 8, fig.height = 4}
+rpart.plot::rpart.plot(
+  trees_model,
+  type = 3,
+  extra = 101,
+  fallen.leaves = TRUE,
+  roundint = FALSE,
+  cex = 0.7,
+  main = "Regression Tree: Tree Species Richness in the Americas",
+  box.palette = viridis::turbo(n = 10, alpha = 0.5)
+)
+```
+
+According to the model, 4,000 mm of yearly precipitation is the main differentiator between areas with *high* and *low* tree richness. In the latter group, highly continental areas at more than 1660km from the ocean harbor the lowest number of tree species. On the other hand, regions with moderate temperatures, low soil sand, and higher cloud cover harbor the largest number of tree species.
+
+
+### Prediction Map
+
+Assigning predictions back to the spatial data reveals the ability of this simple model to capture the main pattern of geographic variation in tree richness.
+
+```{r, message = FALSE}
+trees$predicted <- predict(
+  object = trees_model,
+  newdata = sf::st_drop_geometry(trees)
+) |> 
+  as.integer() |> 
+  as.factor()
+
+mapview::mapview(
+  trees,
+  zcol = "predicted",
+  layer.name = "Predicted richness",
+    col.regions = viridis::turbo(
+    n = 7,
+    direction = 1
+  ),
+  color = NULL
+)
+```
+
+## Conclusion
+
+The `trees` dataset provides a rich testbed for spatial modelling of biodiversity patterns across the Americas. The workflow above demonstrates how a handful of environmental predictors can produce an interpretable regression tree capturing main geographic gradients in tree species richness, making `trees` well suited for tutorials on variable selection, regression modelling, and spatial visualisation in R.

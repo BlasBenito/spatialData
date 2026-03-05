@@ -1,7 +1,7 @@
 #' @title Tree Species Richness and Environmental Predictors
 #'
 #' @description
-#' `sf` data frame with `POLYGON` geometry representing 3,429 hexagonal grid
+#' `sf` data frame with `POLYGON` geometry representing 3,373 hexagonal grid
 #' cells across the Americas, with 1 response variable encoding tree species
 #' richness and 50 numeric environmental predictors.
 #'
@@ -14,7 +14,7 @@
 #' -34.3° and latitudes -34.4° to 49.9°.
 #'
 #' @usage data(trees)
-#' @format An sf data frame with 3429 rows (hexagonal cells) and 53 columns:
+#' @format An sf data frame with 3373 rows (hexagonal cells) and 53 columns:
 #'
 #' **Identifier (1):**
 #' \itemize{
