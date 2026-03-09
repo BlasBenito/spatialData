@@ -1,8 +1,9 @@
-# Response Variable Name for `quercus`
+# Response variable name for quercus dataset
 
 Character string with the name of the response variable in
 [quercus](https://blasbenito.github.io/spatialData/reference/quercus.md):
-`"species"`.
+`"species"`, a character column with 9 levels (absence + 8 Quercus
+species).
 
 ## Usage
 
@@ -12,7 +13,7 @@ data(quercus_response)
 
 ## Format
 
-Character string of length 1.
+A character string of length 1.
 
 ## See also
 

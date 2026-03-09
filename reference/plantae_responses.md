@@ -20,4 +20,7 @@ A character vector of length 53.
 
 Other plantae:
 [`plantae`](https://blasbenito.github.io/spatialData/reference/plantae.md),
-[`plantae_predictors`](https://blasbenito.github.io/spatialData/reference/plantae_predictors.md)
+[`plantae_east()`](https://blasbenito.github.io/spatialData/reference/plantae_east.md),
+[`plantae_extra()`](https://blasbenito.github.io/spatialData/reference/plantae_extra.md),
+[`plantae_predictors`](https://blasbenito.github.io/spatialData/reference/plantae_predictors.md),
+[`plantae_west()`](https://blasbenito.github.io/spatialData/reference/plantae_west.md)

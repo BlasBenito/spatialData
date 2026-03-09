@@ -1,6 +1,12 @@
-# Vector of all predictor names in `vi`
+# Predictor variable names for vi dataset
 
-Vector of all predictor names in `vi`
+Character vector of 58 predictor variable names from
+[vi](https://blasbenito.github.io/spatialData/reference/vi.md), covering
+climate classification (3), soil type (1), topography (3), soil water
+index (4), soil temperature (4), soil properties (6), solar radiation
+(4), growing season (4), temperature (5), rainfall (4),
+evapotranspiration (4), cloud cover (4), aridity (1), humidity (4),
+biogeography (3), and administrative (4).
 
 ## Usage
 
@@ -10,7 +16,7 @@ data(vi_predictors)
 
 ## Format
 
-Character vector of length 58.
+A character vector of length 58.
 
 ## See also
 

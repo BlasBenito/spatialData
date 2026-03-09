@@ -1,8 +1,8 @@
-# Response Variable Name for `neanderthal`
+# Response variable name for neanderthal dataset
 
 Character string with the name of the response variable in
 [neanderthal](https://blasbenito.github.io/spatialData/reference/neanderthal.md):
-`"presence"`.
+`"presence"`, a binary integer (1 = presence, 0 = pseudo-absence).
 
 ## Usage
 
@@ -12,7 +12,7 @@ data(neanderthal_response)
 
 ## Format
 
-Character string of length 1.
+A character string of length 1.
 
 ## See also
 

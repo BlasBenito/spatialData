@@ -1,6 +1,10 @@
-# Vector of response names in `vi`
+# Response variable names for vi dataset
 
-Vector of response names in `vi`
+Character vector containing the names of the 5 response variables in
+[vi](https://blasbenito.github.io/spatialData/reference/vi.md),
+representing different encodings of NDVI: continuous (`vi_numeric`),
+integer counts (`vi_counts`), binary (`vi_binomial`), categorical
+(`vi_categorical`), and factor (`vi_factor`).
 
 ## Usage
 
@@ -10,7 +14,7 @@ data(vi_responses)
 
 ## Format
 
-Character vector with response names.
+A character vector of length 5.
 
 ## See also
 

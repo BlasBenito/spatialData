@@ -1,8 +1,8 @@
-# Predictor Variable Names for `neanderthal`
+# Predictor variable names for neanderthal dataset
 
-Character vector with the names of the 25 predictor variables in
-[neanderthal](https://blasbenito.github.io/spatialData/reference/neanderthal.md):
-19 bioclimatic and 6 topographic variables.
+Character vector of 25 predictor variable names from
+[neanderthal](https://blasbenito.github.io/spatialData/reference/neanderthal.md),
+covering palaeoclimatic (19) and topography (6).
 
 ## Usage
 
@@ -12,7 +12,7 @@ data(neanderthal_predictors)
 
 ## Format
 
-Character vector of length 25.
+A character vector of length 25.
 
 ## See also
 
