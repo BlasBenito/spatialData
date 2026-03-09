@@ -5,13 +5,10 @@
 #' cells across the Americas, with 1 response variable encoding tree species
 #' richness and 50 numeric environmental predictors.
 #'
-#' Tree species richness per cell was computed from occurrence records sourced
-#' primarily from the Global Biodiversity Information Facility (GBIF), supplemented
-#' by a small number of records from the Tree Biodiversity Network (BIOTREE-NET;
-#' Cayuela et al. 2012). The hexagonal grid was
-#' constructed using `sf::st_make_grid(..., cellsize = 1, square = FALSE)` at
-#' 1-degree resolution (WGS84, EPSG:4326), covering longitudes -125.3° to
-#' -34.3° and latitudes -34.4° to 49.9°.
+#' Tree species in this dataset does NOT represent total tree species counts! The dataset focuses on the tree species found in Mesoamerica according to the Tree Biodiversity Network (BIOTREE-NET;
+#' Cayuela et al. 2012). These tree species were later used as input for a search query at the Global Biodiversity Information Facility (GBIF). The resulting presence data and environmental data at 1km resolution were aggregated as a hexagonal grid.
+#'
+#' The hexagonal grid was constructed using `sf::st_make_grid(..., cellsize = 1, square = FALSE)` at 1-degree resolution (WGS84, EPSG:4326), covering longitudes -125.3° to -34.3° and latitudes -34.4° to 49.9°.
 #'
 #' @usage data(trees)
 #' @format An sf data frame with 3373 rows (hexagonal cells) and 53 columns:
@@ -29,20 +26,20 @@
 #' **Predictor variables - Air humidity (4):**
 #' \itemize{
 #'   \item `air_humidity_max`: Maximum monthly near-surface relative humidity (%).
-#'   \item `air_humidity_mean`: Mean annual near-surface relative humidity (%).
+#'   \item `air_humidity`: Mean annual near-surface relative humidity (%).
 #'   \item `air_humidity_min`: Minimum monthly near-surface relative humidity (%).
 #'   \item `air_humidity_range`: Annual near-surface relative humidity range (%).
 #' }
 #'
 #' **Predictor variables - Aridity (1):**
 #' \itemize{
-#'   \item `aridity_mean`: Mean aridity index (unitless ratio; higher values indicate wetter conditions).
+#'   \item `aridity`: Mean aridity index (unitless ratio; higher values indicate wetter conditions).
 #' }
 #'
 #' **Predictor variables - Cloud cover (4):**
 #' \itemize{
 #'   \item `cloud_cover_max`: Maximum monthly total cloud cover (%).
-#'   \item `cloud_cover_mean`: Mean annual total cloud cover (%).
+#'   \item `cloud_cover`: Mean annual total cloud cover (%).
 #'   \item `cloud_cover_min`: Minimum monthly total cloud cover (%).
 #'   \item `cloud_cover_range`: Annual total cloud cover range (%).
 #' }
@@ -50,36 +47,36 @@
 #' **Predictor variables - Evapotranspiration (4):**
 #' \itemize{
 #'   \item `evapotranspiration_max`: Maximum monthly potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
-#'   \item `evapotranspiration_mean`: Mean annual potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
+#'   \item `evapotranspiration`: Mean annual potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
 #'   \item `evapotranspiration_min`: Minimum monthly potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
 #'   \item `evapotranspiration_range`: Annual potential evapotranspiration range (kg m-2 month-1; Penman-Monteith).
 #' }
 #'
-#' **Predictor variables - Precipitation (8):**
+#' **Predictor variables - Rainfall (8):**
 #' \itemize{
-#'   \item `precipitation_seasonality`: Precipitation seasonality as coefficient of variation of monthly totals (CHELSA bio15).
-#'   \item `precipitation_sum`: Total annual precipitation (kg m-2; CHELSA bio12).
-#'   \item `precipitation_coldest_quarter_sum`: Precipitation of coldest quarter (kg m-2; CHELSA bio19).
-#'   \item `precipitation_driest_month_sum`: Precipitation of driest month (kg m-2; CHELSA bio14).
-#'   \item `precipitation_driest_quarter_sum`: Precipitation of driest quarter (kg m-2; CHELSA bio17).
-#'   \item `precipitation_warmest_quarter_sum`: Precipitation of warmest quarter (kg m-2; CHELSA bio18).
-#'   \item `precipitation_wettest_month_sum`: Precipitation of wettest month (kg m-2; CHELSA bio13).
-#'   \item `precipitation_wettest_quarter_sum`: Precipitation of wettest quarter (kg m-2; CHELSA bio16).
+#'   \item `rainfall_seasonality`: Precipitation seasonality as coefficient of variation of monthly totals (CHELSA bio15).
+#'   \item `rainfall`: Total annual precipitation (kg m-2; CHELSA bio12).
+#'   \item `rainfall_coldest_quarter`: Precipitation of coldest quarter (kg m-2; CHELSA bio19).
+#'   \item `rainfall_driest_month`: Precipitation of driest month (kg m-2; CHELSA bio14).
+#'   \item `rainfall_driest_quarter`: Precipitation of driest quarter (kg m-2; CHELSA bio17).
+#'   \item `rainfall_warmest_quarter`: Precipitation of warmest quarter (kg m-2; CHELSA bio18).
+#'   \item `rainfall_wettest_month`: Precipitation of wettest month (kg m-2; CHELSA bio13).
+#'   \item `rainfall_wettest_quarter`: Precipitation of wettest quarter (kg m-2; CHELSA bio16).
 #' }
 #'
 #' **Predictor variables - Temperature (11):**
 #' \itemize{
 #'   \item `temperature_isothermality`: Isothermality as ratio of mean daily range to annual range (unitless; CHELSA bio3).
 #'   \item `temperature_mean_daily_range`: Mean of monthly temperature ranges (degrees C; CHELSA bio2).
-#'   \item `temperature_mean`: Mean annual air temperature (degrees C; CHELSA bio1).
+#'   \item `temperature`: Mean annual air temperature (degrees C; CHELSA bio1).
 #'   \item `temperature_range`: Annual air temperature range (degrees C; CHELSA bio7).
 #'   \item `temperature_seasonality`: Temperature seasonality as standard deviation of monthly means (degrees C; CHELSA bio4).
-#'   \item `temperature_coldest_month_minimum`: Minimum temperature of coldest month (degrees C; CHELSA bio6).
-#'   \item `temperature_coldest_quarter_mean`: Mean temperature of coldest quarter (degrees C; CHELSA bio11).
-#'   \item `temperature_driest_quarter_mean`: Mean temperature of driest quarter (degrees C; CHELSA bio9).
-#'   \item `temperature_warmest_month_maximum`: Maximum temperature of warmest month (degrees C; CHELSA bio5).
-#'   \item `temperature_warmest_quarter_mean`: Mean temperature of warmest quarter (degrees C; CHELSA bio10).
-#'   \item `temperature_wettest_quarter_mean`: Mean temperature of wettest quarter (degrees C; CHELSA bio8).
+#'   \item `temperature_coldest_month_min`: Minimum temperature of coldest month (degrees C; CHELSA bio6).
+#'   \item `temperature_coldest_quarter`: Mean temperature of coldest quarter (degrees C; CHELSA bio11).
+#'   \item `temperature_driest_quarter`: Mean temperature of driest quarter (degrees C; CHELSA bio9).
+#'   \item `temperature_warmest_month_max`: Maximum temperature of warmest month (degrees C; CHELSA bio5).
+#'   \item `temperature_warmest_quarter`: Mean temperature of warmest quarter (degrees C; CHELSA bio10).
+#'   \item `temperature_wettest_quarter`: Mean temperature of wettest quarter (degrees C; CHELSA bio8).
 #' }
 #'
 #' **Predictor variables - Geography (4):**
@@ -103,7 +100,7 @@
 #' **Predictor variables - Soil temperature (4):**
 #' \itemize{
 #'   \item `soil_temperature_max`: Maximum annual land surface temperature (degrees C).
-#'   \item `soil_temperature_mean`: Mean annual land surface temperature (degrees C).
+#'   \item `soil_temperature`: Mean annual land surface temperature (degrees C).
 #'   \item `soil_temperature_min`: Minimum annual land surface temperature (degrees C).
 #'   \item `soil_temperature_range`: Annual land surface temperature range (degrees C).
 #' }
@@ -111,7 +108,7 @@
 #' **Predictor variables - NDVI (4):**
 #' \itemize{
 #'   \item `ndvi_max`: Maximum annual NDVI (unitless, 0-1).
-#'   \item `ndvi_mean`: Mean annual NDVI (unitless, 0-1).
+#'   \item `ndvi`: Mean annual NDVI (unitless, 0-1).
 #'   \item `ndvi_min`: Minimum annual NDVI (unitless, 0-1).
 #'   \item `ndvi_range`: Annual NDVI range (unitless, 0-1).
 #' }
