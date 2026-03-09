@@ -27,6 +27,7 @@ articles:
   - articles/plantae
   - articles/quercus
   - articles/neanderthal
+  - articles/trees
 
 reference:
   - title: "neanderthal"
@@ -62,3 +63,10 @@ reference:
       - vi_responses
       - vi_predictors
       - vi_extra
+
+  - title: "trees"
+    desc: "Richness of Mesoamerican trees across North and South America."
+    contents:
+      - trees
+      - trees_response
+      - trees_predictors
