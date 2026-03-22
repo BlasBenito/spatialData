@@ -1,0 +1,550 @@
+---
+title: "communities"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_title: "Contents"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  eval = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+```
+
+## Overview
+
+The `communities` dataset contains spatially-thinned plant community records from the **Sierra Nevada** mountain range in SE Spain, compiled from the official vegetation map at 1:10,000 scale. It is designed to support multi-class classification, binary presence-absence modelling, and ecological niche analysis using climate and topographic predictors.
+
+Its main features are:
+
+- *Sierra Nevada scope*: 7,300 point records covering the Sierra Nevada mountain range (SE Spain, EPSG:25830).
+- *Multi-class and binary responses*: a `community` column with 6 levels (`"none"` + 5 named plant communities) and 5 binary presence-absence columns for individual community types.
+- *Climate and topographic predictors*: 9 numeric predictors spanning seasonal temperature extremes, rainfall, and terrain attributes.
+- *Temporal climate scenario rasters*: associated rasters for baseline (2010), 2050, and 2100 climate scenarios are available via download functions.
+
+## Setup
+
+```{r, include = FALSE}
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak")
+}
+pak::pkg_install(
+  c(
+    "sf",
+    "mapview",
+    "dplyr",
+    "tidyr",
+    "terra",
+    "ggplot2",
+    "viridis",
+    "ranger",
+    "collinear",
+    "knitr"
+  ),
+  ask = FALSE
+)
+```
+
+The following R libraries and example data are required to run this tutorial.
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+library(spatialData)
+library(sf)
+library(mapview)
+library(dplyr)
+library(tidyr)
+library(terra)
+library(ggplot2)
+library(viridis)
+library(collinear)
+library(ranger)
+```
+
+```{r setup}
+data(
+  communities,
+  communities_responses,
+  communities_predictors,
+  package = "spatialData"
+)
+```
+
+
+## Description
+
+The dataset is an `sf` data frame with `r nrow(communities)` rows and `r ncol(communities)` columns. The first 10 records (geometry dropped) are shown below.
+
+```{r}
+communities |>
+  sf::st_drop_geometry() |>
+  head(10) |>
+  dplyr::glimpse()
+```
+
+## Response Variables
+
+The dataset contains 6 response variables (named in `communities_responses`):
+
+| Variable | Type | Description |
+|---|---|---|
+| `community` | factor (6 levels) | Multi-class community label: one of 5 named community types, and `"none"` to represent absence of the target communities  |
+| `pyrenean_oak` | binary integer | Presence (1) / absence (0) of Pyrenean oak forests |
+| `juniper_shrubland` | binary integer | Presence (1) / absence (0) of juniper-broom shrublands |
+| `pinus_forest` | binary integer | Presence (1) / absence (0) of Pinus forests |
+| `alpine_pastures` | binary integer | Presence (1) / absence (0) of alpine pastures |
+| `holm_oak` | binary integer | Presence (1) / absence (0) of holm oak forests |
+
+The binary integer responses are suitable for presence-absence modelling, while `community` is designed for multi-class modelling.
+
+The overall number of samples per community type is shown below. The `none` community refers to samples with absences for all communities.
+
+```{r}
+communities |> 
+  sf::st_drop_geometry() |> 
+  dplyr::group_by(community) |> 
+  dplyr::summarize(
+    samples = dplyr::n()
+  )
+```
+
+The map below shows all records coloured by `communities$community`.
+
+
+```{r, warning = FALSE}
+communities_colors <- stats::setNames(
+  viridis::turbo(n = length(levels(communities$community))),
+  levels(communities$community)
+)
+
+mapview::mapview(
+  communities,
+  zcol = "community",
+  layer.name = "community",
+  col.regions = communities_colors,
+  color = NULL
+)
+```
+
+## Predictor Variables
+
+The dataset contains 9 numeric predictors (named in `communities_predictors`) covering two categories:
+
+| Variable | Category | Description |
+|---|---|---|
+| `max_temperature_summer` | Climate | Maximum summer temperature (°C) |
+| `max_temperature_winter` | Climate | Maximum winter temperature (°C) |
+| `min_temperature_summer` | Climate | Minimum summer temperature (°C) |
+| `min_temperature_winter` | Climate | Minimum winter temperature (°C) |
+| `rainfall_summer` | Climate | Summer rainfall (mm) |
+| `rainfall_winter` | Climate | Winter rainfall (mm) |
+| `northness` | Topography | Northness index (cosine of aspect, −1 to 1) |
+| `slope` | Topography | Terrain slope (degrees) |
+| `topographic_wetness_index` | Topography | Topographic wetness index |
+
+The variance inflation factor analysis below shows that the temperature predictors in `communities` are collinear with each other. Applying a multicollinearity filtering approach may be beneficial for certain modelling methods.
+
+
+```{r}
+collinear::vif_df(
+  df = communities,
+  predictors = communities_predictors,
+  quiet = TRUE
+)
+```
+
+The classes in `communities$community` follow clear gradients for the climatic predictors, as evidenced by the boxplots below.
+
+
+```{r, fig.width=8, fig.height=8}
+communities |> 
+  tidyr::pivot_longer(
+    cols = dplyr::all_of(communities_predictors),
+    names_to = "predictor",
+    values_to = "value"
+  ) |> 
+  dplyr::mutate(
+    predictor = factor(predictor, levels = c(
+      "min_temperature_winter",
+      "max_temperature_winter",
+      "min_temperature_summer",
+      "max_temperature_summer",
+      "rainfall_summer",
+      "rainfall_winter",
+      "slope",
+      "topographic_wetness_index",
+      "northness"
+    ))
+  ) |>
+  ggplot2::ggplot() + 
+  ggplot2::aes(
+    x = value,
+    y = community,
+    fill = community
+  ) + 
+  ggplot2::facet_wrap(~predictor, scales = "free_x") + 
+  ggplot2::geom_boxplot(notch = TRUE, varwidth = TRUE) + 
+  ggplot2::scale_fill_viridis_d(option = "turbo") +
+  ggplot2::theme_bw() + 
+  ggplot2::theme(
+    legend.position = "none",
+    axis.text.y = ggplot2::element_text(size = 12)
+    ) + 
+  ggplot2::labs(
+    y = "", 
+    x = "Predictor Value"
+    )
+```
+
+## Raster Layers
+
+The `communities` dataset also has associated environmental rasters for present and future climate scenarios. These raster layers can be downloaded using the dedicated functions shown below.
+
+```{r, message = FALSE}
+communities_2010 <- spatialData::communities_extra_2010()
+communities_2050 <- spatialData::communities_extra_2050()
+communities_2100 <- spatialData::communities_extra_2100()
+```
+
+These functions download the data as multi-band GeoTIFF files.
+
+```{r}
+file.exists("communities_2010.tif")
+file.exists("communities_2050.tif")
+file.exists("communities_2100.tif")
+```
+The files are loaded into R as `SpatRaster` objects, managed by the R package [`terra`](https://rspatial.github.io/terra/).
+
+The raster variables have the same names and units as the predictors in `communities`.  
+
+The raster layers with climate and topographic conditions for the 2010 baseline in the area of interest are shown below.
+
+
+```{r, fig.width=10, fig.height=4.5}
+plot(communities_2010)
+```
+
+
+## Example
+
+In this example we model the spatial distribution of plant communities in Sierra Nevada via Random Forest classification, and project the model across the 2010 baseline and the 2050 and 2100 future climate scenarios.
+
+### Model Training
+
+In this section, we train a probability random forest model with [`ranger::ranger()`](https://cran.r-project.org/package=ranger). To give each class in `community` equal influence, we use [`collinear::case_weights()`](https://blasbenito.github.io/collinear/reference/case_weights.html) to assign inverse-frequency case weights per community, so that rare communities are up-weighted relative to common ones.
+
+```{r}
+#remove geometry column
+training_df <-  sf::st_drop_geometry(communities)
+
+#train random forest model
+communities_rf <- ranger::ranger(
+  y = training_df$community,
+  x = training_df[, communities_predictors],
+  probability = TRUE,
+  importance = "permutation",
+  num.trees = 1000,
+  min.node.size = 30,
+  seed = 1,
+  case.weights = collinear::case_weights(x = training_df$community)
+)
+```
+
+The model output is a list of class `ranger` containing several objects of interest.
+
+```{r}
+names(communities_rf)
+```
+The three most relevant output objects are described below:
+
++ `predictions`: Holds the out-of-bag class probabilities. Each prediction is generated by the trees that were not trained on that observation. These predictions help assess model performance in a way that is not as rigorous as spatial cross-validation, but is sufficient for our purposes here.
+
+```{r}
+head(communities_rf$predictions)
+```
+
++ `prediction.error`: The [Brier score](https://en.wikipedia.org/wiki/Brier_score) of the model, representing the mean squared error between predicted probabilities and actual outcomes.
+
+```{r}
+communities_rf$prediction.error
+```
+
++ `variable.importance`: Permutation importance of each predictor, expressed as the increase in model error on the out-of-bag data when the predictor is permuted. Important predictors show higher scores.
+
+```{r}
+#permutation importance
+communities_rf$variable.importance |> 
+  sort() |> 
+  rev() |> 
+  round(digits = 3)
+```
+These scores represent how well a predictor helps the model discriminate between categories from a statistical standpoint rather than from an ecological one.
+
+### Model Assessment
+
+This model has a Brier score of `r round(communities_rf$prediction.error, digits = 3)`, which is reasonably good, indicating that the model is producing well-calibrated class probabilities.
+
+However, this score says nothing about per-class performance. To understand how well the model predicts each class, we first need to transform the out-of-bag class probabilities to class predictions. 
+
+The code below extracts the name of the column in `communities_rf$predictions` with the highest probability per observation.
+
+```{r}
+#case index of the column with the maximum probability
+max_probability_column <- max.col(communities_rf$predictions)
+
+#name of the column with the maximum probability
+predicted_class <- colnames(communities_rf$predictions)[max_probability_column]
+
+head(predicted_class)
+```
+
+Now we use the observed and predicted data to build a confusion matrix showing model performance per class in `community`.
+
+```{r}
+#generate confusion matrix
+confusion_matrix <- table(
+  #WARNING! if factor, must be converted to character!
+  observed = as.character(training_df$community),
+  predicted = predicted_class
+) |> 
+  as.matrix()
+
+#abbreviate dimension names
+colnames(confusion_matrix) <-
+  rownames(confusion_matrix) <-
+    abbreviate(
+      colnames(confusion_matrix),
+      minlength = 8
+    )
+
+confusion_matrix
+```
+Below, we use the diagonal of the confusion matrix to compute the model's overall *recall* (sensitivity or true positive rate), and the matrix rows to compute the *per-class recall*.
+
+```{r}
+sum(diag(confusion_matrix)) / sum(confusion_matrix)
+```
+
+```{r}
+sapply(
+  X = colnames(confusion_matrix),
+  FUN = function(x){
+    confusion_matrix[x, x] / sum(confusion_matrix[x, ])
+  }
+) |> 
+  sort() |> 
+  round(digits = 3)
+```
+The model achieves above-random recall for all communities, and is particularly accurate at discriminating juniper-broom shrublands and alpine pastures.
+
+```{r, echo = FALSE}
+rm(
+  communities,
+  training_df,
+  communities_predictors,
+  communities_responses,
+  confusion_matrix,
+  max_probability_column,
+  predicted_class
+)
+
+```
+
+
+
+### Spatial Predictions
+
+The function `terra::predict()` applies the trained random forest model to a `SpatRaster` object whose layers share the same predictor names and units used during training.
+
+```{r, fig.width=10, fig.height=4.5}
+probabilities_2010 <- terra::predict(
+  object = communities_2010,
+  model  = communities_rf,
+  na.rm  = TRUE
+)
+
+probabilities_2050 <- terra::predict(
+  object = communities_2050,
+  model  = communities_rf,
+  na.rm  = TRUE
+)
+
+probabilities_2100 <- terra::predict(
+  object = communities_2100,
+  model  = communities_rf,
+  na.rm  = TRUE
+)
+```
+
+```{r, echo = FALSE}
+rm(
+  communities_rf, 
+  communities_2010, 
+  communities_2050, 
+  communities_2100
+  )
+
+```
+
+
+The output has one probability layer per class.
+
+```{r, fig.width=9, fig.height=7}
+plot(
+  probabilities_2010, 
+  nc = 2, 
+  axes = NULL,
+  col = viridis::turbo(n = 100)
+  )
+```
+To transform these probabilities into class predictions, we apply `terra::which.max()` to retrieve the index of the layer with the maximum probability.
+
+```{r, fig.width=6, fig.height=2.5}
+prediction_2010 <- terra::which.max(
+  x = probabilities_2010
+)
+
+prediction_2050 <- terra::which.max(
+  x = probabilities_2050
+)
+
+prediction_2100 <- terra::which.max(
+  x = probabilities_2100
+)
+```
+
+The output is a raster in which each pixel's value is the index of the layer with the maximum predicted probability.
+
+
+```{r, fig.width=6, fig.height=2.5}
+plot(prediction_2010, col = communities_colors)
+```
+
+To facilitate the plotting of these categorical maps, first we add category names via `terra::categories()` and a categories data frame, and second we add specific colors per category using `terra::coltab()`.
+
+
+```{r}
+#categories dataframe
+categories_df <- data.frame(
+  ID = seq_along(communities_colors),
+  category = levels(communities$community)
+)
+
+#colors dataframe
+colors_df <- data.frame(
+  value = seq_along(communities_colors),
+  col = communities_colors
+)
+
+
+#assign categories
+levels(prediction_2010) <- categories_df
+levels(prediction_2050) <- categories_df
+levels(prediction_2100) <- categories_df
+
+#assign colors
+terra::coltab(prediction_2010) <- colors_df
+terra::coltab(prediction_2050) <- colors_df
+terra::coltab(prediction_2100) <- colors_df
+```
+
+Let's take a look at the resulting maps.
+
+```{r, warning = FALSE}
+terra::plet(prediction_2010)
+terra::plet(prediction_2050)
+terra::plet(prediction_2100)
+```
+These maps are visually compelling, but it is important to think about their meaning. These projections illustrate how the model's predictions shift under different climate scenarios, but they should **not** be interpreted as forecasts of future vegetation. Many processes that govern vegetation dynamics are not captured here, including species dispersal limitations, biotic interactions, and community resilience or adaptation. The maps represent the climatic envelope of each community under different climatic conditions as learnt from the observations in `communities`, and assume that communities can track climate change instantaneously and without constraint.
+
+### Model Analysis
+
+The number of pixels per plant community over time can be converted to hectares and plotted together to get a sense of how much the climate envelope of each community is going to shrink or expand in the future.
+
+```{r, fig.width=8, fig.height=4}
+area_df <- dplyr::bind_rows(
+  terra::freq(prediction_2010) |> dplyr::mutate(year = 2010),
+  terra::freq(prediction_2050) |> dplyr::mutate(year = 2050),
+  terra::freq(prediction_2100) |> dplyr::mutate(year = 2100)
+) |>
+  dplyr::rename(community = value) |>
+  #resolution is 100x100 meters = 1 ha per cell
+  dplyr::mutate(hectares = count) |>
+  dplyr::select(year, community, hectares) |> 
+  dplyr::filter(community != "none")
+
+ggplot2::ggplot(
+  data = area_df,
+  ggplot2::aes(
+    x = year,
+    y = hectares,
+    colour = community,
+    group  = community
+  )
+) +
+  ggplot2::geom_line(linewidth = 1) +
+  ggplot2::geom_point(size = 3) +
+  ggplot2::scale_colour_manual(values = communities_colors) +
+  ggplot2::scale_x_continuous(breaks = c(2010, 2050, 2100)) +
+  ggplot2::scale_y_continuous(labels = scales::comma) +
+  ggplot2::labs(
+    x = "Year",
+    y = "Area (hectares)",
+    colour = "Community"
+  ) +
+  ggplot2::theme_bw()
+```
+
+Rather than actual community surface at a given time, these curves can be interpreted as a proxy for *climatic stress*: the smaller the community's predicted area with respect to the initial area, the higher the climate stress the community may undergo.
+
+We can also obtain a proxy for *biotic stress* by assessing the fraction of the original area of each community that will become suitable for another community.
+
+
+
+```{r, fig.width=8, fig.height=5, message=FALSE, warning=FALSE}
+#stack together projections for 2010 and 2100
+transition_df <- terra::as.data.frame(
+  x = c(prediction_2010, prediction_2050), 
+  na.rm = TRUE
+  ) |>
+  setNames(c("communities_2010", "communities_2050")) |>
+  #count pixels transitioning from one community to another
+  dplyr::count(
+    from = communities_2010, 
+    to = communities_2050, 
+    name = "hectares"
+    ) |>
+  dplyr::group_by(from) |>
+  dplyr::mutate(
+    transition_percent = round(
+      x = hectares * 100 / sum(hectares), 
+      digits = 1
+      )
+    ) |>
+  dplyr::select(-hectares) |> 
+  dplyr::ungroup() |> 
+  tidyr::pivot_wider(
+    names_from = "to",
+    values_from = "transition_percent",
+    values_fill = 0
+  ) |> 
+  dplyr::filter(
+    from != "none"
+  ) |> 
+  dplyr::rename(
+    Community = from
+  )
+
+knitr::kable(transition_df)
+```
+
+The transition matrix shows the source community (year 2010) in the first column, the resulting community as columns, and the values represent the percentage of the original area of the source community becoming suitable for a different community in 2050.
+
+For example, the 87.1% of the area of *Alpine pastures* transitioning to *Juniper-broom shrublands* can be interpreted as an indicator of biological pressure. Future conditions may facilitate the upwards migration of Juniper-broom species, resulting in a heightened competition with pasture species, leading to the eventual replacement of this community.
+
+## Conclusion
+
+The `communities` dataset offers a rich testbed for multi-class classification and ecological niche modelling in a real Mediterranean mountain system. The random forest workflow above demonstrates how climate gradients help discriminate plant communities, and how a single trained multi-class model can be projected across climate scenarios. The area analysis further highlights which communities are projected to expand or contract under future climate scenarios, while underscoring the importance of interpreting such projections with caution.

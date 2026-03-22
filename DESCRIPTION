@@ -13,8 +13,12 @@ RoxygenNote: 7.3.3
 Imports:
     sf
 Suggests:
+    ggalluvial,
+    ggraph,
+    igraph,
     lavaan,
     mapview,
+    patchwork,
     pdp,
     roxyglobals,
     semPlot,

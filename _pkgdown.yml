@@ -28,6 +28,7 @@ articles:
   - articles/quercus
   - articles/neanderthal
   - articles/trees
+  - articles/communities
 
 reference:
   - title: "neanderthal"
@@ -70,3 +71,13 @@ reference:
       - trees
       - trees_response
       - trees_predictors
+
+  - title: "communities"
+    desc: "Plant community records from the Sierra Nevada (SE Spain) with climate and topographic predictors."
+    contents:
+      - communities
+      - communities_responses
+      - communities_predictors
+      - communities_extra_2010
+      - communities_extra_2050
+      - communities_extra_2100
