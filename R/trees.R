@@ -175,3 +175,70 @@
 #' @format A character vector of length 50.
 #' @family trees
 "trees_predictors"
+
+#' Download Presence Records for trees
+#'
+#' @description
+#' Downloads and reads the tree species presence records associated with the
+#' [trees] dataset from the
+#' [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
+#' Requires the \pkg{sf} package.
+#'
+#' @autoglobal
+#' @param dir (optional, character) Directory to save the file. Defaults to
+#'   the current working directory.
+#' @param quiet (optional, logical) If `TRUE` (default), suppresses
+#'   download messages.
+#' @return sf data frame with POINT geometry (WGS84, EPSG:4326) and columns
+#'   `names` and `source`.
+#' @family trees
+#' @examples
+#' \dontrun{
+#' trees_pres <- trees_extra()
+#' trees_pres
+#' }
+#' @export
+trees_extra <- function(
+  dir = ".",
+  quiet = TRUE
+) {
+  if (!requireNamespace("sf", quietly = TRUE)) {
+    stop(
+      "spatialData::trees_extra(): The package 'sf' is required to run trees_extra().",
+      call. = FALSE
+    )
+  }
+
+  path <- file.path(dir, "trees_presence.gpkg")
+
+  if (!file.exists(path)) {
+    url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/trees_presence.gpkg"
+    if (quiet == FALSE) {
+      message(
+        "spatialData::trees_extra(): Downloading 'trees_presence.gpkg' to '",
+        dir,
+        "'."
+      )
+    }
+    tryCatch(
+      utils::download.file(url, path, mode = "wb", quiet = TRUE),
+      error = function(e) {
+        unlink(path)
+        stop(
+          "spatialData::trees_extra(): Download of \nURL: '",
+          url,
+          "' failed.",
+          call. = FALSE
+        )
+      }
+    )
+  } else {
+    message(
+      "spatialData::trees_extra(): Loading local copy of 'trees_presence.gpkg'."
+    )
+  }
+
+  out <- sf::st_read(path, quiet = TRUE)
+
+  out
+}

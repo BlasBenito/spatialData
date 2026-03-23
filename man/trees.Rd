@@ -164,6 +164,7 @@ The hexagonal grid was constructed using \code{sf::st_make_grid(..., cellsize = 
 }
 \seealso{
 Other trees: 
+\code{\link{trees_extra}()},
 \code{\link{trees_predictors}},
 \code{\link{trees_response}}
 }

@@ -19,6 +19,7 @@ geography (4), soil properties (6), soil temperature (4), and NDVI (4).
 \seealso{
 Other trees: 
 \code{\link{trees}},
+\code{\link{trees_extra}()},
 \code{\link{trees_response}}
 }
 \concept{trees}

@@ -18,6 +18,7 @@ richness per hexagonal cell).
 \seealso{
 Other trees: 
 \code{\link{trees}},
+\code{\link{trees_extra}()},
 \code{\link{trees_predictors}}
 }
 \concept{trees}
