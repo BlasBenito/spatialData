@@ -100,46 +100,19 @@
 #' Download Environmental Raster for neanderthal
 #'
 #' @description
-#' Downloads and reads the environmental raster associated with the [neanderthal]
-#' dataset from the
-#' [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
-#' Requires the \pkg{terra} package.
-#'
+#' Downloads and reads the environmental raster associated with the [neanderthal] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
 #' @autoglobal
-#' @param dir (optional, character) Directory to save the file. Defaults to
-#'   the current working directory.
-#' @param quiet (optional, logical) If `TRUE` (default), suppresses
-#'   download messages.
 #' @return SpatRaster object.
 #' @family neanderthal
-#' @examples
-#' \dontrun{
-#' neanderthal_env <- neanderthal_extra()
-#' neanderthal_env
-#' }
 #' @export
-neanderthal_extra <- function(
-  dir = ".",
-  quiet = TRUE
-) {
-  if (!requireNamespace("terra", quietly = TRUE)) {
-    stop(
-      "spatialData::neanderthal_extra(): The package 'terra' is required to run neanderthal_extra().",
-      call. = FALSE
-    )
-  }
-
-  path <- file.path(dir, "neanderthal_env.tif")
+neanderthal_extra <- function() {
+  path <- file.path(getwd(), "neanderthal_env.tif")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/neanderthal_env.tif"
-    if (quiet == FALSE) {
-      message(
-        "spatialData::neanderthal_extra(): Downloading 'neanderthal_env.tif' to '",
-        dir,
-        "'."
-      )
-    }
+    message(
+      "spatialData::neanderthal_extra(): Downloading 'neanderthal_env.tif'."
+    )
     tryCatch(
       utils::download.file(url, path, mode = "wb", quiet = TRUE),
       error = function(e) {
@@ -151,10 +124,6 @@ neanderthal_extra <- function(
           call. = FALSE
         )
       }
-    )
-  } else {
-    message(
-      "spatialData::neanderthal_extra(): Loading local copy of 'neanderthal_env.tif'."
     )
   }
 

@@ -4,29 +4,14 @@
 \alias{plantae_extra}
 \title{Download Extended plantae Dataset}
 \usage{
-plantae_extra(dir = ".", quiet = TRUE)
-}
-\arguments{
-\item{dir}{(optional, character) Directory to save the file. Defaults to
-the current working directory.}
-
-\item{quiet}{(optional, logical) If \code{TRUE} (default), suppresses
-\code{sf::st_read()} messages.}
+plantae_extra()
 }
 \value{
 sf data.frame with 662 rows and 143 columns (MULTIPOLYGON geometry, WGS84).
 }
 \description{
-Downloads and reads the extended version of the \link{plantae} dataset with
-original polygon geometries instead of point centroids, from the
-\href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
+Downloads and reads the extended version of the \link{plantae} dataset with original polygon geometries instead of point centroids, from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
 See \link{plantae} for details on the response variables, predictors, and data sources.
-}
-\examples{
-\dontrun{
-plantae_extended <- plantae_extra()
-nrow(plantae_extended)
-}
 }
 \seealso{
 Other plantae: 

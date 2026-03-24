@@ -4,29 +4,13 @@
 \alias{quercus_extra}
 \title{Download Environmental Raster for quercus}
 \usage{
-quercus_extra(dir = ".", quiet = TRUE)
-}
-\arguments{
-\item{dir}{(optional, character) Directory to save the file. Defaults to
-the current working directory.}
-
-\item{quiet}{(optional, logical) If \code{TRUE} (default), suppresses
-download messages.}
+quercus_extra()
 }
 \value{
 SpatRaster object.
 }
 \description{
-Downloads and reads the environmental raster associated with the \link{quercus}
-dataset from the
-\href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
-Requires the \pkg{terra} package.
-}
-\examples{
-\dontrun{
-quercus_env <- quercus_extra()
-quercus_env
-}
+Downloads and reads the environmental raster associated with the \link{quercus} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository. Requires the \pkg{terra} package.
 }
 \seealso{
 Other quercus: 

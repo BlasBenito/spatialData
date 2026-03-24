@@ -179,47 +179,20 @@
 #' Download Presence Records for trees
 #'
 #' @description
-#' Downloads and reads the tree species presence records associated with the
-#' [trees] dataset from the
-#' [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
-#' Requires the \pkg{sf} package.
+#' Downloads and reads an `sf` dataframe with the tree species presence records associated with the [trees] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
 #'
 #' @autoglobal
-#' @param dir (optional, character) Directory to save the file. Defaults to
-#'   the current working directory.
-#' @param quiet (optional, logical) If `TRUE` (default), suppresses
-#'   download messages.
-#' @return sf data frame with POINT geometry (WGS84, EPSG:4326) and columns
-#'   `names` and `source`.
+#' @return sf data frame with POINT geometry (WGS84, EPSG:4326) and columns `names` and `source`.
 #' @family trees
-#' @examples
-#' \dontrun{
-#' trees_pres <- trees_extra()
-#' trees_pres
-#' }
 #' @export
-trees_extra <- function(
-  dir = ".",
-  quiet = TRUE
-) {
-  if (!requireNamespace("sf", quietly = TRUE)) {
-    stop(
-      "spatialData::trees_extra(): The package 'sf' is required to run trees_extra().",
-      call. = FALSE
-    )
-  }
-
-  path <- file.path(dir, "trees_presence.gpkg")
+trees_extra <- function() {
+  path <- file.path(getwd(), "trees_presence.gpkg")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/trees_presence.gpkg"
-    if (quiet == FALSE) {
-      message(
-        "spatialData::trees_extra(): Downloading 'trees_presence.gpkg' to '",
-        dir,
-        "'."
-      )
-    }
+    message(
+      "spatialData::trees_extra(): Downloading file 'trees_presence.gpkg'."
+    )
     tryCatch(
       utils::download.file(url, path, mode = "wb", quiet = TRUE),
       error = function(e) {
@@ -232,13 +205,12 @@ trees_extra <- function(
         )
       }
     )
-  } else {
-    message(
-      "spatialData::trees_extra(): Loading local copy of 'trees_presence.gpkg'."
-    )
   }
 
-  out <- sf::st_read(path, quiet = TRUE)
+  out <- sf::st_read(
+    dsn = path,
+    quiet = TRUE
+  )
 
   out
 }

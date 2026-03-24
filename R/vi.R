@@ -237,35 +237,18 @@
 #' Download Extended vi Dataset
 #'
 #' @description
-#' Downloads and reads the extended version of the [vi] dataset (30,000 rows)
-#' from the
-#' [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
-#' See [vi] for details on the response variables, predictors, and data sources.
+#' Downloads and reads the extended version of the [vi] dataset (30,000 rows) from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. See [vi] for details on the response variables, predictors, and data sources.
 #'
 #' @autoglobal
-#' @param dir (optional, character) Directory to save the file. Defaults to
-#'   the current working directory.
-#' @param quiet (optional, logical) If `TRUE` (default), suppresses
-#'   `sf::st_read()` messages.
 #' @return sf data.frame with 30,000 rows and 64 columns (POINT geometry, WGS84).
 #' @family vi
-#' @examples
-#' \dontrun{
-#' vi_extended <- vi_extra()
-#' nrow(vi_extended)
-#' }
 #' @export
-vi_extra <- function(
-  dir = ".",
-  quiet = TRUE
-) {
-  path <- file.path(dir, "vi.gpkg")
+vi_extra <- function() {
+  path <- file.path(getwd(), "vi.gpkg")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/vi.gpkg"
-    if (quiet == FALSE) {
-      message("spatialData::vi_extra(): Downloading 'vi.gpkg' to '", dir, "'.")
-    }
+    message("spatialData::vi_extra(): Downloading 'vi.gpkg' to '", dir, "'.")
     tryCatch(
       utils::download.file(url, path, mode = "wb", quiet = TRUE),
       error = function(e) {
@@ -278,15 +261,11 @@ vi_extra <- function(
         )
       }
     )
-  } else {
-    message(
-      "spatialData::vi_extra(): Loading local copy of 'vi.gpkg'."
-    )
   }
 
   out <- sf::st_read(
     dsn = path,
-    quiet = quiet
+    quiet = TRUE
   )
 
   out

@@ -4,29 +4,13 @@
 \alias{neanderthal_extra}
 \title{Download Environmental Raster for neanderthal}
 \usage{
-neanderthal_extra(dir = ".", quiet = TRUE)
-}
-\arguments{
-\item{dir}{(optional, character) Directory to save the file. Defaults to
-the current working directory.}
-
-\item{quiet}{(optional, logical) If \code{TRUE} (default), suppresses
-download messages.}
+neanderthal_extra()
 }
 \value{
 SpatRaster object.
 }
 \description{
-Downloads and reads the environmental raster associated with the \link{neanderthal}
-dataset from the
-\href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
-Requires the \pkg{terra} package.
-}
-\examples{
-\dontrun{
-neanderthal_env <- neanderthal_extra()
-neanderthal_env
-}
+Downloads and reads the environmental raster associated with the \link{neanderthal} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
 }
 \seealso{
 Other neanderthal: 

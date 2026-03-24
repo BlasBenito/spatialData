@@ -4,30 +4,13 @@
 \alias{trees_extra}
 \title{Download Presence Records for trees}
 \usage{
-trees_extra(dir = ".", quiet = TRUE)
-}
-\arguments{
-\item{dir}{(optional, character) Directory to save the file. Defaults to
-the current working directory.}
-
-\item{quiet}{(optional, logical) If \code{TRUE} (default), suppresses
-download messages.}
+trees_extra()
 }
 \value{
-sf data frame with POINT geometry (WGS84, EPSG:4326) and columns
-\code{names} and \code{source}.
+sf data frame with POINT geometry (WGS84, EPSG:4326) and columns \code{names} and \code{source}.
 }
 \description{
-Downloads and reads the tree species presence records associated with the
-\link{trees} dataset from the
-\href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
-Requires the \pkg{sf} package.
-}
-\examples{
-\dontrun{
-trees_pres <- trees_extra()
-trees_pres
-}
+Downloads and reads an \code{sf} dataframe with the tree species presence records associated with the \link{trees} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
 }
 \seealso{
 Other trees: 

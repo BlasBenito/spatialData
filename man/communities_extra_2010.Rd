@@ -4,29 +4,13 @@
 \alias{communities_extra_2010}
 \title{Download Environmental Raster for communities - 2010}
 \usage{
-communities_extra_2010(dir = ".", quiet = TRUE)
-}
-\arguments{
-\item{dir}{(optional, character) Directory to save the file. Defaults to
-the current working directory.}
-
-\item{quiet}{(optional, logical) If \code{TRUE} (default), suppresses
-download messages.}
+communities_extra_2010()
 }
 \value{
 SpatRaster object.
 }
 \description{
-Downloads and reads the baseline (2010) environmental raster associated with the \link{communities}
-dataset from the
-\href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
-Requires the \pkg{terra} package.
-}
-\examples{
-\dontrun{
-communities_env_2010 <- communities_extra_2010()
-communities_env_2010
-}
+Downloads and reads the baseline (2010) environmental raster associated with the \link{communities} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
 }
 \seealso{
 Other communities: 

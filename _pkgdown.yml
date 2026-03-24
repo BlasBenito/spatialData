@@ -71,6 +71,7 @@ reference:
       - trees
       - trees_response
       - trees_predictors
+      - trees_extra
 
   - title: "communities"
     desc: "Plant community records from the Sierra Nevada (SE Spain) with climate and topographic predictors."

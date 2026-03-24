@@ -338,39 +338,21 @@
 #' Download Extended plantae Dataset
 #'
 #' @description
-#' Downloads and reads the extended version of the [plantae] dataset with
-#' original polygon geometries instead of point centroids, from the
-#' [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
+#' Downloads and reads the extended version of the [plantae] dataset with original polygon geometries instead of point centroids, from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
 #' See [plantae] for details on the response variables, predictors, and data sources.
 #'
 #' @autoglobal
-#' @param dir (optional, character) Directory to save the file. Defaults to
-#'   the current working directory.
-#' @param quiet (optional, logical) If `TRUE` (default), suppresses
-#'   `sf::st_read()` messages.
 #' @return sf data.frame with 662 rows and 143 columns (MULTIPOLYGON geometry, WGS84).
 #' @family plantae
-#' @examples
-#' \dontrun{
-#' plantae_extended <- plantae_extra()
-#' nrow(plantae_extended)
-#' }
 #' @export
-plantae_extra <- function(
-  dir = ".",
-  quiet = TRUE
-) {
-  path <- file.path(dir, "plantae.gpkg")
+plantae_extra <- function() {
+  path <- file.path(getwd(), "plantae.gpkg")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/plantae.gpkg"
-    if (quiet == FALSE) {
-      message(
-        "spatialData::plantae_extra(): Downloading 'plantae.gpkg' to '",
-        dir,
-        "'."
-      )
-    }
+    message(
+      "spatialData::plantae_extra(): Downloading file 'plantae.gpkg'."
+    )
     tryCatch(
       utils::download.file(url, path, mode = "wb", quiet = TRUE),
       error = function(e) {
@@ -383,15 +365,11 @@ plantae_extra <- function(
         )
       }
     )
-  } else {
-    message(
-      "spatialData::plantae_extra(): Loading local copy of 'plantae.gpkg'."
-    )
   }
 
   out <- sf::st_read(
     dsn = path,
-    quiet = quiet
+    quiet = TRUE
   )
 
   out

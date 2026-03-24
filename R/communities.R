@@ -89,48 +89,27 @@
 #' Download Environmental Raster for communities - 2010
 #'
 #' @description
-#' Downloads and reads the baseline (2010) environmental raster associated with the [communities]
-#' dataset from the
-#' [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
-#' Requires the \pkg{terra} package.
+#' Downloads and reads the baseline (2010) environmental raster associated with the [communities] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
 #'
 #' @autoglobal
-#' @param dir (optional, character) Directory to save the file. Defaults to
-#'   the current working directory.
-#' @param quiet (optional, logical) If `TRUE` (default), suppresses
-#'   download messages.
 #' @return SpatRaster object.
 #' @family communities
-#' @examples
-#' \dontrun{
-#' communities_env_2010 <- communities_extra_2010()
-#' communities_env_2010
-#' }
 #' @export
-communities_extra_2010 <- function(
-  dir = ".",
-  quiet = TRUE
-) {
-  if (!requireNamespace("terra", quietly = TRUE)) {
-    stop(
-      "spatialData::communities_extra_2010(): The package 'terra' is required to run communities_extra_2010().",
-      call. = FALSE
-    )
-  }
-
-  path <- file.path(dir, "communities_2010.tif")
+communities_extra_2010 <- function() {
+  path <- file.path(getwd(), "communities_2010.tif")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/communities_2010.tif"
-    if (quiet == FALSE) {
-      message(
-        "spatialData::communities_extra_2010(): Downloading 'communities_2010.tif' to '",
-        dir,
-        "'."
-      )
-    }
+    message(
+      "spatialData::communities_extra_2010(): Downloading file 'communities_2010.tif'."
+    )
     tryCatch(
-      utils::download.file(url, path, mode = "wb", quiet = TRUE),
+      utils::download.file(
+        url,
+        path,
+        mode = "wb",
+        quiet = TRUE
+      ),
       error = function(e) {
         unlink(path)
         stop(
@@ -140,10 +119,6 @@ communities_extra_2010 <- function(
           call. = FALSE
         )
       }
-    )
-  } else {
-    message(
-      "spatialData::communities_extra_2010(): Loading local copy of 'communities_2010.tif'."
     )
   }
 
@@ -156,47 +131,27 @@ communities_extra_2010 <- function(
 #'
 #' @description
 #' Downloads and reads the 2050 climate scenario environmental raster associated with the [communities]
-#' dataset from the
-#' [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
-#' Requires the \pkg{terra} package.
+#' dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
 #'
 #' @autoglobal
-#' @param dir (optional, character) Directory to save the file. Defaults to
-#'   the current working directory.
-#' @param quiet (optional, logical) If `TRUE` (default), suppresses
-#'   download messages.
 #' @return SpatRaster object.
 #' @family communities
-#' @examples
-#' \dontrun{
-#' communities_env_2050 <- communities_extra_2050()
-#' communities_env_2050
-#' }
 #' @export
-communities_extra_2050 <- function(
-  dir = ".",
-  quiet = TRUE
-) {
-  if (!requireNamespace("terra", quietly = TRUE)) {
-    stop(
-      "spatialData::communities_extra_2050(): The package 'terra' is required to run communities_extra_2050().",
-      call. = FALSE
-    )
-  }
-
+communities_extra_2050 <- function() {
   path <- file.path(dir, "communities_2050.tif")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/communities_2050.tif"
-    if (quiet == FALSE) {
-      message(
-        "spatialData::communities_extra_2050(): Downloading 'communities_2050.tif' to '",
-        dir,
-        "'."
-      )
-    }
+    message(
+      "spatialData::communities_extra_2050(): Downloading file 'communities_2050.tif'."
+    )
     tryCatch(
-      utils::download.file(url, path, mode = "wb", quiet = TRUE),
+      utils::download.file(
+        url,
+        path,
+        mode = "wb",
+        quiet = TRUE
+      ),
       error = function(e) {
         unlink(path)
         stop(
@@ -206,10 +161,6 @@ communities_extra_2050 <- function(
           call. = FALSE
         )
       }
-    )
-  } else {
-    message(
-      "spatialData::communities_extra_2050(): Loading local copy of 'communities_2050.tif'."
     )
   }
 
@@ -222,47 +173,27 @@ communities_extra_2050 <- function(
 #'
 #' @description
 #' Downloads and reads the 2100 climate scenario environmental raster associated with the [communities]
-#' dataset from the
-#' [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
-#' Requires the \pkg{terra} package.
+#' dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
 #'
 #' @autoglobal
-#' @param dir (optional, character) Directory to save the file. Defaults to
-#'   the current working directory.
-#' @param quiet (optional, logical) If `TRUE` (default), suppresses
-#'   download messages.
 #' @return SpatRaster object.
 #' @family communities
-#' @examples
-#' \dontrun{
-#' communities_env_2100 <- communities_extra_2100()
-#' communities_env_2100
-#' }
 #' @export
-communities_extra_2100 <- function(
-  dir = ".",
-  quiet = TRUE
-) {
-  if (!requireNamespace("terra", quietly = TRUE)) {
-    stop(
-      "spatialData::communities_extra_2100(): The package 'terra' is required to run communities_extra_2100().",
-      call. = FALSE
-    )
-  }
-
-  path <- file.path(dir, "communities_2100.tif")
+communities_extra_2100 <- function() {
+  path <- file.path(getwd(), "communities_2100.tif")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/communities_2100.tif"
-    if (quiet == FALSE) {
-      message(
-        "spatialData::communities_extra_2100(): Downloading 'communities_2100.tif' to '",
-        dir,
-        "'."
-      )
-    }
+    message(
+      "spatialData::communities_extra_2100(): Downloading file 'communities_2100.tif'."
+    )
     tryCatch(
-      utils::download.file(url, path, mode = "wb", quiet = TRUE),
+      utils::download.file(
+        url,
+        path,
+        mode = "wb",
+        quiet = TRUE
+      ),
       error = function(e) {
         unlink(path)
         stop(
@@ -272,10 +203,6 @@ communities_extra_2100 <- function(
           call. = FALSE
         )
       }
-    )
-  } else {
-    message(
-      "spatialData::communities_extra_2100(): Loading local copy of 'communities_2100.tif'."
     )
   }
 

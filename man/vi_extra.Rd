@@ -4,29 +4,13 @@
 \alias{vi_extra}
 \title{Download Extended vi Dataset}
 \usage{
-vi_extra(dir = ".", quiet = TRUE)
-}
-\arguments{
-\item{dir}{(optional, character) Directory to save the file. Defaults to
-the current working directory.}
-
-\item{quiet}{(optional, logical) If \code{TRUE} (default), suppresses
-\code{sf::st_read()} messages.}
+vi_extra()
 }
 \value{
 sf data.frame with 30,000 rows and 64 columns (POINT geometry, WGS84).
 }
 \description{
-Downloads and reads the extended version of the \link{vi} dataset (30,000 rows)
-from the
-\href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
-See \link{vi} for details on the response variables, predictors, and data sources.
-}
-\examples{
-\dontrun{
-vi_extended <- vi_extra()
-nrow(vi_extended)
-}
+Downloads and reads the extended version of the \link{vi} dataset (30,000 rows) from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository. See \link{vi} for details on the response variables, predictors, and data sources.
 }
 \seealso{
 Other vi: 
