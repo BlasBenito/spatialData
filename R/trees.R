@@ -1,9 +1,7 @@
 #' @title Tree Species Richness and Environmental Predictors
 #'
 #' @description
-#' `sf` data frame with `POLYGON` geometry representing 3,373 hexagonal grid
-#' cells across the Americas, with 1 response variable encoding tree species
-#' richness and 50 numeric environmental predictors.
+#' `sf` data frame with `POLYGON` geometry representing 3,373 hexagonal grid cells across the Americas, with 1 response variable encoding tree species richness and 50 numeric environmental predictors.
 #'
 #' Tree species in this dataset does NOT represent total tree species counts! The dataset focuses on the tree species found in Mesoamerica according to the Tree Biodiversity Network (BIOTREE-NET;
 #' Cayuela et al. 2012). These tree species were later used as input for a search query at the Global Biodiversity Information Facility (GBIF). The resulting presence data and environmental data at 1km resolution were aggregated as a hexagonal grid.
@@ -182,7 +180,7 @@
 #' Downloads and reads an `sf` dataframe with the tree species presence records associated with the [trees] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
 #'
 #' @autoglobal
-#' @return sf data frame with POINT geometry (WGS84, EPSG:4326) and columns `names` and `source`.
+#' @return sf data frame with POINT geometry (WGS84, EPSG:4326) and columns `species` and `source`.
 #' @family trees
 #' @export
 trees_extra <- function() {

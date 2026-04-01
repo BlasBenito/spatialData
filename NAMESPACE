@@ -3,6 +3,7 @@
 export(communities_extra_2010)
 export(communities_extra_2050)
 export(communities_extra_2100)
+export(interaction_extra)
 export(neanderthal_extra)
 export(plantae_east)
 export(plantae_extra)

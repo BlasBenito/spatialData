@@ -138,7 +138,7 @@ communities_extra_2010 <- function() {
 #' @family communities
 #' @export
 communities_extra_2050 <- function() {
-  path <- file.path(dir, "communities_2050.tif")
+  path <- file.path(getwd(), "communities_2050.tif")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/communities_2050.tif"

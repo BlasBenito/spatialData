@@ -29,6 +29,7 @@ articles:
   - articles/neanderthal
   - articles/trees
   - articles/communities
+  - articles/interaction
 
 reference:
   - title: "neanderthal"
@@ -82,3 +83,11 @@ reference:
       - communities_extra_2010
       - communities_extra_2050
       - communities_extra_2100
+
+  - title: "interaction"
+    desc: "Co-occurrence records for a butterfly-plant interaction in the Sierra Nevada (SE Spain) with environmental predictors."
+    contents:
+      - interaction
+      - interaction_responses
+      - interaction_predictors
+      - interaction_extra

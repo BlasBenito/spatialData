@@ -1,5 +1,5 @@
 ---
-title: "communities"
+title: "Plant community distribution in Sierra Nevada: multi-class classification under climate change"
 output:
   rmarkdown::html_document:
     toc: true
@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
+Mediterranean mountain ecosystems are among the most biodiverse and climate-sensitive environments in Europe. Projecting how their plant communities respond to future climate change requires models that can handle multi-class responses and be projected across climate scenarios — which is what this dataset is built for.
 
 ## Overview
 
@@ -98,7 +100,7 @@ The dataset contains 6 response variables (named in `communities_responses`):
 | `alpine_pastures` | binary integer | Presence (1) / absence (0) of alpine pastures |
 | `holm_oak` | binary integer | Presence (1) / absence (0) of holm oak forests |
 
-The binary integer responses are suitable for presence-absence modelling, while `community` is designed for multi-class modelling.
+You can use the binary responses for presence-absence modelling, or `community` for multi-class classification.
 
 The overall number of samples per community type is shown below. The `none` community refers to samples with absences for all communities.
 
@@ -145,7 +147,7 @@ The dataset contains 9 numeric predictors (named in `communities_predictors`) co
 | `slope` | Topography | Terrain slope (degrees) |
 | `topographic_wetness_index` | Topography | Topographic wetness index |
 
-The variance inflation factor analysis below shows that the temperature predictors in `communities` are collinear with each other. Applying a multicollinearity filtering approach may be beneficial for certain modelling methods.
+The VIF analysis below confirms that temperature predictors are collinear — worth filtering before modelling.
 
 
 ```{r}
@@ -231,6 +233,8 @@ plot(communities_2010)
 ## Example
 
 In this example we model the spatial distribution of plant communities in Sierra Nevada via Random Forest classification, and project the model across the 2010 baseline and the 2050 and 2100 future climate scenarios.
+
+With the data characterised, let's train a multi-class random forest.
 
 ### Model Training
 
@@ -354,6 +358,8 @@ rm(
 ```
 
 
+
+Now let's project the trained model across climate scenarios.
 
 ### Spatial Predictions
 
@@ -548,3 +554,5 @@ For example, the 87.1% of the area of *Alpine pastures* transitioning to *Junipe
 ## Conclusion
 
 The `communities` dataset offers a rich testbed for multi-class classification and ecological niche modelling in a real Mediterranean mountain system. The random forest workflow above demonstrates how climate gradients help discriminate plant communities, and how a single trained multi-class model can be projected across climate scenarios. The area analysis further highlights which communities are projected to expand or contract under future climate scenarios, while underscoring the importance of interpreting such projections with caution.
+
+Happy projecting!

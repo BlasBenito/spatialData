@@ -1,5 +1,5 @@
 ---
-title: "trees"
+title: "Mesoamerican tree richness across the Americas: conditional inference trees for biodiversity patterns"
 output:
   rmarkdown::html_document:
     toc: true
@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+Tree species richness in the Americas is not evenly distributed — Mesoamerican forests are global hotspots of tree diversity, yet that richness declines sharply toward drier or colder regions. Understanding what drives those gradients calls for a dataset with both broad geographic coverage and diverse climate predictors.
+
 ## Overview
 
 The `trees` dataset focuses on the distribution of the tree species present in Mesoamerica across North and South America. The presence of Mesoamerican trees was obtained from the **Tree Biodiversity Network (BIOTREE-NET)** dataset (project now defunct). The distribution of these species across the Americas was derived from **GBIF**. The data represents *richness of Mesoamerican trees in the Americas* for 3,373 hexagonal grid cells across the Americas, combined with 50 environmental predictor variables from different sources.
@@ -25,7 +27,7 @@ Its main features are:
 - *Single response*: `trees`, an integer count of tree species richness per hexagonal cell.
 - *Rich environmental predictors*: 50 predictors spanning 10 categories (climate, soil, vegetation, geography, and more).
 
-The dataset is designed to support regression modelling, multicollinearity filtering, and spatial analysis of tree diversity patterns.
+We designed it to support regression modelling, multicollinearity filtering, and spatial analysis of tree diversity patterns.
 
 ## Setup
 
@@ -112,10 +114,19 @@ trees |>
   dplyr::glimpse()
 ```
 
+## Raw Data
+
+You can download the raw presence data with `trees_extra()`.
+
+```{r}
+trees_presence <- spatialData::trees_extra()
+head(trees_presence)
+```
+
 
 ## Example Usage
 
-This example uses `trees` to assess how extreme values in climate variables drive tree species richness across the Americas.
+In this example we use `trees` to assess how climate extremes drive tree richness across the Americas.
 
 - *Log Transformation*: to facilitate the visualization of model results.
 - *Variable Selection*: multicollinearity analysis of the selected environmental variables.
@@ -136,6 +147,8 @@ trees <- trees |>
 ```
 
 ### Variable Selection
+
+Now let's identify which extreme-climate predictors are worth keeping.
 
 The predictors indicating climate extreme values are identified with the suffixes `_min` and `_max` in `trees_predictors`, with the exception of rainfall, where `rainfall_driest_month` and `rainfall_wettest_month` represent the monthly minimum and maximum respectively. 
 
@@ -180,6 +193,8 @@ trees_selection$log_trees$formulas$linear
 
 ### Conditional Inference Tree
 
+With a clean predictor set, we can fit an interpretable regression tree.
+
 A conditional inference tree provides an interpretable summary of how the selected predictors interact to explain tree species richness. The model is fitted with [`partykit::ctree()`](https://cran.r-project.org/package=partykit), which uses permutation tests to select splits without overfitting bias.
 
 ```{r}
@@ -218,7 +233,9 @@ The results of conditional inference trees are easy to interpret when the model 
 
 ### Prediction Map
 
-Assigning predictions back to the spatial data reveals the ability of this simple model to capture a relevant pattern of geographic variation in tree richness. Notice that the prediction of `partykit::ctree()` can be expressed as a quantile of the cases within each terminal node. Below we show the prediction for the quantile 0.75.
+Let's map the model predictions back onto the hexagonal grid.
+
+Assigning predictions back to the grid reveals how well this simple model captures geographic variation in richness. Notice that the prediction of `partykit::ctree()` can be expressed as a quantile of the cases within each terminal node. Below we show the prediction for the quantile 0.75.
 
 ```{r, message = FALSE}
 trees$predicted <- predict(
@@ -245,4 +262,6 @@ mapview::mapview(
 
 ## Conclusion
 
-The `trees` dataset provides a rich testbed for spatial modelling of biodiversity patterns across the Americas. The workflow above demonstrates how a handful of environmental predictors can produce an interpretable regression tree capturing main geographic gradients in tree species richness, making `trees` well suited for tutorials on variable selection, regression modelling, and spatial visualisation in R.
+This example walked through extreme-climate predictor selection, a conditional inference tree, and spatial prediction onto a hexagonal grid — a simple but interpretable pipeline for exploring tree richness gradients.
+
+Want to go further? Try a random forest or a spatial model, or compare richness patterns between Mesoamerican and non-Mesoamerican grid cells. Happy modelling!

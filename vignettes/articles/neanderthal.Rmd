@@ -1,5 +1,5 @@
 ---
-title: "neanderthal"
+title: "Neanderthal habitat during the Last Interglacial: a weighted GAM ensemble"
 output:
   rmarkdown::html_document:
     toc: true
@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 ```
 
 ## Overview
+
+Neanderthals survived for hundreds of thousands of years across diverse environments, yet their distribution during warm interglacials remains debated — partly because high-resolution palaeoclimate reconstructions have only recently become available. This dataset lets you explore that question with modern SDM tools.
 
 The `neanderthal` dataset contains presence and pseudo-absence records of Neanderthal archaeological sites from Marine Isotope Stage 5e (Last Interglacial, ~130,000-115,000 years ago), combined with 25 paleoclimate and topographic predictor variables. This dataset was sourced from [Benito et al. (2017)](https://doi.org/10.1111/jbi.12845) and built to support binary classification, species distribution modelling, and habitat suitability analysis.
 
@@ -107,7 +109,7 @@ The dataset includes 25 palaeoclimatic (last interglacial) and topographic predi
 ```{r}
 neanderthal_predictors
 ```
-The palaeoclimatic predictors are described [here](https://www.worldclim.org/data/bioclim.html).
+You can find descriptions of the palaeoclimatic predictors [here](https://www.worldclim.org/data/bioclim.html).
 
 ## Example Usage
 
@@ -133,7 +135,7 @@ selection <- collinear::collinear(
 )
 ```
 
-The ranking of predictors computed by `colliinear::collinear()` for this dataset is shown below. The column `score` shows the AUC score of each univariate model.
+Here is the predictor ranking:
 
 ```{r}
 DT::datatable(selection$presence$preference_order[, c("response", "predictor", "score")])
@@ -144,6 +146,8 @@ The function has selected the following predictors:
 ```{r}
 selection$presence$selection
 ```
+
+Before fitting anything, let's think about the modelling choices.
 
 ### Modelling Rationale
 
@@ -317,6 +321,8 @@ auc
 
 The global AUC score indicates the probability of any presence to have a higher habitat suitability than any pseudoabsence.
 
+With a validated ensemble in hand, we can now map Neanderthal habitat across the region.
+
 ### Habitat Suitability Map
 
 The package `spatialData` provides the raster dataset `neanderthal_env` to predict models based on the `neanderthal` data.
@@ -463,3 +469,9 @@ bi_map + patchwork::inset_element(
 ```
 
 The map suggests that during the Last Interglacial, the most suitable Neanderthal habitat was concentrated in southern Europe and parts of the Near East, with model confidence decreasing toward range margins and data-sparse regions.
+
+## Conclusion
+
+The ensemble of univariate GAMs, weighted by cross-validated AUC, provides a robust picture of Neanderthal habitat suitability during the Last Interglacial. Whitening the ensemble predictions with their standard deviation surfaces the areas of genuine uncertainty. SDM tools developed for modern species translate naturally to palaeontological data — and `neanderthal` is a good place to experiment with that.
+
+Happy modelling!

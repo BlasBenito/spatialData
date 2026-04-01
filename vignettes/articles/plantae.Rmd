@@ -1,5 +1,5 @@
 ---
-title: "plantae"
+title: "Global plant diversity: spatial random forests across 662 ecoregions"
 output:
   rmarkdown::html_document:
     toc: true
@@ -17,6 +17,8 @@ knitr::opts_chunk$set(
 
 ## Overview
 
+Plant species richness is not randomly distributed — it peaks in tropical regions, tracks climate gradients, and is shaped by biogeographic history and human impact. Understanding those drivers requires datasets with both broad geographic scope and many predictors, which is exactly what `plantae` provides.
+
 The `plantae` dataset contains plant diversity metrics for **662 global ecoregions**, derived from **244M+ GBIF plant presence records** and a large set of environmental predictors (see `plantae_predictors`).
 
 Its main features are:
@@ -26,7 +28,7 @@ Its main features are:
 - *Multiple responses*: 53 response variables (see `plantae_responses`) covering richness, rarity, and beta diversity.
 - *Large number of predictors*: The 84 predictors (see `plantae_predictors`) span 12 categories (temperature, precipitation, atmospheric, soil, fragmentation, human impact, and more).
 
-The dataset is designed to support a wide range of ecological modeling approaches.
+It is designed to support a wide range of ecological modelling approaches — from richness regressions to beta diversity analyses.
 
 ## Setup
 
@@ -167,7 +169,7 @@ rm(
 
 ## Example Usage
 
-This example uses `plantae` to identify predictors driving the plant richness of the World's ecoregions. 
+In this example we use `plantae` to identify the predictors driving plant richness across the World's ecoregions. 
 
 - *Multicollinearity Analysis*: aims to limit redundancy in the predictors and focus on the most promising ones.
 - *Spatial Autocorrelation Analysis*: to help understand the importance of the spatial structure of the data.
@@ -247,6 +249,8 @@ spatialRF::plot_training_df_moran(
 
 Notice how the autocorrelation of most predictors peaks at 1000 km, and remains positive for most of them across the entire distance span. This analysis suggests that the data has a strong spatial structure, and is likely not suited for non-spatial modelling.
 
+Let's first train a non-spatial model to confirm that spatial structure is a problem.
+
 We can transform this intuition into a fact by training a regular random forest model via [`spatialRF::rf()`](https://blasbenito.github.io/spatialRF/reference/rf.html) and assessing the spatial autocorrelation of the residuals.
 
 ```{r, fig.width=6, fig.height=3.5}
@@ -274,6 +278,8 @@ spatialRF::moran_multithreshold(
 The SAC of the residuals peaks at ~1000km and remains positive over long distances, indicating that this model is missing predictors accounting for the spatial structure of the data.
 
 ### Spatial Modelling
+
+Now that we've confirmed residual SAC, let's add spatial predictors.
 
 The function [`spatialRF::rf_spatial()`](https://blasbenito.github.io/spatialRF/reference/rf_spatial.html) takes the model above, adds *spatial predictors* (namely *Moran's Eigenvector Maps* or MEMs) to the training data. MEMs are synthetic predictors derived from the distance matrix. Each MEM captures a distinct spatial pattern at a different scale, from broad continental gradients to finer regional structures. By selecting the MEMs that reduce residual SAC the most, `spatialRF::rf_spatial()` captures spatial variation in plant richness that the environmental predictors alone cannot explain. Think of biogeographic legacies, dispersal barriers, or unknown environmental gradients. 
 
@@ -323,6 +329,8 @@ Once spatial structure is considered, four predictors remain more important than
 + `human_population` indicates the importance of the human factor on plant species richness.
 
 
+With spatial structure accounted for, the response curves reflect genuine environmental gradients.
+
 The figure below shows how predicted richness changes across the range of these predictor when all others are held at their median (quantile 0.5).
 
 
@@ -340,6 +348,6 @@ spatialRF::plot_response_curves(
 ```
 In the context of a spatial model with MEMs, these curves represent the *environmental* component of richness after bias and spatial structure are accounted for. This means the relationships shown reflect genuine environmental gradients rather than geographic clustering artefacts, making them more interpretable than those from a non-spatial model.
 
-The spatial random forest above demonstrates one modeling approach for `richness_species`, one of 53 response variables available in `plantae`. The dataset supports a much wider range of ecological modeling experiments, from rarity-weighted richness and beta diversity analyses to spatial cross-validation and path analysis. 
+The spatial random forest above demonstrates one modeling approach for `richness_species`, but the same workflow applies to any of the 53 response variables in `plantae` — including rarity-weighted richness, beta diversity (Sorensen or Simpson), or richness gradients between biomes. The dataset supports a much wider range of ecological modelling experiments, from spatial cross-validation to path analysis.
 
 Have fun with it!
