@@ -30,6 +30,7 @@ articles:
   - articles/trees
   - articles/communities
   - articles/interaction
+  - articles/linaria
 
 reference:
   - title: "neanderthal"
@@ -91,3 +92,11 @@ reference:
       - interaction_responses
       - interaction_predictors
       - interaction_extra
+
+  - title: "linaria"
+    desc: "Presence and background records for Linaria nigricans and greenhouses in Andalusia, Spain, with Landsat, climate, and topographic predictors."
+    contents:
+      - linaria
+      - linaria_responses
+      - linaria_predictors
+      - linaria_extra

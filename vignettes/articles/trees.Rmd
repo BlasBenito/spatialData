@@ -19,7 +19,7 @@ Tree species richness in the Americas is not evenly distributed — Mesoamerican
 
 ## Overview
 
-The `trees` dataset focuses on the distribution of the tree species present in Mesoamerica across North and South America. The presence of Mesoamerican trees was obtained from the **Tree Biodiversity Network (BIOTREE-NET)** dataset (project now defunct). The distribution of these species across the Americas was derived from **GBIF**. The data represents *richness of Mesoamerican trees in the Americas* for 3,373 hexagonal grid cells across the Americas, combined with 50 environmental predictor variables from different sources.
+The `trees` dataset focuses on the distribution of the tree species present in Mesoamerica across North and South America. The presence of Mesoamerican trees was obtained from the **Tree Biodiversity Network (BIOTREE-NET)** dataset (project now defunct). The distribution of these species across the Americas was derived from **GBIF**. The data represents *richness of Mesoamerican trees in the Americas* for 3,373 hexagonal grid cells across the Americas, combined with 50 environmental predictor variables from different sources. The dataset was originally compiled for Benito et al. (2013).
 
 Its main features are:
 
@@ -265,3 +265,7 @@ mapview::mapview(
 This example walked through extreme-climate predictor selection, a conditional inference tree, and spatial prediction onto a hexagonal grid — a simple but interpretable pipeline for exploring tree richness gradients.
 
 Want to go further? Try a random forest or a spatial model, or compare richness patterns between Mesoamerican and non-Mesoamerican grid cells. Happy modelling!
+
+## References
+
+Benito, B.M., Cayuela, L., & Albuquerque, F.S. (2013). The impact of modelling choices in the predictive performance of richness maps derived from species-distribution models: Guidelines to build better diversity models. *Methods in Ecology and Evolution*, 4(4), 327–335. https://doi.org/10.1111/2041-210X.12022

@@ -1,0 +1,219 @@
+---
+title: "Linaria nigricans distribution and greenhouse expansion in Andalusia"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_title: "Contents"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  eval = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+```
+
+## Overview
+
+The `linaria` dataset, built from *Benito et al. (2009)*, contains three types of records:
+
+- **Species presences** (*Linaria nigricans* occurrence sites)
+- **Greenhouse presences** (competing land-use sites)
+- **Background points** (random samples from the study extent)
+
+Combined with 21 environmental predictors (Landsat reflectance, climate, topography) at 400 m resolution, the dataset is well suited for binary classification, multi-response SDMs, and habitat suitability analysis.
+
+## Setup
+
+```{r, include = FALSE}
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak")
+}
+pak::pkg_install(
+  c(
+    "sf",
+    "mapview",
+    "dplyr",
+    "terra",
+    "ggplot2",
+    "patchwork",
+    "viridis",
+    "maxnet"
+  ),
+  ask = FALSE
+)
+```
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
+library(dplyr)
+library(terra)
+library(sf)
+library(mapview)
+library(ggplot2)
+library(patchwork)
+library(viridis)
+library(maxnet)
+library(spatialData)
+
+data(
+  linaria,
+  linaria_responses,
+  linaria_predictors,
+  package = "spatialData"
+)
+```
+
+## Data Structure
+
+The dataset is an `sf` data frame with `r nrow(linaria)` rows and `r ncol(linaria)` columns.
+
+```{r}
+linaria |> 
+  head() |> 
+  dplyr::glimpse()
+```
+
+It has two binary response variables (see `linaria_responses`):
+
+```{r}
+linaria_responses
+```
+
+Both response variables encode binary outcomes: 1 for confirmed presence, 0 for all other record types.
+
+The map below shows all three record types by colour.
+
+```{r map, message = FALSE}
+linaria_mapped <- linaria |>
+  dplyr::mutate(
+    record_type = dplyr::case_when(
+      linaria_nigricans == 1L ~ "Linaria nigricans",
+      greenhouses == 1L      ~ "Greenhouse",
+      TRUE                   ~ "Background"
+    )
+  )
+
+mapview::mapview(
+  linaria_mapped,
+  zcol = "record_type",
+  layer.name = "Record type",
+  col.regions = c("gray60", "darkgreen", "violet")
+)
+```
+
+The dataset includes `r length(linaria_predictors)` remote sensing, topographic, and climate predictors.
+
+```{r}
+linaria_predictors
+```
+
+## Example Usage
+
+Greenhouse agriculture and *Linaria nigricans* compete for the same lowland territory in eastern Andalusia. Following an approach similar to *Benito et al. (2009)*, we fit two separate habitat suitability models using [`maxnet`](https://cran.r-project.org/package=maxnet), one for *L. nigricans* and one for greenhouses, predict them across the study region, and combine them into an extinction-risk surface by multiplying the two suitability layers and rescaling to 0–100.
+
+### Environmental raster
+
+The environmental raster (same extent, 400 m resolution, EPSG:25830) is loaded with `linaria_extra()`. When the vignette renders, the raster file `linaria_env.tif` is read from disk without re-downloading.
+
+```{r load_raster, message = FALSE}
+linaria_env <- spatialData::linaria_extra()
+```
+
+```{r}
+plot(linaria_env)
+```
+
+### Fitting SDMs with `maxnet`
+
+Each `maxnet()` call treats rows where the response equals 1 as presences and all other rows (including the opposite response's presences and background points) as background. This pseudo-absence design lets us model each response against the full environmental backdrop of the study region.
+
+```{r fit_sdms}
+training_df <- sf::st_drop_geometry(linaria)
+
+linaria_model <- maxnet::maxnet(
+  p = training_df[["linaria_nigricans"]],
+  data = training_df[, linaria_predictors]
+)
+
+greenhouses_model <- maxnet::maxnet(
+  p = training_df[["greenhouses"]],
+  data = training_df[, linaria_predictors]
+)
+```
+
+
+We project each model onto the environmental raster using `terra::predict()` with `type = "cloglog"`, which returns values bounded between 0 and 1 that can be interpreted as occurrence probability. The option `clamp = TRUE` restricts predictions to the environmental envelope seen during training.
+
+```{r predict_sdms, message = FALSE}
+linaria_prediction <- terra::predict(
+  object = linaria_env,
+  model  = linaria_model,
+  type   = "cloglog",
+  clamp  = TRUE,
+  na.rm  = TRUE
+)
+names(linaria_prediction) <- "linaria"
+
+greenhouses_prediction <- terra::predict(
+  object = linaria_env,
+  model  = greenhouses_model,
+  type   = "cloglog",
+  clamp  = TRUE,
+  na.rm  = TRUE
+)
+names(greenhouses_prediction) <- "greenhouses"
+```
+
+```{r plot_suitability}
+plot(
+  linaria_prediction,
+  col  = viridis::turbo(100),
+  main = "Linaria nigricans suitability"
+)
+
+plot(
+  greenhouses_prediction,
+  col  = viridis::turbo(100),
+  main = "Greenhouse suitability"
+)
+```
+
+### Extinction-risk composite
+
+The relative extinction-risk surface is the product of the two suitability layers. Areas with high scores represent places where *L. nigricans* is likely to occur *and* where greenhouses are likely to expand, indicating high-risk zones.
+
+```{r linaria_risk}
+linaria_risk <- terra::stretch(
+  x = linaria_prediction * greenhouses_prediction, 
+  minv = 0, 
+  maxv = 100
+  )
+```
+
+```{r plot_risk, fig.height = 5}
+mapview(
+  linaria_risk,
+  col.regions  = viridis::turbo(100),
+  layer.name = "Relative risk (0–100)"
+) + 
+  mapview(
+    linaria |> 
+      dplyr::filter(
+        linaria_nigricans == 1
+      ),
+    layer.name = "Linaria presence",
+    alpha.regions = 0
+  )
+```
+The original data is from 2008. Notice how several presence records in the high-risk areas are already covered by greenhouses.
+
+
+## Conclusion
+
+The `linaria` dataset provides a compact but ecologically rich testbed for multi-response binary classification: one response captures species habitat suitability, the other captures the spatial footprint of the main threatening land use. This structure is ideal for comparative SDM workflows, land-use conflict analyses, or any task requiring simultaneous modelling of species and threat distributions.
+
+The extinction-risk analysis above shows how combining two MaxEnt predictions into a spatially explicit composite can pinpoint the areas where conservation action is most urgent — the approach introduced by Benito et al. (2009) for *Linaria nigricans* in Andalusia.
+
+Happy modelling!

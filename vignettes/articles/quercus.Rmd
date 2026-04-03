@@ -1,5 +1,5 @@
 ---
-title: "European oak distribution: multi-species niche modelling with decision trees"
+title: "European oak distribution: multi-species niche modelling with recursive partition trees"
 output:
   rmarkdown::html_document:
     toc: true
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-Quercus oaks are keystone species that shape European forest composition, yet distinguishing their climatic niches is challenging given overlapping ranges and correlated predictors. The `quercus` dataset is designed for exactly that problem.
 
 ## Overview
 
@@ -42,7 +41,6 @@ pak::pkg_install(
   c(
     "sf",
     "mapview",
-    "DT",
     "dplyr",
     "collinear",
     "rpart",
@@ -59,7 +57,6 @@ library(spatialData)
 library(sf)
 library(terra)
 library(mapview)
-library(DT)
 library(dplyr)
 library(collinear)
 library(rpart)
@@ -83,10 +80,10 @@ data(
 The dataset is an `sf` data frame with `r nrow(quercus)` rows and `r ncol(quercus)` columns, and no missing data. The first 10 records and all columns but `geometry` are shown below.
 
 ```{r}
-DT::datatable(
-  data = head(sf::st_drop_geometry(quercus), n = 10),
-  rownames = FALSE
-)
+quercus |> 
+  sf::st_drop_geometry() |> 
+  head() |> 
+  dplyr::glimpse()
 ```
 
 ## Response Variable
@@ -94,7 +91,15 @@ DT::datatable(
 The response variable is `species`, a categorical variable with 9 levels (8 species + absence):
 
 ```{r}
-table(quercus$species)
+quercus |> 
+  sf::st_drop_geometry() |> 
+  dplyr::group_by(species) |> 
+  dplyr::summarise(
+    n = dplyr::n()
+  ) |> 
+  dplyr::arrange(
+    dplyr::desc(n)
+    )
 ```
 
 ## Predictor Variables
@@ -125,16 +130,14 @@ mapview::mapview(
 
 ## Example Usage
 
-Now let's put `quercus` to work.
-
-In this example we use `quercus` to identify the environmental conditions that distinguish oak species using multicollinearity filtering and a decision tree.
+In this example we use `quercus` to identify the environmental conditions that distinguish oak species using recursive partition trees.
 
 ### Multicollinearity Filtering
 
 Many predictors in this dataset are correlated (e.g., `bio5`, `bio6`, `bio7` are all derived from temperature extremes). The `collinear::collinear()` function from the R package [`collinear`](https://blasbenito.github.io/collinear/) selects a non-redundant subset that maximizes predictive power for the response variable.
 
 ```{r}
-predictors_selection <- collinear::collinear(
+quercus_selection <- collinear::collinear(
   df = quercus,
   responses = "species",
   predictors = quercus_predictors,
@@ -142,7 +145,7 @@ predictors_selection <- collinear::collinear(
   quiet = TRUE
 )
 
-predictors_selection$species$selection
+quercus_selection$species$selection
 ```
 
 ### Decision Tree Model
@@ -150,21 +153,20 @@ predictors_selection$species$selection
 Species occurrence counts are imbalanced — *Q. robur* has 1,660 records while *Q. suber* has only 58. Without correction, rare species get absorbed into leaves dominated by common ones. To fix this, we use the `collinear::case_weights()` function, which generates inverse-frequency weights so that each species contributes equally to the tree splits.
 
 ```{r}
-m <- rpart::rpart(
-  formula = predictors_selection$species$formulas$classification,
+quercus_rpart <- rpart::rpart(
+  formula = quercus_selection$species$formulas$classification,
   data = sf::st_drop_geometry(quercus),
   method = "class",
   weights = collinear::case_weights(x = quercus$species)
 )
 ```
 
-### Tree Visualization
 
 The decision tree below shows which environmental variables and thresholds best separate oak species. Each split represents a condition (e.g., "bio6 < -2.3"), and each leaf shows the most likely species at that combination of conditions.
 
 ```{r, fig.width = 10, fig.height = 7}
 rpart.plot::rpart.plot(
-  m,
+  quercus_rpart,
   type = 0,
   extra = 8,
   fallen.leaves = TRUE,
@@ -175,16 +177,16 @@ rpart.plot::rpart.plot(
 )
 ```
 
-The figure shows how different combinations of environmental conditions lead to the dominance of each Quercus species.
+The figure shows how different combinations of environmental conditions lead to the dominance of a different *Quercus* species.
 
 ### Prediction Map
 
-Assigning predictions back to the spatial data reveals where each species is most likely to occur.
+Assigning predictions back to the spatial data reveals where each species is most likely to occur according to the recursive partition model.
 
 
 ```{r, message = FALSE}
 quercus$predicted <- predict(
-  object = m,
+  object = quercus_rpart,
   newdata = sf::st_drop_geometry(quercus),
   type = "class"
 )
@@ -201,15 +203,15 @@ mapview::mapview(
 
 ### Species Probability Map
 
-With the model trained, we can project it onto raster predictors.
-
-The package provides the raster dataset `quercus_env` to predict models based on the `quercus` data.
+The package provides the raster dataset `quercus_env`, downloaded via `spatialData::quercus_extra()`, useful to generate continuous predictions from models trained with the `quercus` data.
 
 ```{r}
 quercus_env <- spatialData::quercus_extra()
 class(quercus_env)
 names(quercus_env)
 ```
+
+
 ```{r, fig.width=5, fig.height=5}
 plot(
   x = quercus_env[["bio1"]],
@@ -222,7 +224,7 @@ The map below shows the fitted probability of *Quercus petraea* across Europe.
 ```{r, fig.width=5, fig.height=5}
 quercus_probability <- predict(
   object = quercus_env,
-  model = m,
+  model = quercus_rpart,
   type = "prob",
   na.rm = TRUE
 )
@@ -235,4 +237,4 @@ plot(
 
 The decision tree above gives interpretable climate rules for each oak species — but it is just one entry point into `quercus`. More flexible methods like random forests or gradient boosting can push accuracy further while the multi-class structure and 31 predictors keep the dataset interesting.
 
-That's all for now — happy oak modelling!
+That's all for now, enjoy this dataset!

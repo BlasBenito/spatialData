@@ -217,6 +217,14 @@ Computed at 5 km resolution in Lambert Azimuthal Equal-Area projection using
 }
 }
 \source{
+\strong{Associated publication:}
+\itemize{
+\item Maestre, F.T., Benito, B.M., Berdugo, M., Concostrina-Zubiri, L., Delgado-Baquerizo, M.,
+Eldridge, D.J., Guirado, E., Gross, N., Kefi, S., Le Bagousse-Pinguet, Y., et al. (2021).
+Biogeography of global drylands. \emph{New Phytologist}, 231(2), 540--558.
+\doi{10.1111/nph.17398}
+}
+
 \strong{Biodiversity data:}
 \itemize{
 \item GBIF Plantae Dataset (September 15, 2020). \doi{10.15468/dl.xh5y5g}

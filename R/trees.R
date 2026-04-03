@@ -117,6 +117,11 @@
 #' }
 #'
 #' @source
+#' **Dataset publication:**
+#' \itemize{
+#'   \item Benito, B.M., Cayuela, L., & Albuquerque, F.S. (2013). The impact of modelling choices in the predictive performance of richness maps derived from species-distribution models: Guidelines to build better diversity models. \emph{Methods in Ecology and Evolution}, 4(4), 327--335. \doi{10.1111/2041-210X.12022}
+#' }
+#'
 #' **Response variable (tree species richness):**
 #' \itemize{
 #'   \item GBIF: Global Biodiversity Information Facility. \url{https://www.gbif.org}

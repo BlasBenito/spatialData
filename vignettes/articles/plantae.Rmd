@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
 
 Plant species richness is not randomly distributed — it peaks in tropical regions, tracks climate gradients, and is shaped by biogeographic history and human impact. Understanding those drivers requires datasets with both broad geographic scope and many predictors, which is exactly what `plantae` provides.
 
+This dataset was created in the context of research on the biogeography of global drylands (Maestre et al. 2021, *New Phytologist*, 231(2), 540--558, [doi:10.1111/nph.17398](https://doi.org/10.1111/nph.17398)).
+
 The `plantae` dataset contains plant diversity metrics for **662 global ecoregions**, derived from **244M+ GBIF plant presence records** and a large set of environmental predictors (see `plantae_predictors`).
 
 Its main features are:

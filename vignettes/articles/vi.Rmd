@@ -15,11 +15,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-NDVI is one of the most widely used proxies for vegetation activity, yet its relationship with climate, soil, and human impact varies enormously across biomes. The `vi` dataset captures that variation at global scale, with ~10 000 records spanning 6 continents and 12 biomes.
+
 
 ## Overview
 
-The `vi` dataset contains ~10k records of Normalized Difference Vegetation Index (NDVI) with different encodings (see `vi_responses`) and a large set of numeric and categorical predictors (see `vi_predictors`) with consistent naming patterns (e.g., `temperature_*`, `rainfall_*`, `swi_*`).
+The Normalized Difference Vegetation Index (NDVI) is one of the most widely used proxies for vegetation activity, yet its relationship with climate, soil, and human impact varies enormously across biomes. The `vi` dataset captures that variation at global scale, with ~10 000 records spanning 6 continents and 12 biomes, and a large set of numeric and categorical predictors (see `vi_predictors`) with consistent naming patterns (e.g., `temperature_*`, `rainfall_*`, `swi_*`).
 
 Its main features are:
 
