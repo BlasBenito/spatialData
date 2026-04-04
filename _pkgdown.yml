@@ -100,3 +100,12 @@ reference:
       - linaria_responses
       - linaria_predictors
       - linaria_extra
+
+  - title: "andalusia"
+    desc: "Presence and background records for several plant species in Andalusia, Spain, with Landsat, climate, and topographic predictors."
+    contents:
+      - andalusia
+      - andalusia_responses
+      - andalusia_predictors
+      - andalusia_extra
+
