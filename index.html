@@ -38,12 +38,15 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
-    <li><a class="dropdown-item" href="articles/vi.html">vi</a></li>
-    <li><a class="dropdown-item" href="articles/plantae.html">plantae</a></li>
-    <li><a class="dropdown-item" href="articles/quercus.html">quercus</a></li>
-    <li><a class="dropdown-item" href="articles/neanderthal.html">neanderthal</a></li>
-    <li><a class="dropdown-item" href="articles/trees.html">trees</a></li>
-    <li><a class="dropdown-item" href="articles/communities.html">communities</a></li>
+    <li><a class="dropdown-item" href="articles/vi.html">Global vegetation index: modelling NDVI across climates and biomes</a></li>
+    <li><a class="dropdown-item" href="articles/plantae.html">Global plant diversity: spatial random forests across 662 ecoregions</a></li>
+    <li><a class="dropdown-item" href="articles/quercus.html">European oak distribution: multi-species niche modelling with recursive partition trees</a></li>
+    <li><a class="dropdown-item" href="articles/neanderthal.html">Neanderthal habitat during the Last Interglacial: a weighted GAM ensemble</a></li>
+    <li><a class="dropdown-item" href="articles/trees.html">Mesoamerican tree richness across the Americas: conditional inference trees for biodiversity patterns</a></li>
+    <li><a class="dropdown-item" href="articles/communities.html">Plant community distribution in Sierra Nevada: multi-class classification under climate change</a></li>
+    <li><a class="dropdown-item" href="articles/interaction.html">Biotic interactions: modelling species dependencies with sequential SDMs</a></li>
+    <li><a class="dropdown-item" href="articles/linaria.html">Linaria nigricans distribution and greenhouse expansion in Andalusia</a></li>
+    <li><a class="dropdown-item" href="articles/andalusia.html">Threatened plant species distribution in Andalusia: per-species GLMs and species richness mapping</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -64,78 +67,312 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><code>spatialData</code> provides ready-to-use spatial datasets for ecological and environmental modeling in R. Each dataset includes pre-processed response variables and environmental predictors, making it easy to jump straight into species distribution modeling, biodiversity analysis, or spatial statistics.</p>
+<p><code>spatialData</code> is a data-only R package providing ready-to-use spatial datasets for ecological modeling. It was originally developed to supply example data for the R packages <a href="https://blasbenito.github.io/collinear/" class="external-link"><code>collinear</code></a> and <a href="https://blasbenito.github.io/spatialRF/" class="external-link"><code>spatialRF</code></a>, but the datasets are equally suited for teaching spatial analysis and species distribution modeling. Each dataset comes pre-processed with response variables and environmental predictors, so you can jump straight into the analysis without spending time on data preparation.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of <code>spatialData</code> from <a href="https://github.com/blasbenito/spatialData" class="external-link">GitHub</a>:</p>
+<p>Install the development version from <a href="https://github.com/blasbenito/spatialData" class="external-link">GitHub</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<code class="sourceCode R"><span><span class="co"># Option 1: pak (recommended)</span></span>
+<span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"blasbenito/spatialData"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Option 2: remotes</span></span>
+<span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"blasbenito/spatialData"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a>
 </h2>
+<p>All datasets are loaded lazily via <code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code>. Most are <code>sf</code> data frames with point or polygon geometries; <code>interaction</code> is a plain data frame.</p>
 <table style="width:100%;" class="table">
 <colgroup>
-<col width="16%">
-<col width="16%">
-<col width="16%">
-<col width="16%">
-<col width="16%">
-<col width="16%">
+<col width="11%">
+<col width="11%">
+<col width="11%">
+<col width="11%">
+<col width="11%">
+<col width="11%">
+<col width="11%">
+<col width="11%">
+<col width="11%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Dataset</th>
 <th align="left">Description</th>
-<th align="right">Records</th>
+<th align="left">Spatial scope</th>
+<th align="left">Temporal scope</th>
+<th align="right">Rows</th>
 <th align="right">Responses</th>
 <th align="right">Predictors</th>
-<th align="left">Article</th>
+<th align="left">CRS</th>
+<th align="left">Geometry</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left"><code>neanderthal</code></td>
-<td align="left">Neanderthal presence/absence records with paleoclimate and topographic predictors</td>
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/neanderthal.html"><code>neanderthal</code></a></td>
+<td align="left">Neanderthal presence/absence and paleoclimate predictors</td>
+<td align="left">Europe</td>
+<td align="left">~120,000 BP (MIS 5e)</td>
 <td align="right">245</td>
 <td align="right">1</td>
 <td align="right">25</td>
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/neanderthal.html">link</a></td>
+<td align="left">EPSG:4326</td>
+<td align="left">POINT</td>
 </tr>
 <tr class="even">
-<td align="left"><code>quercus</code></td>
-<td align="left">European oak species distribution records with bioclimatic and land cover predictors</td>
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/quercus.html"><code>quercus</code></a></td>
+<td align="left">Distribution of European oaks and bioglimatic predictors</td>
+<td align="left">Europe</td>
+<td align="left">present</td>
 <td align="right">6,728</td>
 <td align="right">1</td>
 <td align="right">31</td>
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/quercus.html">link</a></td>
+<td align="left">EPSG:4326</td>
+<td align="left">POINT</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>vi</code></td>
-<td align="left">Global NDVI records with climate, soil, and topographic predictors</td>
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/vi.html"><code>vi</code></a></td>
+<td align="left">NDVI records with environmental predictors</td>
+<td align="left">Global</td>
+<td align="left">1999–2019</td>
 <td align="right">9,265</td>
 <td align="right">5</td>
 <td align="right">58</td>
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/vi.html">link</a></td>
+<td align="left">EPSG:4326</td>
+<td align="left">POINT</td>
 </tr>
 <tr class="even">
-<td align="left"><code>plantae</code></td>
-<td align="left">Plant diversity metrics for global ecoregions with environmental predictors</td>
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/plantae.html"><code>plantae</code></a></td>
+<td align="left">Plant diversity of the global ecoregions</td>
+<td align="left">Global</td>
+<td align="left">2020</td>
 <td align="right">662</td>
 <td align="right">53</td>
-<td align="right">96</td>
-<td align="left">–</td>
+<td align="right">84</td>
+<td align="left">EPSG:4326</td>
+<td align="left">POINT (centroids)</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/trees.html"><code>trees</code></a></td>
+<td align="left">Tree species richness and environmental predictors</td>
+<td align="left">Americas</td>
+<td align="left">2012</td>
+<td align="right">3,373</td>
+<td align="right">1</td>
+<td align="right">50</td>
+<td align="left">EPSG:4326</td>
+<td align="left">POLYGON</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/communities.html"><code>communities</code></a></td>
+<td align="left">Plant community presence and climate predictors</td>
+<td align="left">Sierra Nevada, SE Spain</td>
+<td align="left">2009</td>
+<td align="right">7,300</td>
+<td align="right">6</td>
+<td align="right">9</td>
+<td align="left">EPSG:25830</td>
+<td align="left">POINT</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/interaction.html"><code>interaction</code></a></td>
+<td align="left">Butterfly and host plant presence and environmental predictors</td>
+<td align="left">Sierra Nevada, SE Spain</td>
+<td align="left">2014</td>
+<td align="right">1000</td>
+<td align="right">3</td>
+<td align="right">10</td>
+<td align="left">EPSG:25830</td>
+<td align="left">POINT</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/linaria.html"><code>linaria</code></a></td>
+<td align="left">
+<em>Linaria nigricans</em> and greenhouse records with environmental predictors</td>
+<td align="left">Eastern Andalusia, Spain</td>
+<td align="left"></td>
+<td align="right">7,386</td>
+<td align="right">2</td>
+<td align="right">20</td>
+<td align="left">EPSG:25830</td>
+<td align="left">POINT</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/andalusia.html"><code>andalusia</code></a></td>
+<td align="left">Plant species presences and and environmental predictors</td>
+<td align="left">Andalusia, Spain</td>
+<td align="left">2010</td>
+<td align="right">8,666</td>
+<td align="right">2</td>
+<td align="right">20</td>
+<td align="left">EPSG:25830</td>
+<td align="left">POINT</td>
 </tr>
 </tbody>
 </table>
-<p>All datasets are <code>sf</code> data frames with point or polygon geometries, loaded lazily via <code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code>.</p>
+</div>
+<div class="section level2">
+<h2 id="extra-data">Extra Data<a class="anchor" aria-label="anchor" href="#extra-data"></a>
+</h2>
+<p>Several datasets ship with companion download functions that retrieve larger or complementary files from <a href="https://github.com/BlasBenito/spatialDataExtra" class="external-link">spatialDataExtra</a>.</p>
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="14%">
+<col width="14%">
+<col width="14%">
+<col width="14%">
+<col width="14%">
+<col width="14%">
+<col width="14%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Dataset</th>
+<th align="left">Function</th>
+<th align="left">Description</th>
+<th align="left">Format</th>
+<th align="left">Geometry / Bands</th>
+<th align="left">Resolution</th>
+<th align="left">CRS</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/neanderthal.html"><code>neanderthal</code></a></td>
+<td align="left"><code><a href="reference/neanderthal_extra.html">neanderthal_extra()</a></code></td>
+<td align="left">25-band palaeoclimate raster (bioclim + topography)</td>
+<td align="left">GeoTIFF</td>
+<td align="left">25 bands</td>
+<td align="left">0.18°</td>
+<td align="left">EPSG:4326</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/quercus.html"><code>quercus</code></a></td>
+<td align="left"><code><a href="reference/quercus_extra.html">quercus_extra()</a></code></td>
+<td align="left">31-band bioclimatic/environmental raster</td>
+<td align="left">GeoTIFF</td>
+<td align="left">31 bands</td>
+<td align="left">0.167°</td>
+<td align="left">EPSG:4326</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/vi.html"><code>vi</code></a></td>
+<td align="left"><code><a href="reference/vi_extra.html">vi_extra()</a></code></td>
+<td align="left">Extended NDVI point dataset (30,000 records)</td>
+<td align="left">GeoPackage</td>
+<td align="left">POINT</td>
+<td align="left">30,000 rows</td>
+<td align="left">EPSG:4326</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/plantae.html"><code>plantae</code></a></td>
+<td align="left"><code><a href="reference/plantae_extra.html">plantae_extra()</a></code></td>
+<td align="left">Ecoregion polygons with full diversity data</td>
+<td align="left">GeoPackage</td>
+<td align="left">MULTIPOLYGON</td>
+<td align="left">662 features</td>
+<td align="left">EPSG:4326</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/trees.html"><code>trees</code></a></td>
+<td align="left"><code><a href="reference/trees_extra.html">trees_extra()</a></code></td>
+<td align="left">Individual tree species presence points</td>
+<td align="left">GeoPackage</td>
+<td align="left">POINT</td>
+<td align="left">523,308 rows</td>
+<td align="left">EPSG:4326</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/communities.html"><code>communities</code></a></td>
+<td align="left"><code><a href="reference/communities_extra_2010.html">communities_extra_2010()</a></code></td>
+<td align="left">Baseline (2010) climate raster for Sierra Nevada</td>
+<td align="left">GeoTIFF</td>
+<td align="left">9 bands</td>
+<td align="left">100 m</td>
+<td align="left">EPSG:25830</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/communities.html"><code>communities</code></a></td>
+<td align="left"><code><a href="reference/communities_extra_2050.html">communities_extra_2050()</a></code></td>
+<td align="left">Projected (2050) climate raster for Sierra Nevada</td>
+<td align="left">GeoTIFF</td>
+<td align="left">9 bands</td>
+<td align="left">100 m</td>
+<td align="left">EPSG:25830</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/communities.html"><code>communities</code></a></td>
+<td align="left"><code><a href="reference/communities_extra_2100.html">communities_extra_2100()</a></code></td>
+<td align="left">Projected (2100) climate raster for Sierra Nevada</td>
+<td align="left">GeoTIFF</td>
+<td align="left">9 bands</td>
+<td align="left">100 m</td>
+<td align="left">EPSG:25830</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/interaction.html"><code>interaction</code></a></td>
+<td align="left"><code><a href="reference/interaction_extra.html">interaction_extra()</a></code></td>
+<td align="left">10-band environmental raster for Sierra Nevada</td>
+<td align="left">GeoTIFF</td>
+<td align="left">10 bands</td>
+<td align="left">100 m</td>
+<td align="left">EPSG:25830</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/linaria.html"><code>linaria</code></a></td>
+<td align="left"><code><a href="reference/linaria_extra.html">linaria_extra()</a></code></td>
+<td align="left">20-band environmental raster for Eastern Andalusia</td>
+<td align="left">GeoTIFF</td>
+<td align="left">20 bands</td>
+<td align="left">400 m</td>
+<td align="left">EPSG:25830</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/andalusia.html"><code>andalusia</code></a></td>
+<td align="left"><code><a href="reference/andalusia_extra.html">andalusia_extra()</a></code></td>
+<td align="left">20-band environmental raster for Andalusia</td>
+<td align="left">GeoTIFF</td>
+<td align="left">20 bands</td>
+<td align="left">400 m</td>
+<td align="left">EPSG:25830</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
+<p>The license of <code>spatialData</code> requires the following citation:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"spatialData"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; To cite package 'spatialData' in publications use:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Benito B (2025). "spatialData: Spatial Datasets for Ecological</span></span>
+<span><span class="co">#&gt;   Modeling." doi:10.5281/zenodo.XXXXXXX</span></span>
+<span><span class="co">#&gt;   &lt;https://doi.org/10.5281/zenodo.XXXXXXX&gt;, R package version 0.0.1,</span></span>
+<span><span class="co">#&gt;   &lt;https://blasbenito.github.io/spatialData&gt;.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   @Misc{,</span></span>
+<span><span class="co">#&gt;     title = {spatialData: Spatial Datasets for Ecological Modeling},</span></span>
+<span><span class="co">#&gt;     author = {Blas M. Benito},</span></span>
+<span><span class="co">#&gt;     year = {2025},</span></span>
+<span><span class="co">#&gt;     note = {R package version 0.0.1},</span></span>
+<span><span class="co">#&gt;     url = {https://blasbenito.github.io/spatialData},</span></span>
+<span><span class="co">#&gt;     doi = {10.5281/zenodo.XXXXXXX},</span></span>
+<span><span class="co">#&gt;   }</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
+<p>CC BY 4.0 — see <a href="LICENSE.html">LICENSE.md</a> for details.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://creativecommons.org/licenses/by/4.0" class="external-link">CC BY 4.0</a></small></li>
 </ul>
 </div>
 
@@ -150,7 +387,8 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>First Last <br><small class="roles"> Author, maintainer </small>   </li>
+<li>
+<a href="https://blasbenito.com" class="external-link">Blas M. Benito</a> <br><small class="roles"> Author, maintainer </small>   </li>
 </ul>
 </div>
 
@@ -166,7 +404,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by First Last.</p>
+  <p>Developed by <a href="https://blasbenito.com" class="external-link">Blas M. Benito</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

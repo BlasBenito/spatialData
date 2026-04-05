@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>neanderthal • spatialData</title>
+<title>Neanderthal habitat during the Last Interglacial: a weighted GAM ensemble • spatialData</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="neanderthal">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Neanderthal habitat during the Last Interglacial: a weighted GAM ensemble">
 <link rel="stylesheet" href="extra.css">
 </head>
 <body>
@@ -36,12 +36,15 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
-    <li><a class="dropdown-item" href="../articles/vi.html">vi</a></li>
-    <li><a class="dropdown-item" href="../articles/plantae.html">plantae</a></li>
-    <li><a class="dropdown-item" href="../articles/quercus.html">quercus</a></li>
-    <li><a class="dropdown-item" href="../articles/neanderthal.html">neanderthal</a></li>
-    <li><a class="dropdown-item" href="../articles/trees.html">trees</a></li>
-    <li><a class="dropdown-item" href="../articles/communities.html">communities</a></li>
+    <li><a class="dropdown-item" href="../articles/vi.html">Global vegetation index: modelling NDVI across climates and biomes</a></li>
+    <li><a class="dropdown-item" href="../articles/plantae.html">Global plant diversity: spatial random forests across 662 ecoregions</a></li>
+    <li><a class="dropdown-item" href="../articles/quercus.html">European oak distribution: multi-species niche modelling with recursive partition trees</a></li>
+    <li><a class="dropdown-item" href="../articles/neanderthal.html">Neanderthal habitat during the Last Interglacial: a weighted GAM ensemble</a></li>
+    <li><a class="dropdown-item" href="../articles/trees.html">Mesoamerican tree richness across the Americas: conditional inference trees for biodiversity patterns</a></li>
+    <li><a class="dropdown-item" href="../articles/communities.html">Plant community distribution in Sierra Nevada: multi-class classification under climate change</a></li>
+    <li><a class="dropdown-item" href="../articles/interaction.html">Biotic interactions: modelling species dependencies with sequential SDMs</a></li>
+    <li><a class="dropdown-item" href="../articles/linaria.html">Linaria nigricans distribution and greenhouse expansion in Andalusia</a></li>
+    <li><a class="dropdown-item" href="../articles/andalusia.html">Threatened plant species distribution in Andalusia: per-species GLMs and species richness mapping</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -66,14 +69,10 @@
 <script src="neanderthal_files/leaflet-binding-2.2.3/leaflet.js"></script><script src="neanderthal_files/leaflet-providers-3.0.0/leaflet-providers.js"></script><script src="neanderthal_files/leaflet-providers-plugin-2.2.3/leaflet-providers-plugin.js"></script><script src="neanderthal_files/HomeButton-0.0.1/home-button.js"></script><script src="neanderthal_files/HomeButton-0.0.1/easy-button-src.min.js"></script><link href="neanderthal_files/Presence-CSS-0.0.1/Presence_home-button.css" rel="stylesheet">
 <script src="neanderthal_files/clipboard-0.0.1/setClipboardText.js"></script><link href="neanderthal_files/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet">
 <link href="neanderthal_files/mapviewCSS-0.0.1/mapview.css" rel="stylesheet">
-<link href="neanderthal_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="neanderthal_files/datatables-binding-0.34.0/datatables.js"></script><link href="neanderthal_files/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="neanderthal_files/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="neanderthal_files/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="neanderthal_files/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
-<script src="neanderthal_files/crosstalk-1.2.2/js/crosstalk.min.js"></script><div class="row">
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>neanderthal</h1>
+      <h1>Neanderthal habitat during the Last Interglacial: a weighted GAM ensemble</h1>
             
       
 
@@ -85,6 +84,11 @@
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
+<p>Neanderthals survived for hundreds of thousands of years across
+diverse environments, yet their distribution during warm interglacials
+remains debated — partly because high-resolution palaeoclimate
+reconstructions have only recently become available. This dataset lets
+you explore that question with modern SDM tools.</p>
 <p>The <code>neanderthal</code> dataset contains presence and
 pseudo-absence records of Neanderthal archaeological sites from Marine
 Isotope Stage 5e (Last Interglacial, ~130,000-115,000 years ago),
@@ -167,7 +171,7 @@ topographic predictors.</p>
 <span><span class="co">#&gt; [19] "bio9"                 "topo_aspect"          "topo_diversity_local"</span></span>
 <span><span class="co">#&gt; [22] "topo_diversity"       "topo_elev"            "topo_slope"          </span></span>
 <span><span class="co">#&gt; [25] "topo_wetness"</span></span></code></pre></div>
-<p>The palaeoclimatic predictors are described <a href="https://www.worldclim.org/data/bioclim.html" class="external-link">here</a>.</p>
+<p>You can find descriptions of the palaeoclimatic predictors <a href="https://www.worldclim.org/data/bioclim.html" class="external-link">here</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="example-usage">Example Usage<a class="anchor" aria-label="anchor" href="#example-usage"></a>
@@ -207,14 +211,36 @@ that preserves the most important ones.</p>
 <span>  f <span class="op">=</span> <span class="fu">collinear</span><span class="fu">::</span><span class="va"><a href="https://blasbenito.github.io/collinear/reference/f_binomial_gam.html" class="external-link">f_binomial_gam</a></span>,  </span>
 <span>  quiet <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>The ranking of predictors computed by
-<code>colliinear::collinear()</code> for this dataset is shown below.
-The column <code>score</code> shows the AUC score of each univariate
-model.</p>
+<p>Here is the predictor ranking:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">datatable</a></span><span class="op">(</span><span class="va">selection</span><span class="op">$</span><span class="va">presence</span><span class="op">$</span><span class="va">preference_order</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"response"</span>, <span class="st">"predictor"</span>, <span class="st">"score"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25"],["presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence","presence"],["bio17","bio12","bio19","bio14","bio1","bio7","bio2","bio11","bio8","topo_slope","bio13","bio16","bio9","bio3","bio10","bio5","bio4","topo_diversity","bio6","bio15","topo_wetness","bio18","topo_elev","topo_aspect","topo_diversity_local"],[0.8748,0.8665,0.8638,0.8411999999999999,0.8343,0.8143,0.8084,0.8037,0.7999000000000001,0.7997,0.7987,0.797,0.7897,0.7833,0.7809,0.7751,0.7726,0.7466,0.7353,0.7332,0.7134,0.6573,0.6572,0.6289,0.626]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>response<\/th>\n      <th>predictor<\/th>\n      <th>score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":3},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"response","targets":1},{"name":"predictor","targets":2},{"name":"score","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>The function has selected the following predictors:</p>
+<code class="sourceCode R"><span><span class="va">selection</span><span class="op">$</span><span class="va">presence</span><span class="op">$</span><span class="va">preference_order</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"response"</span>, <span class="st">"predictor"</span>, <span class="st">"score"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt;    response            predictor  score</span></span>
+<span><span class="co">#&gt; 1  presence                bio17 0.8748</span></span>
+<span><span class="co">#&gt; 2  presence                bio12 0.8665</span></span>
+<span><span class="co">#&gt; 3  presence                bio19 0.8638</span></span>
+<span><span class="co">#&gt; 4  presence                bio14 0.8412</span></span>
+<span><span class="co">#&gt; 5  presence                 bio1 0.8343</span></span>
+<span><span class="co">#&gt; 6  presence                 bio7 0.8143</span></span>
+<span><span class="co">#&gt; 7  presence                 bio2 0.8084</span></span>
+<span><span class="co">#&gt; 8  presence                bio11 0.8037</span></span>
+<span><span class="co">#&gt; 9  presence                 bio8 0.7999</span></span>
+<span><span class="co">#&gt; 10 presence           topo_slope 0.7997</span></span>
+<span><span class="co">#&gt; 11 presence                bio13 0.7987</span></span>
+<span><span class="co">#&gt; 12 presence                bio16 0.7970</span></span>
+<span><span class="co">#&gt; 13 presence                 bio9 0.7897</span></span>
+<span><span class="co">#&gt; 14 presence                 bio3 0.7833</span></span>
+<span><span class="co">#&gt; 15 presence                bio10 0.7809</span></span>
+<span><span class="co">#&gt; 16 presence                 bio5 0.7751</span></span>
+<span><span class="co">#&gt; 17 presence                 bio4 0.7726</span></span>
+<span><span class="co">#&gt; 18 presence       topo_diversity 0.7466</span></span>
+<span><span class="co">#&gt; 19 presence                 bio6 0.7353</span></span>
+<span><span class="co">#&gt; 20 presence                bio15 0.7332</span></span>
+<span><span class="co">#&gt; 21 presence         topo_wetness 0.7134</span></span>
+<span><span class="co">#&gt; 22 presence                bio18 0.6573</span></span>
+<span><span class="co">#&gt; 23 presence            topo_elev 0.6572</span></span>
+<span><span class="co">#&gt; 24 presence          topo_aspect 0.6289</span></span>
+<span><span class="co">#&gt; 25 presence topo_diversity_local 0.6260</span></span></code></pre></div>
+<p>The function has selected the following predictors:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">selection</span><span class="op">$</span><span class="va">presence</span><span class="op">$</span><span class="va">selection</span></span>
 <span><span class="co">#&gt; [1] "bio17"          "bio1"           "bio7"           "bio8"          </span></span>
@@ -222,6 +248,7 @@ model.</p>
 <span><span class="co">#&gt; [9] "topo_aspect"   </span></span>
 <span><span class="co">#&gt; attr(,"validated")</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<p>Before fitting anything, let’s think about the modelling choices.</p>
 </div>
 <div class="section level3">
 <h3 id="modelling-rationale">Modelling Rationale<a class="anchor" aria-label="anchor" href="#modelling-rationale"></a>
@@ -381,12 +408,21 @@ but any other function able to compute AUC will do here.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">model_weights</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">selection</span><span class="op">$</span><span class="va">presence</span><span class="op">$</span><span class="va">selection</span></span></code></pre></div>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-36aa3d2a04d42bbc2145" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-36aa3d2a04d42bbc2145">{"x":{"filter":"none","vertical":false,"data":[["bio17","bio1","bio7","bio8","topo_slope","bio13","topo_diversity","topo_wetness","topo_aspect"],[0.8235,0.8286,0.805,0.7000999999999999,0.7981,0.7864,0.6861,0.6056,0.6304999999999999]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>model_weights<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"model_weights","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>To compute the intrinsic AUC of the model, we first generate the
+<pre><code><span><span class="co">#&gt;                model_weights</span></span>
+<span><span class="co">#&gt; bio17                 0.8235</span></span>
+<span><span class="co">#&gt; bio1                  0.8286</span></span>
+<span><span class="co">#&gt; bio7                  0.8050</span></span>
+<span><span class="co">#&gt; bio8                  0.7001</span></span>
+<span><span class="co">#&gt; topo_slope            0.7981</span></span>
+<span><span class="co">#&gt; bio13                 0.7864</span></span>
+<span><span class="co">#&gt; topo_diversity        0.6861</span></span>
+<span><span class="co">#&gt; topo_wetness          0.6056</span></span>
+<span><span class="co">#&gt; topo_aspect           0.6305</span></span></code></pre>
+<p>To compute the intrinsic AUC of the model, we first generate the
 predictions of the univariate GAM models, and then average these
 predictions weighted by their partial AUC scores, and finally compare
 them with the observations.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#extract predictions from each model</span></span>
 <span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span></span>
 <span>  X <span class="op">=</span> <span class="va">models</span>,</span>
@@ -413,6 +449,8 @@ them with the observations.</p>
 <span><span class="co">#&gt; [1] 0.923756</span></span></code></pre></div>
 <p>The global AUC score indicates the probability of any presence to
 have a higher habitat suitability than any pseudoabsence.</p>
+<p>With a validated ensemble in hand, we can now map Neanderthal habitat
+across the region.</p>
 </div>
 <div class="section level3">
 <h3 id="habitat-suitability-map">Habitat Suitability Map<a class="anchor" aria-label="anchor" href="#habitat-suitability-map"></a>
@@ -420,8 +458,9 @@ have a higher habitat suitability than any pseudoabsence.</p>
 <p>The package <code>spatialData</code> provides the raster dataset
 <code>neanderthal_env</code> to predict models based on the
 <code>neanderthal</code> data.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">neanderthal_env</span> <span class="op">&lt;-</span> <span class="fu">spatialData</span><span class="fu">::</span><span class="fu"><a href="../reference/neanderthal_extra.html">neanderthal_extra</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; spatialData::neanderthal_extra(): Downloading 'neanderthal_env.tif'.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">neanderthal_env</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "SpatRaster"</span></span>
 <span><span class="co">#&gt; attr(,"package")</span></span>
@@ -439,7 +478,7 @@ have a higher habitat suitability than any pseudoabsence.</p>
 <p>The code below predicts the univariate GAMs over
 <code>neanderthal_env</code>, and then computes their weighted mean to
 produce the habitat suitability map.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#predict each model on a separate raster object</span></span>
 <span><span class="va">univariate_predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span></span>
 <span>  X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">models</span><span class="op">)</span>,</span>
@@ -485,7 +524,7 @@ produce the habitat suitability map.</p>
 progressively bleached toward white as uncertainty increases. Vivid
 colors indicate confident predictions, while pale or white areas flag
 regions where models disagree.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co">#combine into a data frame</span></span>
 <span><span class="va">bi_df</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span></span>
@@ -577,6 +616,18 @@ Near East, with model confidence decreasing toward range margins and
 data-sparse regions.</p>
 </div>
 </div>
+<div class="section level2">
+<h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
+</h2>
+<p>The ensemble of univariate GAMs, weighted by cross-validated AUC,
+provides a robust picture of Neanderthal habitat suitability during the
+Last Interglacial. Whitening the ensemble predictions with their
+standard deviation surfaces the areas of genuine uncertainty. SDM tools
+developed for modern species translate naturally to palaeontological
+data — and <code>neanderthal</code> is a good place to experiment with
+that.</p>
+<p>Happy modelling!</p>
+</div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
@@ -584,7 +635,7 @@ data-sparse regions.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by First Last.</p>
+  <p>Developed by <a href="https://blasbenito.com" class="external-link">Blas M. Benito</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
