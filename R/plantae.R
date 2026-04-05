@@ -12,7 +12,7 @@
 #' **Tree species** were identified by cross-referencing GBIF records with the BGCI Global Tree
 #' Search database (BGCI 2020). **Grasses** were defined as members of family Poaceae.
 #'
-#' **Rarity-weighted richness** (Williams et al. 1996): each taxon is scored with the inverse of
+#' **Rarity-weighted richness**: each taxon is scored with the inverse of
 #' its number of spatial presence records in GBIF, then scores are summed per ecoregion.
 #' **Mean rarity** is the mean of these inverse presence record counts per taxon in an ecoregion.
 #'
@@ -248,32 +248,32 @@
 #'   \item Maestre, F.T., Benito, B.M., Berdugo, M., Concostrina-Zubiri, L., Delgado-Baquerizo, M.,
 #'   Eldridge, D.J., Guirado, E., Gross, N., Kefi, S., Le Bagousse-Pinguet, Y., et al. (2021).
 #'   Biogeography of global drylands. \emph{New Phytologist}, 231(2), 540--558.
-#'   \doi{10.1111/nph.17398}
+#'   \url{https://doi.org/10.1111/nph.17398}
 #' }
 #'
 #' **Biodiversity data:**
 #' \itemize{
-#'   \item GBIF Plantae Dataset (September 15, 2020). \doi{10.15468/dl.xh5y5g}
+#'   \item GBIF Plantae Dataset (September 15, 2020). \url{https://doi.org/10.15468/dl.xh5y5g}
 #' }
 #'
 #' **Spatial boundaries:**
 #' \itemize{
-#'   \item Dinerstein, E., et al. (2017). An Ecoregion-Based Approach to Protecting Half the Terrestrial Realm. \emph{BioScience}, 67(6), 534-545. \doi{10.1093/biosci/bix014}
+#'   \item Dinerstein, E., et al. (2017). An Ecoregion-Based Approach to Protecting Half the Terrestrial Realm. \emph{BioScience}, 67(6), 534-545. \url{https://doi.org/10.1093/biosci/bix014}
 #' }
 #'
 #' **Climate predictors (precipitation, temperature, atmospheric):**
 #' \itemize{
-#'   \item Karger, D.N., et al. (2021). Climatologies at high resolution for the earth's land surface areas. EnviDat. \doi{10.16904/envidat.228.v2.1}
+#'   \item Karger, D.N., et al. (2021). Climatologies at high resolution for the earth's land surface areas. EnviDat. \url{https://doi.org/10.16904/envidat.228.v2.1}
 #' }
 #'
 #' **Soil properties:**
 #' \itemize{
-#'   \item Hengl, T., et al. (2017). SoilGrids250m: Global gridded soil information based on machine learning. \emph{PLOS ONE}, 12(2), e0169748. \doi{10.1371/journal.pone.0169748}
+#'   \item Hengl, T., et al. (2017). SoilGrids250m: Global gridded soil information based on machine learning. \emph{PLOS ONE}, 12(2), e0169748. \url{https://doi.org/10.1371/journal.pone.0169748}
 #' }
 #'
 #' **Soil temperature:**
 #' \itemize{
-#'   \item Lembrechts, J.J., et al. (2021). Mismatches between soil and air temperature. \emph{Global Change Biology}. \doi{10.1111/gcb.16060}
+#'   \item Lembrechts, J.J., et al. (2021). Mismatches between soil and air temperature. \emph{Global Change Biology}. \url{https://doi.org/10.1111/gcb.16060}
 #' }
 #'
 #' **NDVI:**
@@ -283,7 +283,7 @@
 #'
 #' **Landcover and fragmentation:**
 #' \itemize{
-#'   \item Buchhorn, M., et al. (2020). Copernicus Global Land Service: Land Cover 100m: collection 3: epoch 2019: Globe. Zenodo. \doi{10.5281/zenodo.3939050}
+#'   \item Buchhorn, M., et al. (2020). Copernicus Global Land Service: Land Cover 100m: collection 3: epoch 2019: Globe. Zenodo. \url{https://doi.org/10.5281/zenodo.3939050}
 #' }
 #'
 #' **Topographic/geographic features:**
@@ -293,7 +293,7 @@
 #'
 #' **Aridity index:**
 #' \itemize{
-#'   \item Trabucco, A. & Zomer, R.J. (2019). Global Aridity Index and Potential Evapotranspiration Climate Database v2. CGIAR-CSI. \doi{10.6084/m9.figshare.7504448.v3}
+#'   \item Trabucco, A. & Zomer, R.J. (2019). Global Aridity Index and Potential Evapotranspiration Climate Database v2. CGIAR-CSI. \url{https://doi.org/10.6084/m9.figshare.7504448.v3}
 #' }
 #'
 #' **Tree species identification:**
@@ -303,12 +303,12 @@
 #'
 #' **Fragmentation metrics:**
 #' \itemize{
-#'   \item Hesselbarth, M.H.K., et al. (2019). landscapemetrics: an open-source R tool to calculate landscape metrics. \emph{Ecography}, 42(10), 1648-1657. \doi{10.1111/ecog.04617}
+#'   \item Hesselbarth, M.H.K., et al. (2019). landscapemetrics: an open-source R tool to calculate landscape metrics. \emph{Ecography}, 42(10), 1648-1657. \url{https://doi.org/10.1111/ecog.04617}
 #' }
 #'
 #' **Beta diversity methodology:**
 #' \itemize{
-#'   \item Koleff, P., Gaston, K.J. & Lennon, J.J. (2003). Measuring beta diversity for presence-absence data. \emph{Journal of Animal Ecology}, 72(3), 367-382. \doi{10.1046/j.1365-2656.2003.00710.x}
+#'   \item Koleff, P., Gaston, K.J. & Lennon, J.J. (2003). Measuring beta diversity for presence-absence data. \emph{Journal of Animal Ecology}, 72(3), 367-382. \url{https://doi.org/10.1046/j.1365-2656.2003.00710.x}
 #' }
 #'
 #' **Rarity-weighted richness:**
@@ -318,7 +318,7 @@
 #'
 #' **Human footprint:**
 #' \itemize{
-#'   \item Venter, O., et al. (2016). Global terrestrial Human Footprint maps for 1993 and 2009. \emph{Scientific Data}, 3, 160067. \doi{10.1038/sdata.2016.67}
+#'   \item Venter, O., et al. (2016). Global terrestrial Human Footprint maps for 1993 and 2009. \emph{Scientific Data}, 3, 160067. \url{https://doi.org/10.1038/sdata.2016.67}
 #' }
 #' @family plantae
 "plantae"

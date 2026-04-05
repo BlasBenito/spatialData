@@ -42,7 +42,6 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 pak::pkg_install(
   c(
     "sf",
-    "stars",
     "mapview",
     "dplyr",
     "ggplot2",
@@ -96,8 +95,8 @@ mapview::mapview(
   plantae,
   zcol = "richness_species",
   layer.name = "Species richness",
-  col.regions = viridis::magma(
-    n = length(unique(plantae$richness_species)), 
+  col.regions = viridis::turbo(
+    n = length(unique(plantae$richness_species)),
     direction = -1
     ),
   cex = sqrt(plantae$richness_species)/10
@@ -113,8 +112,8 @@ mapview::mapview(
   plantae_polygons,
   zcol = "richness_species",
   layer.name = "Species richness",
-  col.regions = viridis::magma(
-    n = length(unique(plantae$richness_species)), 
+  col.regions = viridis::turbo(
+    n = length(unique(plantae$richness_species)),
     direction = -1
     )
   )
@@ -351,9 +350,9 @@ spatialRF::plot_response_curves(
 ```
 In the context of a spatial model with MEMs, these curves represent the *environmental* component of richness after bias and spatial structure are accounted for. This means the relationships shown reflect genuine environmental gradients rather than geographic clustering artefacts, making them more interpretable than those from a non-spatial model.
 
-The spatial random forest above demonstrates one modeling approach for `richness_species`, but the same workflow applies to any of the 53 response variables in `plantae` — including rarity-weighted richness, beta diversity (Sorensen or Simpson), or richness gradients between biomes. The dataset supports a much wider range of ecological modelling experiments, from spatial cross-validation to path analysis.
+## Conclusion
 
-Have fun with it!
+The spatial random forest above demonstrates one modelling approach for `richness_species`, but the same workflow applies to any of the 53 response variables in `plantae` — including rarity-weighted richness, beta diversity (Sorensen or Simpson), or richness gradients between biomes. The dataset supports a much wider range of ecological modelling experiments, from spatial cross-validation to path analysis.
 
 ```{r, echo = FALSE}
 unlink("plantae.gpkg")

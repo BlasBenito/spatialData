@@ -1,4 +1,4 @@
-#' @title Presence of *Linaria nigricans* Distribution and Greenhouses in Eastern Andalusia
+#' @title *Linaria nigricans* Presence and Greenhouses in Eastern Andalusia
 #'
 #' @description
 #' `sf` data frame with `POINT` geometry containing presence records of the plant
@@ -67,18 +67,28 @@
 #' }
 #'
 #' @source
-#' **Published study:**
+#' **Published studies:**
 #' \itemize{
 #'   \item Benito, B.M., Martínez-Ortega, M.M., Munoz, L.M., Lorite, J. & Penas, J. (2009).
 #'   Assessing extinction-risk of endangered plants using species distribution models: a case
 #'   study of habitat depletion caused by the spread of greenhouses.
 #'   \emph{Biodiversity and Conservation}, 18(9), 2509--2520.
-#'   \doi{10.1007/s10531-009-9706-6}
+#'   \url{https://doi.org/10.1007/s10531-009-9706-6}
+#'   \item Peñas, J., Benito, B., Lorite, J., et al. (2011). Habitat fragmentation in arid
+#'   zones: a case study of \emph{Linaria nigricans} under land use changes (SE Spain).
+#'   \emph{Environmental Management}, 48, 168--176.
+#'   \url{https://doi.org/10.1007/s00267-011-9663-y}
+#' }
+#'
+#' **Species occurrence data:**
+#' \itemize{
+#'   \item Original field surveys conducted by B.M. Benito in SE Spain (Sierra Nevada and
+#'   surrounding arid zones).
 #' }
 #'
 #' **Landsat imagery:**
 #' \itemize{
-#'   \item U.S. Geological Survey. Landsat Thematic Mapper (TM) imagery, path/row tiles for Andalusia. \url{https://earthexplorer.usgs.gov}
+#'   \item Nunes de Lima, M. V. (Ed.) (2005). \emph{IMAGE2000 and CLC2000 -- Products and methods}. Joint Research Centre, Institute for Environment and Sustainability, and European Environment Agency. Publications Office of the European Union. \url{https://op.europa.eu/en/publication-detail/-/publication/84dd2bad-14d9-4a65-9b92-3b4507d09e44/language-en}
 #' }
 #'
 #' **Climate variables:**

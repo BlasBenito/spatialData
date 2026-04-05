@@ -59,9 +59,17 @@ An sf data frame with 8666 rows (presences and background points) and 23 columns
 }
 }
 \source{
+\strong{Published study, data preparation, and species occurrence data:}
+\itemize{
+\item Benito, B.M., Lorite, J., Pérez-Pérez, R., Gómez-Aparicio, L., & Peñas, J. (2014).
+Forecasting plant range collapse in a mediterranean hotspot: when dispersal uncertainties
+matter. \emph{Diversity and Distributions}, 20(1), 72--83.
+\url{https://doi.org/10.1111/ddi.12148}
+}
+
 \strong{Landsat imagery:}
 \itemize{
-\item U.S. Geological Survey. Landsat Thematic Mapper (TM) imagery, path/row tiles for Andalusia. \url{https://earthexplorer.usgs.gov}
+\item Nunes de Lima, M. V. (Ed.) (2005). \emph{IMAGE2000 and CLC2000 -- Products and methods}. Joint Research Centre, Institute for Environment and Sustainability, and European Environment Agency. Publications Office of the European Union. \url{https://op.europa.eu/en/publication-detail/-/publication/84dd2bad-14d9-4a65-9b92-3b4507d09e44/language-en}
 }
 
 \strong{Climate variables:}

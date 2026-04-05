@@ -46,25 +46,10 @@
 #' }
 #'
 #' @source
-#' **Plant community occurrences:**
 #' \itemize{
-#'   \item Official vegetation map at 1:10,000 scale. Council of Environment, Regional Government of Andalusia (Spain).
+#'   \item Benito, B., Lorite, J., & Peñas, J. (2011). Simulating potential effects of climatic warming on altitudinal patterns of key species in Mediterranean-alpine ecosystems. \emph{Climatic Change}, 108, 471–483. \url{https://doi.org/10.1007/s10584-010-0015-3}
 #' }
 #'
-#' **Climate variables:**
-#' \itemize{
-#'   \item Downscaled climate simulations (ECHAM4/CGCM2, SRES A2/B2 scenarios) using the FIC Analogues Method (Brunet et al. 2007); calibration period 1990-2005. Council of Environment, Regional Government of Andalusia (Spain).
-#' }
-#'
-#' **Topographic variables (northness, slope, TWI):**
-#' \itemize{
-#'   \item 10 m Digital Elevation Model. Council of Environment, Government of Andalusia (Spain).
-#' }
-#'
-#' **Reference:**
-#' \itemize{
-#'   \item Benito, B., Lorite, J., & Penas, J. (2011). Simulating potential effects of climatic warming on altitudinal patterns of key species in Mediterranean-alpine ecosystems. \emph{Climatic Change}, 108, 471-483. \doi{10.1007/s10584-010-0015-3}
-#' }
 #' @family communities
 "communities"
 

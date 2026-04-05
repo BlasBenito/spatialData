@@ -38,7 +38,6 @@ pak::pkg_install(
     "sf",
     "stars",
     "mapview",
-    "stars",
     "collinear",
     "spatialRF"
   ),
@@ -377,11 +376,13 @@ The divergent palette shows three distinct zones:
 
 The `interaction` dataset illustrates a two-stage species distribution modelling workflow in which the output of one model becomes a predictor for another. By first modelling the host plant *Androsace vitaliana* from abiotic predictors and then using those predictions as a biotic input for the butterfly *Agriades zullichi*, we showed how obligate ecological dependencies can be encoded in a sequential modelling framework.
 
-The resulting suitability maps and difference raster make `interaction` well suited for tutorials on biotic interactions, predictor engineering, spatial cross-validation, and divergent palette visualisation in R. Happy modelling!
+The resulting suitability maps and difference raster make `interaction` well suited for tutorials on biotic interactions, predictor engineering, spatial cross-validation, and divergent palette visualisation in R.
 
 ## References
 
 Barea-Azcón, J.M., Benito, B.M., Olivares, F.J., Ruiz, H., Martín, J., García, A.L., & López, R. (2014). Distribution and conservation of the relict interaction between the butterfly *Agriades zullichi* and its larval foodplant (*Androsace vitaliana nevadensis*). *Biodiversity and Conservation*, 23(4), 927–944. https://doi.org/10.1007/s10531-014-0643-4
+
+Benito, B., Lorite, J., & Peñas, J. (2011). Simulating potential effects of climatic warming on altitudinal patterns of key species in Mediterranean-alpine ecosystems. *Climatic Change*, 108, 471–483. https://doi.org/10.1007/s10584-010-0015-3
 
 ```{r, echo = FALSE}
 unlink("sierra_nevada_env.tif")

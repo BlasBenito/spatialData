@@ -40,22 +40,17 @@ A data frame with presence and background rows and 13 columns:
 \strong{Species occurrences:}
 \itemize{
 \item Butterfly (\emph{Agriades zullichi}) and host plant (\emph{Androsace vitaliana}) field records collected in the Sierra Nevada mountain range (SE Spain).
-\item Barea-Azcón, J.M., Benito, B.M., Olivares, F.J., Ruiz, H., Martín, J., García, A.L., & López, R. (2014). Distribution and conservation of the relict interaction between the butterfly \emph{Agriades zullichi} and its larval foodplant (\emph{Androsace vitaliana nevadensis}). \emph{Biodiversity and Conservation}, 23(4), 927–944. \doi{10.1007/s10531-014-0643-4}
+\item Barea-Azcón, J.M., Benito, B.M., Olivares, F.J., Ruiz, H., Martín, J., García, A.L., & López, R. (2014). Distribution and conservation of the relict interaction between the butterfly \emph{Agriades zullichi} and its larval foodplant (\emph{Androsace vitaliana nevadensis}). \emph{Biodiversity and Conservation}, 23(4), 927–944. \url{https://doi.org/10.1007/s10531-014-0643-4}
 }
 
 \strong{Remote sensing:}
 \itemize{
-\item Landsat imagery processed to derive NDVI and principal component scores for the Sierra Nevada region.
+\item Nunes de Lima, M. V. (Ed.) (2005). \emph{IMAGE2000 and CLC2000 -- Products and methods}. Joint Research Centre, Institute for Environment and Sustainability, and European Environment Agency. Publications Office of the European Union. \url{https://op.europa.eu/en/publication-detail/-/publication/84dd2bad-14d9-4a65-9b92-3b4507d09e44/language-en}
 }
 
-\strong{Climate variables:}
+\strong{Climate and topographic variables:}
 \itemize{
-\item Downscaled climate data for the Sierra Nevada mountain range. Council of Environment, Regional Government of Andalusia (Spain).
-}
-
-\strong{Topographic variables:}
-\itemize{
-\item 100 m Digital Elevation Model derivatives. Council of Environment, Government of Andalusia (Spain).
+\item Benito, B., Lorite, J., & Peñas, J. (2011). Simulating potential effects of climatic warming on altitudinal patterns of key species in Mediterranean-alpine ecosystems. \emph{Climatic Change}, 108, 471–483. \url{https://doi.org/10.1007/s10584-010-0015-3}
 }
 }
 \usage{

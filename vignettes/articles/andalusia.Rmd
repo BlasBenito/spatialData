@@ -278,7 +278,9 @@ The `andalusia` dataset provides a multi-species presence-background framework w
 
 The Youden's J thresholding approach offers a principled, symmetric criterion for converting continuous suitability surfaces into binary maps — an important step when the downstream goal is counting species rather than ranking habitat quality. The resulting richness raster highlights the areas of Andalusia predicted to support the greatest concentration of threatened and endemic plant species, offering a direct input to spatial conservation planning.
 
-Happy modelling!
+## References
+
+Benito, B.M., Lorite, J., Pérez-Pérez, R., Gómez-Aparicio, L., & Peñas, J. (2014). Forecasting plant range collapse in a mediterranean hotspot: when dispersal uncertainties matter. *Diversity and Distributions*, 20(1), 72–83. https://doi.org/10.1111/ddi.12148
 
 ```{r, echo = FALSE}
 unlink("andalusia_env.tif")

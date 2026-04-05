@@ -38,7 +38,6 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 pak::pkg_install(
   c(
     "sf",
-    "stars",
     "mapview",
     "dplyr",
     "collinear",
@@ -265,7 +264,7 @@ mapview::mapview(
 
 This example walked through extreme-climate predictor selection, a conditional inference tree, and spatial prediction onto a hexagonal grid — a simple but interpretable pipeline for exploring tree richness gradients.
 
-Want to go further? Try a random forest or a spatial model, or compare richness patterns between Mesoamerican and non-Mesoamerican grid cells. Happy modelling!
+Want to go further? Try a random forest or a spatial model, or compare richness patterns between Mesoamerican and non-Mesoamerican grid cells.
 
 ## References
 

@@ -42,7 +42,6 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 pak::pkg_install(
   c(
     "sf",
-    "stars",
     "mapview",
     "dplyr",
     "spatialRF",
@@ -237,4 +236,6 @@ spatialRF::plot_response_surface(
 )
 ```
 
-The usage example above is only one of the many modeling approaches that can be applied to `vi`. This workflow walked through random forest regression, permutation-based importance, local variable relevance, and response curves and surfaces — all with a single global dataset. Have fun with it!
+## Conclusion
+
+The usage example above is only one of the many modelling approaches that can be applied to `vi`. This workflow walked through random forest regression, permutation-based importance, local variable relevance, and response curves and surfaces — all with a single global dataset.

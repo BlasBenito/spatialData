@@ -61,7 +61,7 @@
 #' @source
 #' **Presence data:**
 #' \itemize{
-#'   \item Benito, B.M., et al. (2017). The ecological niche and distribution of Neanderthals during the Last Interglacial. \emph{Journal of Biogeography}, 44, 51-61. \doi{10.1111/jbi.12845}
+#'   \item Benito, B.M., et al. (2017). The ecological niche and distribution of Neanderthals during the Last Interglacial. \emph{Journal of Biogeography}, 44, 51-61. \url{https://doi.org/10.1111/jbi.12845}
 #' }
 #'
 #' **Palaeoclimatic variables (GCM simulation):**
@@ -76,7 +76,7 @@
 #'
 #' **Elevation and topography:**
 #' \itemize{
-#'   \item Jarvis, A., Reuter, H.I., Nelson, A., & Guevara, E. (2008). Hole-filled seamless SRTM data V4. International Centre for Tropical Agriculture (CIAT). \url{https://srtm.csi.cgiar.org}
+#'   \item Jarvis, A., Guevara, E., Reuter, H. I., & Nelson, A. D. (2008). Hole-filled SRTM for the globe: version 4, data grid. Web publication/site, CGIAR Consortium for Spatial Information. \url{https://srtm.csi.cgiar.org}
 #' }
 #' @family neanderthal
 "neanderthal"

@@ -40,7 +40,6 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 pak::pkg_install(
   c(
     "sf",
-    "stars",
     "mapview",
     "dplyr",
     "collinear",
@@ -236,9 +235,9 @@ plot(
   )
 ```
 
-The decision tree above gives interpretable climate rules for each oak species — but it is just one entry point into `quercus`. More flexible methods like random forests or gradient boosting can push accuracy further while the multi-class structure and 31 predictors keep the dataset interesting.
+## Conclusion
 
-Enjoy this dataset!
+The decision tree above gives interpretable climate rules for each oak species — but it is just one entry point into `quercus`. More flexible methods like random forests or gradient boosting can push accuracy further while the multi-class structure and 31 predictors keep the dataset interesting.
 
 ```{r, echo = FALSE}
 unlink("quercus_env.tif")

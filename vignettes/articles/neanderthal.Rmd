@@ -32,7 +32,6 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 pak::pkg_install(
   c(
     "sf",
-    "stars",
     "mapview",
     "dplyr",
     "collinear",
@@ -465,8 +464,6 @@ The map suggests that during the Last Interglacial, the most suitable Neandertha
 ## Conclusion
 
 The ensemble of univariate GAMs, weighted by cross-validated AUC, provides a robust picture of Neanderthal habitat suitability during the Last Interglacial. Whitening the ensemble predictions with their standard deviation surfaces the areas of genuine uncertainty. SDM tools developed for modern species translate naturally to palaeontological data — and `neanderthal` is a good place to experiment with that.
-
-Happy modelling!
 
 ```{r, echo = FALSE}
 unlink("neanderthal_env.tif")
