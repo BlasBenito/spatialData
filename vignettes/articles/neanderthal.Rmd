@@ -32,8 +32,8 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 pak::pkg_install(
   c(
     "sf",
+    "stars",
     "mapview",
-    "DT",
     "dplyr",
     "collinear",
     "viridis",
@@ -47,19 +47,11 @@ pak::pkg_install(
 ```
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
-#data wrangling
-library(DT)
 library(dplyr)
-
-#spatial processing
 library(terra)
 library(sf)
-
-#modelling
 library(collinear)
 library(mgcv)
-
-#mapping/plotting
 library(mapview)
 library(ggplot2)
 library(patchwork)
@@ -138,7 +130,7 @@ selection <- collinear::collinear(
 Here is the predictor ranking:
 
 ```{r}
-DT::datatable(selection$presence$preference_order[, c("response", "predictor", "score")])
+selection$presence$preference_order[, c("response", "predictor", "score")]
 ```
 
 The function has selected the following predictors:
@@ -287,7 +279,7 @@ names(model_weights) <- selection$presence$selection
 ```
 
 ```{r, echo = FALSE}
-DT::datatable(round(as.data.frame(model_weights), digits = 4))
+round(as.data.frame(model_weights), digits = 4)
 ```
 
 To compute the intrinsic AUC of the model, we first generate the predictions of the univariate GAM models, and then average these predictions weighted by their partial AUC scores, and finally compare them with the observations.

@@ -34,6 +34,7 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 pak::pkg_install(
   c(
     "sf",
+    "stars",
     "mapview",
     "dplyr",
     "terra",

@@ -32,6 +32,7 @@ pak::pkg_install(
     "sf",
     "dplyr",
     "terra",
+    "stars",
     "mapview",
     "collinear",
     "viridis"
