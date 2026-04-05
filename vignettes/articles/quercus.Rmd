@@ -237,4 +237,9 @@ plot(
 
 The decision tree above gives interpretable climate rules for each oak species — but it is just one entry point into `quercus`. More flexible methods like random forests or gradient boosting can push accuracy further while the multi-class structure and 31 predictors keep the dataset interesting.
 
-That's all for now, enjoy this dataset!
+Enjoy this dataset!
+
+```{r, echo = FALSE}
+unlink("quercus_env.tif")
+```
+

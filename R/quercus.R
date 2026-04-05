@@ -145,7 +145,7 @@
 #' @family quercus
 #' @export
 quercus_extra <- function() {
-  path <- file.path(getwd(), "quercus_env.tiff")
+  path <- file.path(getwd(), "quercus_env.tif")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/quercus_env.tif"

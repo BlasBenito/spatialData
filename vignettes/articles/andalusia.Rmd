@@ -1,0 +1,285 @@
+---
+title: "Threatened plant species distribution in Andalusia: per-species GLMs and species richness mapping"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_title: "Contents"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  eval = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+```
+
+## Overview
+
+The `andalusia` dataset contains presence records of threatened and endemic plant species from Andalusia, Spain — a biodiversity hotspot in south-western Europe renowned for its exceptionally high rates of endemism within the Mediterranean Basin. Records were collected at 400 m resolution in the ETRS89 / UTM zone 30N coordinate system (EPSG:25830), with species presences spatially thinned at the raster cell level to remove spatial redundancy. Species with fewer than 30 records after thinning were excluded.
+
+The dataset pairs occurrence points for multiple threatened and endemic species with randomly sampled background points, and includes 20 environmental predictors derived from Landsat imagery, climate surfaces, and a digital elevation model. This structure is well suited for per-species species distribution models (SDMs), multi-species richness mapping, and spatial conservation prioritisation.
+
+## Setup
+
+```{r, include = FALSE}
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak")
+}
+pak::pkg_install(
+  c(
+    "sf",
+    "dplyr",
+    "terra",
+    "mapview",
+    "collinear",
+    "viridis"
+  ),
+  ask = FALSE
+)
+```
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
+library(dplyr)
+library(terra)
+library(sf)
+library(mapview)
+library(collinear)
+library(viridis)
+library(spatialData)
+
+data(
+  andalusia,
+  andalusia_responses,
+  andalusia_predictors,
+  package = "spatialData"
+)
+```
+
+## Data Structure
+
+The dataset is an `sf` data frame with `r nrow(andalusia)` rows and `r ncol(andalusia)` columns.
+
+```{r}
+andalusia |> dplyr::glimpse()
+```
+
+The `species` column identifies each record as a named species or `"background"`. The table below shows the number of records per species.
+
+```{r}
+andalusia |>
+  sf::st_drop_geometry() |>
+  dplyr::group_by(species) |>
+  dplyr::summarise(n = dplyr::n()) |>
+  dplyr::arrange(dplyr::desc(n))
+```
+
+The map below shows all species presences and background points by colour.
+
+```{r map, message = FALSE}
+mapview::mapview(
+  andalusia,
+  zcol = "species",
+  layer.name = "Species",
+  col.regions = viridis::turbo(n = length(unique(andalusia$species)))
+)
+```
+
+The dataset includes `r length(andalusia_predictors)` remote sensing, topographic, and climate predictors.
+
+```{r}
+andalusia_predictors
+```
+
+## Example Usage
+
+This section demonstrates a complete per-species distribution modelling workflow:
+
+- **Environmental Raster**: download and visualise the 20-band raster covering the study area.
+- **Multicollinearity Filtering**: select a shared, non-redundant predictor set using `collinear::collinear()`.
+- **Modelling Rationale**: describe the per-species GLM design and threshold strategy.
+- **Model Fitting**: fit one binomial GLM per species with inverse-frequency case weights.
+- **Threshold Selection**: choose the optimal binary threshold per model via Youden's J statistic.
+- **Species Richness Model**: sum thresholded binary predictions to produce a richness raster.
+- **High-Richness Areas**: identify and map cells at or above the 75th-percentile richness.
+
+### Environmental Raster
+
+The environmental raster (same extent as the occurrence data, 400 m resolution, EPSG:25830) is loaded with `andalusia_extra()`. When the vignette renders, `andalusia_env.tif` is read from disk without re-downloading.
+
+```{r load_raster, message = FALSE}
+andalusia_env <- spatialData::andalusia_extra()
+```
+
+```{r}
+plot(andalusia_env)
+```
+
+### Multicollinearity Filtering
+
+A shared predictor set is selected for all species models using `collinear::collinear()` on the pooled `presence` response. Using the same predictors across all species ensures that suitability surfaces are directly comparable when summed into a richness layer.
+
+```{r multicollinearity}
+andalusia_selection <- collinear::collinear(
+  df         = andalusia,
+  responses  = "presence",
+  predictors = andalusia_predictors,
+  f          = collinear::f_binomial_gam,
+  quiet      = TRUE
+)
+selected_predictors <- andalusia_selection$presence$selection
+selected_predictors
+```
+
+### Modelling Rationale
+
+Each species is modelled with a separate binomial GLM. For a given species `sp`, the training data consists of:
+
+- All rows where `species == sp` (labelled `sp_presence = 1`).
+- All background rows (labelled `sp_presence = 0`).
+
+Background points typically outnumber any individual species' presences by a large margin. To prevent the model from being dominated by the background class, `collinear::case_weights()` assigns inverse-frequency weights so that presences and background contribute equally to the likelihood.
+
+The shared predictor set selected above ensures that all suitability layers rest on the same environmental basis and can be meaningfully summed into a species richness estimate.
+
+Each model is converted from a continuous suitability surface to a binary presence/absence map using Youden's J statistic (sensitivity + specificity − 1). The threshold that maximises J balances commission and omission errors symmetrically, giving a principled default for binary mapping across species with very different prevalences.
+
+The species richness raster is then the sum of all binary layers: each cell's value equals the number of species predicted present there.
+
+### Model Fitting
+
+The helper function `find_threshold()` evaluates Youden's J at 99 candidate thresholds and returns the one with the highest value.
+
+```{r find_threshold}
+find_threshold <- function(observed, predicted) {
+  thresholds <- seq(0.01, 0.99, by = 0.01)
+  youden <- vapply(thresholds, function(t) {
+    pred_bin <- as.integer(predicted >= t)
+    tp <- sum(pred_bin == 1L & observed == 1L)
+    tn <- sum(pred_bin == 0L & observed == 0L)
+    fp <- sum(pred_bin == 1L & observed == 0L)
+    fn <- sum(pred_bin == 0L & observed == 1L)
+    if ((tp + fn) == 0L || (tn + fp) == 0L) return(-1)
+    (tp / (tp + fn)) + (tn / (tn + fp)) - 1
+  }, FUN.VALUE = numeric(1))
+  thresholds[which.max(youden)]
+}
+```
+
+One binomial GLM is fitted per species. The `warning = FALSE` chunk option suppresses the non-integer weights warning that `stats::glm()` emits when non-standard case weights are provided.
+
+```{r fit_models, warning = FALSE}
+species_names <- unique(andalusia$species[andalusia$species != "background"])
+
+species_models <- lapply(
+  X = species_names,
+  FUN = function(sp) {
+    sp_df <- andalusia |>
+      dplyr::filter(species == sp | species == "background") |>
+      sf::st_drop_geometry() |>
+      dplyr::mutate(sp_presence = dplyr::if_else(species == sp, 1L, 0L))
+    sp_weights <- collinear::case_weights(x = sp_df$sp_presence)
+    sp_formula <- as.formula(
+      paste0("sp_presence ~ ", paste(selected_predictors, collapse = " + "))
+    )
+    stats::glm(
+      formula = sp_formula,
+      data    = sp_df,
+      family  = binomial(link = "logit"),
+      weights = sp_weights
+    )
+  }
+)
+names(species_models) <- species_names
+```
+
+### Threshold Selection
+
+For each species, training-set predictions are scored against observed labels and `find_threshold()` selects the Youden-optimal cut-off.
+
+```{r thresholds}
+species_thresholds <- vapply(
+  X = species_names,
+  FUN = function(sp) {
+    sp_df <- andalusia |>
+      dplyr::filter(species == sp | species == "background") |>
+      sf::st_drop_geometry() |>
+      dplyr::mutate(sp_presence = dplyr::if_else(species == sp, 1L, 0L))
+    sp_pred <- stats::predict(species_models[[sp]], newdata = sp_df, type = "response")
+    find_threshold(observed = sp_df$sp_presence, predicted = sp_pred)
+  },
+  FUN.VALUE = numeric(1)
+)
+names(species_thresholds) <- species_names
+species_thresholds
+```
+
+### Species Richness Model
+
+The richness raster is built by predicting each model onto `andalusia_env`, thresholding the continuous suitability surface at the species-specific Youden cut-off, and summing the resulting binary layers.
+
+```{r, echo = FALSE}
+stopifnot(all(selected_predictors %in% names(andalusia_env)))
+```
+
+```{r richness}
+richness_raster <- lapply(
+  X = species_names,
+  FUN = function(sp) {
+    sp_pred <- terra::predict(
+      object = andalusia_env,
+      model  = species_models[[sp]],
+      type   = "response",
+      na.rm  = TRUE
+    )
+    terra::ifel(sp_pred >= species_thresholds[[sp]], 1L, 0L)
+  }
+) |>
+  terra::rast() |>
+  terra::app(fun = sum)
+
+names(richness_raster) <- "species_richness"
+
+plot(
+  x    = richness_raster,
+  col  = viridis::turbo(n = 100),
+  main = "Predicted species richness"
+)
+```
+
+### High-Richness Areas
+
+Areas at or above the 75th percentile of predicted richness are identified and mapped interactively to highlight the most species-rich parts of the study region.
+
+```{r high_richness, message = FALSE}
+richness_threshold <- terra::global(
+  x   = richness_raster,
+  fun = function(x) quantile(x, probs = 0.75, na.rm = TRUE)
+)[[1]]
+
+high_richness <- terra::ifel(
+  test = richness_raster >= richness_threshold,
+  yes  = richness_raster,
+  no   = NA
+)
+
+mapview::mapview(
+  high_richness,
+  layer.name  = "High species richness",
+  col.regions = viridis::turbo(n = 100)
+)
+```
+
+## Conclusion
+
+The `andalusia` dataset provides a multi-species presence-background framework well suited to comparative SDM workflows and conservation prioritisation. By fitting one binomial GLM per species with case-weighted training data and a shared, multicollinearity-filtered predictor set, the models remain comparable across species and their outputs can be meaningfully combined into a spatially explicit richness estimate.
+
+The Youden's J thresholding approach offers a principled, symmetric criterion for converting continuous suitability surfaces into binary maps — an important step when the downstream goal is counting species rather than ranking habitat quality. The resulting richness raster highlights the areas of Andalusia predicted to support the greatest concentration of threatened and endemic plant species, offering a direct input to spatial conservation planning.
+
+Happy modelling!
+
+```{r, echo = FALSE}
+unlink("andalusia_env.tif")
+```
+

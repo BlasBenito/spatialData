@@ -353,3 +353,10 @@ In the context of a spatial model with MEMs, these curves represent the *environ
 The spatial random forest above demonstrates one modeling approach for `richness_species`, but the same workflow applies to any of the 53 response variables in `plantae` — including rarity-weighted richness, beta diversity (Sorensen or Simpson), or richness gradients between biomes. The dataset supports a much wider range of ecological modelling experiments, from spatial cross-validation to path analysis.
 
 Have fun with it!
+
+```{r, echo = FALSE}
+unlink("plantae.gpkg")
+
+```
+
+

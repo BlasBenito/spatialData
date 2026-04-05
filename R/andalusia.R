@@ -20,7 +20,7 @@
 #' **Response variables (2):**
 #' \itemize{
 #'   \item `species`: Character string (species name or `"background"`).
-#'   \item `presence`: Binary integer (1 = confirmed species presence, 0 = background point).
+#'   \item `presence`: Binary integer stored as `integer` (1 = confirmed species presence, 0 = background point).
 #' }
 #'
 #' **Predictor variables - Landsat (7):**

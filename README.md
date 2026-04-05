@@ -8,30 +8,93 @@
 [![R-CMD-check](https://github.com/BlasBenito/spatialData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/BlasBenito/spatialData/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-`spatialData` provides ready-to-use spatial datasets for ecological and
-environmental modeling in R. Each dataset includes pre-processed
-response variables and environmental predictors, making it easy to jump
-straight into species distribution modeling, biodiversity analysis, or
-spatial statistics.
+`spatialData` is a data-only R package providing ready-to-use spatial
+datasets for ecological modeling. It was originally developed to supply
+example data for the R packages
+[`collinear`](https://blasbenito.github.io/collinear/) and
+[`spatialRF`](https://blasbenito.github.io/spatialRF/), but the datasets
+are equally suited for teaching spatial analysis and species
+distribution modeling. Each dataset comes pre-processed with response
+variables and environmental predictors, so you can jump straight into
+the analysis without spending time on data preparation.
 
 ## Installation
 
-You can install the development version of `spatialData` from
+Install the development version from
 [GitHub](https://github.com/blasbenito/spatialData):
 
 ``` r
+# Option 1: pak (recommended)
+# install.packages("pak")
+pak::pkg_install("blasbenito/spatialData")
+
+# Option 2: remotes
 # install.packages("remotes")
 remotes::install_github("blasbenito/spatialData")
 ```
 
 ## Datasets
 
-| Dataset | Description | Records | Responses | Predictors | Article |
-|:---|:---|---:|---:|---:|:---|
-| `neanderthal` | Neanderthal presence/absence records with paleoclimate and topographic predictors | 245 | 1 | 25 | [link](https://blasbenito.github.io/spatialData/articles/neanderthal.html) |
-| `quercus` | European oak species distribution records with bioclimatic and land cover predictors | 6,728 | 1 | 31 | [link](https://blasbenito.github.io/spatialData/articles/quercus.html) |
-| `vi` | Global NDVI records with climate, soil, and topographic predictors | 9,265 | 5 | 58 | [link](https://blasbenito.github.io/spatialData/articles/vi.html) |
-| `plantae` | Plant diversity metrics for global ecoregions with environmental predictors | 662 | 53 | 96 | – |
+All datasets are loaded lazily via `data()`. Most are `sf` data frames
+with point or polygon geometries; `interaction` is a plain data frame.
 
-All datasets are `sf` data frames with point or polygon geometries,
-loaded lazily via `data()`.
+| Dataset | Description | Spatial scope | Temporal scope | Rows | Responses | Predictors | CRS | Geometry |
+|:---|:---|:---|:---|---:|---:|---:|:---|:---|
+| [`neanderthal`](https://blasbenito.github.io/spatialData/articles/neanderthal.html) | Neanderthal presence/absence and paleoclimate predictors | Europe | ~120,000 BP (MIS 5e) | 245 | 1 | 25 | EPSG:4326 | POINT |
+| [`quercus`](https://blasbenito.github.io/spatialData/articles/quercus.html) | Distribution of European oaks and bioglimatic predictors | Europe | present | 6,728 | 1 | 31 | EPSG:4326 | POINT |
+| [`vi`](https://blasbenito.github.io/spatialData/articles/vi.html) | NDVI records with environmental predictors | Global | 1999–2019 | 9,265 | 5 | 58 | EPSG:4326 | POINT |
+| [`plantae`](https://blasbenito.github.io/spatialData/articles/plantae.html) | Plant diversity of the global ecoregions | Global | 2020 | 662 | 53 | 84 | EPSG:4326 | POINT (centroids) |
+| [`trees`](https://blasbenito.github.io/spatialData/articles/trees.html) | Tree species richness and environmental predictors | Americas | 2012 | 3,373 | 1 | 50 | EPSG:4326 | POLYGON |
+| [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | Plant community presence and climate predictors | Sierra Nevada, SE Spain | 2009 | 7,300 | 6 | 9 | EPSG:25830 | POINT |
+| [`interaction`](https://blasbenito.github.io/spatialData/articles/interaction.html) | Butterfly and host plant presence and environmental predictors | Sierra Nevada, SE Spain | 2014 | 1000 | 3 | 10 | EPSG:25830 | POINT |
+| [`linaria`](https://blasbenito.github.io/spatialData/articles/linaria.html) | *Linaria nigricans* and greenhouse records with environmental predictors | Eastern Andalusia, Spain |  | 7,386 | 2 | 20 | EPSG:25830 | POINT |
+| [`andalusia`](https://blasbenito.github.io/spatialData/articles/andalusia.html) | Plant species presences and and environmental predictors | Andalusia, Spain | 2010 | 8,666 | 2 | 20 | EPSG:25830 | POINT |
+
+## Extra Data
+
+Several datasets ship with companion download functions that retrieve
+larger or complementary files from
+[spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra).
+
+| Dataset | Function | Description | Format | Geometry / Bands | Resolution | CRS |
+|:---|:---|:---|:---|:---|:---|:---|
+| [`neanderthal`](https://blasbenito.github.io/spatialData/articles/neanderthal.html) | `neanderthal_extra()` | 25-band palaeoclimate raster (bioclim + topography) | GeoTIFF | 25 bands | 0.18° | EPSG:4326 |
+| [`quercus`](https://blasbenito.github.io/spatialData/articles/quercus.html) | `quercus_extra()` | 31-band bioclimatic/environmental raster | GeoTIFF | 31 bands | 0.167° | EPSG:4326 |
+| [`vi`](https://blasbenito.github.io/spatialData/articles/vi.html) | `vi_extra()` | Extended NDVI point dataset (30,000 records) | GeoPackage | POINT | 30,000 rows | EPSG:4326 |
+| [`plantae`](https://blasbenito.github.io/spatialData/articles/plantae.html) | `plantae_extra()` | Ecoregion polygons with full diversity data | GeoPackage | MULTIPOLYGON | 662 features | EPSG:4326 |
+| [`trees`](https://blasbenito.github.io/spatialData/articles/trees.html) | `trees_extra()` | Individual tree species presence points | GeoPackage | POINT | 523,308 rows | EPSG:4326 |
+| [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | `communities_extra_2010()` | Baseline (2010) climate raster for Sierra Nevada | GeoTIFF | 9 bands | 100 m | EPSG:25830 |
+| [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | `communities_extra_2050()` | Projected (2050) climate raster for Sierra Nevada | GeoTIFF | 9 bands | 100 m | EPSG:25830 |
+| [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | `communities_extra_2100()` | Projected (2100) climate raster for Sierra Nevada | GeoTIFF | 9 bands | 100 m | EPSG:25830 |
+| [`interaction`](https://blasbenito.github.io/spatialData/articles/interaction.html) | `interaction_extra()` | 10-band environmental raster for Sierra Nevada | GeoTIFF | 10 bands | 100 m | EPSG:25830 |
+| [`linaria`](https://blasbenito.github.io/spatialData/articles/linaria.html) | `linaria_extra()` | 20-band environmental raster for Eastern Andalusia | GeoTIFF | 20 bands | 400 m | EPSG:25830 |
+| [`andalusia`](https://blasbenito.github.io/spatialData/articles/andalusia.html) | `andalusia_extra()` | 20-band environmental raster for Andalusia | GeoTIFF | 20 bands | 400 m | EPSG:25830 |
+
+## Citation
+
+The license of `spatialData` requires the following citation:
+
+``` r
+citation("spatialData")
+#> To cite package 'spatialData' in publications use:
+#> 
+#>   Benito B (2025). "spatialData: Spatial Datasets for Ecological
+#>   Modeling." doi:10.5281/zenodo.XXXXXXX
+#>   <https://doi.org/10.5281/zenodo.XXXXXXX>, R package version 0.0.1,
+#>   <https://blasbenito.github.io/spatialData>.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Misc{,
+#>     title = {spatialData: Spatial Datasets for Ecological Modeling},
+#>     author = {Blas M. Benito},
+#>     year = {2025},
+#>     note = {R package version 0.0.1},
+#>     url = {https://blasbenito.github.io/spatialData},
+#>     doi = {10.5281/zenodo.XXXXXXX},
+#>   }
+```
+
+## License
+
+CC BY 4.0 — see [LICENSE.md](LICENSE.md) for details.

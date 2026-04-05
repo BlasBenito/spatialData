@@ -37,6 +37,7 @@ pak::pkg_install(
     "terra",
     "sf",
     "mapview",
+    "stars",
     "collinear",
     "spatialRF"
   ),
@@ -380,3 +381,9 @@ The resulting suitability maps and difference raster make `interaction` well sui
 ## References
 
 Barea-Azcón, J.M., Benito, B.M., Olivares, F.J., Ruiz, H., Martín, J., García, A.L., & López, R. (2014). Distribution and conservation of the relict interaction between the butterfly *Agriades zullichi* and its larval foodplant (*Androsace vitaliana nevadensis*). *Biodiversity and Conservation*, 23(4), 927–944. https://doi.org/10.1007/s10531-014-0643-4
+
+```{r, echo = FALSE}
+unlink("sierra_nevada_env.tif")
+
+```
+

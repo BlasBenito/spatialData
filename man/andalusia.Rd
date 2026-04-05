@@ -10,7 +10,7 @@ An sf data frame with 8666 rows (presences and background points) and 23 columns
 \strong{Response variables (2):}
 \itemize{
 \item \code{species}: Character string (species name or \code{"background"}).
-\item \code{presence}: Binary integer (1 = confirmed species presence, 0 = background point).
+\item \code{presence}: Binary integer stored as \code{integer} (1 = confirmed species presence, 0 = background point).
 }
 
 \strong{Predictor variables - Landsat (7):}

@@ -217,3 +217,9 @@ The `linaria` dataset provides a compact but ecologically rich testbed for multi
 The extinction-risk analysis above shows how combining two MaxEnt predictions into a spatially explicit composite can pinpoint the areas where conservation action is most urgent — the approach introduced by Benito et al. (2009) for *Linaria nigricans* in Andalusia.
 
 Happy modelling!
+
+```{r, echo = FALSE}
+unlink("linaria_env.tif")
+
+```
+
