@@ -2,19 +2,15 @@
 % Please edit documentation in R/andalusia.R
 \name{andalusia_extra}
 \alias{andalusia_extra}
-\title{Download Environmental Raster for andalusia}
+\title{Download Environmental Raster for the dataset \code{andalusia}}
 \usage{
 andalusia_extra()
 }
 \value{
-SpatRaster object with 20 layers.
+local file \code{andalusia_env.tif} and \code{spatRaster} object with 20 layers.
 }
 \description{
-Downloads and reads the 20-band environmental raster associated with the \link{andalusia} dataset
-from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
-The raster covers Andalusia, Spain, at 400 m resolution (EPSG:25830) and includes
-Landsat reflectance, climate, and topographic predictors (see \link{andalusia_predictors}).
-Requires the \pkg{terra} package.
+Downloads and reads the 20-band environmental raster associated with the \link{andalusia} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository. The raster covers Andalusia, Spain, at 400 m resolution (EPSG:25830) and includes Landsat reflectance, climate, and topographic predictors (see \link{andalusia}).
 }
 \seealso{
 Other andalusia: 

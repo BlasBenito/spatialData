@@ -15,6 +15,7 @@ Description: Provides nine spatial datasets for ecological and environmental
     plant Linaria nigricans with greenhouse land-use data. All datasets include
     pre-processed environmental predictors ready for statistical modelling.
 URL: https://blasbenito.github.io/spatialData, https://github.com/BlasBenito/spatialData
+BugReports: https://github.com/BlasBenito/spatialData/issues
 License: CC BY 4.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",

@@ -87,7 +87,9 @@
 #' @family interaction
 #' @export
 interaction_extra <- function() {
-  path <- file.path(getwd(), "sierra_nevada_env.tif")
+  cache_dir <- tools::R_user_dir("spatialData", which = "data")
+  dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
+  path <- file.path(cache_dir, "sierra_nevada_env.tif")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/sierra_nevada_env.tif"

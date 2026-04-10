@@ -106,7 +106,9 @@
 #' @family neanderthal
 #' @export
 neanderthal_extra <- function() {
-  path <- file.path(getwd(), "neanderthal_env.tif")
+  cache_dir <- tools::R_user_dir("spatialData", which = "data")
+  dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
+  path <- file.path(cache_dir, "neanderthal_env.tif")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/neanderthal_env.tif"

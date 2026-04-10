@@ -189,7 +189,9 @@
 #' @family trees
 #' @export
 trees_extra <- function() {
-  path <- file.path(getwd(), "trees_presence.gpkg")
+  cache_dir <- tools::R_user_dir("spatialData", which = "data")
+  dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
+  path <- file.path(cache_dir, "trees_presence.gpkg")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/trees_presence.gpkg"

@@ -244,7 +244,9 @@
 #' @family vi
 #' @export
 vi_extra <- function() {
-  path <- file.path(getwd(), "vi.gpkg")
+  cache_dir <- tools::R_user_dir("spatialData", which = "data")
+  dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
+  path <- file.path(cache_dir, "vi.gpkg")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/vi.gpkg"

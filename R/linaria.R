@@ -135,7 +135,9 @@
 #' @family linaria
 #' @export
 linaria_extra <- function() {
-  path <- file.path(getwd(), "linaria_env.tif")
+  cache_dir <- tools::R_user_dir("spatialData", which = "data")
+  dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
+  path <- file.path(cache_dir, "linaria_env.tif")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/linaria_env.tif"

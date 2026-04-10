@@ -3,17 +3,15 @@
 \docType{data}
 \name{andalusia_predictors}
 \alias{andalusia_predictors}
-\title{Predictor variable names for andalusia dataset}
+\title{Predictor names for the dataset \code{andalusia}}
 \format{
-A character vector of length 20.
+Character vector of length 20.
 }
 \usage{
 data(andalusia_predictors)
 }
 \description{
-Character vector of 20 predictor variable names from \link{andalusia},
-covering Landsat reflectance (7), rainfall (2), solar radiation (2),
-temperature (4), and topography (5).
+Character vector of 20 predictor variable names corresponding to the layers of the environmental raster returned by \code{\link[=andalusia_extra]{andalusia_extra()}}, covering Landsat reflectance (7), rainfall (2), solar radiation (2), temperature (4), and topography (5). These are \strong{not} columns in \link{andalusia}; use \code{terra::extract()} to attach them to the point data.
 }
 \seealso{
 Other andalusia: 

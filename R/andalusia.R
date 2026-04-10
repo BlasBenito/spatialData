@@ -1,85 +1,28 @@
-#' @title Threatened Plant Species Presences and Background Points in Andalusia, Spain
+#' @title Presence Records of 90 Plant Species and Background Points from Andalusia, Spain
 #'
 #' @description
-#' `sf` data frame with `POINT` geometry containing presence records of threatened
-#' and endemic plant species and background points from Andalusia, Spain. The dataframe
-#' contains 2 response variables (see [andalusia_responses]), and 20 numeric predictors
-#' (see [andalusia_predictors]). Use [andalusia_extra()] to download the associated
-#' environmental raster.
+#' `sf` long format data frame with `POINT` geometry and CRS ETRS89 / UTM zone 30N (EPSG:25830), containing 37,773 presence records for 90 plant species and 8,692 background points (46,465 rows total) from Andalusia, Spain.
 #'
-#' The dataset combines species occurrence records and randomly sampled background
-#' points. Presences were spatially thinned at the raster cell level (400 m) to
-#' remove redundancy. Background points were randomly sampled within the raster extent.
-#' Species with fewer than 30 records after thinning were excluded. Environmental
-#' predictors were extracted from a Landsat/DEM-derived raster at 400 m resolution
-#' (EPSG:25830).
+#' The dataset contains 3 columns (species, presence, geometry). Environmental predictors for each point can be extracted from the companion raster returned by [andalusia_extra()]; predictor names are stored in [andalusia_predictors].
 #'
 #' @usage data(andalusia)
-#' @format An sf data frame with 8666 rows (presences and background points) and 23 columns:
+#' @format An sf data frame with 46,465 rows (presences and background points) and 3 columns:
 #'
-#' **Response variables (2):**
 #' \itemize{
-#'   \item `species`: Character string (species name or `"background"`).
+#'   \item `species`: Character string (species name or `"background"`). Suitable for classification models.
 #'   \item `presence`: Binary integer stored as `integer` (1 = confirmed species presence, 0 = background point).
-#' }
-#'
-#' **Predictor variables - Landsat (7):**
-#' \itemize{
-#'   \item `landsat_band_1`: Landsat TM Band 1 — Blue (0.45–0.52 µm), surface reflectance.
-#'   \item `landsat_band_2`: Landsat TM Band 2 — Green (0.52–0.60 µm), surface reflectance.
-#'   \item `landsat_band_3`: Landsat TM Band 3 — Red (0.63–0.69 µm), surface reflectance.
-#'   \item `landsat_band_4`: Landsat TM Band 4 — Near-infrared (0.76–0.90 µm), surface reflectance.
-#'   \item `landsat_band_5`: Landsat TM Band 5 — Short-wave infrared 1 (1.55–1.75 µm), surface reflectance.
-#'   \item `landsat_band_6`: Landsat TM Band 6 — Thermal infrared (10.4–12.5 µm), brightness temperature (K).
-#'   \item `landsat_ndvi`: Normalized Difference Vegetation Index derived from Landsat bands 3 and 4.
-#' }
-#'
-#' **Predictor variables - Rainfall (2):**
-#' \itemize{
-#'   \item `rainfall_annual`: Total annual rainfall (mm).
-#'   \item `rainfall_summer`: Total summer rainfall (mm, June–September).
-#' }
-#'
-#' **Predictor variables - Solar radiation (2):**
-#' \itemize{
-#'   \item `solar_radiation_summer`: Mean daily solar radiation in summer (kJ m-2 day-1).
-#'   \item `solar_radiation_winter`: Mean daily solar radiation in winter (kJ m-2 day-1).
-#' }
-#'
-#' **Predictor variables - Temperature (4):**
-#' \itemize{
-#'   \item `temperature_summer_max`: Mean maximum temperature in summer (degrees C).
-#'   \item `temperature_summer_min`: Mean minimum temperature in summer (degrees C).
-#'   \item `temperature_winter_max`: Mean maximum temperature in winter (degrees C).
-#'   \item `temperature_winter_min`: Mean minimum temperature in winter (degrees C).
-#' }
-#'
-#' **Predictor variables - Topography (5):**
-#' \itemize{
-#'   \item `topography_eastness`: Eastward component of aspect (sin of aspect in radians).
-#'   \item `topography_elevation`: Elevation above sea level (m).
-#'   \item `topography_northness`: Northward component of aspect (cos of aspect in radians).
-#'   \item `topography_position`: Topographic position index (local elevation relative to neighbourhood mean).
-#'   \item `topography_slope`: Slope gradient (degrees).
-#' }
-#'
-#' **Geometry:**
-#' \itemize{
-#'   \item `geometry`: Point geometry (ETRS89 / UTM zone 30N, EPSG:25830).
+#'   \item `geometry`: `sfc_POINT` column with coordinates in EPSG:25830.
 #' }
 #'
 #' @source
 #' **Published study, data preparation, and species occurrence data:**
 #' \itemize{
-#'   \item Benito, B.M., Lorite, J., Pérez-Pérez, R., Gómez-Aparicio, L., & Peñas, J. (2014).
-#'   Forecasting plant range collapse in a mediterranean hotspot: when dispersal uncertainties
-#'   matter. \emph{Diversity and Distributions}, 20(1), 72--83.
-#'   \url{https://doi.org/10.1111/ddi.12148}
+#'   \item Benito, B.M., Lorite, J., Pérez-Pérez, R., Gómez-Aparicio, L., & Peñas, J. (2014). Forecasting plant range collapse in a mediterranean hotspot: when dispersal uncertainties matter. \emph{Diversity and Distributions}, 20(1), 72--83. \url{https://doi.org/10.1111/ddi.12148}
 #' }
 #'
 #' **Landsat imagery:**
 #' \itemize{
-#'   \item Nunes de Lima, M. V. (Ed.) (2005). \emph{IMAGE2000 and CLC2000 -- Products and methods}. Joint Research Centre, Institute for Environment and Sustainability, and European Environment Agency. Publications Office of the European Union. \url{https://op.europa.eu/en/publication-detail/-/publication/84dd2bad-14d9-4a65-9b92-3b4507d09e44/language-en}
+#'   \item Nunes de Lima, M. V. (Ed.) (2005). \emph{IMAGE2000 and CLC2000 - Products and methods}. Joint Research Centre, Institute for Environment and Sustainability, and European Environment Agency. Publications Office of the European Union. \url{https://op.europa.eu/en/publication-detail/-/publication/84dd2bad-14d9-4a65-9b92-3b4507d09e44/language-en}
 #' }
 #'
 #' **Climate variables:**
@@ -94,38 +37,33 @@
 #' @family andalusia
 "andalusia"
 
-#' @title Response variable names for andalusia dataset
+#' @title Response names for the dataset `andalusia`
 #' @description Character vector of length 2 containing the names of the
-#' response variables in [andalusia]: `"species"` (character, species name or
-#' `"background"`) and `"presence"` (binary integer, 1 = confirmed species presence).
+#' response variables in [andalusia]: `"species"` (character, species name or `"background"` for 90 species plus background points) and `"presence"` (binary integer, 1 = confirmed species presence, 0 = background point).
 #' @usage data(andalusia_responses)
-#' @format A character vector of length 2.
+#' @format Character vector of length 2.
 #' @family andalusia
 "andalusia_responses"
 
-#' @title Predictor variable names for andalusia dataset
-#' @description Character vector of 20 predictor variable names from [andalusia],
-#' covering Landsat reflectance (7), rainfall (2), solar radiation (2),
-#' temperature (4), and topography (5).
+#' @title Predictor names for the dataset `andalusia`
+#' @description Character vector of 20 predictor variable names corresponding to the layers of the environmental raster returned by [andalusia_extra()], covering Landsat reflectance (7), rainfall (2), solar radiation (2), temperature (4), and topography (5). These are **not** columns in [andalusia]; use `terra::extract()` to attach them to the point data.
 #' @usage data(andalusia_predictors)
-#' @format A character vector of length 20.
+#' @format Character vector of length 20.
 #' @family andalusia
 "andalusia_predictors"
 
-#' Download Environmental Raster for andalusia
+#' Download Environmental Raster for the dataset `andalusia`
 #'
 #' @description
-#' Downloads and reads the 20-band environmental raster associated with the [andalusia] dataset
-#' from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
-#' The raster covers Andalusia, Spain, at 400 m resolution (EPSG:25830) and includes
-#' Landsat reflectance, climate, and topographic predictors (see [andalusia_predictors]).
-#' Requires the \pkg{terra} package.
+#' Downloads and reads the 20-band environmental raster associated with the [andalusia] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. The raster covers Andalusia, Spain, at 400 m resolution (EPSG:25830) and includes Landsat reflectance, climate, and topographic predictors (see [andalusia]).
 #' @autoglobal
 #' @return SpatRaster object with 20 layers.
 #' @family andalusia
 #' @export
 andalusia_extra <- function() {
-  path <- file.path(getwd(), "andalusia_env.tif")
+  cache_dir <- tools::R_user_dir("spatialData", which = "data")
+  dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
+  path <- file.path(cache_dir, "andalusia_env.tif")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/andalusia_env.tif"

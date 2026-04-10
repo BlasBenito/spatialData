@@ -23,6 +23,7 @@ articles:
 - title: "Tutorials"
   navbar: "Tutorials"
   contents:
+  - articles/andalusia
   - articles/vi
   - articles/plantae
   - articles/quercus
@@ -31,9 +32,17 @@ articles:
   - articles/communities
   - articles/interaction
   - articles/linaria
-  - articles/andalusia
 
 reference:
+
+  - title: "andalusia"
+    desc: "Presence and background records for 27 plant species in Andalusia, Spain, with remote-sensing, climate, and topographic predictors."
+    contents:
+      - andalusia
+      - andalusia_responses
+      - andalusia_predictors
+      - andalusia_extra
+
   - title: "neanderthal"
     desc: "Neanderthal presence/absence records with paleoclimate and topographic predictors."
     contents:
@@ -101,12 +110,4 @@ reference:
       - linaria_responses
       - linaria_predictors
       - linaria_extra
-
-  - title: "andalusia"
-    desc: "Presence and background records for several plant species in Andalusia, Spain, with Landsat, climate, and topographic predictors."
-    contents:
-      - andalusia
-      - andalusia_responses
-      - andalusia_predictors
-      - andalusia_extra
 

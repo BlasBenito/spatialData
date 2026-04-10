@@ -41,6 +41,7 @@ All datasets are loaded lazily via `data()`. Most are `sf` data frames with poin
 
 | Dataset | Description | Spatial scope | Temporal scope | Rows | Responses | Predictors | CRS | Geometry |
 |:--------|:------------|:--------------|:---------------|-----:|----------:|-----------:|:----|:---------|
+| [`andalusia`](https://blasbenito.github.io/spatialData/articles/andalusia.html) | Plant presences and and environmental predictors | Andalusia, Spain | 2000 - 2010 | 8,666 | 2 | 20 | EPSG:25830 | POINT |
 | [`neanderthal`](https://blasbenito.github.io/spatialData/articles/neanderthal.html) | Neanderthal presence/absence and paleoclimate predictors | Europe | ~120,000 BP (MIS 5e) | 245 | 1 | 25 | EPSG:4326 | POINT |
 | [`quercus`](https://blasbenito.github.io/spatialData/articles/quercus.html) | Distribution of European oaks  and bioglimatic predictors | Europe | present | 6,728 | 1 | 31 | EPSG:4326 | POINT |
 | [`vi`](https://blasbenito.github.io/spatialData/articles/vi.html) | NDVI records with environmental predictors | Global | 1999–2019 | 9,265 | 5 | 58 | EPSG:4326 | POINT |
@@ -49,7 +50,6 @@ All datasets are loaded lazily via `data()`. Most are `sf` data frames with poin
 | [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | Plant community presence and climate predictors | Sierra Nevada, SE Spain | 2009 | 7,300 | 6 | 9 | EPSG:25830 | POINT |
 | [`interaction`](https://blasbenito.github.io/spatialData/articles/interaction.html) | Butterfly and host plant presence and environmental predictors | Sierra Nevada, SE Spain | 2014 | 1000 | 3 | 10 | EPSG:25830 | POINT |
 | [`linaria`](https://blasbenito.github.io/spatialData/articles/linaria.html) | *Linaria nigricans* and greenhouse records with environmental predictors | Eastern Andalusia, Spain | | 7,386 | 2 | 20 | EPSG:25830 | POINT |
-| [`andalusia`](https://blasbenito.github.io/spatialData/articles/andalusia.html) | Plant species presences and and environmental predictors | Andalusia, Spain | 2010 | 8,666 | 2 | 20 | EPSG:25830 | POINT |
 
 ## Extra Data
 

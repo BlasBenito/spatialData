@@ -81,7 +81,9 @@
 #' @family communities
 #' @export
 communities_extra_2010 <- function() {
-  path <- file.path(getwd(), "communities_2010.tif")
+  cache_dir <- tools::R_user_dir("spatialData", which = "data")
+  dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
+  path <- file.path(cache_dir, "communities_2010.tif")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/communities_2010.tif"
@@ -123,7 +125,9 @@ communities_extra_2010 <- function() {
 #' @family communities
 #' @export
 communities_extra_2050 <- function() {
-  path <- file.path(getwd(), "communities_2050.tif")
+  cache_dir <- tools::R_user_dir("spatialData", which = "data")
+  dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
+  path <- file.path(cache_dir, "communities_2050.tif")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/communities_2050.tif"
@@ -165,7 +169,9 @@ communities_extra_2050 <- function() {
 #' @family communities
 #' @export
 communities_extra_2100 <- function() {
-  path <- file.path(getwd(), "communities_2100.tif")
+  cache_dir <- tools::R_user_dir("spatialData", which = "data")
+  dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
+  path <- file.path(cache_dir, "communities_2100.tif")
 
   if (!file.exists(path)) {
     url <- "https://github.com/BlasBenito/spatialDataExtra/releases/latest/download/communities_2100.tif"

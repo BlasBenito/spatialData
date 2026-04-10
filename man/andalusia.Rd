@@ -3,73 +3,25 @@
 \docType{data}
 \name{andalusia}
 \alias{andalusia}
-\title{Threatened Plant Species Presences and Background Points in Andalusia, Spain}
+\title{Presence Records of 90 Plant Species and Background Points from Andalusia, Spain}
 \format{
-An sf data frame with 8666 rows (presences and background points) and 23 columns:
+An sf data frame with 46,465 rows (presences and background points) and 3 columns:
 
-\strong{Response variables (2):}
 \itemize{
-\item \code{species}: Character string (species name or \code{"background"}).
+\item \code{species}: Character string (species name or \code{"background"}). Suitable for classification models.
 \item \code{presence}: Binary integer stored as \code{integer} (1 = confirmed species presence, 0 = background point).
-}
-
-\strong{Predictor variables - Landsat (7):}
-\itemize{
-\item \code{landsat_band_1}: Landsat TM Band 1 — Blue (0.45–0.52 µm), surface reflectance.
-\item \code{landsat_band_2}: Landsat TM Band 2 — Green (0.52–0.60 µm), surface reflectance.
-\item \code{landsat_band_3}: Landsat TM Band 3 — Red (0.63–0.69 µm), surface reflectance.
-\item \code{landsat_band_4}: Landsat TM Band 4 — Near-infrared (0.76–0.90 µm), surface reflectance.
-\item \code{landsat_band_5}: Landsat TM Band 5 — Short-wave infrared 1 (1.55–1.75 µm), surface reflectance.
-\item \code{landsat_band_6}: Landsat TM Band 6 — Thermal infrared (10.4–12.5 µm), brightness temperature (K).
-\item \code{landsat_ndvi}: Normalized Difference Vegetation Index derived from Landsat bands 3 and 4.
-}
-
-\strong{Predictor variables - Rainfall (2):}
-\itemize{
-\item \code{rainfall_annual}: Total annual rainfall (mm).
-\item \code{rainfall_summer}: Total summer rainfall (mm, June–September).
-}
-
-\strong{Predictor variables - Solar radiation (2):}
-\itemize{
-\item \code{solar_radiation_summer}: Mean daily solar radiation in summer (kJ m-2 day-1).
-\item \code{solar_radiation_winter}: Mean daily solar radiation in winter (kJ m-2 day-1).
-}
-
-\strong{Predictor variables - Temperature (4):}
-\itemize{
-\item \code{temperature_summer_max}: Mean maximum temperature in summer (degrees C).
-\item \code{temperature_summer_min}: Mean minimum temperature in summer (degrees C).
-\item \code{temperature_winter_max}: Mean maximum temperature in winter (degrees C).
-\item \code{temperature_winter_min}: Mean minimum temperature in winter (degrees C).
-}
-
-\strong{Predictor variables - Topography (5):}
-\itemize{
-\item \code{topography_eastness}: Eastward component of aspect (sin of aspect in radians).
-\item \code{topography_elevation}: Elevation above sea level (m).
-\item \code{topography_northness}: Northward component of aspect (cos of aspect in radians).
-\item \code{topography_position}: Topographic position index (local elevation relative to neighbourhood mean).
-\item \code{topography_slope}: Slope gradient (degrees).
-}
-
-\strong{Geometry:}
-\itemize{
-\item \code{geometry}: Point geometry (ETRS89 / UTM zone 30N, EPSG:25830).
+\item \code{geometry}: \code{sfc_POINT} column with coordinates in EPSG:25830.
 }
 }
 \source{
 \strong{Published study, data preparation, and species occurrence data:}
 \itemize{
-\item Benito, B.M., Lorite, J., Pérez-Pérez, R., Gómez-Aparicio, L., & Peñas, J. (2014).
-Forecasting plant range collapse in a mediterranean hotspot: when dispersal uncertainties
-matter. \emph{Diversity and Distributions}, 20(1), 72--83.
-\url{https://doi.org/10.1111/ddi.12148}
+\item Benito, B.M., Lorite, J., Pérez-Pérez, R., Gómez-Aparicio, L., & Peñas, J. (2014). Forecasting plant range collapse in a mediterranean hotspot: when dispersal uncertainties matter. \emph{Diversity and Distributions}, 20(1), 72--83. \url{https://doi.org/10.1111/ddi.12148}
 }
 
 \strong{Landsat imagery:}
 \itemize{
-\item Nunes de Lima, M. V. (Ed.) (2005). \emph{IMAGE2000 and CLC2000 -- Products and methods}. Joint Research Centre, Institute for Environment and Sustainability, and European Environment Agency. Publications Office of the European Union. \url{https://op.europa.eu/en/publication-detail/-/publication/84dd2bad-14d9-4a65-9b92-3b4507d09e44/language-en}
+\item Nunes de Lima, M. V. (Ed.) (2005). \emph{IMAGE2000 and CLC2000 - Products and methods}. Joint Research Centre, Institute for Environment and Sustainability, and European Environment Agency. Publications Office of the European Union. \url{https://op.europa.eu/en/publication-detail/-/publication/84dd2bad-14d9-4a65-9b92-3b4507d09e44/language-en}
 }
 
 \strong{Climate variables:}
@@ -86,18 +38,9 @@ matter. \emph{Diversity and Distributions}, 20(1), 72--83.
 data(andalusia)
 }
 \description{
-\code{sf} data frame with \code{POINT} geometry containing presence records of threatened
-and endemic plant species and background points from Andalusia, Spain. The dataframe
-contains 2 response variables (see \link{andalusia_responses}), and 20 numeric predictors
-(see \link{andalusia_predictors}). Use \code{\link[=andalusia_extra]{andalusia_extra()}} to download the associated
-environmental raster.
+\code{sf} long format data frame with \code{POINT} geometry and CRS ETRS89 / UTM zone 30N (EPSG:25830), containing 37,773 presence records for 90 plant species and 8,692 background points (46,465 rows total) from Andalusia, Spain.
 
-The dataset combines species occurrence records and randomly sampled background
-points. Presences were spatially thinned at the raster cell level (400 m) to
-remove redundancy. Background points were randomly sampled within the raster extent.
-Species with fewer than 30 records after thinning were excluded. Environmental
-predictors were extracted from a Landsat/DEM-derived raster at 400 m resolution
-(EPSG:25830).
+The dataset contains 3 columns (species, presence, geometry). Environmental predictors for each point can be extracted from the companion raster returned by \code{\link[=andalusia_extra]{andalusia_extra()}}; predictor names are stored in \link{andalusia_predictors}.
 }
 \seealso{
 Other andalusia: 

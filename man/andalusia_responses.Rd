@@ -3,17 +3,16 @@
 \docType{data}
 \name{andalusia_responses}
 \alias{andalusia_responses}
-\title{Response variable names for andalusia dataset}
+\title{Response names for the dataset \code{andalusia}}
 \format{
-A character vector of length 2.
+Character vector of length 2.
 }
 \usage{
 data(andalusia_responses)
 }
 \description{
 Character vector of length 2 containing the names of the
-response variables in \link{andalusia}: \code{"species"} (character, species name or
-\code{"background"}) and \code{"presence"} (binary integer, 1 = confirmed species presence).
+response variables in \link{andalusia}: \code{"species"} (character, species name or \code{"background"} for 90 species plus background points) and \code{"presence"} (binary integer, 1 = confirmed species presence, 0 = background point).
 }
 \seealso{
 Other andalusia: 

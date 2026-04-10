@@ -97,6 +97,8 @@
 
 # Other documents
 ^CRAN_CHECKLIST\.md$
+^CRAN_RULES\.md$
+^CRAN_TODO\.md$
 ^TUTORIAL\.md$
 
 

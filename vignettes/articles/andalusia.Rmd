@@ -1,5 +1,5 @@
 ---
-title: "Threatened plant species distribution in Andalusia: per-species GLMs and species richness mapping"
+title: "Presence records of 90 plant species in Andalusia"
 output:
   rmarkdown::html_document:
     toc: true
@@ -8,20 +8,24 @@ output:
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  eval = TRUE,
-  collapse = TRUE,
-  comment = "#>",
+  eval      = TRUE,
+  collapse  = TRUE,
+  comment   = "#>",
   out.width = "100%"
 )
 ```
 
 ## Overview
 
-The `andalusia` dataset contains presence records of threatened and endemic plant species from Andalusia, Spain — a biodiversity hotspot in south-western Europe renowned for its exceptionally high rates of endemism within the Mediterranean Basin. Records were collected at 400 m resolution in the ETRS89 / UTM zone 30N coordinate system (EPSG:25830), with species presences spatially thinned at the raster cell level to remove spatial redundancy. Species with fewer than 30 records after thinning were excluded.
+The `andalusia` dataset is an `sf` data frame with coordinate reference system ETRS89 / UTM zone 30N (EPSG:25830), containing 37,773 presence records for 90 plant species and 8,692 background points (46,465 rows total) from Andalusia, Spain. The data frame has only 3 columns: `species` (character), `presence` (integer), and `geometry` (POINT).
 
-The dataset pairs occurrence points for multiple threatened and endemic species with randomly sampled background points, and includes 20 environmental predictors derived from Landsat imagery, climate surfaces, and a digital elevation model. This structure is well suited for per-species species distribution models (SDMs), multi-species richness mapping, and spatial conservation prioritisation.
+Environmental predictors are **not** columns in `andalusia` — they live in the companion 20-layer raster downloaded via `andalusia_extra()`, and their names are stored in `andalusia_predictors`.
+
+This dataset is well suited for multi-species SDMs, multiclass classification, and spatial richness mapping.
 
 ## Setup
+
+The code below loads the `R` packages and example data required for this tutorial.
 
 ```{r, include = FALSE}
 if (!requireNamespace("pak", quietly = TRUE)) {
@@ -33,8 +37,9 @@ pak::pkg_install(
     "dplyr",
     "terra",
     "stars",
-    "mapview",
     "collinear",
+    "ranger",
+    "mapview",
     "viridis"
   ),
   ask = FALSE
@@ -45,8 +50,9 @@ pak::pkg_install(
 library(dplyr)
 library(terra)
 library(sf)
-library(mapview)
 library(collinear)
+library(ranger)
+library(mapview)
 library(viridis)
 library(spatialData)
 
@@ -63,10 +69,10 @@ data(
 The dataset is an `sf` data frame with `r nrow(andalusia)` rows and `r ncol(andalusia)` columns.
 
 ```{r}
-andalusia |> dplyr::glimpse()
+dplyr::glimpse(andalusia)
 ```
 
-The `species` column identifies each record as a named species or `"background"`. The table below shows the number of records per species.
+The `species` column identifies each record as a named species or `"background"`. The table below shows the number of records per species or group.
 
 ```{r}
 andalusia |>
@@ -76,207 +82,284 @@ andalusia |>
   dplyr::arrange(dplyr::desc(n))
 ```
 
-The map below shows all species presences and background points by colour.
+Background points were generated randomly across the entire study area to sample the range of environmental conditions available.
+
+The map below shows all species presences. Background points were excluded for clarity.
 
 ```{r map, message = FALSE}
 mapview::mapview(
-  andalusia,
+  andalusia |>
+    dplyr::filter(
+      species != "background"
+    ),
   zcol = "species",
   layer.name = "Species",
-  col.regions = viridis::turbo(n = length(unique(andalusia$species)))
+  col.regions = viridis::turbo(n = 90),
+  legend = FALSE
 )
 ```
 
-The dataset includes `r length(andalusia_predictors)` remote sensing, topographic, and climate predictors.
+The environmental raster matching this dataset is downloaded via `andalusia_extra()`, which returns a multilayer `SpatRaster` object (R package [`terra`](https://cran.r-project.org/package=terra)).
+
+```{r load_raster, message = FALSE}
+andalusia_env <- spatialData::andalusia_extra()
+plot(andalusia_env)
+```
+
+The `SpatRaster` object contains `r length(andalusia_predictors)` layers, all named in the vector `andalusia_predictors`.
 
 ```{r}
 andalusia_predictors
 ```
 
-## Example Usage
-
-This section demonstrates a complete per-species distribution modelling workflow:
-
-- **Environmental Raster**: download and visualise the 20-band raster covering the study area.
-- **Multicollinearity Filtering**: select a shared, non-redundant predictor set using `collinear::collinear()`.
-- **Modelling Rationale**: describe the per-species GLM design and threshold strategy.
-- **Model Fitting**: fit one binomial GLM per species with inverse-frequency case weights.
-- **Threshold Selection**: choose the optimal binary threshold per model via Youden's J statistic.
-- **Species Richness Model**: sum thresholded binary predictions to produce a richness raster.
-- **High-Richness Areas**: identify and map cells at or above the 75th-percentile richness.
-
-### Environmental Raster
-
-The environmental raster (same extent as the occurrence data, 400 m resolution, EPSG:25830) is loaded with `andalusia_extra()`. When the vignette renders, `andalusia_env.tif` is read from disk without re-downloading.
-
-```{r load_raster, message = FALSE}
-andalusia_env <- spatialData::andalusia_extra()
-```
+Each cell of the raster dataset represents 400 × 400 meters on the ground.
 
 ```{r}
-plot(andalusia_env)
+terra::res(andalusia_env)
 ```
 
-### Multicollinearity Filtering
+To pair records in `andalusia` with the cell values in `andalusia_env`, we use `terra::extract()`.
 
-A shared predictor set is selected for all species models using `collinear::collinear()` on the pooled `presence` response. Using the same predictors across all species ensures that suitability surfaces are directly comparable when summed into a richness layer.
 
-```{r multicollinearity}
-andalusia_selection <- collinear::collinear(
-  df         = andalusia,
-  responses  = "presence",
-  predictors = andalusia_predictors,
-  f          = collinear::f_binomial_gam,
-  quiet      = TRUE
+```{r}
+env_df <- terra::extract(
+  x = andalusia_env,
+  y = andalusia,
+  ID = FALSE
 )
-selected_predictors <- andalusia_selection$presence$selection
-selected_predictors
+
+andalusia <- dplyr::bind_cols(
+  andalusia,
+  env_df
+) |> 
+  na.omit()
+
+dplyr::glimpse(andalusia)
 ```
 
-### Modelling Rationale
+To speed up code execution in the next section, we are going to reduce the resolution of `andalusia_env` by a factor of 4 via aggregation.
 
-Each species is modelled with a separate binomial GLM. For a given species `sp`, the training data consists of:
+```{r}
+andalusia_env <- terra::aggregate(
+  x = andalusia_env,
+  fact = 4,
+  fun = mean
+)
 
-- All rows where `species == sp` (labelled `sp_presence = 1`).
-- All background rows (labelled `sp_presence = 0`).
-
-Background points typically outnumber any individual species' presences by a large margin. To prevent the model from being dominated by the background class, `collinear::case_weights()` assigns inverse-frequency weights so that presences and background contribute equally to the likelihood.
-
-The shared predictor set selected above ensures that all suitability layers rest on the same environmental basis and can be meaningfully summed into a species richness estimate.
-
-Each model is converted from a continuous suitability surface to a binary presence/absence map using Youden's J statistic (sensitivity + specificity − 1). The threshold that maximises J balances commission and omission errors symmetrically, giving a principled default for binary mapping across species with very different prevalences.
-
-The species richness raster is then the sum of all binary layers: each cell's value equals the number of species predicted present there.
-
-### Model Fitting
-
-The helper function `find_threshold()` evaluates Youden's J at 99 candidate thresholds and returns the one with the highest value.
-
-```{r find_threshold}
-find_threshold <- function(observed, predicted) {
-  thresholds <- seq(0.01, 0.99, by = 0.01)
-  youden <- vapply(thresholds, function(t) {
-    pred_bin <- as.integer(predicted >= t)
-    tp <- sum(pred_bin == 1L & observed == 1L)
-    tn <- sum(pred_bin == 0L & observed == 0L)
-    fp <- sum(pred_bin == 1L & observed == 0L)
-    fn <- sum(pred_bin == 0L & observed == 1L)
-    if ((tp + fn) == 0L || (tn + fp) == 0L) return(-1)
-    (tp / (tp + fn)) + (tn / (tn + fp)) - 1
-  }, FUN.VALUE = numeric(1))
-  thresholds[which.max(youden)]
-}
+res(andalusia_env)
 ```
 
-One binomial GLM is fitted per species. The `warning = FALSE` chunk option suppresses the non-integer weights warning that `stats::glm()` emits when non-standard case weights are provided.
+## Example Usage
 
-```{r fit_models, warning = FALSE}
-species_names <- unique(andalusia$species[andalusia$species != "background"])
+This section demonstrates a complete multi-species distribution modelling workflow:
 
-species_models <- lapply(
-  X = species_names,
-  FUN = function(sp) {
-    sp_df <- andalusia |>
-      dplyr::filter(species == sp | species == "background") |>
-      sf::st_drop_geometry() |>
-      dplyr::mutate(sp_presence = dplyr::if_else(species == sp, 1L, 0L))
-    sp_weights <- collinear::case_weights(x = sp_df$sp_presence)
-    sp_formula <- as.formula(
-      paste0("sp_presence ~ ", paste(selected_predictors, collapse = " + "))
+- **Species Distribution Modelling**: fit a `ranger::ranger()` binary random forest for *Pinus halepensis*, then loop over all species.
+- **Species Richness Map**: sum binary predictions to produce a species richness raster.
+
+Before fitting models, we convert `presence` to a factor (required by `ranger` for classification) and split the data into two objects: `species` (presence records) and `background`.
+
+```{r}
+andalusia <- andalusia |>
+  dplyr::mutate(
+    presence = factor(presence)
+  )
+
+background <- andalusia |>
+  dplyr::filter(
+    species == "background"
+  )
+
+species <- andalusia |>
+  dplyr::filter(
+    species != "background"
+  )
+```
+
+
+
+
+### Modelling steps for one species
+
+This section shows the modelling steps for a single species.
+
+```{r}
+species_name <- "Pinus_halepensis"
+```
+
+First, we filter the records belonging to the target species.
+
+```{r}
+species_data <- species |>
+  dplyr::filter(
+    species == species_name
     )
-    stats::glm(
-      formula = sp_formula,
-      data    = sp_df,
-      family  = binomial(link = "logit"),
-      weights = sp_weights
+```
+
+Next, we build a 10 km buffer around the species presences to exclude background points that fall within it — records too close to presences would dilute the contrast the model needs to learn habitat boundaries.
+
+```{r}
+species_data_buffer <- sf::st_buffer(
+  x = species_data,
+  dist = 10000
+) |> 
+  sf::st_union()
+```
+
+
+We then identify which background points fall outside the buffer using `sf::st_contains()` and retain only those.
+
+```{r}
+background_outside_buffer <- !sf::st_contains(
+  x = species_data_buffer,
+  y = background,
+  sparse = FALSE
+) |>
+  as.vector()
+
+species_background <- background[background_outside_buffer, ]
+```
+
+The map below shows the 10 km buffer around the species presences and the background points that remain after filtering.
+
+```{r}
+mapview(species_data_buffer, col.regions = "gray50") + mapview(species_background, col.regions = "red4")
+```
+
+We combine the species presences and the filtered background into one training data frame.
+
+```{r}
+species_data <- dplyr::bind_rows(
+  species_data,
+  species_background
+)
+```
+
+
+We train a binary random forest using all predictors and class weights to account for the imbalance between presences and background records. `num.trees = 100` and `min.node.size = 30` are set below their defaults (500 and 5, respectively) to reduce computation time — increase them for production models.
+
+```{r}
+species_model <- ranger::ranger(
+  formula = presence ~ .,
+  data = sf::st_drop_geometry(species_data)[, c("presence", andalusia_predictors)],
+  case.weights = collinear::case_weights(
+    x = species_data$presence
+  ),
+  num.trees = 100,
+  min.node.size = 30
+)
+```
+
+We then apply the fitted model to every cell of `andalusia_env` to produce a binary habitat suitability raster.
+
+```{r}
+species_prediction <- terra::predict(
+  object = andalusia_env,
+  model = species_model
+)
+```
+
+The prediction is a binary map.
+
+```{r}
+mapview(
+  species_data |> 
+    dplyr::filter(
+      species == species_name
+    ),
+  layer.name  = paste0("Presence ", species_name),
+  alpha.regions = 0,
+  color       = "black",
+  col.regions = "black"
+) +
+  mapview(
+    species_prediction,
+    layer.name = paste0("Prediction ", species_name),
+    maxpixels  = terra::ncell(species_prediction),
+    na.alpha   = 0
+  )
+```
+
+
+### Modelling all species
+
+We extract the names of all 90 species to iterate over them.
+
+```{r}
+species_names <- andalusia |>
+  dplyr::filter(species != "background") |>
+  dplyr::distinct(species) |>
+  dplyr::pull(species)
+
+species_names
+```
+
+We now apply the same modelling pipeline to all 90 species. The result is a list of per-species binary rasters, stacked into a single `SpatRaster` with `terra::rast()`.
+
+```{r}
+species_predictions <- lapply(
+  X = species_names,
+  FUN = function(species_name) {
+
+    species_data <- species |>
+      dplyr::filter(species == species_name)
+
+    species_data_buffer <- sf::st_buffer(
+      x = species_data,
+      dist = 10000
+    ) |>
+      sf::st_union()
+
+    background_outside_buffer <- !sf::st_contains(
+      x = species_data_buffer,
+      y = background,
+      sparse = FALSE
+    ) |>
+      as.vector()
+
+    species_background <- background[background_outside_buffer, ]
+
+    species_data <- dplyr::bind_rows(
+      species_data,
+      species_background
     )
-  }
-)
-names(species_models) <- species_names
-```
 
-### Threshold Selection
+    species_model <- ranger::ranger(
+      formula = presence ~ .,
+      data = sf::st_drop_geometry(species_data)[, c("presence", andalusia_predictors)],
+      case.weights = collinear::case_weights(
+        x = species_data$presence
+      ),
+      num.trees     = 100,
+      min.node.size = 30
+    )
 
-For each species, training-set predictions are scored against observed labels and `find_threshold()` selects the Youden-optimal cut-off.
-
-```{r thresholds}
-species_thresholds <- vapply(
-  X = species_names,
-  FUN = function(sp) {
-    sp_df <- andalusia |>
-      dplyr::filter(species == sp | species == "background") |>
-      sf::st_drop_geometry() |>
-      dplyr::mutate(sp_presence = dplyr::if_else(species == sp, 1L, 0L))
-    sp_pred <- stats::predict(species_models[[sp]], newdata = sp_df, type = "response")
-    find_threshold(observed = sp_df$sp_presence, predicted = sp_pred)
-  },
-  FUN.VALUE = numeric(1)
-)
-names(species_thresholds) <- species_names
-species_thresholds
-```
-
-### Species Richness Model
-
-The richness raster is built by predicting each model onto `andalusia_env`, thresholding the continuous suitability surface at the species-specific Youden cut-off, and summing the resulting binary layers.
-
-```{r, echo = FALSE}
-stopifnot(all(selected_predictors %in% names(andalusia_env)))
-```
-
-```{r richness}
-richness_raster <- lapply(
-  X = species_names,
-  FUN = function(sp) {
-    sp_pred <- terra::predict(
+    terra::predict(
       object = andalusia_env,
-      model  = species_models[[sp]],
-      type   = "response",
-      na.rm  = TRUE
+      model = species_model
     )
-    terra::ifel(sp_pred >= species_thresholds[[sp]], 1L, 0L)
   }
 ) |>
-  terra::rast() |>
-  terra::app(fun = sum)
-
-names(richness_raster) <- "species_richness"
-
-plot(
-  x    = richness_raster,
-  col  = viridis::turbo(n = 100),
-  main = "Predicted species richness"
-)
+  terra::rast()
 ```
 
-### High-Richness Areas
+### Species Richness Map
 
-Areas at or above the 75th percentile of predicted richness are identified and mapped interactively to highlight the most species-rich parts of the study region.
+Because each model is a binary classifier, every per-species prediction is already a 0/1 raster: 1 where the model predicts suitable habitat, 0 elsewhere. Summing these layers gives a species richness raster where each pixel counts how many of the 90 species have predicted suitable habitat at that location.
 
-```{r high_richness, message = FALSE}
-richness_threshold <- terra::global(
-  x   = richness_raster,
-  fun = function(x) quantile(x, probs = 0.75, na.rm = TRUE)
-)[[1]]
+```{r}
+species_predictions_sum <- sum(species_predictions)
 
-high_richness <- terra::ifel(
-  test = richness_raster >= richness_threshold,
-  yes  = richness_raster,
-  no   = NA
-)
-
-mapview::mapview(
-  high_richness,
-  layer.name  = "High species richness",
+mapview(
+  species_predictions_sum,
   col.regions = viridis::turbo(n = 100)
 )
 ```
 
 ## Conclusion
 
-The `andalusia` dataset provides a multi-species presence-background framework well suited to comparative SDM workflows and conservation prioritisation. By fitting one binomial GLM per species with case-weighted training data and a shared, multicollinearity-filtered predictor set, the models remain comparable across species and their outputs can be meaningfully combined into a spatially explicit richness estimate.
+This vignette demonstrated a complete multi-species modelling workflow using the `andalusia` dataset. After extracting environmental predictors from the companion raster via `terra::extract()`, we fitted `ranger::ranger()` binary random forest models for all 90 plant species using background points outside a 10 km buffer around each species' presences, and summed the per-species binary predictions into a species richness raster where each pixel value counts how many species have predicted suitable habitat at that location. Areas of high predicted richness correspond to climatically and topographically heterogeneous zones in Andalusia. Beyond the SDM workflow shown here, the dataset supports multiclass classification (using the `species` column), habitat connectivity analysis, and spatial conservation prioritisation.
 
-The Youden's J thresholding approach offers a principled, symmetric criterion for converting continuous suitability surfaces into binary maps — an important step when the downstream goal is counting species rather than ranking habitat quality. The resulting richness raster highlights the areas of Andalusia predicted to support the greatest concentration of threatened and endemic plant species, offering a direct input to spatial conservation planning.
+Happy modelling!
 
 ## References
 
@@ -285,4 +368,3 @@ Benito, B.M., Lorite, J., Pérez-Pérez, R., Gómez-Aparicio, L., & Peñas, J. (
 ```{r, echo = FALSE}
 unlink("andalusia_env.tif")
 ```
-

@@ -312,7 +312,7 @@ with coordinates, no geospatial issues, and occurrence status "present".
 \strong{Tree species} were identified by cross-referencing GBIF records with the BGCI Global Tree
 Search database (BGCI 2020). \strong{Grasses} were defined as members of family Poaceae.
 
-\strong{Rarity-weighted richness} (Williams et al. 1996): each taxon is scored with the inverse of
+\strong{Rarity-weighted richness}: each taxon is scored with the inverse of
 its number of spatial presence records in GBIF, then scores are summed per ecoregion.
 \strong{Mean rarity} is the mean of these inverse presence record counts per taxon in an ecoregion.
 
