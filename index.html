@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="index.html">spatialData</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,14 +39,14 @@
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
     <li><a class="dropdown-item" href="articles/andalusia.html">Presence records of 90 plant species in Andalusia</a></li>
-    <li><a class="dropdown-item" href="articles/vi.html">Global vegetation index: modelling NDVI across climates and biomes</a></li>
-    <li><a class="dropdown-item" href="articles/plantae.html">Global plant diversity: spatial random forests across 662 ecoregions</a></li>
-    <li><a class="dropdown-item" href="articles/quercus.html">European oak distribution: multi-species niche modelling with recursive partition trees</a></li>
-    <li><a class="dropdown-item" href="articles/neanderthal.html">Neanderthal habitat during the Last Interglacial: a weighted GAM ensemble</a></li>
-    <li><a class="dropdown-item" href="articles/trees.html">Mesoamerican tree richness across the Americas: conditional inference trees for biodiversity patterns</a></li>
     <li><a class="dropdown-item" href="articles/communities.html">Plant community distribution in Sierra Nevada: multi-class classification under climate change</a></li>
     <li><a class="dropdown-item" href="articles/interaction.html">Biotic interactions: modelling species dependencies with sequential SDMs</a></li>
     <li><a class="dropdown-item" href="articles/linaria.html">Linaria nigricans distribution and greenhouse expansion in Andalusia</a></li>
+    <li><a class="dropdown-item" href="articles/neanderthal.html">Neanderthal habitat during the Last Interglacial: a weighted GAM ensemble</a></li>
+    <li><a class="dropdown-item" href="articles/plantae.html">Global plant diversity: spatial random forests across 662 ecoregions</a></li>
+    <li><a class="dropdown-item" href="articles/quercus.html">European oak distribution: multi-species niche modelling with recursive partition trees</a></li>
+    <li><a class="dropdown-item" href="articles/trees.html">Mesoamerican tree richness across the Americas: conditional inference trees for biodiversity patterns</a></li>
+    <li><a class="dropdown-item" href="articles/vi.html">Global vegetation index: modelling NDVI across climates and biomes</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -68,7 +68,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><code>spatialData</code> is a data-only R package providing ready-to-use spatial datasets for ecological modeling. It was originally developed to supply example data for the R packages <a href="https://blasbenito.github.io/collinear/" class="external-link"><code>collinear</code></a> and <a href="https://blasbenito.github.io/spatialRF/" class="external-link"><code>spatialRF</code></a>, but the datasets are equally suited for teaching spatial analysis and species distribution modeling. Each dataset comes pre-processed with response variables and environmental predictors, so you can jump straight into the analysis without spending time on data preparation.</p>
+<p><code>spatialData</code> is a data-only R package providing ready-to-use spatial datasets for ecological modeling. Each dataset comes pre-processed with response variables and environmental predictors, so you can jump straight into the analysis without spending time on data preparation.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -111,59 +111,15 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/neanderthal.html"><code>neanderthal</code></a></td>
-<td align="left">Neanderthal presence/absence and paleoclimate predictors</td>
-<td align="left">Europe</td>
-<td align="left">~120,000 BP (MIS 5e)</td>
-<td align="right">245</td>
-<td align="right">1</td>
-<td align="right">25</td>
-<td align="left">EPSG:4326</td>
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/andalusia.html"><code>andalusia</code></a></td>
+<td align="left">Plant presences and environmental predictors</td>
+<td align="left">Andalusia, Spain</td>
+<td align="left">2000 - 2010</td>
+<td align="right">46,465</td>
+<td align="right">2</td>
+<td align="right">20</td>
+<td align="left">EPSG:25830</td>
 <td align="left">POINT</td>
-</tr>
-<tr class="even">
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/quercus.html"><code>quercus</code></a></td>
-<td align="left">Distribution of European oaks and bioglimatic predictors</td>
-<td align="left">Europe</td>
-<td align="left">present</td>
-<td align="right">6,728</td>
-<td align="right">1</td>
-<td align="right">31</td>
-<td align="left">EPSG:4326</td>
-<td align="left">POINT</td>
-</tr>
-<tr class="odd">
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/vi.html"><code>vi</code></a></td>
-<td align="left">NDVI records with environmental predictors</td>
-<td align="left">Global</td>
-<td align="left">1999–2019</td>
-<td align="right">9,265</td>
-<td align="right">5</td>
-<td align="right">58</td>
-<td align="left">EPSG:4326</td>
-<td align="left">POINT</td>
-</tr>
-<tr class="even">
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/plantae.html"><code>plantae</code></a></td>
-<td align="left">Plant diversity of the global ecoregions</td>
-<td align="left">Global</td>
-<td align="left">2020</td>
-<td align="right">662</td>
-<td align="right">53</td>
-<td align="right">84</td>
-<td align="left">EPSG:4326</td>
-<td align="left">POINT (centroids)</td>
-</tr>
-<tr class="odd">
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/trees.html"><code>trees</code></a></td>
-<td align="left">Tree species richness and environmental predictors</td>
-<td align="left">Americas</td>
-<td align="left">2012</td>
-<td align="right">3,373</td>
-<td align="right">1</td>
-<td align="right">50</td>
-<td align="left">EPSG:4326</td>
-<td align="left">POLYGON</td>
 </tr>
 <tr class="even">
 <td align="left"><a href="https://blasbenito.github.io/spatialData/articles/communities.html"><code>communities</code></a></td>
@@ -181,11 +137,11 @@
 <td align="left">Butterfly and host plant presence and environmental predictors</td>
 <td align="left">Sierra Nevada, SE Spain</td>
 <td align="left">2014</td>
-<td align="right">1000</td>
+<td align="right">1,000</td>
 <td align="right">3</td>
 <td align="right">10</td>
-<td align="left">EPSG:25830</td>
-<td align="left">POINT</td>
+<td align="left">-</td>
+<td align="left">-</td>
 </tr>
 <tr class="even">
 <td align="left"><a href="https://blasbenito.github.io/spatialData/articles/linaria.html"><code>linaria</code></a></td>
@@ -200,14 +156,58 @@
 <td align="left">POINT</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/andalusia.html"><code>andalusia</code></a></td>
-<td align="left">Plant species presences and and environmental predictors</td>
-<td align="left">Andalusia, Spain</td>
-<td align="left">2010</td>
-<td align="right">8,666</td>
-<td align="right">2</td>
-<td align="right">20</td>
-<td align="left">EPSG:25830</td>
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/neanderthal.html"><code>neanderthal</code></a></td>
+<td align="left">Neanderthal presence/absence and paleoclimate predictors</td>
+<td align="left">Europe</td>
+<td align="left">~120,000 BP (MIS 5e)</td>
+<td align="right">245</td>
+<td align="right">1</td>
+<td align="right">25</td>
+<td align="left">EPSG:4326</td>
+<td align="left">POINT</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/plantae.html"><code>plantae</code></a></td>
+<td align="left">Plant diversity of the global ecoregions</td>
+<td align="left">Global</td>
+<td align="left">2020</td>
+<td align="right">662</td>
+<td align="right">53</td>
+<td align="right">84</td>
+<td align="left">EPSG:4326</td>
+<td align="left">POINT (centroids)</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/quercus.html"><code>quercus</code></a></td>
+<td align="left">Distribution of European oaks and bioclimatic predictors</td>
+<td align="left">Europe</td>
+<td align="left">present</td>
+<td align="right">6,728</td>
+<td align="right">1</td>
+<td align="right">31</td>
+<td align="left">EPSG:4326</td>
+<td align="left">POINT</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/trees.html"><code>trees</code></a></td>
+<td align="left">Tree species richness and environmental predictors</td>
+<td align="left">Americas</td>
+<td align="left">2012</td>
+<td align="right">3,373</td>
+<td align="right">1</td>
+<td align="right">50</td>
+<td align="left">EPSG:4326</td>
+<td align="left">POLYGON</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/vi.html"><code>vi</code></a></td>
+<td align="left">NDVI records with environmental predictors</td>
+<td align="left">Global</td>
+<td align="left">1999–2019</td>
+<td align="right">9,265</td>
+<td align="right">5</td>
+<td align="right">58</td>
+<td align="left">EPSG:4326</td>
 <td align="left">POINT</td>
 </tr>
 </tbody>
@@ -238,49 +238,13 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/neanderthal.html"><code>neanderthal</code></a></td>
-<td align="left"><code><a href="reference/neanderthal_extra.html">neanderthal_extra()</a></code></td>
-<td align="left">25-band palaeoclimate raster (bioclim + topography)</td>
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/andalusia.html"><code>andalusia</code></a></td>
+<td align="left"><code><a href="reference/andalusia_extra.html">andalusia_extra()</a></code></td>
+<td align="left">20-band environmental raster for Andalusia</td>
 <td align="left">GeoTIFF</td>
-<td align="left">25 bands</td>
-<td align="left">0.18°</td>
-<td align="left">EPSG:4326</td>
-</tr>
-<tr class="even">
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/quercus.html"><code>quercus</code></a></td>
-<td align="left"><code><a href="reference/quercus_extra.html">quercus_extra()</a></code></td>
-<td align="left">31-band bioclimatic/environmental raster</td>
-<td align="left">GeoTIFF</td>
-<td align="left">31 bands</td>
-<td align="left">0.167°</td>
-<td align="left">EPSG:4326</td>
-</tr>
-<tr class="odd">
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/vi.html"><code>vi</code></a></td>
-<td align="left"><code><a href="reference/vi_extra.html">vi_extra()</a></code></td>
-<td align="left">Extended NDVI point dataset (30,000 records)</td>
-<td align="left">GeoPackage</td>
-<td align="left">POINT</td>
-<td align="left">30,000 rows</td>
-<td align="left">EPSG:4326</td>
-</tr>
-<tr class="even">
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/plantae.html"><code>plantae</code></a></td>
-<td align="left"><code><a href="reference/plantae_extra.html">plantae_extra()</a></code></td>
-<td align="left">Ecoregion polygons with full diversity data</td>
-<td align="left">GeoPackage</td>
-<td align="left">MULTIPOLYGON</td>
-<td align="left">662 features</td>
-<td align="left">EPSG:4326</td>
-</tr>
-<tr class="odd">
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/trees.html"><code>trees</code></a></td>
-<td align="left"><code><a href="reference/trees_extra.html">trees_extra()</a></code></td>
-<td align="left">Individual tree species presence points</td>
-<td align="left">GeoPackage</td>
-<td align="left">POINT</td>
-<td align="left">523,308 rows</td>
-<td align="left">EPSG:4326</td>
+<td align="left">20 bands</td>
+<td align="left">400 m</td>
+<td align="left">EPSG:25830</td>
 </tr>
 <tr class="even">
 <td align="left"><a href="https://blasbenito.github.io/spatialData/articles/communities.html"><code>communities</code></a></td>
@@ -328,16 +292,57 @@
 <td align="left">EPSG:25830</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/andalusia.html"><code>andalusia</code></a></td>
-<td align="left"><code><a href="reference/andalusia_extra.html">andalusia_extra()</a></code></td>
-<td align="left">20-band environmental raster for Andalusia</td>
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/neanderthal.html"><code>neanderthal</code></a></td>
+<td align="left"><code><a href="reference/neanderthal_extra.html">neanderthal_extra()</a></code></td>
+<td align="left">25-band palaeoclimate raster (bioclim + topography)</td>
 <td align="left">GeoTIFF</td>
-<td align="left">20 bands</td>
-<td align="left">400 m</td>
-<td align="left">EPSG:25830</td>
+<td align="left">25 bands</td>
+<td align="left">0.18°</td>
+<td align="left">EPSG:4326</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/plantae.html"><code>plantae</code></a></td>
+<td align="left"><code><a href="reference/plantae_extra.html">plantae_extra()</a></code></td>
+<td align="left">Ecoregion polygons with full diversity data</td>
+<td align="left">GeoPackage</td>
+<td align="left">MULTIPOLYGON</td>
+<td align="left">662 features</td>
+<td align="left">EPSG:4326</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/quercus.html"><code>quercus</code></a></td>
+<td align="left"><code><a href="reference/quercus_extra.html">quercus_extra()</a></code></td>
+<td align="left">31-band bioclimatic/environmental raster</td>
+<td align="left">GeoTIFF</td>
+<td align="left">31 bands</td>
+<td align="left">0.167°</td>
+<td align="left">EPSG:4326</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/trees.html"><code>trees</code></a></td>
+<td align="left"><code><a href="reference/trees_extra.html">trees_extra()</a></code></td>
+<td align="left">Individual tree species presence points</td>
+<td align="left">GeoPackage</td>
+<td align="left">POINT</td>
+<td align="left">523,308 rows</td>
+<td align="left">EPSG:4326</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://blasbenito.github.io/spatialData/articles/vi.html"><code>vi</code></a></td>
+<td align="left"><code><a href="reference/vi_extra.html">vi_extra()</a></code></td>
+<td align="left">Extended NDVI point dataset (30,000 records)</td>
+<td align="left">GeoPackage</td>
+<td align="left">POINT</td>
+<td align="left">30,000 rows</td>
+<td align="left">EPSG:4326</td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
+<p>CC BY 4.0 — see <a href="LICENSE.html">LICENSE.md</a> for details.</p>
 </div>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
@@ -362,11 +367,88 @@
 <span><span class="co">#&gt;     url = {https://blasbenito.github.io/spatialData},</span></span>
 <span><span class="co">#&gt;     doi = {10.5281/zenodo.XXXXXXX},</span></span>
 <span><span class="co">#&gt;   }</span></span></code></pre></div>
+<p>Each dataset also has its own sources; when using individual datasets, please cite them as appropriate:</p>
+<div class="section level3">
+<h3 id="andalusia">
+<strong><code>andalusia</code></strong><a class="anchor" aria-label="anchor" href="#andalusia"></a>
+</h3>
+<ul>
+<li>Benito, B.M., Lorite, J., Pérez-Pérez, R., Gómez-Aparicio, L., &amp; Peñas, J. (2014). Forecasting plant range collapse in a mediterranean hotspot: when dispersal uncertainties matter. <em>Diversity and Distributions</em>, 20(1), 72–83. <a href="https://doi.org/10.1111/ddi.12148" class="external-link uri">https://doi.org/10.1111/ddi.12148</a>
+</li>
+</ul>
 </div>
-<div class="section level2">
-<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
-</h2>
-<p>CC BY 4.0 — see <a href="LICENSE.html">LICENSE.md</a> for details.</p>
+<div class="section level3">
+<h3 id="communities">
+<strong><code>communities</code></strong><a class="anchor" aria-label="anchor" href="#communities"></a>
+</h3>
+<ul>
+<li>Benito, B., Lorite, J., &amp; Peñas, J. (2011). Simulating potential effects of climatic warming on altitudinal patterns of key species in Mediterranean-alpine ecosystems. <em>Climatic Change</em>, 108, 471–483. <a href="https://doi.org/10.1007/s10584-010-0015-3" class="external-link uri">https://doi.org/10.1007/s10584-010-0015-3</a>
+</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="interaction">
+<strong><code>interaction</code></strong><a class="anchor" aria-label="anchor" href="#interaction"></a>
+</h3>
+<ul>
+<li>Barea-Azcón, J.M., Benito, B.M., Olivares, F.J., Ruiz, H., Martín, J., García, A.L., &amp; López, R. (2014). Distribution and conservation of the relict interaction between the butterfly <em>Agriades zullichi</em> and its larval foodplant (<em>Androsace vitaliana nevadensis</em>). <em>Biodiversity and Conservation</em>, 23(4), 927–944. <a href="https://doi.org/10.1007/s10531-014-0643-4" class="external-link uri">https://doi.org/10.1007/s10531-014-0643-4</a>
+</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="linaria">
+<strong><code>linaria</code></strong><a class="anchor" aria-label="anchor" href="#linaria"></a>
+</h3>
+<ul>
+<li><p>Benito, B.M., Martínez-Ortega, M.M., Munoz, L.M., Lorite, J. &amp; Penas, J. (2009). Assessing extinction-risk of endangered plants using species distribution models: a case study of habitat depletion caused by the spread of greenhouses. <em>Biodiversity and Conservation</em>, 18(9), 2509–2520. <a href="https://doi.org/10.1007/s10531-009-9706-6" class="external-link uri">https://doi.org/10.1007/s10531-009-9706-6</a></p></li>
+<li><p>Peñas, J., Benito, B., Lorite, J., et al. (2011). Habitat fragmentation in arid zones: a case study of <em>Linaria nigricans</em> under land use changes (SE Spain). <em>Environmental Management</em>, 48, 168–176. <a href="https://doi.org/10.1007/s00267-011-9663-y" class="external-link uri">https://doi.org/10.1007/s00267-011-9663-y</a></p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="neanderthal">
+<strong><code>neanderthal</code></strong><a class="anchor" aria-label="anchor" href="#neanderthal"></a>
+</h3>
+<ul>
+<li><p>Benito, B.M., et al. (2017). The ecological niche and distribution of Neanderthals during the Last Interglacial. <em>Journal of Biogeography</em>, 44, 51–61. <a href="https://doi.org/10.1111/jbi.12845" class="external-link uri">https://doi.org/10.1111/jbi.12845</a></p></li>
+<li><p>Nielsen, T.K., Benito, B.M., Svenning, J.-C., Sandel, B., McKerracher, L., Riede, F., &amp; Kjærgaard, P.C. (2017). Investigating Neanderthal dispersal above 55°N in Europe during the Last Interglacial Complex. <em>Quaternary International</em>, 431, 88–103. <a href="https://doi.org/10.1016/j.quaint.2015.10.039" class="external-link uri">https://doi.org/10.1016/j.quaint.2015.10.039</a></p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="plantae">
+<strong><code>plantae</code></strong><a class="anchor" aria-label="anchor" href="#plantae"></a>
+</h3>
+<ul>
+<li>Maestre, F.T., Benito, B.M., Berdugo, M., et al. (2021). Biogeography of global drylands. <em>New Phytologist</em>, 231(2), 540–558. <a href="https://doi.org/10.1111/nph.17398" class="external-link uri">https://doi.org/10.1111/nph.17398</a>
+</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="quercus">
+<strong><code>quercus</code></strong><a class="anchor" aria-label="anchor" href="#quercus"></a>
+</h3>
+<ul>
+<li><p>GBIF — Global Biodiversity Information Facility <a href="https://www.gbif.org/" class="external-link uri">https://www.gbif.org/</a></p></li>
+<li><p>Fick, S.E. &amp; Hijmans, R.J. (2017). WorldClim 2: new 1-km spatial resolution climate surfaces for global land areas. <em>International Journal of Climatology</em>, 37(12), 4302–4315. <a href="https://doi.org/10.1002/joc.5086" class="external-link uri">https://doi.org/10.1002/joc.5086</a></p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="trees">
+<strong><code>trees</code></strong><a class="anchor" aria-label="anchor" href="#trees"></a>
+</h3>
+<ul>
+<li><p>Benito, B.M., Cayuela, L., &amp; Albuquerque, F.S. (2013). The impact of modelling choices in the predictive performance of richness maps derived from species-distribution models. <em>Methods in Ecology and Evolution</em>, 4(4), 327–335. <a href="https://doi.org/10.1111/2041-210X.12022" class="external-link uri">https://doi.org/10.1111/2041-210X.12022</a></p></li>
+<li><p>Cayuela, L., Gálvez-Bravo, L., Pérez Pérez, R., de Albuquerque, F.S., Golicher, D.J., Zahawi, R.A., et al. (2012). The Tree Biodiversity Network (BIOTREE-NET): prospects for biodiversity research and conservation in the Neotropics. <em>Biodiversity &amp; Ecology</em>, 4, 211–224. <a href="https://doi.org/10.7809/b-e.00078" class="external-link uri">https://doi.org/10.7809/b-e.00078</a></p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="vi">
+<strong><code>vi</code></strong><a class="anchor" aria-label="anchor" href="#vi"></a>
+</h3>
+<ul>
+<li>Copernicus Land Monitoring Service (2019). Normalised Difference Vegetation Index Statistics (Long Term 1999–2019), raster 1 km, global, version 3. European Commission, Joint Research Centre. <a href="https://doi.org/10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda" class="external-link uri">https://doi.org/10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda</a>
+</li>
+</ul>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
