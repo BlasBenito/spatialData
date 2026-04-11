@@ -127,9 +127,13 @@ rsconnect/
 
 
 # OTHER FILES
+.claude/*
 VOICE.md
 CLAUDE.md
 dev_scripts/*
 extra_data/*
 docs/*
 docs
+CRAN_CHECKLIST.md
+CRAN_RULES.md
+CRAN_TODO.md
