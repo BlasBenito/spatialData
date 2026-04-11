@@ -6,7 +6,7 @@
 #' Use [interaction_extra()] to download the associated environmental raster.
 #'
 #' @usage data(interaction)
-#' @format A data frame with presence and background rows and 13 columns:
+#' @format A data frame with 1,000 rows (presence and background points) and 13 columns:
 #'
 #' **Response variables (3):**
 #' \itemize{

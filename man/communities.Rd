@@ -54,7 +54,7 @@ An sf data frame with 7,300 rows and 16 columns:
 data(communities)
 }
 \description{
-\code{sf} data frame with \code{POINT} geometry containing 6747 plant community records from the Sierra Nevada mountain range (SE Spain), with 6 response variables (see \link{communities_responses}) and 9 numeric predictors (see \link{communities_predictors}).
+\code{sf} data frame with \code{POINT} geometry containing 7,300 plant community records from the Sierra Nevada mountain range (SE Spain), with 6 response variables (see \link{communities_responses}) and 9 numeric predictors (see \link{communities_predictors}).
 Use \code{\link[=communities_extra_2010]{communities_extra_2010()}}, \code{\link[=communities_extra_2050]{communities_extra_2050()}}, and \code{\link[=communities_extra_2100]{communities_extra_2100()}} to download the associated environmental rasters for the baseline (2010), 2050, and 2100 climate scenarios.
 }
 \seealso{

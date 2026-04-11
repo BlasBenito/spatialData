@@ -1,6 +1,6 @@
 Package: spatialData
 Title: Spatial Datasets for Ecological Modeling
-Version: 0.0.1
+Version: 1.0.0
 Authors@R:
     person("Blas M.", "Benito", , "blasbenito@gmail.com", role = c("aut", "cre"))
 Description: Provides nine spatial datasets for ecological and environmental

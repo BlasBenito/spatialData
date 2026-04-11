@@ -5,7 +5,7 @@
 \alias{interaction}
 \title{Species Interaction Dataset: Butterfly and Host Plant in Sierra Nevada (SE Spain)}
 \format{
-A data frame with presence and background rows and 13 columns:
+A data frame with 1,000 rows (presence and background points) and 13 columns:
 
 \strong{Response variables (3):}
 \itemize{

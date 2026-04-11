@@ -62,6 +62,7 @@
 #' **Presence data:**
 #' \itemize{
 #'   \item Benito, B.M., et al. (2017). The ecological niche and distribution of Neanderthals during the Last Interglacial. \emph{Journal of Biogeography}, 44, 51-61. \url{https://doi.org/10.1111/jbi.12845}
+#'   \item Nielsen, T.K., Benito, B.M., Svenning, J.-C., Sandel, B., McKerracher, L., Riede, F., & Kjærgaard, P.C. (2017). Investigating Neanderthal dispersal above 55°N in Europe during the Last Interglacial Complex. \emph{Quaternary International}, 431, 88-103. \url{https://doi.org/10.1016/j.quaint.2015.10.039}
 #' }
 #'
 #' **Palaeoclimatic variables (GCM simulation):**

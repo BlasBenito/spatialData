@@ -24,14 +24,15 @@ articles:
   navbar: "Tutorials"
   contents:
   - articles/andalusia
-  - articles/vi
-  - articles/plantae
-  - articles/quercus
-  - articles/neanderthal
-  - articles/trees
   - articles/communities
   - articles/interaction
   - articles/linaria
+  - articles/neanderthal
+  - articles/plantae
+  - articles/quercus
+  - articles/trees
+  - articles/vi
+
 
 reference:
 
@@ -42,6 +43,32 @@ reference:
       - andalusia_responses
       - andalusia_predictors
       - andalusia_extra
+
+  - title: "communities"
+    desc: "Plant community records from the Sierra Nevada (SE Spain) with climate and topographic predictors."
+    contents:
+      - communities
+      - communities_responses
+      - communities_predictors
+      - communities_extra_2010
+      - communities_extra_2050
+      - communities_extra_2100
+
+  - title: "interaction"
+    desc: "Co-occurrence records for a butterfly-plant interaction in the Sierra Nevada (SE Spain) with environmental predictors."
+    contents:
+      - interaction
+      - interaction_responses
+      - interaction_predictors
+      - interaction_extra
+
+  - title: "linaria"
+    desc: "Presence and background records for Linaria nigricans and greenhouses in Andalusia, Spain, with Landsat, climate, and topographic predictors."
+    contents:
+      - linaria
+      - linaria_responses
+      - linaria_predictors
+      - linaria_extra
 
   - title: "neanderthal"
     desc: "Neanderthal presence/absence records with paleoclimate and topographic predictors."
@@ -69,14 +96,6 @@ reference:
       - quercus_predictors
       - quercus_extra
 
-  - title: "vi"
-    desc: "Global NDVI records with climate, soil, and topographic predictors."
-    contents:
-      - vi
-      - vi_responses
-      - vi_predictors
-      - vi_extra
-
   - title: "trees"
     desc: "Richness of Mesoamerican trees across North and South America."
     contents:
@@ -85,29 +104,13 @@ reference:
       - trees_predictors
       - trees_extra
 
-  - title: "communities"
-    desc: "Plant community records from the Sierra Nevada (SE Spain) with climate and topographic predictors."
+  - title: "vi"
+    desc: "Global NDVI records with climate, soil, and topographic predictors."
     contents:
-      - communities
-      - communities_responses
-      - communities_predictors
-      - communities_extra_2010
-      - communities_extra_2050
-      - communities_extra_2100
+      - vi
+      - vi_responses
+      - vi_predictors
+      - vi_extra
 
-  - title: "interaction"
-    desc: "Co-occurrence records for a butterfly-plant interaction in the Sierra Nevada (SE Spain) with environmental predictors."
-    contents:
-      - interaction
-      - interaction_responses
-      - interaction_predictors
-      - interaction_extra
 
-  - title: "linaria"
-    desc: "Presence and background records for Linaria nigricans and greenhouses in Andalusia, Spain, with Landsat, climate, and topographic predictors."
-    contents:
-      - linaria
-      - linaria_responses
-      - linaria_predictors
-      - linaria_extra
 

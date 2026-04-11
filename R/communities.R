@@ -1,7 +1,7 @@
 #' @title Plant Communities of the Sierra Nevada (SE Spain)
 #'
 #' @description
-#' `sf` data frame with `POINT` geometry containing 6747 plant community records from the Sierra Nevada mountain range (SE Spain), with 6 response variables (see [communities_responses]) and 9 numeric predictors (see [communities_predictors]).
+#' `sf` data frame with `POINT` geometry containing 7,300 plant community records from the Sierra Nevada mountain range (SE Spain), with 6 response variables (see [communities_responses]) and 9 numeric predictors (see [communities_predictors]).
 #' Use [communities_extra_2010()], [communities_extra_2050()], and [communities_extra_2100()] to download the associated environmental rasters for the baseline (2010), 2050, and 2100 climate scenarios.
 #'
 #' @usage data(communities)
