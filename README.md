@@ -6,6 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/BlasBenito/spatialData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/BlasBenito/spatialData/actions/workflows/R-CMD-check.yaml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19508673.svg)](https://doi.org/10.5281/zenodo.19508673)
 <!-- badges: end -->
 
 `spatialData` is a data-only R package providing ready-to-use spatial
