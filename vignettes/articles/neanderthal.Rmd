@@ -1,5 +1,5 @@
 ---
-title: "Neanderthal habitat during the Last Interglacial: a weighted GAM ensemble"
+title: "neanderthal"
 output:
   rmarkdown::html_document:
     toc: true

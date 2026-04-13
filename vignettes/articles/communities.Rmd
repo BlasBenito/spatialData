@@ -1,5 +1,5 @@
 ---
-title: "Plant community distribution in Sierra Nevada: multi-class classification under climate change"
+title: "communities"
 output:
   rmarkdown::html_document:
     toc: true

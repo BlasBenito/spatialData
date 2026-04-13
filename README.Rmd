@@ -44,7 +44,7 @@ All datasets are loaded lazily via `data()`. Most are `sf` data frames with poin
 |:--------|:------------|:--------------|:---------------|-----:|----------:|-----------:|:----|:---------|
 | [`andalusia`](https://blasbenito.github.io/spatialData/articles/andalusia.html) | Plant presences and environmental predictors | Andalusia, Spain | 2000 - 2010 | 46,465 | 2 | 20 | EPSG:25830 | POINT |
 | [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | Plant community presence and climate predictors | Sierra Nevada, SE Spain | 2009 | 7,300 | 6 | 9 | EPSG:25830 | POINT |
-| [`interaction`](https://blasbenito.github.io/spatialData/articles/interaction.html) | Butterfly and host plant presence and environmental predictors | Sierra Nevada, SE Spain | 2014 | 1,000 | 3 | 10 | - | - |
+| [`interaction`](https://blasbenito.github.io/spatialData/articles/interaction.html) | Butterfly and host plant presence and environmental predictors | Sierra Nevada, SE Spain | 2014 | 1,000 | 3 | 10 | EPSG:25830 | POINT|
 | [`linaria`](https://blasbenito.github.io/spatialData/articles/linaria.html) | *Linaria nigricans* and greenhouse records with environmental predictors | Eastern Andalusia, Spain | | 7,386 | 2 | 20 | EPSG:25830 | POINT |
 | [`neanderthal`](https://blasbenito.github.io/spatialData/articles/neanderthal.html) | Neanderthal presence/absence and paleoclimate predictors | Europe | ~120,000 BP (MIS 5e) | 245 | 1 | 25 | EPSG:4326 | POINT |
 | [`plantae`](https://blasbenito.github.io/spatialData/articles/plantae.html) | Plant diversity of the global ecoregions | Global | 2020 | 662 | 53 | 84 | EPSG:4326 | POINT (centroids) |
@@ -83,7 +83,7 @@ The license of `spatialData` requires the following citation:
 citation("spatialData")
 ```
 
-Each dataset also has its own sources; when using individual datasets, please cite them as appropriate:
+Several datasets were sourced from research paper and require their own citations as well:
 
 ### **`andalusia`**
 
@@ -99,7 +99,7 @@ Each dataset also has its own sources; when using individual datasets, please ci
 
 ### **`linaria`**
 
-- Benito, B.M., Martínez-Ortega, M.M., Munoz, L.M., Lorite, J. & Penas, J. (2009). Assessing extinction-risk of endangered plants using species distribution models: a case study of habitat depletion caused by the spread of greenhouses. *Biodiversity and Conservation*, 18(9), 2509–2520. <https://doi.org/10.1007/s10531-009-9706-6>
+- Benito, B.M., Martínez-Ortega, M.M., Munoz, L.M., Lorite, J. & Penas, J. (2009). Assessing extinction-risk of endangered plants using species distribution models: a case study of habitat depletion caused by the spread of greenhouses. *Biodiversity and Conservation*, 18(9), 2509–2520. <https://doi.org/10.1007/s10531-009-9604-8>
 
 - Peñas, J., Benito, B., Lorite, J., et al. (2011). Habitat fragmentation in arid zones: a case study of *Linaria nigricans* under land use changes (SE Spain). *Environmental Management*, 48, 168–176. <https://doi.org/10.1007/s00267-011-9663-y>
 
@@ -113,21 +113,13 @@ Each dataset also has its own sources; when using individual datasets, please ci
 
 - Maestre, F.T., Benito, B.M., Berdugo, M., et al. (2021). Biogeography of global drylands. *New Phytologist*, 231(2), 540–558. <https://doi.org/10.1111/nph.17398>
 
-### **`quercus`**
-
-- GBIF — Global Biodiversity Information Facility <https://www.gbif.org/>
-
-- Fick, S.E. & Hijmans, R.J. (2017). WorldClim 2: new 1-km spatial resolution climate surfaces for global land areas. *International Journal of Climatology*, 37(12), 4302–4315. <https://doi.org/10.1002/joc.5086>
-
 ### **`trees`**
 
 - Benito, B.M., Cayuela, L., & Albuquerque, F.S. (2013). The impact of modelling choices in the predictive performance of richness maps derived from species-distribution models. *Methods in Ecology and Evolution*, 4(4), 327–335. <https://doi.org/10.1111/2041-210X.12022>
 
 - Cayuela, L., Gálvez-Bravo, L., Pérez Pérez, R., de Albuquerque, F.S., Golicher, D.J., Zahawi, R.A., et al. (2012). The Tree Biodiversity Network (BIOTREE-NET): prospects for biodiversity research and conservation in the Neotropics. *Biodiversity & Ecology*, 4, 211–224. <https://doi.org/10.7809/b-e.00078>
 
-### **`vi`**
 
-- Copernicus Land Monitoring Service (2019). Normalised Difference Vegetation Index Statistics (Long Term 1999–2019), raster 1 km, global, version 3. European Commission, Joint Research Centre. <https://doi.org/10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda>
 
 
 

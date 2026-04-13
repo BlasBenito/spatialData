@@ -146,37 +146,37 @@ An sf data frame with 9265 rows (locations) and 64 columns:
 \source{
 \strong{Response variables (NDVI):}
 \itemize{
-\item Copernicus Land Monitoring Service. (2019). Normalised Difference Vegetation Index Statistics (Long Term 1999-2019), raster 1 km, global, version 3. European Commission, Joint Research Centre. \url{https://doi.org/10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda}
+\item Copernicus Land Monitoring Service. (2019). Normalised Difference Vegetation Index Statistics (Long Term 1999-2019), raster 1 km, global, version 3. European Commission, Joint Research Centre. \doi{10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda}
 }
 
 \strong{Climate classification:}
 \itemize{
-\item Beck, H.E., et al. (2018). Present and future Koppen-Geiger climate classification maps at 1-km resolution. \emph{Scientific Data}, 5, 180214. \url{https://doi.org/10.1038/sdata.2018.214}
+\item Beck, H.E., et al. (2018). Present and future Koppen-Geiger climate classification maps at 1-km resolution. \emph{Scientific Data}, 5, 180214. \doi{10.1038/sdata.2018.214}
 }
 
 \strong{Soil water index:}
 \itemize{
-\item Copernicus Land Monitoring Service: Soil Water Index. \url{https://doi.org/10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda}
+\item Copernicus Land Monitoring Service: Soil Water Index. \doi{10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda}
 }
 
 \strong{Climate predictors (temperature, rainfall, solar radiation, growing season, evapotranspiration, cloud cover, humidity):}
 \itemize{
-\item Brun, P., Zimmermann, N.E., Hari, C., Pellissier, L., & Karger, D.N. (2022). CHELSA-BIOCLIM+ A novel set of global climate-related predictors at kilometre-resolution. EnviDat. \url{https://doi.org/10.16904/envidat.332}
+\item Brun, P., Zimmermann, N.E., Hari, C., Pellissier, L., & Karger, D.N. (2022). CHELSA-BIOCLIM+ A novel set of global climate-related predictors at kilometre-resolution. EnviDat. \doi{10.16904/envidat.332}
 }
 
 \strong{Soil type and properties:}
 \itemize{
-\item Hengl, T., et al. (2017). SoilGrids250m: Global gridded soil information based on machine learning. \emph{PLOS ONE}, 12(2), e0169748. \url{https://doi.org/10.1371/journal.pone.0169748}
+\item Hengl, T., et al. (2017). SoilGrids250m: Global gridded soil information based on machine learning. \emph{PLOS ONE}, 12(2), e0169748. \doi{10.1371/journal.pone.0169748}
 }
 
 \strong{Soil temperature:}
 \itemize{
-\item Wan, Z., Hook, S., & Hulley, G. (2015). MOD11A2 MODIS/Terra Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006. NASA EOSDIS LP DAAC. \url{https://doi.org/10.5067/MODIS/MOD11A2.006}
+\item Wan, Z., Hook, S., & Hulley, G. (2015). MOD11A2 MODIS/Terra Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD11A2.006}
 }
 
 \strong{Ecoregions and biogeography:}
 \itemize{
-\item Dinerstein, E., et al. (2017). An Ecoregion-Based Approach to Protecting Half the Terrestrial Realm. \emph{BioScience}, 67(6), 534-545. \url{https://doi.org/10.1093/biosci/bix014}
+\item Dinerstein, E., et al. (2017). An Ecoregion-Based Approach to Protecting Half the Terrestrial Realm. \emph{BioScience}, 67(6), 534-545. \doi{10.1093/biosci/bix014}
 }
 
 \strong{Elevation and topography:}
@@ -186,7 +186,7 @@ An sf data frame with 9265 rows (locations) and 64 columns:
 
 \strong{Aridity index:}
 \itemize{
-\item Zomer, R.J., Xu, J., & Trabucco, A. (2022). Version 3 of the Global Aridity Index and Potential Evapotranspiration Database. \emph{Scientific Data}, 9, 409. \url{https://doi.org/10.1038/s41597-022-01493-1}
+\item Zomer, R.J., Xu, J., & Trabucco, A. (2022). Version 3 of the Global Aridity Index and Potential Evapotranspiration Database. \emph{Scientific Data}, 9, 409. \doi{10.1038/s41597-022-01493-1}
 }
 
 \strong{Country, continent, region, and subregion:}

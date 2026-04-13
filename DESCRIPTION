@@ -3,10 +3,8 @@ Title: Spatial Datasets for Ecological Modeling
 Version: 1.0.0
 Authors@R:
     person("Blas M.", "Benito", , "blasbenito@gmail.com", role = c("aut", "cre"))
-Description: Provides nine spatial datasets for ecological and environmental
-    modelling, covering species distribution modelling, biodiversity analysis,
-    and climate-change projections. Datasets include Neanderthal presence records with Last Interglacial paleoclimate predictors; global NDVI records with environmental predictors; European oak species occurrences; plant diversity metrics for global ecoregions; tree species richness across the Americas; plant community records from the Sierra Nevada (Spain) with future climate scenarios; butterfly-plant interaction data from the Sierra Nevada; threatened plant species occurrences in Andalusia; and presence records of the endemic plant Linaria nigricans with greenhouse land-use data. All datasets include pre-processed environmental predictors ready for statistical modelling.
-URL: https://blasbenito.github.io/spatialData
+Description: Provides nine spatial datasets for ecological modelling, covering species distribution modelling, biodiversity analysis, and climate-change projections. Datasets include Neanderthal presence records; global NDVI and environmental predictors; European oak species occurrences; Global plant diversity metrics for the World's Ecoregions; tree species richness across the Americas; plant community records from the Sierra Nevada (Spain) with future climate scenarios; butterfly-plant interaction data from the Sierra Nevada (Spain); plant species occurrences in Andalusia (Spain); and presence records of the endemic plant Linaria nigricans with greenhouse land-use data. All datasets include pre-processed environmental predictors ready for statistical modelling.
+URL: https://blasbenito.github.io/spatialData/
 BugReports: https://github.com/BlasBenito/spatialData/issues
 License: CC BY 4.0
 Encoding: UTF-8

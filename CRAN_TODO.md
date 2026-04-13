@@ -4,11 +4,7 @@ Items you must complete before submitting spatialData to CRAN.
 
 ---
 
-## Blocking (must fix before submission)
 
-- [ ] **Provide real Zenodo DOI** — `inst/CITATION` currently has
-  `doi = "10.5281/zenodo.XXXXXXX"`. Deposit the package on Zenodo
-  (https://zenodo.org), then replace the placeholder with the real DOI.
 
 ## Checks to run and record in `cran-comments.md`
 

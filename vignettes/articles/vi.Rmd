@@ -1,5 +1,5 @@
 ---
-title: "Global vegetation index: modelling NDVI across climates and biomes"
+title: "vi"
 output:
   rmarkdown::html_document:
     toc: true

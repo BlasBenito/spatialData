@@ -41,7 +41,7 @@
 #' **Species occurrences:**
 #' \itemize{
 #'   \item Butterfly (\emph{Agriades zullichi}) and host plant (\emph{Androsace vitaliana}) field records collected in the Sierra Nevada mountain range (SE Spain).
-#'   \item Barea-Azcón, J.M., Benito, B.M., Olivares, F.J., Ruiz, H., Martín, J., García, A.L., & López, R. (2014). Distribution and conservation of the relict interaction between the butterfly \emph{Agriades zullichi} and its larval foodplant (\emph{Androsace vitaliana nevadensis}). \emph{Biodiversity and Conservation}, 23(4), 927–944. \url{https://doi.org/10.1007/s10531-014-0643-4}
+#'   \item Barea-Azcón, J.M., Benito, B.M., Olivares, F.J., Ruiz, H., Martín, J., García, A.L., & López, R. (2014). Distribution and conservation of the relict interaction between the butterfly \emph{Agriades zullichi} and its larval foodplant (\emph{Androsace vitaliana nevadensis}). \emph{Biodiversity and Conservation}, 23(4), 927–944. \doi{10.1007/s10531-014-0643-4}
 #' }
 #'
 #' **Remote sensing:**
@@ -51,7 +51,7 @@
 #'
 #' **Climate and topographic variables:**
 #' \itemize{
-#'   \item Benito, B., Lorite, J., & Peñas, J. (2011). Simulating potential effects of climatic warming on altitudinal patterns of key species in Mediterranean-alpine ecosystems. \emph{Climatic Change}, 108, 471–483. \url{https://doi.org/10.1007/s10584-010-0015-3}
+#'   \item Benito, B., Lorite, J., & Peñas, J. (2011). Simulating potential effects of climatic warming on altitudinal patterns of key species in Mediterranean-alpine ecosystems. \emph{Climatic Change}, 108, 471–483. \doi{10.1007/s10584-010-0015-3}
 #' }
 #'
 #' @family interaction

@@ -1,5 +1,5 @@
 ---
-title: "Global plant diversity: spatial random forests across 662 ecoregions"
+title: "plantae"
 output:
   rmarkdown::html_document:
     toc: true

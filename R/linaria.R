@@ -73,11 +73,11 @@
 #'   Assessing extinction-risk of endangered plants using species distribution models: a case
 #'   study of habitat depletion caused by the spread of greenhouses.
 #'   \emph{Biodiversity and Conservation}, 18(9), 2509--2520.
-#'   \url{https://doi.org/10.1007/s10531-009-9706-6}
+#'   \doi{10.1007/s10531-009-9604-8}
 #'   \item Peñas, J., Benito, B., Lorite, J., et al. (2011). Habitat fragmentation in arid
 #'   zones: a case study of \emph{Linaria nigricans} under land use changes (SE Spain).
 #'   \emph{Environmental Management}, 48, 168--176.
-#'   \url{https://doi.org/10.1007/s00267-011-9663-y}
+#'   \doi{10.1007/s00267-011-9663-y}
 #' }
 #'
 #' **Species occurrence data:**

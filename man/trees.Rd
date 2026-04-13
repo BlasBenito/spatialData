@@ -115,38 +115,38 @@ An sf data frame with 3373 rows (hexagonal cells) and 53 columns:
 \source{
 \strong{Dataset publication:}
 \itemize{
-\item Benito, B.M., Cayuela, L., & Albuquerque, F.S. (2013). The impact of modelling choices in the predictive performance of richness maps derived from species-distribution models: Guidelines to build better diversity models. \emph{Methods in Ecology and Evolution}, 4(4), 327--335. \url{https://doi.org/10.1111/2041-210X.12022}
+\item Benito, B.M., Cayuela, L., & Albuquerque, F.S. (2013). The impact of modelling choices in the predictive performance of richness maps derived from species-distribution models: Guidelines to build better diversity models. \emph{Methods in Ecology and Evolution}, 4(4), 327--335. \doi{10.1111/2041-210X.12022}
 }
 
 \strong{Response variable (tree species richness):}
 \itemize{
 \item GBIF: Global Biodiversity Information Facility. \url{https://www.gbif.org}
-\item Cayuela, L., Gálvez-Bravo, L., Pérez Pérez, R., de Albuquerque, F.S., Golicher, D.J., Zahawi, R.A., et al. (2012). The Tree Biodiversity Network (BIOTREE-NET): prospects for biodiversity research and conservation in the Neotropics. \emph{Biodiversity & Ecology}, 4, 211--224. \url{https://doi.org/10.7809/b-e.00078}
+\item Cayuela, L., Gálvez-Bravo, L., Pérez Pérez, R., de Albuquerque, F.S., Golicher, D.J., Zahawi, R.A., et al. (2012). The Tree Biodiversity Network (BIOTREE-NET): prospects for biodiversity research and conservation in the Neotropics. \emph{Biodiversity & Ecology}, 4, 211--224. \doi{10.7809/b-e.00078}
 }
 
 \strong{Climate predictors (temperature, precipitation, air humidity, cloud cover, evapotranspiration):}
 \itemize{
-\item Brun, P., Zimmermann, N.E., Hari, C., Pellissier, L., & Karger, D.N. (2022). CHELSA-BIOCLIM+ A novel set of global climate-related predictors at kilometre-resolution. EnviDat. \url{https://doi.org/10.16904/envidat.332}
+\item Brun, P., Zimmermann, N.E., Hari, C., Pellissier, L., & Karger, D.N. (2022). CHELSA-BIOCLIM+ A novel set of global climate-related predictors at kilometre-resolution. EnviDat. \doi{10.16904/envidat.332}
 }
 
 \strong{Aridity:}
 \itemize{
-\item Zomer, R.J., Xu, J., & Trabucco, A. (2022). Version 3 of the Global Aridity Index and Potential Evapotranspiration Database. \emph{Scientific Data}, 9, 409. \url{https://doi.org/10.1038/s41597-022-01493-1}
+\item Zomer, R.J., Xu, J., & Trabucco, A. (2022). Version 3 of the Global Aridity Index and Potential Evapotranspiration Database. \emph{Scientific Data}, 9, 409. \doi{10.1038/s41597-022-01493-1}
 }
 
 \strong{Soil properties:}
 \itemize{
-\item Hengl, T., et al. (2017). SoilGrids250m: Global gridded soil information based on machine learning. \emph{PLOS ONE}, 12(2), e0169748. \url{https://doi.org/10.1371/journal.pone.0169748}
+\item Hengl, T., et al. (2017). SoilGrids250m: Global gridded soil information based on machine learning. \emph{PLOS ONE}, 12(2), e0169748. \doi{10.1371/journal.pone.0169748}
 }
 
 \strong{Soil temperature:}
 \itemize{
-\item Wan, Z., Hook, S., & Hulley, G. (2015). MOD11A2 MODIS/Terra Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006. NASA EOSDIS LP DAAC. \url{https://doi.org/10.5067/MODIS/MOD11A2.006}
+\item Wan, Z., Hook, S., & Hulley, G. (2015). MOD11A2 MODIS/Terra Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD11A2.006}
 }
 
 \strong{NDVI:}
 \itemize{
-\item Copernicus Land Monitoring Service. (2019). Normalised Difference Vegetation Index Statistics (Long Term 1999-2019), raster 1 km, global, version 3. European Commission, Joint Research Centre. \url{https://doi.org/10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda}
+\item Copernicus Land Monitoring Service. (2019). Normalised Difference Vegetation Index Statistics (Long Term 1999-2019), raster 1 km, global, version 3. European Commission, Joint Research Centre. \doi{10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda}
 }
 
 \strong{Elevation and geography:}

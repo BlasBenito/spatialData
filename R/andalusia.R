@@ -17,7 +17,7 @@
 #' @source
 #' **Published study, data preparation, and species occurrence data:**
 #' \itemize{
-#'   \item Benito, B.M., Lorite, J., Pérez-Pérez, R., Gómez-Aparicio, L., & Peñas, J. (2014). Forecasting plant range collapse in a mediterranean hotspot: when dispersal uncertainties matter. \emph{Diversity and Distributions}, 20(1), 72--83. \url{https://doi.org/10.1111/ddi.12148}
+#'   \item Benito, B.M., Lorite, J., Pérez-Pérez, R., Gómez-Aparicio, L., & Peñas, J. (2014). Forecasting plant range collapse in a mediterranean hotspot: when dispersal uncertainties matter. \emph{Diversity and Distributions}, 20(1), 72--83. \doi{10.1111/ddi.12148}
 #' }
 #'
 #' **Landsat imagery:**

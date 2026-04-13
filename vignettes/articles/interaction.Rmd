@@ -1,5 +1,5 @@
 ---
-title: "Biotic interactions: modelling species dependencies with sequential SDMs"
+title: "interaction"
 output:
   rmarkdown::html_document:
     toc: true
@@ -376,7 +376,7 @@ The divergent palette shows three distinct zones:
 
 The `interaction` dataset illustrates a two-stage species distribution modelling workflow in which the output of one model becomes a predictor for another. By first modelling the host plant *Androsace vitaliana* from abiotic predictors and then using those predictions as a biotic input for the butterfly *Agriades zullichi*, we showed how obligate ecological dependencies can be encoded in a sequential modelling framework.
 
-The resulting suitability maps and difference raster make `interaction` well suited for tutorials on biotic interactions, predictor engineering, spatial cross-validation, and divergent palette visualisation in R.
+The resulting suitability maps and difference raster make `interaction` well suited for tutorials on biotic interactions, predictor engineering, spatial cross-validation, and divergent palette visualization in R.
 
 ## References
 

@@ -1,5 +1,5 @@
 ---
-title: "Mesoamerican tree richness across the Americas: conditional inference trees for biodiversity patterns"
+title: "trees"
 output:
   rmarkdown::html_document:
     toc: true

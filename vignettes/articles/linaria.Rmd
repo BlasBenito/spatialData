@@ -1,5 +1,5 @@
 ---
-title: "Linaria nigricans distribution and greenhouse expansion in Andalusia"
+title: "linaria"
 output:
   rmarkdown::html_document:
     toc: true

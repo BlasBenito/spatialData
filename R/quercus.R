@@ -93,17 +93,17 @@
 #'
 #' **Bioclimatic variables and solar radiation:**
 #' \itemize{
-#'   \item Fick, S.E. & Hijmans, R.J. (2017). WorldClim 2: new 1-km spatial resolution climate surfaces for global land areas. \emph{International Journal of Climatology}, 37(12), 4302-4315. \url{https://doi.org/10.1002/joc.5086}
+#'   \item Fick, S.E. & Hijmans, R.J. (2017). WorldClim 2: new 1-km spatial resolution climate surfaces for global land areas. \emph{International Journal of Climatology}, 37(12), 4302-4315. \doi{10.1002/joc.5086}
 #' }
 #'
 #' **NDVI:**
 #' \itemize{
-#'   \item Didan, K. (2015). MOD13A2 MODIS/Terra Vegetation Indices 16-Day L3 Global 1km SIN Grid V006. NASA EOSDIS LP DAAC. \url{https://doi.org/10.5067/MODIS/MOD13A2.006}
+#'   \item Didan, K. (2015). MOD13A2 MODIS/Terra Vegetation Indices 16-Day L3 Global 1km SIN Grid V006. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD13A2.006}
 #' }
 #'
 #' **Land cover:**
 #' \itemize{
-#'   \item DiMiceli, C., et al. (2015). MOD44B MODIS/Terra Vegetation Continuous Fields Yearly L3 Global 250m SIN Grid V006. NASA EOSDIS LP DAAC. \url{https://doi.org/10.5067/MODIS/MOD44B.006}
+#'   \item DiMiceli, C., et al. (2015). MOD44B MODIS/Terra Vegetation Continuous Fields Yearly L3 Global 250m SIN Grid V006. NASA EOSDIS LP DAAC. \doi{10.5067/MODIS/MOD44B.006}
 #' }
 #'
 #' **Elevation and topography:**
@@ -113,7 +113,7 @@
 #'
 #' **Human footprint:**
 #' \itemize{
-#'   \item Venter, O., et al. (2016). Global terrestrial Human Footprint maps for 1993 and 2009. \emph{Scientific Data}, 3, 160067. \url{https://doi.org/10.1038/sdata.2016.67}
+#'   \item Venter, O., et al. (2016). Global terrestrial Human Footprint maps for 1993 and 2009. \emph{Scientific Data}, 3, 160067. \doi{10.1038/sdata.2016.67}
 #' }
 #' @family quercus
 "quercus"

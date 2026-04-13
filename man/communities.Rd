@@ -47,7 +47,7 @@ An sf data frame with 7,300 rows and 16 columns:
 }
 \source{
 \itemize{
-\item Benito, B., Lorite, J., & Peñas, J. (2011). Simulating potential effects of climatic warming on altitudinal patterns of key species in Mediterranean-alpine ecosystems. \emph{Climatic Change}, 108, 471–483. \url{https://doi.org/10.1007/s10584-010-0015-3}
+\item Benito, B., Lorite, J., & Peñas, J. (2011). Simulating potential effects of climatic warming on altitudinal patterns of key species in Mediterranean-alpine ecosystems. \emph{Climatic Change}, 108, 471–483. \doi{10.1007/s10584-010-0015-3}
 }
 }
 \usage{
