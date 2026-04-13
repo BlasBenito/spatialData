@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="spatialData: Cool Spatial Datasets">
-<meta name="description" content="Provides nine spatial datasets for ecological and environmental modelling, covering species distribution modelling, biodiversity analysis, and climate-change projections. Datasets include Neanderthal presence records with Last Interglacial paleoclimate predictors; global NDVI records with environmental predictors; European oak species occurrences; plant diversity metrics for global ecoregions; tree species richness across the Americas; plant community records from the Sierra Nevada (Spain) with future climate scenarios; butterfly-plant interaction data from the Sierra Nevada; threatened plant species occurrences in Andalusia; and presence records of the endemic plant Linaria nigricans with greenhouse land-use data. All datasets include pre-processed environmental predictors ready for statistical modelling.">
-<meta property="og:description" content="Provides nine spatial datasets for ecological and environmental modelling, covering species distribution modelling, biodiversity analysis, and climate-change projections. Datasets include Neanderthal presence records with Last Interglacial paleoclimate predictors; global NDVI records with environmental predictors; European oak species occurrences; plant diversity metrics for global ecoregions; tree species richness across the Americas; plant community records from the Sierra Nevada (Spain) with future climate scenarios; butterfly-plant interaction data from the Sierra Nevada; threatened plant species occurrences in Andalusia; and presence records of the endemic plant Linaria nigricans with greenhouse land-use data. All datasets include pre-processed environmental predictors ready for statistical modelling.">
+<meta name="description" content="Provides nine spatial datasets for ecological modelling, covering species distribution modelling, biodiversity analysis, and climate-change projections. Datasets include Neanderthal presence records; global NDVI and environmental predictors; European oak species occurrences; Global plant diversity metrics for the World's Ecoregions; tree species richness across the Americas; plant community records from the Sierra Nevada (Spain) with future climate scenarios; butterfly-plant interaction data from the Sierra Nevada (Spain); plant species occurrences in Andalusia (Spain); and presence records of the endemic plant Linaria nigricans with greenhouse land-use data. All datasets include pre-processed environmental predictors ready for statistical modelling.">
+<meta property="og:description" content="Provides nine spatial datasets for ecological modelling, covering species distribution modelling, biodiversity analysis, and climate-change projections. Datasets include Neanderthal presence records; global NDVI and environmental predictors; European oak species occurrences; Global plant diversity metrics for the World's Ecoregions; tree species richness across the Americas; plant community records from the Sierra Nevada (Spain) with future climate scenarios; butterfly-plant interaction data from the Sierra Nevada (Spain); plant species occurrences in Andalusia (Spain); and presence records of the endemic plant Linaria nigricans with greenhouse land-use data. All datasets include pre-processed environmental predictors ready for statistical modelling.">
 <link rel="stylesheet" href="extra.css">
 </head>
 <body>
@@ -38,15 +38,15 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
-    <li><a class="dropdown-item" href="articles/andalusia.html">Presence records of 90 plant species in Andalusia</a></li>
-    <li><a class="dropdown-item" href="articles/communities.html">Plant community distribution in Sierra Nevada: multi-class classification under climate change</a></li>
-    <li><a class="dropdown-item" href="articles/interaction.html">Biotic interactions: modelling species dependencies with sequential SDMs</a></li>
-    <li><a class="dropdown-item" href="articles/linaria.html">Linaria nigricans distribution and greenhouse expansion in Andalusia</a></li>
-    <li><a class="dropdown-item" href="articles/neanderthal.html">Neanderthal habitat during the Last Interglacial: a weighted GAM ensemble</a></li>
-    <li><a class="dropdown-item" href="articles/plantae.html">Global plant diversity: spatial random forests across 662 ecoregions</a></li>
-    <li><a class="dropdown-item" href="articles/quercus.html">European oak distribution: multi-species niche modelling with recursive partition trees</a></li>
-    <li><a class="dropdown-item" href="articles/trees.html">Mesoamerican tree richness across the Americas: conditional inference trees for biodiversity patterns</a></li>
-    <li><a class="dropdown-item" href="articles/vi.html">Global vegetation index: modelling NDVI across climates and biomes</a></li>
+    <li><a class="dropdown-item" href="articles/andalusia.html">andalusia</a></li>
+    <li><a class="dropdown-item" href="articles/communities.html">communities</a></li>
+    <li><a class="dropdown-item" href="articles/interaction.html">interaction</a></li>
+    <li><a class="dropdown-item" href="articles/linaria.html">linaria</a></li>
+    <li><a class="dropdown-item" href="articles/neanderthal.html">neanderthal</a></li>
+    <li><a class="dropdown-item" href="articles/plantae.html">plantae</a></li>
+    <li><a class="dropdown-item" href="articles/quercus.html">quercus</a></li>
+    <li><a class="dropdown-item" href="articles/trees.html">trees</a></li>
+    <li><a class="dropdown-item" href="articles/vi.html">vi</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -86,17 +86,17 @@
 <h2 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a>
 </h2>
 <p>All datasets are loaded lazily via <code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code>. Most are <code>sf</code> data frames with point or polygon geometries; <code>interaction</code> is a plain data frame.</p>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
-<col width="11%">
-<col width="11%">
-<col width="11%">
-<col width="11%">
-<col width="11%">
-<col width="11%">
-<col width="11%">
-<col width="11%">
-<col width="11%">
+<col width="31%">
+<col width="27%">
+<col width="9%">
+<col width="8%">
+<col width="2%">
+<col width="4%">
+<col width="4%">
+<col width="4%">
+<col width="7%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Dataset</th>
@@ -140,8 +140,8 @@
 <td align="right">1,000</td>
 <td align="right">3</td>
 <td align="right">10</td>
-<td align="left">-</td>
-<td align="left">-</td>
+<td align="left">EPSG:25830</td>
+<td align="left">POINT</td>
 </tr>
 <tr class="even">
 <td align="left"><a href="https://blasbenito.github.io/spatialData/articles/linaria.html"><code>linaria</code></a></td>
@@ -219,13 +219,13 @@
 <p>Several datasets ship with companion download functions that retrieve larger or complementary files from <a href="https://github.com/BlasBenito/spatialDataExtra" class="external-link">spatialDataExtra</a>.</p>
 <table style="width:100%;" class="table">
 <colgroup>
-<col width="14%">
-<col width="14%">
-<col width="14%">
-<col width="14%">
-<col width="14%">
-<col width="14%">
-<col width="14%">
+<col width="38%">
+<col width="12%">
+<col width="23%">
+<col width="5%">
+<col width="8%">
+<col width="6%">
+<col width="5%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Dataset</th>
@@ -353,9 +353,9 @@
 <span><span class="co">#&gt; To cite package 'spatialData' in publications use:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Benito B (2025). "spatialData: Spatial Datasets for Ecological</span></span>
-<span><span class="co">#&gt;   Modeling." doi:10.5281/zenodo.XXXXXXX</span></span>
-<span><span class="co">#&gt;   &lt;https://doi.org/10.5281/zenodo.XXXXXXX&gt;, R package version 0.0.1,</span></span>
-<span><span class="co">#&gt;   &lt;https://blasbenito.github.io/spatialData&gt;.</span></span>
+<span><span class="co">#&gt;   Modeling." doi:10.5281/zenodo.19508673</span></span>
+<span><span class="co">#&gt;   &lt;https://doi.org/10.5281/zenodo.19508673&gt;, R package version 1.0.0,</span></span>
+<span><span class="co">#&gt;   &lt;https://blasbenito.github.io/spatialData/&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -363,11 +363,11 @@
 <span><span class="co">#&gt;     title = {spatialData: Spatial Datasets for Ecological Modeling},</span></span>
 <span><span class="co">#&gt;     author = {Blas M. Benito},</span></span>
 <span><span class="co">#&gt;     year = {2025},</span></span>
-<span><span class="co">#&gt;     note = {R package version 0.0.1},</span></span>
-<span><span class="co">#&gt;     url = {https://blasbenito.github.io/spatialData},</span></span>
-<span><span class="co">#&gt;     doi = {10.5281/zenodo.XXXXXXX},</span></span>
+<span><span class="co">#&gt;     note = {R package version 1.0.0},</span></span>
+<span><span class="co">#&gt;     url = {https://blasbenito.github.io/spatialData/},</span></span>
+<span><span class="co">#&gt;     doi = {10.5281/zenodo.19508673},</span></span>
 <span><span class="co">#&gt;   }</span></span></code></pre></div>
-<p>Each dataset also has its own sources; when using individual datasets, please cite them as appropriate:</p>
+<p>Several datasets were sourced from research paper and require their own citations as well:</p>
 <div class="section level3">
 <h3 id="andalusia">
 <strong><code>andalusia</code></strong><a class="anchor" aria-label="anchor" href="#andalusia"></a>
@@ -400,7 +400,7 @@
 <strong><code>linaria</code></strong><a class="anchor" aria-label="anchor" href="#linaria"></a>
 </h3>
 <ul>
-<li><p>Benito, B.M., Martínez-Ortega, M.M., Munoz, L.M., Lorite, J. &amp; Penas, J. (2009). Assessing extinction-risk of endangered plants using species distribution models: a case study of habitat depletion caused by the spread of greenhouses. <em>Biodiversity and Conservation</em>, 18(9), 2509–2520. <a href="https://doi.org/10.1007/s10531-009-9706-6" class="external-link uri">https://doi.org/10.1007/s10531-009-9706-6</a></p></li>
+<li><p>Benito, B.M., Martínez-Ortega, M.M., Munoz, L.M., Lorite, J. &amp; Penas, J. (2009). Assessing extinction-risk of endangered plants using species distribution models: a case study of habitat depletion caused by the spread of greenhouses. <em>Biodiversity and Conservation</em>, 18(9), 2509–2520. <a href="https://doi.org/10.1007/s10531-009-9604-8" class="external-link uri">https://doi.org/10.1007/s10531-009-9604-8</a></p></li>
 <li><p>Peñas, J., Benito, B., Lorite, J., et al. (2011). Habitat fragmentation in arid zones: a case study of <em>Linaria nigricans</em> under land use changes (SE Spain). <em>Environmental Management</em>, 48, 168–176. <a href="https://doi.org/10.1007/s00267-011-9663-y" class="external-link uri">https://doi.org/10.1007/s00267-011-9663-y</a></p></li>
 </ul>
 </div>
@@ -423,30 +423,12 @@
 </ul>
 </div>
 <div class="section level3">
-<h3 id="quercus">
-<strong><code>quercus</code></strong><a class="anchor" aria-label="anchor" href="#quercus"></a>
-</h3>
-<ul>
-<li><p>GBIF — Global Biodiversity Information Facility <a href="https://www.gbif.org/" class="external-link uri">https://www.gbif.org/</a></p></li>
-<li><p>Fick, S.E. &amp; Hijmans, R.J. (2017). WorldClim 2: new 1-km spatial resolution climate surfaces for global land areas. <em>International Journal of Climatology</em>, 37(12), 4302–4315. <a href="https://doi.org/10.1002/joc.5086" class="external-link uri">https://doi.org/10.1002/joc.5086</a></p></li>
-</ul>
-</div>
-<div class="section level3">
 <h3 id="trees">
 <strong><code>trees</code></strong><a class="anchor" aria-label="anchor" href="#trees"></a>
 </h3>
 <ul>
 <li><p>Benito, B.M., Cayuela, L., &amp; Albuquerque, F.S. (2013). The impact of modelling choices in the predictive performance of richness maps derived from species-distribution models. <em>Methods in Ecology and Evolution</em>, 4(4), 327–335. <a href="https://doi.org/10.1111/2041-210X.12022" class="external-link uri">https://doi.org/10.1111/2041-210X.12022</a></p></li>
 <li><p>Cayuela, L., Gálvez-Bravo, L., Pérez Pérez, R., de Albuquerque, F.S., Golicher, D.J., Zahawi, R.A., et al. (2012). The Tree Biodiversity Network (BIOTREE-NET): prospects for biodiversity research and conservation in the Neotropics. <em>Biodiversity &amp; Ecology</em>, 4, 211–224. <a href="https://doi.org/10.7809/b-e.00078" class="external-link uri">https://doi.org/10.7809/b-e.00078</a></p></li>
-</ul>
-</div>
-<div class="section level3">
-<h3 id="vi">
-<strong><code>vi</code></strong><a class="anchor" aria-label="anchor" href="#vi"></a>
-</h3>
-<ul>
-<li>Copernicus Land Monitoring Service (2019). Normalised Difference Vegetation Index Statistics (Long Term 1999–2019), raster 1 km, global, version 3. European Commission, Joint Research Centre. <a href="https://doi.org/10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda" class="external-link uri">https://doi.org/10.2909/290e81fb-4c84-42ad-ae12-f663312b0eda</a>
-</li>
 </ul>
 </div>
 </div>

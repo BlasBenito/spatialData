@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Biotic interactions: modelling species dependencies with sequential SDMs • spatialData</title>
+<title>interaction • spatialData</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Biotic interactions: modelling species dependencies with sequential SDMs">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="interaction">
 <link rel="stylesheet" href="extra.css">
 </head>
 <body>
@@ -36,15 +36,15 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
-    <li><a class="dropdown-item" href="../articles/andalusia.html">Presence records of 90 plant species in Andalusia</a></li>
-    <li><a class="dropdown-item" href="../articles/communities.html">Plant community distribution in Sierra Nevada: multi-class classification under climate change</a></li>
-    <li><a class="dropdown-item" href="../articles/interaction.html">Biotic interactions: modelling species dependencies with sequential SDMs</a></li>
-    <li><a class="dropdown-item" href="../articles/linaria.html">Linaria nigricans distribution and greenhouse expansion in Andalusia</a></li>
-    <li><a class="dropdown-item" href="../articles/neanderthal.html">Neanderthal habitat during the Last Interglacial: a weighted GAM ensemble</a></li>
-    <li><a class="dropdown-item" href="../articles/plantae.html">Global plant diversity: spatial random forests across 662 ecoregions</a></li>
-    <li><a class="dropdown-item" href="../articles/quercus.html">European oak distribution: multi-species niche modelling with recursive partition trees</a></li>
-    <li><a class="dropdown-item" href="../articles/trees.html">Mesoamerican tree richness across the Americas: conditional inference trees for biodiversity patterns</a></li>
-    <li><a class="dropdown-item" href="../articles/vi.html">Global vegetation index: modelling NDVI across climates and biomes</a></li>
+    <li><a class="dropdown-item" href="../articles/andalusia.html">andalusia</a></li>
+    <li><a class="dropdown-item" href="../articles/communities.html">communities</a></li>
+    <li><a class="dropdown-item" href="../articles/interaction.html">interaction</a></li>
+    <li><a class="dropdown-item" href="../articles/linaria.html">linaria</a></li>
+    <li><a class="dropdown-item" href="../articles/neanderthal.html">neanderthal</a></li>
+    <li><a class="dropdown-item" href="../articles/plantae.html">plantae</a></li>
+    <li><a class="dropdown-item" href="../articles/quercus.html">quercus</a></li>
+    <li><a class="dropdown-item" href="../articles/trees.html">trees</a></li>
+    <li><a class="dropdown-item" href="../articles/vi.html">vi</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -76,7 +76,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Biotic interactions: modelling species dependencies with sequential SDMs</h1>
+      <h1>interaction</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/BlasBenito/spatialData/blob/main/vignettes/articles/interaction.Rmd" class="external-link"><code>vignettes/articles/interaction.Rmd</code></a></small>
@@ -138,10 +138,10 @@ this tutorial.</p>
 <span><span class="co">#&gt; Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]</span></span>
 <span><span class="co">#&gt; Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease</span></span>
 <span><span class="co">#&gt; Hit:6 https://packages.microsoft.com/repos/azure-cli noble InRelease</span></span>
+<span><span class="co">#&gt; Hit:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease</span></span>
 <span><span class="co">#&gt; Hit:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease</span></span>
 <span><span class="co">#&gt; Hit:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease</span></span>
 <span><span class="co">#&gt; Hit:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease</span></span>
-<span><span class="co">#&gt; Hit:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease</span></span>
 <span><span class="co">#&gt; Reading package lists...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Executing `sudo sh -c apt-get -y install libgdal-dev gdal-bin libgeos-dev libproj-dev libsqlite3-dev libabsl-dev cmake libssl-dev libudunits2-dev make libuv1-dev zlib1g-dev pandoc libpng-dev libicu-dev libfontconfig1-dev libfreetype6-dev libfribidi-dev libharfbuzz-dev texlive libxml2-dev`</span></span>
 <span><span class="co">#&gt; Reading package lists...</span></span>
@@ -168,8 +168,8 @@ this tutorial.</p>
 <span><span class="co">#&gt; libharfbuzz-dev is already the newest version (8.3.0-2build2).</span></span>
 <span><span class="co">#&gt; libxml2-dev is already the newest version (2.9.14+dfsg-1.3ubuntu3.7).</span></span>
 <span><span class="co">#&gt; The following additional packages will be installed:</span></span>
-<span><span class="co">#&gt; dvisvgm fonts-lmodern fonts-texgyre fonts-texgyre-math libgumbo2</span></span>
-<span><span class="co">#&gt;   libkpathsea6 libmujs3 libpotrace0 libptexenc1 libsynctex2 libteckit0</span></span>
+<span><span class="co">#&gt;   dvisvgm fonts-lmodern fonts-texgyre fonts-texgyre-math libgumbo2</span></span>
+<span><span class="co">#&gt; libkpathsea6 libmujs3 libpotrace0 libptexenc1 libsynctex2 libteckit0</span></span>
 <span><span class="co">#&gt;   libtexlua53-5 libwoff1 libzzip-0-13t64 lmodern mupdf-tools tex-gyre</span></span>
 <span><span class="co">#&gt;   texlive-base texlive-binaries texlive-fonts-recommended texlive-latex-base</span></span>
 <span><span class="co">#&gt;   texlive-latex-recommended tipa</span></span>
@@ -178,8 +178,8 @@ this tutorial.</p>
 <span><span class="co">#&gt;   texlive-fonts-recommended-doc texlive-latex-base-doc wp2latex</span></span>
 <span><span class="co">#&gt;   texlive-latex-recommended-doc texlive-luatex texlive-pstricks tipa-doc</span></span>
 <span><span class="co">#&gt; The following NEW packages will be installed:</span></span>
-<span><span class="co">#&gt; dvisvgm fonts-lmodern fonts-texgyre fonts-texgyre-math libgumbo2</span></span>
-<span><span class="co">#&gt;   libkpathsea6 libmujs3 libpotrace0 libptexenc1 libsynctex2 libteckit0</span></span>
+<span><span class="co">#&gt;   dvisvgm fonts-lmodern fonts-texgyre fonts-texgyre-math libgumbo2</span></span>
+<span><span class="co">#&gt; libkpathsea6 libmujs3 libpotrace0 libptexenc1 libsynctex2 libteckit0</span></span>
 <span><span class="co">#&gt;   libtexlua53-5 libwoff1 libzzip-0-13t64 lmodern mupdf-tools tex-gyre texlive</span></span>
 <span><span class="co">#&gt;   texlive-base texlive-binaries texlive-fonts-recommended texlive-latex-base</span></span>
 <span><span class="co">#&gt;   texlive-latex-recommended tipa</span></span>
@@ -212,7 +212,7 @@ this tutorial.</p>
 <span><span class="co">#&gt; Get:24 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 texlive all 2023.20240207-1 [14.0 kB]</span></span>
 <span><span class="co">#&gt; Get:25 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 tipa all 2:1.3-21 [2967 kB]</span></span>
 <span><span class="co">#&gt; Preconfiguring packages ...</span></span>
-<span><span class="co">#&gt; Fetched 131 MB in 3s (46.0 MB/s)</span></span>
+<span><span class="co">#&gt; Fetched 131 MB in 1s (121 MB/s)</span></span>
 <span><span class="co">#&gt; Selecting previously unselected package libkpathsea6:amd64.</span></span>
 <span><span class="co">#&gt; (Reading database ...</span></span>
 <span><span class="co">#&gt; (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%</span></span>
@@ -352,9 +352,9 @@ this tutorial.</p>
 <span><span class="co">#&gt; No containers need to be restarted.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; User sessions running outdated binaries:</span></span>
-<span><span class="co">#&gt; runner @ user manager service: systemd[1115]</span></span>
+<span><span class="co">#&gt; runner @ user manager service: systemd[1194]</span></span>
 <span><span class="co">#&gt; No VM guests are running outdated hypervisor (qemu) binaries on this host.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> 7 pkgs + 126 deps: kept 131 <span style="color: #B2B2B2;">[42.6s]</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> 7 pkgs + 126 deps: kept 131 <span style="color: #B2B2B2;">[40.9s]</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="data-structure">Data Structure<a class="anchor" aria-label="anchor" href="#data-structure"></a>
@@ -771,7 +771,7 @@ sequential modelling framework.</p>
 <p>The resulting suitability maps and difference raster make
 <code>interaction</code> well suited for tutorials on biotic
 interactions, predictor engineering, spatial cross-validation, and
-divergent palette visualisation in R.</p>
+divergent palette visualization in R.</p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
