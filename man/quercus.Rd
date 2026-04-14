@@ -7,7 +7,7 @@
 \format{
 An sf data frame with 6728 rows (species occurrences and absences) and 33 columns:
 
-\strong{Response variable (1):}
+\strong{Response variable:}
 \itemize{
 \item \code{species}: Character column with 9 levels:
 \code{"absence"} (background absence points),
@@ -21,7 +21,7 @@ An sf data frame with 6728 rows (species occurrences and absences) and 33 column
 \code{"Quercus suber"} (Cork oak).
 }
 
-\strong{Predictor variables - Bioclimatic (17):}
+\strong{Predictor variables:}
 
 WorldClim v2 bioclimatic variables (excludes bio8 and bio9):
 \itemize{
@@ -42,39 +42,19 @@ WorldClim v2 bioclimatic variables (excludes bio8 and bio9):
 \item \code{bio17}: Precipitation of driest quarter (mm).
 \item \code{bio18}: Precipitation of warmest quarter (mm).
 \item \code{bio19}: Precipitation of coldest quarter (mm).
-}
-
-\strong{Predictor variables - NDVI (4):}
-\itemize{
 \item \code{ndvi_average}: Average NDVI.
 \item \code{ndvi_maximum}: Maximum NDVI.
 \item \code{ndvi_minimum}: Minimum NDVI.
 \item \code{ndvi_range}: NDVI range.
-}
-
-\strong{Predictor variables - Solar radiation (4):}
-\itemize{
 \item \code{sun_rad_average}: Average solar radiation (kJ m-2 day-1).
 \item \code{sun_rad_maximum}: Maximum solar radiation (kJ m-2 day-1).
 \item \code{sun_rad_minimum}: Minimum solar radiation (kJ m-2 day-1).
 \item \code{sun_rad_range}: Solar radiation range (kJ m-2 day-1).
-}
-
-\strong{Predictor variables - Land cover (3):}
-\itemize{
 \item \code{landcover_veg_bare}: Percentage of bare ground.
 \item \code{landcover_veg_herb}: Percentage of herbaceous vegetation.
 \item \code{landcover_veg_tree}: Percentage of tree cover.
-}
-
-\strong{Predictor variables - Topography (2):}
-\itemize{
 \item \code{topographic_diversity}: Number of unique combinations of elevation, slope, and aspect classes within a neighborhood.
 \item \code{topo_slope}: Topographic slope in degrees.
-}
-
-\strong{Predictor variables - Human impact (1):}
-\itemize{
 \item \code{human_footprint}: Human footprint index.
 }
 

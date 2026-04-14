@@ -2,7 +2,7 @@
 % Please edit documentation in R/vi.R
 \name{vi_extra}
 \alias{vi_extra}
-\title{Download Extended vi Dataset}
+\title{Download extended \code{vi} dataset}
 \usage{
 vi_extra()
 }
@@ -10,7 +10,7 @@ vi_extra()
 sf data.frame with 30,000 rows and 64 columns (POINT geometry, WGS84).
 }
 \description{
-Downloads and reads the extended version of the \link{vi} dataset (30,000 rows) from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository. See \link{vi} for details on the response variables, predictors, and data sources.
+Downloads and reads the extended version of the \link{vi} dataset (30,000 rows) from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository. Writes the file \code{vi.gpkg} to the working directory, and returns it as an \code{sf} dataframe. See \link{vi} for details on the response variables, predictors, and data sources.
 }
 \seealso{
 Other vi: 

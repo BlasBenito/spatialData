@@ -1,32 +1,23 @@
-#' @title Plant diversity metrics for global ecoregions
-#' @description Plant diversity metrics (richness, rarity, beta diversity) obtained from
-#' GBIF Plantae records for global ecoregions. Includes metrics for all plants, trees, and grasses
-#' at species, genus, and family taxonomic levels. Ecoregion boundaries are derived from
-#' [Ecoregions 2017](https://ecoregions2017.appspot.com/). Original polygon geometries have been
-#' converted to point centroids to reduce file size while preserving spatial context.
-#' Use [plantae_extra()] to download the version with original polygon geometries.
+#' @title Plant diversity metrics for the World's Ecoregions
+#' @description Plant diversity metrics (richness, rarity, beta diversity) obtained from GBIF Plantae records for the World's Ecoregions. Includes metrics for all plants, trees, and grasses at species, genus, and family taxonomic levels. Ecoregion boundaries are derived from [Ecoregions 2017](https://ecoregions2017.appspot.com/). Original polygon geometries have been
+#' converted to point centroids to reduce file size while preserving spatial context. Use [plantae_extra()] to download a full version with original polygon geometries.
 #'
-#' The GBIF download comprised **244,830,168 records from 4,741 datasets**, filtered to records
-#' with coordinates, no geospatial issues, and occurrence status "present".
+#' The GBIF download comprised **244,830,168 records from 4,741 datasets**, filtered to records with coordinates, no geospatial issues, and occurrence status "present".
 #'
-#' **Tree species** were identified by cross-referencing GBIF records with the BGCI Global Tree
-#' Search database (BGCI 2020). **Grasses** were defined as members of family Poaceae.
+#' **Tree species** were identified by cross-referencing GBIF records with the BGCI Global Tree Search database (BGCI 2020). **Grasses** were defined as members of family Poaceae.
 #'
-#' **Rarity-weighted richness**: each taxon is scored with the inverse of
-#' its number of spatial presence records in GBIF, then scores are summed per ecoregion.
-#' **Mean rarity** is the mean of these inverse presence record counts per taxon in an ecoregion.
 #'
-#' **Beta diversity** was computed between each ecoregion and its immediate neighboring ecoregions.
-#' Sorensen dissimilarity: Bsor = 1 - 2a/(2a+b+c). Simpson dissimilarity:
-#' Bsim = min(b,c)/(min(b,c)+a), following Koleff et al. (2003).
+#' **Rarity-weighted richness** was computed for each taxon as the inverse of
+#' its number of spatial presence records in GBIF, then scores are summed per ecoregion, while **mean rarity** is the mean of these inverse presence record counts per taxon in an ecoregion.
+#'
+#' **Beta diversity** was computed between each ecoregion and its immediate neighboring ecoregions via Sorensen dissimilarity (`Bsor = 1 - 2a/(2a+b+c)`) and  Simpson dissimilarity (`Bsim = min(b,c)/(min(b,c)+a)`), following Koleff et al. (2003).
 #'
 #' **Fragmentation metrics** were computed with the R package `landscapemetrics`
 #' (Hesselbarth et al. 2019) at 5 km resolution in Lambert Azimuthal Equal-Area projection.
 #'
-#' **Climate hypervolume** was computed using `hypervolume::hypervolume_svm()`.
+#' **Climate hypervolume** was computed using `hypervolume::hypervolume_svm()` from the climate predictors.
 #'
-#' **Aridity** is computed as 1 minus the aridity index of Trabucco and Zomer (2019), so maximum
-#' aridity is coded as 1.
+#' **Aridity** is computed as 1 minus the aridity index of Trabucco and Zomer (2019), so maximum aridity is coded as 1.
 #'
 #' Environmental predictors were extracted as mean pixel values per ecoregion from rasters at
 #' 1 km resolution.
@@ -119,13 +110,9 @@
 #'   \item `betadiversity_simpson_genera_grasses`: Simpson dissimilarity for grass genera (Bsim = min(b,c)/(min(b,c)+a)).
 #' }
 #'
-#' **Predictor variables - Sampling bias (1):**
+#' **Predictor variables:**
 #' \itemize{
 #'   \item `bias_log_records`: Logarithm of the total GBIF records in ecoregion.
-#' }
-#'
-#' **Predictor variables - Geographic/geometric (10):**
-#' \itemize{
 #'   \item `geo_neighbors_count`: Number of neighboring ecoregions.
 #'   \item `geo_neighbors_area_km2`: Total area of neighboring ecoregions in square kilometers.
 #'   \item `geo_neighbors_aridity_mean`: Mean aridity of neighboring ecoregions.
@@ -136,17 +123,9 @@
 #'   \item `geo_shared_perimeter_fraction`: Fraction of perimeter shared with neighbors.
 #'   \item `geo_distance_to_ocean`: Distance to nearest ocean in kilometers.
 #'   \item `geo_elevation_mean`: Mean elevation in meters.
-#' }
-#'
-#' **Predictor variables - Human impact (3):**
-#' \itemize{
 #'   \item `human_population`: Total human population in ecoregion.
 #'   \item `human_population_density`: Human population density per square kilometer.
 #'   \item `human_footprint_mean`: Mean human footprint index.
-#' }
-#'
-#' **Predictor variables - Climate (34):**
-#' \itemize{
 #'   \item `climate_velocity_lgm_mean`: Mean climate velocity since Last Glacial Maximum.
 #'   \item `climate_hypervolume`: Climate hypervolume (niche space size), computed with `hypervolume::hypervolume_svm()`.
 #'   \item `air_humidity_max`: Maximum near-surface relative humidity (%).
@@ -181,19 +160,9 @@
 #'   \item `temperature_warmest_month`: Maximum temperature of warmest month (degrees C; CHELSA bio5).
 #'   \item `temperature_warmest_quarter`: Mean temperature of warmest quarter (degrees C; CHELSA bio10).
 #'   \item `temperature_wettest_quarter`: Mean temperature of wettest quarter (degrees C; CHELSA bio8).
-#' }
-#'
-#' **Predictor variables - Landcover (3):**
-#' \itemize{
 #'   \item `landcover_bare_percent_mean`: Mean percentage of bare ground.
 #'   \item `landcover_herbs_percent_mean`: Mean percentage of herbaceous vegetation.
 #'   \item `landcover_trees_percent_mean`: Mean percentage of tree cover.
-#' }
-#'
-#' **Predictor variables - Fragmentation (19):**
-#' Computed at 5 km resolution in Lambert Azimuthal Equal-Area projection using
-#' `landscapemetrics` (Hesselbarth et al. 2019).
-#' \itemize{
 #'   \item `fragmentation_ai`: Aggregation index.
 #'   \item `fragmentation_area_mn`: Mean patch area.
 #'   \item `fragmentation_ca`: Total class area.
@@ -213,10 +182,6 @@
 #'   \item `fragmentation_shape_mn`: Mean shape index.
 #'   \item `fragmentation_tca`: Total core area.
 #'   \item `fragmentation_te`: Total edge.
-#' }
-#'
-#' **Predictor variables - Soil (10):**
-#' \itemize{
 #'   \item `soil_clay`: Soil clay content (%).
 #'   \item `soil_nitrogen`: Soil nitrogen content (%).
 #'   \item `soil_organic_carbon`: Soil organic carbon content (%).
@@ -227,10 +192,6 @@
 #'   \item `soil_temperature_mean`: Mean soil temperature (degrees C).
 #'   \item `soil_temperature_min`: Minimum soil temperature (degrees C).
 #'   \item `soil_temperature_range`: Soil temperature range (degrees C).
-#' }
-#'
-#' **Predictor variables - NDVI (4):**
-#' \itemize{
 #'   \item `ndvi_max`: Maximum NDVI (1999-2019).
 #'   \item `ndvi_mean`: Mean NDVI (1999-2019).
 #'   \item `ndvi_min`: Minimum NDVI (1999-2019).
@@ -243,101 +204,36 @@
 #' }
 #'
 #' @source
-#' **Associated publication:**
+#' **Associated publications:**
 #' \itemize{
-#'   \item Maestre, F.T., Benito, B.M., Berdugo, M., Concostrina-Zubiri, L., Delgado-Baquerizo, M.,
-#'   Eldridge, D.J., Guirado, E., Gross, N., Kefi, S., Le Bagousse-Pinguet, Y., et al. (2021).
-#'   Biogeography of global drylands. \emph{New Phytologist}, 231(2), 540--558.
-#'   \doi{10.1111/nph.17398}
-#' }
-#'
-#' **Biodiversity data:**
-#' \itemize{
+#'   \item Maestre, F.T., Benito, B.M., Berdugo, M., Concostrina-Zubiri, L., Delgado-Baquerizo, M., Eldridge, D.J., Guirado, E., Gross, N., Kefi, S., Le Bagousse-Pinguet, Y., et al. (2021). Biogeography of global drylands. \emph{New Phytologist}, 231(2), 540--558. \doi{10.1111/nph.17398}}
 #'   \item GBIF Plantae Dataset (September 15, 2020). \doi{10.15468/dl.xh5y5g}
-#' }
-#'
-#' **Spatial boundaries:**
-#' \itemize{
 #'   \item Dinerstein, E., et al. (2017). An Ecoregion-Based Approach to Protecting Half the Terrestrial Realm. \emph{BioScience}, 67(6), 534-545. \doi{10.1093/biosci/bix014}
-#' }
-#'
-#' **Climate predictors (precipitation, temperature, atmospheric):**
-#' \itemize{
 #'   \item Karger, D.N., et al. (2021). Climatologies at high resolution for the earth's land surface areas. EnviDat. \doi{10.16904/envidat.228.v2.1}
-#' }
-#'
-#' **Soil properties:**
-#' \itemize{
 #'   \item Hengl, T., et al. (2017). SoilGrids250m: Global gridded soil information based on machine learning. \emph{PLOS ONE}, 12(2), e0169748. \doi{10.1371/journal.pone.0169748}
-#' }
-#'
-#' **Soil temperature:**
-#' \itemize{
 #'   \item Lembrechts, J.J., et al. (2021). Mismatches between soil and air temperature. \emph{Global Change Biology}. \doi{10.1111/gcb.16060}
-#' }
-#'
-#' **NDVI:**
-#' \itemize{
 #'   \item Copernicus Global Land Service: NDVI Long Term Statistics v3 (1999-2019). \url{https://land.copernicus.eu/en/products/vegetation}
-#' }
-#'
-#' **Landcover and fragmentation:**
-#' \itemize{
 #'   \item Buchhorn, M., et al. (2020). Copernicus Global Land Service: Land Cover 100m: collection 3: epoch 2019: Globe. Zenodo. \doi{10.5281/zenodo.3939050}
-#' }
-#'
-#' **Topographic/geographic features:**
-#' \itemize{
 #'   \item CGIAR-CSI SRTM 90m Digital Elevation Database. \url{https://srtm.csi.cgiar.org/}
-#' }
-#'
-#' **Aridity index:**
-#' \itemize{
 #'   \item Trabucco, A. & Zomer, R.J. (2019). Global Aridity Index and Potential Evapotranspiration Climate Database v2. CGIAR-CSI. \doi{10.6084/m9.figshare.7504448.v3}
-#' }
-#'
-#' **Tree species identification:**
-#' \itemize{
 #'   \item BGCI (2020). GlobalTreeSearch online database. Botanic Gardens Conservation International. \url{https://tools.bgci.org/global_tree_search.php}
-#' }
-#'
-#' **Fragmentation metrics:**
-#' \itemize{
 #'   \item Hesselbarth, M.H.K., et al. (2019). landscapemetrics: an open-source R tool to calculate landscape metrics. \emph{Ecography}, 42(10), 1648-1657. \doi{10.1111/ecog.04617}
-#' }
-#'
-#' **Beta diversity methodology:**
-#' \itemize{
 #'   \item Koleff, P., Gaston, K.J. & Lennon, J.J. (2003). Measuring beta diversity for presence-absence data. \emph{Journal of Animal Ecology}, 72(3), 367-382. \doi{10.1046/j.1365-2656.2003.00710.x}
-#' }
-#'
-#' **Rarity-weighted richness:**
-#' \itemize{
 #'   \item Williams, P.H., et al. (1996). A comparison of richness hotspots, rarity hotspots, and complementary areas for conserving diversity of British birds. \emph{Conservation Biology}, 10(1), 155-174.
-#' }
-#'
-#' **Human footprint:**
-#' \itemize{
 #'   \item Venter, O., et al. (2016). Global terrestrial Human Footprint maps for 1993 and 2009. \emph{Scientific Data}, 3, 160067. \doi{10.1038/sdata.2016.67}
 #' }
 #' @family plantae
 "plantae"
 
-#' @title Response variable names for plantae dataset
-#' @description Character vector containing the names of the 53 response variables in `plantae`,
-#' covering richness metrics (9), rarity-weighted richness (6), mean rarity (6), and beta diversity
-#' indices including raw turnover (16), Sorensen (8), and Simpson (8) dissimilarities.
-#' Metrics are available for all plants, trees, and grasses at species, genus, and family levels.
+#' @title Response variable names for the dataset `plantae`
+#' @description Character vector containing the names of the 53 response variables in `plantae`.
 #' @usage data(plantae_responses)
 #' @format A character vector of length 53.
 #' @family plantae
 "plantae_responses"
 
-#' @title Predictor variable names for plantae dataset
-#' @description Character vector of 84 predictor variable names from `plantae`, covering
-#' sampling bias (1), geographic/geometric (10), human impact (3), climate change (2),
-#' landcover (3), fragmentation (19), atmospheric (13), precipitation (8), temperature (11),
-#' soil properties (6), soil temperature (4), and NDVI (4).
+#' @title Predictor variable names for the dataset `plantae`
+#' @description Character vector of 84 predictor variable names from `plantae`.
 #' @usage data(plantae_predictors)
 #' @format A character vector of length 84.
 #' @family plantae
@@ -346,11 +242,11 @@
 #' Download Extended plantae Dataset
 #'
 #' @description
-#' Downloads and reads the extended version of the [plantae] dataset with original polygon geometries instead of point centroids, from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
+#' Downloads and reads the extended version of the [plantae] dataset with original polygon geometries instead of point centroids, from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `plantae.gpkg` to the working directory and returns it as an `sf` dataframe.
 #' See [plantae] for details on the response variables, predictors, and data sources.
 #'
 #' @autoglobal
-#' @return sf data.frame with 662 rows and 143 columns (MULTIPOLYGON geometry, WGS84).
+#' @return sf dataframe with 662 rows and 143 columns (MULTIPOLYGON geometry, WGS84).
 #' @family plantae
 #' @export
 plantae_extra <- function() {
@@ -385,7 +281,7 @@ plantae_extra <- function() {
   out
 }
 
-#' Subset plantae to Western Hemisphere Ecoregions
+#' Subset `plantae` to Western Hemisphere Ecoregions
 #'
 #' @description
 #' Returns a subset of the [plantae] dataset filtered to American ecoregions
@@ -393,12 +289,8 @@ plantae_extra <- function() {
 #' (overall plant species richness) as the only response variable. All 84
 #' predictor variables and identifier columns are retained.
 #'
-#' This subset matches the example data used in the
-#' [spatialRF](https://blasbenito.github.io/spatialRF/) package.
-#'
 #' @autoglobal
-#' @return sf data.frame with American ecoregions and columns: 5 identifiers,
-#'   `richness_species`, 84 predictors, and point geometry (WGS84).
+#' @return sf data.frame.
 #' @family plantae
 #' @examples
 #' west <- plantae_west()
@@ -420,7 +312,7 @@ plantae_west <- function() {
   ]
 }
 
-#' Subset plantae to Eastern Hemisphere Ecoregions
+#' Subset `plantae` to Eastern Hemisphere Ecoregions
 #'
 #' @description
 #' Returns a subset of the [plantae] dataset filtered to non-American ecoregions
@@ -429,8 +321,7 @@ plantae_west <- function() {
 #' predictor variables and identifier columns are retained.
 #'
 #' @autoglobal
-#' @return sf data.frame with non-American ecoregions and columns: 5
-#'   identifiers, `richness_species`, 84 predictors, and point geometry (WGS84).
+#' @return sf data.frame with non-American ecoregions.
 #' @family plantae
 #' @examples
 #' east <- plantae_east()

@@ -3,7 +3,7 @@
 \docType{data}
 \name{trees_response}
 \alias{trees_response}
-\title{Response variable name for trees dataset}
+\title{Response variable name for the dataset \code{trees}}
 \format{
 A character vector of length 1.
 }
@@ -12,8 +12,7 @@ data(trees_response)
 }
 \description{
 Character vector of length 1 containing the name of the
-response variable in \link{trees}: \code{"trees"} (integer count of tree species
-richness per hexagonal cell).
+response variable in \link{trees}.
 }
 \seealso{
 Other trees: 

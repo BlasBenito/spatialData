@@ -3,7 +3,7 @@
 \docType{data}
 \name{trees_predictors}
 \alias{trees_predictors}
-\title{Predictor variable names for trees dataset}
+\title{Predictor variable names for the dataset \code{trees}}
 \format{
 A character vector of length 50.
 }
@@ -11,10 +11,7 @@ A character vector of length 50.
 data(trees_predictors)
 }
 \description{
-Character vector of 50 predictor variable names from \link{trees},
-covering air humidity (4), aridity (1), cloud cover (4),
-evapotranspiration (4), precipitation (8), temperature (11),
-geography (4), soil properties (6), soil temperature (4), and NDVI (4).
+Character vector of 50 predictor variable names from \link{trees}.
 }
 \seealso{
 Other trees: 

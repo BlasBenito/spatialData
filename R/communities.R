@@ -1,4 +1,4 @@
-#' @title Plant Communities of the Sierra Nevada (SE Spain)
+#' @title Plant Communities of Sierra Nevada (Spain)
 #'
 #' @description
 #' `sf` data frame with `POINT` geometry containing 7,300 plant community records from the Sierra Nevada mountain range (SE Spain), with 6 response variables (see [communities_responses]) and 9 numeric predictors (see [communities_predictors]).
@@ -9,13 +9,7 @@
 #'
 #' **Response variables (6):**
 #' \itemize{
-#'   \item `community`: Factor column with 6 levels:
-#'     `"none"`,
-#'     `"Pyrenean oak forests"`,
-#'     `"Juniper-broom shrublands"`,
-#'     `"Pinus forests"`,
-#'     `"Alpine pastures"`,
-#'     `"Holm oak forests"`.
+#'   \item `community`: Factor column with 6 levels: `"none"` (no presence of target communities), `"Pyrenean oak forests"`, `"Juniper-broom shrublands"`, `"Pinus forests"`, `"Alpine pastures"`, `"Holm oak forests"`.
 #'   \item `pyrenean_oak`: Binary integer presence-absence (1/0) for Pyrenean oak forests.
 #'   \item `juniper_shrubland`: Binary integer presence-absence (1/0) for juniper-broom shrublands.
 #'   \item `pinus_forest`: Binary integer presence-absence (1/0) for Pinus forests.
@@ -23,7 +17,7 @@
 #'   \item `holm_oak`: Binary integer presence-absence (1/0) for holm oak forests.
 #' }
 #'
-#' **Predictor variables - Climate (6):**
+#' **Predictor variables:**
 #' \itemize{
 #'   \item `max_temperature_summer`: Maximum summer temperature (degrees C).
 #'   \item `max_temperature_winter`: Maximum winter temperature (degrees C).
@@ -31,10 +25,6 @@
 #'   \item `min_temperature_winter`: Minimum winter temperature (degrees C).
 #'   \item `rainfall_summer`: Summer rainfall (mm).
 #'   \item `rainfall_winter`: Winter rainfall (mm).
-#' }
-#'
-#' **Predictor variables - Topography (3):**
-#' \itemize{
 #'   \item `northness`: Northness index (cosine of aspect, -1 to 1).
 #'   \item `slope`: Terrain slope (degrees).
 #'   \item `topographic_wetness_index`: Topographic wetness index.
@@ -53,19 +43,15 @@
 #' @family communities
 "communities"
 
-#' @title Response variable names for communities dataset
-#' @description Character vector of 6 response variable names from [communities]:
-#' `"community"` (multi-class character), plus 5 binary columns for individual
-#' plant community types.
+#' @title Response variable names for the dataset `communities`
+#' @description Character vector of 6 response variable names from [communities].
 #' @usage data(communities_responses)
 #' @format A character vector of length 6.
 #' @family communities
 "communities_responses"
 
-#' @title Predictor variable names for communities dataset
-#' @description Character vector of 9 predictor variable names from [communities],
-#' covering climate (6: maximum and minimum summer/winter temperature, summer and
-#' winter rainfall) and topography (3: northness, slope, topographic wetness index).
+#' @title Predictor variable names for the dataset `communities`
+#' @description Character vector of 9 predictor variable names from [communities].
 #' @usage data(communities_predictors)
 #' @format A character vector of length 9.
 #' @family communities
@@ -74,10 +60,10 @@
 #' Download Environmental Raster for communities - 2010
 #'
 #' @description
-#' Downloads and reads the baseline (2010) environmental raster associated with the [communities] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
+#' Downloads the baseline (2010) environmental raster associated with the [communities] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `communities_2010.tif` in the working directory and returns it as a `spatRaster` object.
 #'
 #' @autoglobal
-#' @return SpatRaster object.
+#' @return spatRaster object.
 #' @family communities
 #' @export
 communities_extra_2010 <- function() {
@@ -117,8 +103,7 @@ communities_extra_2010 <- function() {
 #' Download Environmental Raster for communities - 2050
 #'
 #' @description
-#' Downloads and reads the 2050 climate scenario environmental raster associated with the [communities]
-#' dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
+#' Downloads the future climate (2050) raster associated with the [communities] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `communities_2050.tif` in the working directory and returns it as a `spatRaster` object.
 #'
 #' @autoglobal
 #' @return SpatRaster object.
@@ -161,8 +146,7 @@ communities_extra_2050 <- function() {
 #' Download Environmental Raster for communities - 2100
 #'
 #' @description
-#' Downloads and reads the 2100 climate scenario environmental raster associated with the [communities]
-#' dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
+#' Downloads the future climate (2100) raster associated with the [communities] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `communities_2100.tif` in the working directory and returns it as a `spatRaster` object.
 #'
 #' @autoglobal
 #' @return SpatRaster object.

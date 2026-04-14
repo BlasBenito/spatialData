@@ -10,7 +10,7 @@ interaction_extra()
 SpatRaster object.
 }
 \description{
-Downloads and reads the environmental raster associated with the \link{interaction} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository. Requires the \pkg{terra} package.
+Downloads and reads the environmental raster associated with the \link{interaction} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository. Requires the \pkg{terra} package. Writes the file \code{sierra_nevada_env.tif} to the working directory and returns a \code{spatRaster} object.
 }
 \seealso{
 Other interaction: 

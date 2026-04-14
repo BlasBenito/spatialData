@@ -3,7 +3,7 @@
 \docType{data}
 \name{plantae_predictors}
 \alias{plantae_predictors}
-\title{Predictor variable names for plantae dataset}
+\title{Predictor variable names for the dataset \code{plantae}}
 \format{
 A character vector of length 84.
 }
@@ -11,10 +11,7 @@ A character vector of length 84.
 data(plantae_predictors)
 }
 \description{
-Character vector of 84 predictor variable names from \code{plantae}, covering
-sampling bias (1), geographic/geometric (10), human impact (3), climate change (2),
-landcover (3), fragmentation (19), atmospheric (13), precipitation (8), temperature (11),
-soil properties (6), soil temperature (4), and NDVI (4).
+Character vector of 84 predictor variable names from \code{plantae}.
 }
 \seealso{
 Other plantae: 

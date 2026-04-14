@@ -1,9 +1,9 @@
-#' @title Presence Records of 90 Plant Species and Background Points from Andalusia, Spain
+#' @title Presence records of 90 plant species and background points from Andalusia, Spain
 #'
 #' @description
 #' `sf` long format data frame with `POINT` geometry and CRS ETRS89 / UTM zone 30N (EPSG:25830), containing 37,773 presence records for 90 plant species and 8,692 background points (46,465 rows total) from Andalusia, Spain.
 #'
-#' The dataset contains 3 columns (species, presence, geometry). Environmental predictors for each point can be extracted from the companion raster returned by [andalusia_extra()]; predictor names are stored in [andalusia_predictors].
+#' The dataset contains 3 columns (species, presence, geometry). Environmental predictors for each point can be extracted from the companion raster returned by [andalusia_extra()]. Predictor names are stored in [andalusia_predictors].
 #'
 #' @usage data(andalusia)
 #' @format An sf data frame with 46,465 rows (presences and background points) and 3 columns:
@@ -15,7 +15,7 @@
 #' }
 #'
 #' @source
-#' **Published study, data preparation, and species occurrence data:**
+#' **Published study:**
 #' \itemize{
 #'   \item Benito, B.M., Lorite, J., Pérez-Pérez, R., Gómez-Aparicio, L., & Peñas, J. (2014). Forecasting plant range collapse in a mediterranean hotspot: when dispersal uncertainties matter. \emph{Diversity and Distributions}, 20(1), 72--83. \doi{10.1111/ddi.12148}
 #' }
@@ -52,10 +52,10 @@
 #' @family andalusia
 "andalusia_predictors"
 
-#' Download Environmental Raster for the dataset `andalusia`
+#' Environmental raster for the dataset `andalusia`
 #'
 #' @description
-#' Downloads and reads the 20-band environmental raster associated with the [andalusia] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. The raster covers Andalusia, Spain, at 400 m resolution (EPSG:25830) and includes Landsat reflectance, climate, and topographic predictors (see [andalusia]).
+#' Downloads and reads the 20-band environmental raster associated with the [andalusia] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. The raster covers Andalusia, Spain, at 400 m resolution (EPSG:25830) and includes remote-sensing, climate, and topographic predictors (see [andalusia]).
 #' @autoglobal
 #' @return SpatRaster object with 20 layers.
 #' @family andalusia

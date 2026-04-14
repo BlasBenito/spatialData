@@ -1,11 +1,7 @@
-#' @title Neanderthal Presence and Pseudo-Absence Records with Environmental Predictors
+#' @title Neanderthal presence in the Last Interglacial
 #'
 #' @description
-#' `sf` data frame with `POINT` geometry containing 245 records of Neanderthal presence
-#' and pseudo-absence sites from Marine Isotope Stage 5e (Last Interglacial) in Europe
-#' and the Near East, 1 response variable (see [neanderthal_response]), and 25 predictors
-#' (see [neanderthal_predictors]).
-#' Use [neanderthal_extra()] to download the associated environmental raster.
+#' `sf` data frame with `POINT` geometry containing records of Neanderthal presence from Marine Isotope Stage 5e (Last Interglacial) in Europe and the Near East, 1 response variable (see [neanderthal_response]), and 25 predictors (see [neanderthal_predictors]). Use [neanderthal_extra()] to download the associated environmental raster.
 #'
 #' @usage data(neanderthal)
 #' @format An sf data frame with 245 rows (presence and pseudo-absence sites) and 27 columns:
@@ -15,12 +11,10 @@
 #'   \item `presence`: Binary integer (1 = Neanderthal presence site, 0 = pseudo-absence site).
 #' }
 #'
-#' **Predictor variables - Palaeoclimatic (19):**
+#' **Predictor variables:**
 #'
 #' Bioclimatic variables derived from a Last Interglacial GCM simulation
-#' (Otto-Bliesner et al. 2006), downscaled following the method of Hijmans et al. (2005).
-#' These are analogous to the standard WorldClim bioclimatic variables but represent
-#' Last Interglacial (MIS 5e) conditions rather than modern climate:
+#' (Otto-Bliesner et al. 2006), downscaled following the method of Hijmans et al. (2005). These are analogous to the standard WorldClim bioclimatic variables but represent Last Interglacial (MIS 5e) conditions rather than modern climate:
 #' \itemize{
 #'   \item `bio1`: Annual mean temperature (degrees C).
 #'   \item `bio2`: Mean diurnal range (degrees C).
@@ -41,10 +35,6 @@
 #'   \item `bio17`: Precipitation of driest quarter (mm).
 #'   \item `bio18`: Precipitation of warmest quarter (mm).
 #'   \item `bio19`: Precipitation of coldest quarter (mm).
-#' }
-#'
-#' **Predictor variables - Topography (6):**
-#' \itemize{
 #'   \item `topo_aspect`: Aspect in degrees.
 #'   \item `topo_diversity_local`: Local topographic diversity.
 #'   \item `topo_diversity`: Regional topographic diversity.
@@ -82,17 +72,15 @@
 #' @family neanderthal
 "neanderthal"
 
-#' @title Response variable name for neanderthal dataset
-#' @description Character string with the name of the response variable in [neanderthal]: `"presence"`,
-#' a binary integer (1 = presence, 0 = pseudo-absence).
+#' @title Response variable name for the dataset `neanderthal`
+#' @description Character string with the name of the response variable in [neanderthal].
 #' @usage data(neanderthal_response)
 #' @format A character string of length 1.
 #' @family neanderthal
 "neanderthal_response"
 
-#' @title Predictor variable names for neanderthal dataset
-#' @description Character vector of 25 predictor variable names from [neanderthal], covering
-#' palaeoclimatic (19) and topography (6).
+#' @title Predictor variable names for the dataset `neanderthal`
+#' @description Character vector of 25 predictor variable names from [neanderthal].
 #' @usage data(neanderthal_predictors)
 #' @format A character vector of length 25.
 #' @family neanderthal
@@ -101,7 +89,7 @@
 #' Download Environmental Raster for neanderthal
 #'
 #' @description
-#' Downloads and reads the environmental raster associated with the [neanderthal] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
+#' Downloads and reads the environmental raster associated with the [neanderthal] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `neanderthal_env.tif` to the working directory and returns it as a `spatRaster` object.
 #' @autoglobal
 #' @return SpatRaster object.
 #' @family neanderthal

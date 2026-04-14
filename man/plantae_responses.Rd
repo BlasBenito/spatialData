@@ -3,7 +3,7 @@
 \docType{data}
 \name{plantae_responses}
 \alias{plantae_responses}
-\title{Response variable names for plantae dataset}
+\title{Response variable names for the dataset \code{plantae}}
 \format{
 A character vector of length 53.
 }
@@ -11,10 +11,7 @@ A character vector of length 53.
 data(plantae_responses)
 }
 \description{
-Character vector containing the names of the 53 response variables in \code{plantae},
-covering richness metrics (9), rarity-weighted richness (6), mean rarity (6), and beta diversity
-indices including raw turnover (16), Sorensen (8), and Simpson (8) dissimilarities.
-Metrics are available for all plants, trees, and grasses at species, genus, and family levels.
+Character vector containing the names of the 53 response variables in \code{plantae}.
 }
 \seealso{
 Other plantae: 

@@ -11,11 +11,7 @@ A character vector of length 10.
 data(interaction_predictors)
 }
 \description{
-Character vector of 10 predictor variable names from \link{interaction},
-covering remote sensing (3: Landsat NDVI and two PCA scores), climate (5: annual
-rainfall, solar radiation, mean annual temperature, maximum summer temperature,
-minimum winter temperature), and topography (2: topographic complexity and
-topographic position).
+Character vector of 10 predictor variable names from \link{interaction}.
 }
 \seealso{
 Other interaction: 

@@ -3,19 +3,13 @@
 \docType{data}
 \name{communities}
 \alias{communities}
-\title{Plant Communities of the Sierra Nevada (SE Spain)}
+\title{Plant Communities of Sierra Nevada (Spain)}
 \format{
 An sf data frame with 7,300 rows and 16 columns:
 
 \strong{Response variables (6):}
 \itemize{
-\item \code{community}: Factor column with 6 levels:
-\code{"none"},
-\code{"Pyrenean oak forests"},
-\code{"Juniper-broom shrublands"},
-\code{"Pinus forests"},
-\code{"Alpine pastures"},
-\code{"Holm oak forests"}.
+\item \code{community}: Factor column with 6 levels: \code{"none"} (no presence of target communities), \code{"Pyrenean oak forests"}, \code{"Juniper-broom shrublands"}, \code{"Pinus forests"}, \code{"Alpine pastures"}, \code{"Holm oak forests"}.
 \item \code{pyrenean_oak}: Binary integer presence-absence (1/0) for Pyrenean oak forests.
 \item \code{juniper_shrubland}: Binary integer presence-absence (1/0) for juniper-broom shrublands.
 \item \code{pinus_forest}: Binary integer presence-absence (1/0) for Pinus forests.
@@ -23,7 +17,7 @@ An sf data frame with 7,300 rows and 16 columns:
 \item \code{holm_oak}: Binary integer presence-absence (1/0) for holm oak forests.
 }
 
-\strong{Predictor variables - Climate (6):}
+\strong{Predictor variables:}
 \itemize{
 \item \code{max_temperature_summer}: Maximum summer temperature (degrees C).
 \item \code{max_temperature_winter}: Maximum winter temperature (degrees C).
@@ -31,10 +25,6 @@ An sf data frame with 7,300 rows and 16 columns:
 \item \code{min_temperature_winter}: Minimum winter temperature (degrees C).
 \item \code{rainfall_summer}: Summer rainfall (mm).
 \item \code{rainfall_winter}: Winter rainfall (mm).
-}
-
-\strong{Predictor variables - Topography (3):}
-\itemize{
 \item \code{northness}: Northness index (cosine of aspect, -1 to 1).
 \item \code{slope}: Terrain slope (degrees).
 \item \code{topographic_wetness_index}: Topographic wetness index.

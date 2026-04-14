@@ -1,25 +1,11 @@
-#' @title Global NDVI Records and Environmental Predictors
+#' @title Global long-term NDVI records and environmental predictors
 #'
 #' @description
-#' `sf` data frame with `POINT` geometry representing 9,265 global locations with
-#' 5 response variables encoding the Normalized Difference Vegetation Index (NDVI) and
-#' 58 environmental predictors (47 numeric, 11 categorical).
-#' Use [vi_extra()] to download an extended version with 30,000 rows.
+#' `sf` data frame with `POINT` geometry representing 9,265 global locations with one response variable represented in five different encodings of the long-term average (1999-2019) of the Normalized Difference Vegetation Index (NDVI) and 58 environmental predictors (47 numeric, 11 categorical). Use [vi_extra()] to download an extended version with 30,000 rows.
 #'
-#' NDVI values are derived from the Copernicus Global Land Service Long Term Statistics
-#' product (1999-2019) at 1 km resolution. Locations were spatially thinned to reduce
-#' spatial autocorrelation.
+#' NDVI values are derived from the Copernicus Global Land Service Long Term Statistics product (1999-2019) at 1 km resolution. Locations were spatially thinned to reduce spatial autocorrelation.
 #'
-#' **Response variable encodings:**
-#' \itemize{
-#'   \item `vi_numeric`: continuous NDVI values in the range 0-1.
-#'   \item `vi_counts`: simulated integer counts created by multiplying `vi_numeric` by 1000 and coercing to integer.
-#'   \item `vi_binomial`: simulated binary variable created by thresholding `vi_numeric` at 0.5.
-#'   \item `vi_categorical`: character variable with categories "very_low", "low", "medium", "high", and "very_high", with thresholds at quantiles of `vi_numeric`.
-#'   \item `vi_factor`: `vi_categorical` converted to factor.
-#' }
-#'
-#' Environmental predictors were extracted as pixel values from rasters at 1 km resolution.
+#' Environmental predictors were extracted as pixel values from normalized raster data at 1 km resolution.
 #'
 #' @usage data(vi)
 #' @format An sf data frame with 9265 rows (locations) and 64 columns:
@@ -33,122 +19,62 @@
 #'   \item `vi_factor`: Factor encoding of NDVI (vi_categorical as factor).
 #' }
 #'
-#' **Predictor variables - Climate classification (3):**
+#' **Predictor variables:**
 #' \itemize{
 #'   \item `koppen_zone`: Koppen climate zone code (Beck et al. 2018).
 #'   \item `koppen_group`: Koppen climate group name.
 #'   \item `koppen_description`: Koppen climate description.
-#' }
-#'
-#' **Predictor variables - Soil type (1):**
-#' \itemize{
 #'   \item `soil_type`: Soil classification type.
-#' }
-#'
-#' **Predictor variables - Topography (3):**
-#' \itemize{
 #'   \item `topo_slope`: Topographic slope in degrees.
 #'   \item `topo_diversity`: Number of combinations of different elevations, slopes, and aspects in a 5 km radius around each 1 km cell.
 #'   \item `topo_elevation`: Elevation in meters.
-#' }
-#'
-#' **Predictor variables - Soil water index (4):**
-#' \itemize{
 #'   \item `swi_mean`: Mean annual soil water index (unitless, 0-100 cm depth).
 #'   \item `swi_max`: Maximum annual soil water index (unitless, 0-100 cm depth).
 #'   \item `swi_min`: Minimum annual soil water index (unitless, 0-100 cm depth).
 #'   \item `swi_range`: Annual soil water index range (unitless, 0-100 cm depth).
-#' }
-#'
-#' **Predictor variables - Soil temperature (4):**
-#' \itemize{
 #'   \item `soil_temperature_mean`: Mean annual land surface temperature (degrees C).
 #'   \item `soil_temperature_max`: Maximum annual land surface temperature (degrees C).
 #'   \item `soil_temperature_min`: Minimum annual land surface temperature (degrees C).
 #'   \item `soil_temperature_range`: Annual land surface temperature range (degrees C).
-#' }
-#'
-#' **Predictor variables - Soil properties (6):**
-#' \itemize{
 #'   \item `soil_sand`: Soil sand content (%).
 #'   \item `soil_clay`: Soil clay content (%).
 #'   \item `soil_silt`: Soil silt content (%).
 #'   \item `soil_ph`: Soil pH.
 #'   \item `soil_soc`: Soil organic carbon content (%).
 #'   \item `soil_nitrogen`: Soil nitrogen content (%).
-#' }
-#'
-#' **Predictor variables - Solar radiation (4):**
-#' \itemize{
 #'   \item `solar_rad_mean`: Mean annual solar radiation (kJ m-2).
 #'   \item `solar_rad_max`: Maximum annual solar radiation (kJ m-2).
 #'   \item `solar_rad_min`: Minimum annual solar radiation (kJ m-2).
 #'   \item `solar_rad_range`: Annual solar radiation range (kJ m-2).
-#' }
-#'
-#' **Predictor variables - Growing season (4):**
-#' \itemize{
 #'   \item `growing_season_length`: Length of the growing season (days).
 #'   \item `growing_season_temperature`: Mean temperature of the growing season (degrees C).
 #'   \item `growing_season_rainfall`: Accumulated precipitation of the growing season (kg m-2).
 #'   \item `growing_degree_days`: Growing degree days above 0 degrees C accumulated over one year (degree-days).
-#' }
-#'
-#' **Predictor variables - Temperature (5):**
-#' \itemize{
 #'   \item `temperature_mean`: Mean annual air temperature (degrees C; CHELSA bio1).
 #'   \item `temperature_max`: Maximum temperature of warmest month (degrees C; CHELSA bio5).
 #'   \item `temperature_min`: Minimum temperature of coldest month (degrees C; CHELSA bio6).
 #'   \item `temperature_range`: Annual air temperature range (degrees C; CHELSA bio7).
 #'   \item `temperature_seasonality`: Temperature seasonality as standard deviation of monthly means (degrees C; CHELSA bio4).
-#' }
-#'
-#' **Predictor variables - Rainfall (4):**
-#' \itemize{
 #'   \item `rainfall_mean`: Mean annual rainfall (kg m-2).
 #'   \item `rainfall_min`: Minimum monthly rainfall (kg m-2).
 #'   \item `rainfall_max`: Maximum monthly rainfall (kg m-2).
 #'   \item `rainfall_range`: Annual rainfall range (kg m-2).
-#' }
-#'
-#' **Predictor variables - Evapotranspiration (4):**
-#' \itemize{
 #'   \item `evapotranspiration_mean`: Mean annual potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
 #'   \item `evapotranspiration_max`: Maximum monthly potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
 #'   \item `evapotranspiration_min`: Minimum monthly potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
 #'   \item `evapotranspiration_range`: Annual potential evapotranspiration range (kg m-2 month-1; Penman-Monteith).
-#' }
-#'
-#' **Predictor variables - Cloud cover (4):**
-#' \itemize{
 #'   \item `cloud_cover_mean`: Mean annual total cloud cover (%).
 #'   \item `cloud_cover_max`: Maximum monthly total cloud cover (%).
 #'   \item `cloud_cover_min`: Minimum monthly total cloud cover (%).
 #'   \item `cloud_cover_range`: Annual total cloud cover range (%).
-#' }
-#'
-#' **Predictor variables - Aridity (1):**
-#' \itemize{
 #'   \item `aridity_index`: Mean aridity index (unitless ratio; higher values indicate wetter conditions).
-#' }
-#'
-#' **Predictor variables - Humidity (4):**
-#' \itemize{
 #'   \item `humidity_mean`: Mean annual near-surface relative humidity (%).
 #'   \item `humidity_max`: Maximum monthly near-surface relative humidity (%).
 #'   \item `humidity_min`: Minimum monthly near-surface relative humidity (%).
 #'   \item `humidity_range`: Annual near-surface relative humidity range (%).
-#' }
-#'
-#' **Predictor variables - Biogeography (3):**
-#' \itemize{
 #'   \item `biogeo_ecoregion`: Ecoregion name.
 #'   \item `biogeo_biome`: Biome name.
 #'   \item `biogeo_realm`: Ecological realm name.
-#' }
-#'
-#' **Predictor variables - Administrative (4):**
-#' \itemize{
 #'   \item `country_name`: Country name.
 #'   \item `continent`: Continent name.
 #'   \item `region`: UN region name.
@@ -213,31 +139,24 @@
 #' @family vi
 "vi"
 
-#' @title Response variable names for vi dataset
-#' @description Character vector containing the names of the 5 response variables in [vi],
-#' representing different encodings of NDVI: continuous (`vi_numeric`), integer counts
-#' (`vi_counts`), binary (`vi_binomial`), categorical (`vi_categorical`), and factor
-#' (`vi_factor`).
+#' @title Response variable names for the dataset `vi`
+#' @description Character vector containing the names of the 5 response variables in [vi].
 #' @usage data(vi_responses)
 #' @format A character vector of length 5.
 #' @family vi
 "vi_responses"
 
-#' @title Predictor variable names for vi dataset
-#' @description Character vector of 58 predictor variable names from [vi], covering
-#' climate classification (3), soil type (1), topography (3), soil water index (4),
-#' soil temperature (4), soil properties (6), solar radiation (4), growing season (4),
-#' temperature (5), rainfall (4), evapotranspiration (4), cloud cover (4), aridity (1),
-#' humidity (4), biogeography (3), and administrative (4).
+#' @title Predictor variable names for the dataset `vi`
+#' @description Character vector of 58 predictor variable names from [vi].
 #' @usage data(vi_predictors)
 #' @format A character vector of length 58.
 #' @family vi
 "vi_predictors"
 
-#' Download Extended vi Dataset
+#' Download extended `vi` dataset
 #'
 #' @description
-#' Downloads and reads the extended version of the [vi] dataset (30,000 rows) from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. See [vi] for details on the response variables, predictors, and data sources.
+#' Downloads and reads the extended version of the [vi] dataset (30,000 rows) from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `vi.gpkg` to the working directory, and returns it as an `sf` dataframe. See [vi] for details on the response variables, predictors, and data sources.
 #'
 #' @autoglobal
 #' @return sf data.frame with 30,000 rows and 64 columns (POINT geometry, WGS84).

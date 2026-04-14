@@ -9,7 +9,7 @@
 #' @usage data(quercus)
 #' @format An sf data frame with 6728 rows (species occurrences and absences) and 33 columns:
 #'
-#' **Response variable (1):**
+#' **Response variable:**
 #' \itemize{
 #'   \item `species`: Character column with 9 levels:
 #'     `"absence"` (background absence points),
@@ -23,7 +23,7 @@
 #'     `"Quercus suber"` (Cork oak).
 #' }
 #'
-#' **Predictor variables - Bioclimatic (17):**
+#' **Predictor variables:**
 #'
 #' WorldClim v2 bioclimatic variables (excludes bio8 and bio9):
 #' \itemize{
@@ -44,39 +44,19 @@
 #'   \item `bio17`: Precipitation of driest quarter (mm).
 #'   \item `bio18`: Precipitation of warmest quarter (mm).
 #'   \item `bio19`: Precipitation of coldest quarter (mm).
-#' }
-#'
-#' **Predictor variables - NDVI (4):**
-#' \itemize{
 #'   \item `ndvi_average`: Average NDVI.
 #'   \item `ndvi_maximum`: Maximum NDVI.
 #'   \item `ndvi_minimum`: Minimum NDVI.
 #'   \item `ndvi_range`: NDVI range.
-#' }
-#'
-#' **Predictor variables - Solar radiation (4):**
-#' \itemize{
 #'   \item `sun_rad_average`: Average solar radiation (kJ m-2 day-1).
 #'   \item `sun_rad_maximum`: Maximum solar radiation (kJ m-2 day-1).
 #'   \item `sun_rad_minimum`: Minimum solar radiation (kJ m-2 day-1).
 #'   \item `sun_rad_range`: Solar radiation range (kJ m-2 day-1).
-#' }
-#'
-#' **Predictor variables - Land cover (3):**
-#' \itemize{
 #'   \item `landcover_veg_bare`: Percentage of bare ground.
 #'   \item `landcover_veg_herb`: Percentage of herbaceous vegetation.
 #'   \item `landcover_veg_tree`: Percentage of tree cover.
-#' }
-#'
-#' **Predictor variables - Topography (2):**
-#' \itemize{
 #'   \item `topographic_diversity`: Number of unique combinations of elevation, slope, and aspect classes within a neighborhood.
 #'   \item `topo_slope`: Topographic slope in degrees.
-#' }
-#'
-#' **Predictor variables - Human impact (1):**
-#' \itemize{
 #'   \item `human_footprint`: Human footprint index.
 #' }
 #'
@@ -118,18 +98,15 @@
 #' @family quercus
 "quercus"
 
-#' @title Response variable name for quercus dataset
-#' @description Character string with the name of the response variable in [quercus]: `"species"`,
-#' a character column with 9 levels (absence + 8 Quercus species).
+#' @title Response variable name for the dataset `quercus`
+#' @description Character string with the name of the response variable in [quercus].
 #' @usage data(quercus_response)
 #' @format A character string of length 1.
 #' @family quercus
 "quercus_response"
 
-#' @title Predictor variable names for quercus dataset
-#' @description Character vector of 31 predictor variable names from [quercus], covering
-#' bioclimatic (17), NDVI (4), solar radiation (4), land cover (3), topography (2),
-#' and human footprint (1).
+#' @title Predictor variable names for for the dataset `quercus`
+#' @description Character vector of 31 predictor variable names from [quercus].
 #' @usage data(quercus_predictors)
 #' @format A character vector of length 31.
 #' @family quercus
@@ -138,7 +115,7 @@
 #' Download Environmental Raster for quercus
 #'
 #' @description
-#' Downloads and reads the environmental raster associated with the [quercus] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Requires the \pkg{terra} package.
+#' Downloads and reads the environmental raster associated with the [quercus] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `quercus_env.tif` to the working directory, and returns it as a `spatRaster` object.
 #'
 #' @autoglobal
 #' @return SpatRaster object.

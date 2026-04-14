@@ -10,7 +10,7 @@ quercus_extra()
 SpatRaster object.
 }
 \description{
-Downloads and reads the environmental raster associated with the \link{quercus} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository. Requires the \pkg{terra} package.
+Downloads and reads the environmental raster associated with the \link{quercus} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository. Writes the file \code{quercus_env.tif} to the working directory, and returns it as a \code{spatRaster} object.
 }
 \seealso{
 Other quercus: 

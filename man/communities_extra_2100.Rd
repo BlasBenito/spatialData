@@ -10,8 +10,7 @@ communities_extra_2100()
 SpatRaster object.
 }
 \description{
-Downloads and reads the 2100 climate scenario environmental raster associated with the \link{communities}
-dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
+Downloads the future climate (2100) raster associated with the \link{communities} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository. Writes the file \code{communities_2100.tif} in the working directory and returns it as a \code{spatRaster} object.
 }
 \seealso{
 Other communities: 

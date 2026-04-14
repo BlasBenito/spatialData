@@ -3,7 +3,7 @@
 \docType{data}
 \name{plantae}
 \alias{plantae}
-\title{Plant diversity metrics for global ecoregions}
+\title{Plant diversity metrics for the World's Ecoregions}
 \format{
 An sf data frame with 662 rows (ecoregions) and 143 columns:
 
@@ -93,13 +93,9 @@ An sf data frame with 662 rows (ecoregions) and 143 columns:
 \item \code{betadiversity_simpson_genera_grasses}: Simpson dissimilarity for grass genera (Bsim = min(b,c)/(min(b,c)+a)).
 }
 
-\strong{Predictor variables - Sampling bias (1):}
+\strong{Predictor variables:}
 \itemize{
 \item \code{bias_log_records}: Logarithm of the total GBIF records in ecoregion.
-}
-
-\strong{Predictor variables - Geographic/geometric (10):}
-\itemize{
 \item \code{geo_neighbors_count}: Number of neighboring ecoregions.
 \item \code{geo_neighbors_area_km2}: Total area of neighboring ecoregions in square kilometers.
 \item \code{geo_neighbors_aridity_mean}: Mean aridity of neighboring ecoregions.
@@ -110,17 +106,9 @@ An sf data frame with 662 rows (ecoregions) and 143 columns:
 \item \code{geo_shared_perimeter_fraction}: Fraction of perimeter shared with neighbors.
 \item \code{geo_distance_to_ocean}: Distance to nearest ocean in kilometers.
 \item \code{geo_elevation_mean}: Mean elevation in meters.
-}
-
-\strong{Predictor variables - Human impact (3):}
-\itemize{
 \item \code{human_population}: Total human population in ecoregion.
 \item \code{human_population_density}: Human population density per square kilometer.
 \item \code{human_footprint_mean}: Mean human footprint index.
-}
-
-\strong{Predictor variables - Climate (34):}
-\itemize{
 \item \code{climate_velocity_lgm_mean}: Mean climate velocity since Last Glacial Maximum.
 \item \code{climate_hypervolume}: Climate hypervolume (niche space size), computed with \code{hypervolume::hypervolume_svm()}.
 \item \code{air_humidity_max}: Maximum near-surface relative humidity (\%).
@@ -155,19 +143,9 @@ An sf data frame with 662 rows (ecoregions) and 143 columns:
 \item \code{temperature_warmest_month}: Maximum temperature of warmest month (degrees C; CHELSA bio5).
 \item \code{temperature_warmest_quarter}: Mean temperature of warmest quarter (degrees C; CHELSA bio10).
 \item \code{temperature_wettest_quarter}: Mean temperature of wettest quarter (degrees C; CHELSA bio8).
-}
-
-\strong{Predictor variables - Landcover (3):}
-\itemize{
 \item \code{landcover_bare_percent_mean}: Mean percentage of bare ground.
 \item \code{landcover_herbs_percent_mean}: Mean percentage of herbaceous vegetation.
 \item \code{landcover_trees_percent_mean}: Mean percentage of tree cover.
-}
-
-\strong{Predictor variables - Fragmentation (19):}
-Computed at 5 km resolution in Lambert Azimuthal Equal-Area projection using
-\code{landscapemetrics} (Hesselbarth et al. 2019).
-\itemize{
 \item \code{fragmentation_ai}: Aggregation index.
 \item \code{fragmentation_area_mn}: Mean patch area.
 \item \code{fragmentation_ca}: Total class area.
@@ -187,10 +165,6 @@ Computed at 5 km resolution in Lambert Azimuthal Equal-Area projection using
 \item \code{fragmentation_shape_mn}: Mean shape index.
 \item \code{fragmentation_tca}: Total core area.
 \item \code{fragmentation_te}: Total edge.
-}
-
-\strong{Predictor variables - Soil (10):}
-\itemize{
 \item \code{soil_clay}: Soil clay content (\%).
 \item \code{soil_nitrogen}: Soil nitrogen content (\%).
 \item \code{soil_organic_carbon}: Soil organic carbon content (\%).
@@ -201,10 +175,6 @@ Computed at 5 km resolution in Lambert Azimuthal Equal-Area projection using
 \item \code{soil_temperature_mean}: Mean soil temperature (degrees C).
 \item \code{soil_temperature_min}: Minimum soil temperature (degrees C).
 \item \code{soil_temperature_range}: Soil temperature range (degrees C).
-}
-
-\strong{Predictor variables - NDVI (4):}
-\itemize{
 \item \code{ndvi_max}: Maximum NDVI (1999-2019).
 \item \code{ndvi_mean}: Mean NDVI (1999-2019).
 \item \code{ndvi_min}: Minimum NDVI (1999-2019).
@@ -217,81 +187,22 @@ Computed at 5 km resolution in Lambert Azimuthal Equal-Area projection using
 }
 }
 \source{
-\strong{Associated publication:}
+\strong{Associated publications:}
 \itemize{
-\item Maestre, F.T., Benito, B.M., Berdugo, M., Concostrina-Zubiri, L., Delgado-Baquerizo, M.,
-Eldridge, D.J., Guirado, E., Gross, N., Kefi, S., Le Bagousse-Pinguet, Y., et al. (2021).
-Biogeography of global drylands. \emph{New Phytologist}, 231(2), 540--558.
-\doi{10.1111/nph.17398}
-}
-
-\strong{Biodiversity data:}
-\itemize{
+\item Maestre, F.T., Benito, B.M., Berdugo, M., Concostrina-Zubiri, L., Delgado-Baquerizo, M., Eldridge, D.J., Guirado, E., Gross, N., Kefi, S., Le Bagousse-Pinguet, Y., et al. (2021). Biogeography of global drylands. \emph{New Phytologist}, 231(2), 540--558. \doi{10.1111/nph.17398}}
 \item GBIF Plantae Dataset (September 15, 2020). \doi{10.15468/dl.xh5y5g}
-}
-
-\strong{Spatial boundaries:}
-\itemize{
 \item Dinerstein, E., et al. (2017). An Ecoregion-Based Approach to Protecting Half the Terrestrial Realm. \emph{BioScience}, 67(6), 534-545. \doi{10.1093/biosci/bix014}
-}
-
-\strong{Climate predictors (precipitation, temperature, atmospheric):}
-\itemize{
 \item Karger, D.N., et al. (2021). Climatologies at high resolution for the earth's land surface areas. EnviDat. \doi{10.16904/envidat.228.v2.1}
-}
-
-\strong{Soil properties:}
-\itemize{
 \item Hengl, T., et al. (2017). SoilGrids250m: Global gridded soil information based on machine learning. \emph{PLOS ONE}, 12(2), e0169748. \doi{10.1371/journal.pone.0169748}
-}
-
-\strong{Soil temperature:}
-\itemize{
 \item Lembrechts, J.J., et al. (2021). Mismatches between soil and air temperature. \emph{Global Change Biology}. \doi{10.1111/gcb.16060}
-}
-
-\strong{NDVI:}
-\itemize{
 \item Copernicus Global Land Service: NDVI Long Term Statistics v3 (1999-2019). \url{https://land.copernicus.eu/en/products/vegetation}
-}
-
-\strong{Landcover and fragmentation:}
-\itemize{
 \item Buchhorn, M., et al. (2020). Copernicus Global Land Service: Land Cover 100m: collection 3: epoch 2019: Globe. Zenodo. \doi{10.5281/zenodo.3939050}
-}
-
-\strong{Topographic/geographic features:}
-\itemize{
 \item CGIAR-CSI SRTM 90m Digital Elevation Database. \url{https://srtm.csi.cgiar.org/}
-}
-
-\strong{Aridity index:}
-\itemize{
 \item Trabucco, A. & Zomer, R.J. (2019). Global Aridity Index and Potential Evapotranspiration Climate Database v2. CGIAR-CSI. \doi{10.6084/m9.figshare.7504448.v3}
-}
-
-\strong{Tree species identification:}
-\itemize{
 \item BGCI (2020). GlobalTreeSearch online database. Botanic Gardens Conservation International. \url{https://tools.bgci.org/global_tree_search.php}
-}
-
-\strong{Fragmentation metrics:}
-\itemize{
 \item Hesselbarth, M.H.K., et al. (2019). landscapemetrics: an open-source R tool to calculate landscape metrics. \emph{Ecography}, 42(10), 1648-1657. \doi{10.1111/ecog.04617}
-}
-
-\strong{Beta diversity methodology:}
-\itemize{
 \item Koleff, P., Gaston, K.J. & Lennon, J.J. (2003). Measuring beta diversity for presence-absence data. \emph{Journal of Animal Ecology}, 72(3), 367-382. \doi{10.1046/j.1365-2656.2003.00710.x}
-}
-
-\strong{Rarity-weighted richness:}
-\itemize{
 \item Williams, P.H., et al. (1996). A comparison of richness hotspots, rarity hotspots, and complementary areas for conserving diversity of British birds. \emph{Conservation Biology}, 10(1), 155-174.
-}
-
-\strong{Human footprint:}
-\itemize{
 \item Venter, O., et al. (2016). Global terrestrial Human Footprint maps for 1993 and 2009. \emph{Scientific Data}, 3, 160067. \doi{10.1038/sdata.2016.67}
 }
 }
@@ -299,34 +210,24 @@ Biogeography of global drylands. \emph{New Phytologist}, 231(2), 540--558.
 data(plantae)
 }
 \description{
-Plant diversity metrics (richness, rarity, beta diversity) obtained from
-GBIF Plantae records for global ecoregions. Includes metrics for all plants, trees, and grasses
-at species, genus, and family taxonomic levels. Ecoregion boundaries are derived from
-\href{https://ecoregions2017.appspot.com/}{Ecoregions 2017}. Original polygon geometries have been
-converted to point centroids to reduce file size while preserving spatial context.
-Use \code{\link[=plantae_extra]{plantae_extra()}} to download the version with original polygon geometries.
+Plant diversity metrics (richness, rarity, beta diversity) obtained from GBIF Plantae records for the World's Ecoregions. Includes metrics for all plants, trees, and grasses at species, genus, and family taxonomic levels. Ecoregion boundaries are derived from \href{https://ecoregions2017.appspot.com/}{Ecoregions 2017}. Original polygon geometries have been
+converted to point centroids to reduce file size while preserving spatial context. Use \code{\link[=plantae_extra]{plantae_extra()}} to download a full version with original polygon geometries.
 
-The GBIF download comprised \strong{244,830,168 records from 4,741 datasets}, filtered to records
-with coordinates, no geospatial issues, and occurrence status "present".
+The GBIF download comprised \strong{244,830,168 records from 4,741 datasets}, filtered to records with coordinates, no geospatial issues, and occurrence status "present".
 
-\strong{Tree species} were identified by cross-referencing GBIF records with the BGCI Global Tree
-Search database (BGCI 2020). \strong{Grasses} were defined as members of family Poaceae.
+\strong{Tree species} were identified by cross-referencing GBIF records with the BGCI Global Tree Search database (BGCI 2020). \strong{Grasses} were defined as members of family Poaceae.
 
-\strong{Rarity-weighted richness}: each taxon is scored with the inverse of
-its number of spatial presence records in GBIF, then scores are summed per ecoregion.
-\strong{Mean rarity} is the mean of these inverse presence record counts per taxon in an ecoregion.
+\strong{Rarity-weighted richness} was computed for each taxon as the inverse of
+its number of spatial presence records in GBIF, then scores are summed per ecoregion, while \strong{mean rarity} is the mean of these inverse presence record counts per taxon in an ecoregion.
 
-\strong{Beta diversity} was computed between each ecoregion and its immediate neighboring ecoregions.
-Sorensen dissimilarity: Bsor = 1 - 2a/(2a+b+c). Simpson dissimilarity:
-Bsim = min(b,c)/(min(b,c)+a), following Koleff et al. (2003).
+\strong{Beta diversity} was computed between each ecoregion and its immediate neighboring ecoregions via Sorensen dissimilarity (\verb{Bsor = 1 - 2a/(2a+b+c)}) and  Simpson dissimilarity (\code{Bsim = min(b,c)/(min(b,c)+a)}), following Koleff et al. (2003).
 
 \strong{Fragmentation metrics} were computed with the R package \code{landscapemetrics}
 (Hesselbarth et al. 2019) at 5 km resolution in Lambert Azimuthal Equal-Area projection.
 
-\strong{Climate hypervolume} was computed using \code{hypervolume::hypervolume_svm()}.
+\strong{Climate hypervolume} was computed using \code{hypervolume::hypervolume_svm()} from the climate predictors.
 
-\strong{Aridity} is computed as 1 minus the aridity index of Trabucco and Zomer (2019), so maximum
-aridity is coded as 1.
+\strong{Aridity} is computed as 1 minus the aridity index of Trabucco and Zomer (2019), so maximum aridity is coded as 1.
 
 Environmental predictors were extracted as mean pixel values per ecoregion from rasters at
 1 km resolution.

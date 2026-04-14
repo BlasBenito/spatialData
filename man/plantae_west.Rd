@@ -2,22 +2,18 @@
 % Please edit documentation in R/plantae.R
 \name{plantae_west}
 \alias{plantae_west}
-\title{Subset plantae to Western Hemisphere Ecoregions}
+\title{Subset \code{plantae} to Western Hemisphere Ecoregions}
 \usage{
 plantae_west()
 }
 \value{
-sf data.frame with American ecoregions and columns: 5 identifiers,
-\code{richness_species}, 84 predictors, and point geometry (WGS84).
+sf data.frame.
 }
 \description{
 Returns a subset of the \link{plantae} dataset filtered to American ecoregions
 (\code{ecoregion_continent == "Americas"}) with \code{richness_species}
 (overall plant species richness) as the only response variable. All 84
 predictor variables and identifier columns are retained.
-
-This subset matches the example data used in the
-\href{https://blasbenito.github.io/spatialRF/}{spatialRF} package.
 }
 \examples{
 west <- plantae_west()

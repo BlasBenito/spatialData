@@ -3,17 +3,17 @@
 \docType{data}
 \name{linaria}
 \alias{linaria}
-\title{\emph{Linaria nigricans} Presence and Greenhouses in Eastern Andalusia}
+\title{Presence of \emph{Linaria nigricans} and greenhouses in Eastern Andalusia}
 \format{
 An sf data frame with 7386 rows (presences and background points) and 25 columns:
 
-\strong{Response variables (2):}
+\strong{Response variables:}
 \itemize{
 \item \code{linaria_nigricans}: Binary integer (1 = confirmed \emph{Linaria nigricans} presence, 0 = greenhouse presence or background point).
 \item \code{greenhouses}: Binary integer (1 = greenhouse presence, 0 = \emph{Linaria nigricans} presence or background point).
 }
 
-\strong{Predictor variables - Landsat (7):}
+\strong{Predictor variables:}
 \itemize{
 \item \code{landsat_band_1}: Landsat TM Band 1 — Blue (0.45–0.52 µm), surface reflectance.
 \item \code{landsat_band_2}: Landsat TM Band 2 — Green (0.52–0.60 µm), surface reflectance.
@@ -22,30 +22,14 @@ An sf data frame with 7386 rows (presences and background points) and 25 columns
 \item \code{landsat_band_5}: Landsat TM Band 5 — Short-wave infrared 1 (1.55–1.75 µm), surface reflectance.
 \item \code{landsat_band_6}: Landsat TM Band 6 — Thermal infrared (10.4–12.5 µm), brightness temperature (K).
 \item \code{landsat_ndvi}: Normalized Difference Vegetation Index derived from Landsat bands 3 and 4.
-}
-
-\strong{Predictor variables - Rainfall (2):}
-\itemize{
 \item \code{rainfall_annual}: Total annual rainfall (mm).
 \item \code{rainfall_summer}: Total summer rainfall (mm, June–September).
-}
-
-\strong{Predictor variables - Solar radiation (2):}
-\itemize{
 \item \code{solar_radiation_summer}: Mean daily solar radiation in summer (kJ m-2 day-1).
 \item \code{solar_radiation_winter}: Mean daily solar radiation in winter (kJ m-2 day-1).
-}
-
-\strong{Predictor variables - Temperature (4):}
-\itemize{
 \item \code{temperature_summer_max}: Mean maximum temperature in summer (degrees C).
 \item \code{temperature_summer_min}: Mean minimum temperature in summer (degrees C).
 \item \code{temperature_winter_max}: Mean maximum temperature in winter (degrees C).
 \item \code{temperature_winter_min}: Mean minimum temperature in winter (degrees C).
-}
-
-\strong{Predictor variables - Topography (5):}
-\itemize{
 \item \code{topography_eastness}: Eastward component of aspect (sin of aspect in radians).
 \item \code{topography_elevation}: Elevation above sea level (m).
 \item \code{topography_northness}: Northward component of aspect (cos of aspect in radians).
@@ -72,12 +56,6 @@ zones: a case study of \emph{Linaria nigricans} under land use changes (SE Spain
 \doi{10.1007/s00267-011-9663-y}
 }
 
-\strong{Species occurrence data:}
-\itemize{
-\item Original field surveys conducted by B.M. Benito in SE Spain (Sierra Nevada and
-surrounding arid zones).
-}
-
 \strong{Landsat imagery:}
 \itemize{
 \item Nunes de Lima, M. V. (Ed.) (2005). \emph{IMAGE2000 and CLC2000 -- Products and methods}. Joint Research Centre, Institute for Environment and Sustainability, and European Environment Agency. Publications Office of the European Union. \url{https://op.europa.eu/en/publication-detail/-/publication/84dd2bad-14d9-4a65-9b92-3b4507d09e44/language-en}
@@ -101,7 +79,7 @@ data(linaria)
 \emph{Linaria nigricans}, greenhouses, and background points from Eastern Andalusia (Spain). The dataframe contains 2 response variables (see \link{linaria_responses}), and 20 numeric predictors (see \link{linaria_predictors}). Use \code{\link[=linaria_extra]{linaria_extra()}} to download the associated environmental raster.
 
 The dataset combines species presence records,
-greenhouse presence records (representing competing land use), and randomly
+greenhouse presence records (representing a competing land use), and randomly
 sampled background points. Species presences and greenhouse presences were
 spatially thinned at 400 m to remove redundancy at the raster resolution.
 Background points were randomly sampled within the extent of the presence

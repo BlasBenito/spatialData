@@ -3,7 +3,7 @@
 \docType{data}
 \name{neanderthal}
 \alias{neanderthal}
-\title{Neanderthal Presence and Pseudo-Absence Records with Environmental Predictors}
+\title{Neanderthal presence in the Last Interglacial}
 \format{
 An sf data frame with 245 rows (presence and pseudo-absence sites) and 27 columns:
 
@@ -12,12 +12,10 @@ An sf data frame with 245 rows (presence and pseudo-absence sites) and 27 column
 \item \code{presence}: Binary integer (1 = Neanderthal presence site, 0 = pseudo-absence site).
 }
 
-\strong{Predictor variables - Palaeoclimatic (19):}
+\strong{Predictor variables:}
 
 Bioclimatic variables derived from a Last Interglacial GCM simulation
-(Otto-Bliesner et al. 2006), downscaled following the method of Hijmans et al. (2005).
-These are analogous to the standard WorldClim bioclimatic variables but represent
-Last Interglacial (MIS 5e) conditions rather than modern climate:
+(Otto-Bliesner et al. 2006), downscaled following the method of Hijmans et al. (2005). These are analogous to the standard WorldClim bioclimatic variables but represent Last Interglacial (MIS 5e) conditions rather than modern climate:
 \itemize{
 \item \code{bio1}: Annual mean temperature (degrees C).
 \item \code{bio2}: Mean diurnal range (degrees C).
@@ -38,10 +36,6 @@ Last Interglacial (MIS 5e) conditions rather than modern climate:
 \item \code{bio17}: Precipitation of driest quarter (mm).
 \item \code{bio18}: Precipitation of warmest quarter (mm).
 \item \code{bio19}: Precipitation of coldest quarter (mm).
-}
-
-\strong{Predictor variables - Topography (6):}
-\itemize{
 \item \code{topo_aspect}: Aspect in degrees.
 \item \code{topo_diversity_local}: Local topographic diversity.
 \item \code{topo_diversity}: Regional topographic diversity.
@@ -81,11 +75,7 @@ Last Interglacial (MIS 5e) conditions rather than modern climate:
 data(neanderthal)
 }
 \description{
-\code{sf} data frame with \code{POINT} geometry containing 245 records of Neanderthal presence
-and pseudo-absence sites from Marine Isotope Stage 5e (Last Interglacial) in Europe
-and the Near East, 1 response variable (see \link{neanderthal_response}), and 25 predictors
-(see \link{neanderthal_predictors}).
-Use \code{\link[=neanderthal_extra]{neanderthal_extra()}} to download the associated environmental raster.
+\code{sf} data frame with \code{POINT} geometry containing records of Neanderthal presence from Marine Isotope Stage 5e (Last Interglacial) in Europe and the Near East, 1 response variable (see \link{neanderthal_response}), and 25 predictors (see \link{neanderthal_predictors}). Use \code{\link[=neanderthal_extra]{neanderthal_extra()}} to download the associated environmental raster.
 }
 \seealso{
 Other neanderthal: 

@@ -3,7 +3,7 @@
 \docType{data}
 \name{neanderthal_predictors}
 \alias{neanderthal_predictors}
-\title{Predictor variable names for neanderthal dataset}
+\title{Predictor variable names for the dataset \code{neanderthal}}
 \format{
 A character vector of length 25.
 }
@@ -11,8 +11,7 @@ A character vector of length 25.
 data(neanderthal_predictors)
 }
 \description{
-Character vector of 25 predictor variable names from \link{neanderthal}, covering
-palaeoclimatic (19) and topography (6).
+Character vector of 25 predictor variable names from \link{neanderthal}.
 }
 \seealso{
 Other neanderthal: 

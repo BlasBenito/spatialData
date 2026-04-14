@@ -3,7 +3,7 @@
 \docType{data}
 \name{interaction_responses}
 \alias{interaction_responses}
-\title{Response variable names for interaction dataset}
+\title{Response variable names for the dataset \code{interaction}}
 \format{
 A character vector of length 3.
 }
@@ -11,9 +11,7 @@ A character vector of length 3.
 data(interaction_responses)
 }
 \description{
-Character vector of 3 response variable names from \link{interaction}:
-\code{"butterfly"} and \code{"host_plant"} (integer with 1 = presence, 0 = background, NA = not surveyed at opposite-species sites), and
-\code{"class"} (factor with levels \code{"butterfly"}, \code{"host_plant"}, and \code{"background"}).
+Character vector of 3 response variable names from \link{interaction}.
 }
 \seealso{
 Other interaction: 

@@ -3,9 +3,9 @@
 \docType{data}
 \name{interaction}
 \alias{interaction}
-\title{Species Interaction Dataset: Butterfly and Host Plant in Sierra Nevada (SE Spain)}
+\title{Butterfly and host plant presence in Sierra Nevada (SE Spain)}
 \format{
-A data frame with 1,000 rows (presence and background points) and 13 columns:
+An \code{sf} dataframe  with 1,000 rows (presence and background points) and 13 columns:
 
 \strong{Response variables (3):}
 \itemize{
@@ -14,36 +14,32 @@ A data frame with 1,000 rows (presence and background points) and 13 columns:
 \item \code{class}: Factor with three levels: \code{"butterfly"}, \code{"host_plant"}, and \code{"background"}, indicating the observation type of each record.
 }
 
-\strong{Predictor variables - Remote sensing (3):}
+\strong{Predictor variables:}
 \itemize{
 \item \code{landsat_ndvi}: Normalized Difference Vegetation Index derived from Landsat imagery.
 \item \code{landsat_pca_bands_123}: First principal component of Landsat bands 1, 2, and 3 (visible).
 \item \code{landsat_pca_bands_457}: First principal component of Landsat bands 4, 5, and 7 (infrared).
-}
-
-\strong{Predictor variables - Climate (5):}
-\itemize{
 \item \code{rainfall_annual}: Mean annual rainfall (mm).
 \item \code{solar_radiation}: Mean annual solar radiation (MJ m\eqn{^{-2}} day\eqn{^{-1}}).
 \item \code{temperature_annual_mean}: Mean annual temperature (degrees C).
 \item \code{temperature_summer_max}: Maximum summer temperature (degrees C).
 \item \code{temperature_winter_min}: Minimum winter temperature (degrees C).
-}
-
-\strong{Predictor variables - Topography (2):}
-\itemize{
 \item \code{topographic_complexity}: Index of terrain ruggedness and heterogeneity.
 \item \code{topographic_position}: Relative elevation of a cell compared to its surroundings.
+}
+
+\strong{Geometry:}
+\itemize{
+\item \code{geometry}: Point geometry (ETRS89 / UTM zone 30N, EPSG:25830).
 }
 }
 \source{
 \strong{Species occurrences:}
 \itemize{
-\item Butterfly (\emph{Agriades zullichi}) and host plant (\emph{Androsace vitaliana}) field records collected in the Sierra Nevada mountain range (SE Spain).
 \item Barea-Azcón, J.M., Benito, B.M., Olivares, F.J., Ruiz, H., Martín, J., García, A.L., & López, R. (2014). Distribution and conservation of the relict interaction between the butterfly \emph{Agriades zullichi} and its larval foodplant (\emph{Androsace vitaliana nevadensis}). \emph{Biodiversity and Conservation}, 23(4), 927–944. \doi{10.1007/s10531-014-0643-4}
 }
 
-\strong{Remote sensing:}
+\strong{Remote sensing data:}
 \itemize{
 \item Nunes de Lima, M. V. (Ed.) (2005). \emph{IMAGE2000 and CLC2000 -- Products and methods}. Joint Research Centre, Institute for Environment and Sustainability, and European Environment Agency. Publications Office of the European Union. \url{https://op.europa.eu/en/publication-detail/-/publication/84dd2bad-14d9-4a65-9b92-3b4507d09e44/language-en}
 }
@@ -57,9 +53,7 @@ A data frame with 1,000 rows (presence and background points) and 13 columns:
 data(interaction)
 }
 \description{
-Data frame with co-occurrence records for the butterfly \emph{Agriades zullichi} (\code{butterfly}) and its host plant \emph{Androsace vitaliana} (\code{host_plant}) in the Sierra Nevada mountain range (SE Spain), combined with random background points. Contains 3 response variables (see \link{interaction_responses}) and 10 numeric environmental predictors at 100 m resolution (see \link{interaction_predictors}).
-The butterfly and host plant surveys were conducted independently by separate field teams; their presence records are spatially non-overlapping.
-Use \code{\link[=interaction_extra]{interaction_extra()}} to download the associated environmental raster.
+\code{sf} dataframe with co-occurrence records for a butterfly  and its host plant in Sierra Nevada (SE Spain). Contains 3 response variables (see \link{interaction_responses}) and 10 numeric predictors at 100 m resolution (see \link{interaction_predictors}). Use \code{\link[=interaction_extra]{interaction_extra()}} to download the associated environmental raster.
 }
 \seealso{
 Other interaction: 

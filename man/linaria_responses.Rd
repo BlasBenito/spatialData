@@ -3,7 +3,7 @@
 \docType{data}
 \name{linaria_responses}
 \alias{linaria_responses}
-\title{Response variable names for linaria dataset}
+\title{Response variable names for the dataset \code{linaria}}
 \format{
 A character vector of length 2.
 }
@@ -12,9 +12,7 @@ data(linaria_responses)
 }
 \description{
 Character vector of length 2 containing the names of the
-response variables in \link{linaria}: \code{"linaria_nigricans"} (binary integer,
-1 = confirmed \emph{Linaria nigricans} presence) and \code{"greenhouses"} (binary
-integer, 1 = greenhouse presence).
+response variables in \link{linaria}.
 }
 \seealso{
 Other linaria: 

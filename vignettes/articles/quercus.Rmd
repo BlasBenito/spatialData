@@ -8,9 +8,12 @@ output:
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  eval = TRUE,
-  collapse = TRUE,
-  comment = "#>",
+  eval      = TRUE,
+  collapse  = TRUE,
+  comment   = "#>",
+  fig.width = 8,
+  fig.align = "center",
+  dpi = 150,
   out.width = "100%"
 )
 ```

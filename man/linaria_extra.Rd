@@ -11,10 +11,7 @@ SpatRaster object with 20 layers.
 }
 \description{
 Downloads and reads the 20-band environmental raster associated with the \link{linaria} dataset
-from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
-The raster covers Eastern Andalusia, Spain, at 400 m resolution (EPSG:25830) and includes
-Landsat reflectance, climate, and topographic predictors (see \link{linaria_predictors}).
-Requires the \pkg{terra} package.
+from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository. Writes the file \code{linaria_env.tif} in the working directory and returns it as a \code{spatRaster} object.
 }
 \seealso{
 Other linaria: 

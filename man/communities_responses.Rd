@@ -3,7 +3,7 @@
 \docType{data}
 \name{communities_responses}
 \alias{communities_responses}
-\title{Response variable names for communities dataset}
+\title{Response variable names for the dataset \code{communities}}
 \format{
 A character vector of length 6.
 }
@@ -11,9 +11,7 @@ A character vector of length 6.
 data(communities_responses)
 }
 \description{
-Character vector of 6 response variable names from \link{communities}:
-\code{"community"} (multi-class character), plus 5 binary columns for individual
-plant community types.
+Character vector of 6 response variable names from \link{communities}.
 }
 \seealso{
 Other communities: 

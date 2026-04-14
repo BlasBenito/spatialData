@@ -7,10 +7,10 @@
 communities_extra_2010()
 }
 \value{
-SpatRaster object.
+spatRaster object.
 }
 \description{
-Downloads and reads the baseline (2010) environmental raster associated with the \link{communities} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
+Downloads the baseline (2010) environmental raster associated with the \link{communities} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository. Writes the file \code{communities_2010.tif} in the working directory and returns it as a \code{spatRaster} object.
 }
 \seealso{
 Other communities: 

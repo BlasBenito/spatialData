@@ -3,7 +3,7 @@
 \docType{data}
 \name{andalusia}
 \alias{andalusia}
-\title{Presence Records of 90 Plant Species and Background Points from Andalusia, Spain}
+\title{Presence records of 90 plant species and background points from Andalusia, Spain}
 \format{
 An sf data frame with 46,465 rows (presences and background points) and 3 columns:
 
@@ -14,7 +14,7 @@ An sf data frame with 46,465 rows (presences and background points) and 3 column
 }
 }
 \source{
-\strong{Published study, data preparation, and species occurrence data:}
+\strong{Published study:}
 \itemize{
 \item Benito, B.M., Lorite, J., Pérez-Pérez, R., Gómez-Aparicio, L., & Peñas, J. (2014). Forecasting plant range collapse in a mediterranean hotspot: when dispersal uncertainties matter. \emph{Diversity and Distributions}, 20(1), 72--83. \doi{10.1111/ddi.12148}
 }
@@ -40,7 +40,7 @@ data(andalusia)
 \description{
 \code{sf} long format data frame with \code{POINT} geometry and CRS ETRS89 / UTM zone 30N (EPSG:25830), containing 37,773 presence records for 90 plant species and 8,692 background points (46,465 rows total) from Andalusia, Spain.
 
-The dataset contains 3 columns (species, presence, geometry). Environmental predictors for each point can be extracted from the companion raster returned by \code{\link[=andalusia_extra]{andalusia_extra()}}; predictor names are stored in \link{andalusia_predictors}.
+The dataset contains 3 columns (species, presence, geometry). Environmental predictors for each point can be extracted from the companion raster returned by \code{\link[=andalusia_extra]{andalusia_extra()}}. Predictor names are stored in \link{andalusia_predictors}.
 }
 \seealso{
 Other andalusia: 

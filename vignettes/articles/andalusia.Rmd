@@ -11,15 +11,18 @@ knitr::opts_chunk$set(
   eval      = TRUE,
   collapse  = TRUE,
   comment   = "#>",
+  fig.width = 8,
+  fig.align = "center",
+  dpi = 150,
   out.width = "100%"
 )
 ```
 
 ## Overview
 
-The `andalusia` dataset is an `sf` data frame with coordinate reference system ETRS89 / UTM zone 30N (EPSG:25830), containing 37,773 presence records for 90 plant species and 8,692 background points (46,465 rows total) from Andalusia, Spain. The data frame has only 3 columns: `species` (character), `presence` (integer), and `geometry` (POINT).
+The `andalusia` dataset is an `sf` data frame  containing presence records for 90 plant species and  background points from Andalusia, Spain. 
 
-Environmental predictors are **not** columns in `andalusia` — they live in the companion 20-layer raster downloaded via `andalusia_extra()`, and their names are stored in `andalusia_predictors`.
+Environmental predictors are in the companion raster downloaded via `andalusia_extra()`, and their names are stored in `andalusia_predictors`.
 
 This dataset is well suited for multi-species SDMs, multiclass classification, and spatial richness mapping.
 
@@ -72,6 +75,12 @@ The dataset is an `sf` data frame with `r nrow(andalusia)` rows and `r ncol(anda
 dplyr::glimpse(andalusia)
 ```
 
+The data frame has 3 columns: 
+
+- `species` (character): species names.
+- `presence` (integer): with value 1 for plant species and 0 for background points.
+- `geometry` (POINT): with coordinate reference system ETRS89 / UTM zone 30N (EPSG:25830).
+
 The `species` column identifies each record as a named species or `"background"`. The table below shows the number of records per species or group.
 
 ```{r}
@@ -82,7 +91,7 @@ andalusia |>
   dplyr::arrange(dplyr::desc(n))
 ```
 
-Background points were generated randomly across the entire study area to sample the range of environmental conditions available.
+Background points were generated randomly across the entire study area to sample the combinations of environmental conditions available.
 
 The map below shows all species presences. Background points were excluded for clarity.
 
@@ -99,14 +108,14 @@ mapview::mapview(
 )
 ```
 
-The environmental raster matching this dataset is downloaded via `andalusia_extra()`, which returns a multilayer `SpatRaster` object (R package [`terra`](https://cran.r-project.org/package=terra)).
+The environmental raster matching this dataset is downloaded via `andalusia_extra()`, which returns a multilayer `spatRaster` object (R package [`terra`](https://cran.r-project.org/package=terra)).
 
 ```{r load_raster, message = FALSE}
 andalusia_env <- spatialData::andalusia_extra()
 plot(andalusia_env)
 ```
 
-The `SpatRaster` object contains `r length(andalusia_predictors)` layers, all named in the vector `andalusia_predictors`.
+The `spatRaster` object contains `r length(andalusia_predictors)` layers, all named in the vector `andalusia_predictors`.
 
 ```{r}
 andalusia_predictors
@@ -118,11 +127,11 @@ Each cell of the raster dataset represents 400 × 400 meters on the ground.
 terra::res(andalusia_env)
 ```
 
-To pair records in `andalusia` with the cell values in `andalusia_env`, we use `terra::extract()`.
+To pair records in `andalusia` with the cell values in `andalusia_env` we use `terra::extract()`.
 
 
 ```{r}
-env_df <- terra::extract(
+andalusia_env_df <- terra::extract(
   x = andalusia_env,
   y = andalusia,
   ID = FALSE
@@ -130,14 +139,14 @@ env_df <- terra::extract(
 
 andalusia <- dplyr::bind_cols(
   andalusia,
-  env_df
+  andalusia_env_df
 ) |> 
   na.omit()
 
 dplyr::glimpse(andalusia)
 ```
 
-To speed up code execution in the next section, we are going to reduce the resolution of `andalusia_env` by a factor of 4 via aggregation.
+To speed up code execution in the next section, below we reduce the resolution of `andalusia_env` by a factor of 4 via aggregation.
 
 ```{r}
 andalusia_env <- terra::aggregate(
@@ -151,31 +160,29 @@ res(andalusia_env)
 
 ## Example Usage
 
-This section demonstrates a complete multi-species distribution modelling workflow:
+In this section we use the `andalusia` dataset to build a plant richness model by adding per-species binary predictions predicted from random forest models trained with [`ranger::ranger()`](https://cran.r-project.org/package=ranger).
 
-- **Species Distribution Modelling**: fit a `ranger::ranger()` binary random forest for *Pinus halepensis*, then loop over all species.
-- **Species Richness Map**: sum binary predictions to produce a species richness raster.
-
-Before fitting models, we convert `presence` to a factor (required by `ranger` for classification) and split the data into two objects: `species` (presence records) and `background`.
+Before fitting models, we convert `presence` to a factor (required by `ranger` for classification modelling) and split the data into two objects: `species` (presence records) and `background`.
 
 ```{r}
+#convert to factor
 andalusia <- andalusia |>
   dplyr::mutate(
     presence = factor(presence)
   )
 
+#separate background data
 background <- andalusia |>
   dplyr::filter(
     species == "background"
   )
 
+#separate species data
 species <- andalusia |>
   dplyr::filter(
     species != "background"
   )
 ```
-
-
 
 
 ### Modelling steps for one species
@@ -195,7 +202,7 @@ species_data <- species |>
     )
 ```
 
-Next, we build a 10 km buffer around the species presences to exclude background points that fall within it — records too close to presences would dilute the contrast the model needs to learn habitat boundaries.
+Next, we build a 10 km buffer around the species presences to exclude background points too close to presences. This operation helps enhance the contrast between environmental conditions the model needs to learn habitat boundaries.
 
 ```{r}
 species_data_buffer <- sf::st_buffer(
@@ -209,6 +216,7 @@ species_data_buffer <- sf::st_buffer(
 We then identify which background points fall outside the buffer using `sf::st_contains()` and retain only those.
 
 ```{r}
+#identify background outside the presence buffer
 background_outside_buffer <- !sf::st_contains(
   x = species_data_buffer,
   y = background,
@@ -216,16 +224,19 @@ background_outside_buffer <- !sf::st_contains(
 ) |>
   as.vector()
 
+#select background outside the presence buffer
 species_background <- background[background_outside_buffer, ]
 ```
 
 The map below shows the 10 km buffer around the species presences and the background points that remain after filtering.
 
 ```{r}
-mapview(species_data_buffer, col.regions = "gray50") + mapview(species_background, col.regions = "red4")
+mapview(species_data, layer.name = "Presence records", col.regions = "black") +
+mapview(species_data_buffer, col.regions = "gray50", layer.name = "Presence buffer") + 
+  mapview(species_background, col.regions = "red4", layer.name = "Background")
 ```
 
-We combine the species presences and the filtered background into one training data frame.
+To finish the data preparation we combine the species presences and the filtered background into a single training data frame.
 
 ```{r}
 species_data <- dplyr::bind_rows(
@@ -235,7 +246,7 @@ species_data <- dplyr::bind_rows(
 ```
 
 
-We train a binary random forest using all predictors and class weights to account for the imbalance between presences and background records. `num.trees = 100` and `min.node.size = 30` are set below their defaults (500 and 5, respectively) to reduce computation time — increase them for production models.
+We train a binary random forest using all predictors and class weights to account for the imbalance between presences and background records. `num.trees = 100` and `min.node.size = 30` are set below their defaults (500 and 5, respectively) to reduce computation time. It's recommended to increase them for production models!
 
 ```{r}
 species_model <- ranger::ranger(
@@ -249,18 +260,14 @@ species_model <- ranger::ranger(
 )
 ```
 
-We then apply the fitted model to every cell of `andalusia_env` to produce a binary habitat suitability raster.
+We then predict the fitted binary model to every cell of the raster `andalusia_env` to produce a presence/absence raster.
 
 ```{r}
 species_prediction <- terra::predict(
   object = andalusia_env,
   model = species_model
 )
-```
 
-The prediction is a binary map.
-
-```{r}
 mapview(
   species_data |> 
     dplyr::filter(
@@ -279,10 +286,11 @@ mapview(
   )
 ```
 
-
 ### Modelling all species
 
-We extract the names of all 90 species to iterate over them.
+In this section we apply the steps above to the 90 plant species in `andalusia`.
+
+First we extract their names to iterate over them.
 
 ```{r}
 species_names <- andalusia |>
@@ -293,7 +301,7 @@ species_names <- andalusia |>
 species_names
 ```
 
-We now apply the same modelling pipeline to all 90 species. The result is a list of per-species binary rasters, stacked into a single `SpatRaster` with `terra::rast()`.
+We now apply the same modelling pipeline to all 90 species. The result is a list of per-species binary rasters, stacked into a single `spatRaster` with `terra::rast()`.
 
 ```{r}
 species_predictions <- lapply(
@@ -325,11 +333,11 @@ species_predictions <- lapply(
 
     species_model <- ranger::ranger(
       formula = presence ~ .,
-      data = sf::st_drop_geometry(species_data)[, c("presence", andalusia_predictors)],
+      data = sf::st_drop_geometry(species_data[, c("presence", andalusia_predictors)]),
       case.weights = collinear::case_weights(
         x = species_data$presence
       ),
-      num.trees     = 100,
+      num.trees = 100,
       min.node.size = 30
     )
 
@@ -342,16 +350,19 @@ species_predictions <- lapply(
   terra::rast()
 ```
 
-### Species Richness Map
 
 Because each model is a binary classifier, every per-species prediction is already a 0/1 raster: 1 where the model predicts suitable habitat, 0 elsewhere. Summing these layers gives a species richness raster where each pixel counts how many of the 90 species have predicted suitable habitat at that location.
 
 ```{r}
 species_predictions_sum <- sum(species_predictions)
 
+species_predictions_sum <- terra::mask(
+  x = species_predictions_sum,
+  mask = andalusia_env[[1]]
+)
+
 mapview(
-  species_predictions_sum,
-  col.regions = viridis::turbo(n = 100)
+  species_predictions_sum
 )
 ```
 

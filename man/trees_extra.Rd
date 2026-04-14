@@ -10,7 +10,7 @@ trees_extra()
 sf data frame with POINT geometry (WGS84, EPSG:4326) and columns \code{species} and \code{source}.
 }
 \description{
-Downloads and reads an \code{sf} dataframe with the tree species presence records associated with the \link{trees} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository.
+Downloads and reads an \code{sf} dataframe with the tree species presence records associated with the \link{trees} dataset from the \href{https://github.com/BlasBenito/spatialDataExtra}{spatialDataExtra} repository. Writes the file \code{trees_presence.gpkg} to the working folder, and returns it as an \code{sf} dataframe.
 }
 \seealso{
 Other trees: 

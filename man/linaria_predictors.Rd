@@ -3,7 +3,7 @@
 \docType{data}
 \name{linaria_predictors}
 \alias{linaria_predictors}
-\title{Predictor variable names for linaria dataset}
+\title{Predictor variable names for the dataset \code{linaria}}
 \format{
 A character vector of length 20.
 }

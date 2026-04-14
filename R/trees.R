@@ -1,4 +1,4 @@
-#' @title Tree Species Richness and Environmental Predictors
+#' @title Mesoamerican tree species richness
 #'
 #' @description
 #' `sf` data frame with `POLYGON` geometry representing 3,373 hexagonal grid cells across the Americas, with 1 response variable encoding tree species richness and 50 numeric environmental predictors.
@@ -21,37 +21,21 @@
 #'   \item `trees`: Integer count of tree species richness per hexagonal cell.
 #' }
 #'
-#' **Predictor variables - Air humidity (4):**
+#' **Predictor variables:**
 #' \itemize{
 #'   \item `air_humidity_max`: Maximum monthly near-surface relative humidity (%).
 #'   \item `air_humidity`: Mean annual near-surface relative humidity (%).
 #'   \item `air_humidity_min`: Minimum monthly near-surface relative humidity (%).
 #'   \item `air_humidity_range`: Annual near-surface relative humidity range (%).
-#' }
-#'
-#' **Predictor variables - Aridity (1):**
-#' \itemize{
 #'   \item `aridity`: Mean aridity index (unitless ratio; higher values indicate wetter conditions).
-#' }
-#'
-#' **Predictor variables - Cloud cover (4):**
-#' \itemize{
 #'   \item `cloud_cover_max`: Maximum monthly total cloud cover (%).
 #'   \item `cloud_cover`: Mean annual total cloud cover (%).
 #'   \item `cloud_cover_min`: Minimum monthly total cloud cover (%).
 #'   \item `cloud_cover_range`: Annual total cloud cover range (%).
-#' }
-#'
-#' **Predictor variables - Evapotranspiration (4):**
-#' \itemize{
 #'   \item `evapotranspiration_max`: Maximum monthly potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
 #'   \item `evapotranspiration`: Mean annual potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
 #'   \item `evapotranspiration_min`: Minimum monthly potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
 #'   \item `evapotranspiration_range`: Annual potential evapotranspiration range (kg m-2 month-1; Penman-Monteith).
-#' }
-#'
-#' **Predictor variables - Rainfall (8):**
-#' \itemize{
 #'   \item `rainfall_seasonality`: Precipitation seasonality as coefficient of variation of monthly totals (CHELSA bio15).
 #'   \item `rainfall`: Total annual precipitation (kg m-2; CHELSA bio12).
 #'   \item `rainfall_coldest_quarter`: Precipitation of coldest quarter (kg m-2; CHELSA bio19).
@@ -60,10 +44,6 @@
 #'   \item `rainfall_warmest_quarter`: Precipitation of warmest quarter (kg m-2; CHELSA bio18).
 #'   \item `rainfall_wettest_month`: Precipitation of wettest month (kg m-2; CHELSA bio13).
 #'   \item `rainfall_wettest_quarter`: Precipitation of wettest quarter (kg m-2; CHELSA bio16).
-#' }
-#'
-#' **Predictor variables - Temperature (11):**
-#' \itemize{
 #'   \item `temperature_isothermality`: Isothermality as ratio of mean daily range to annual range (unitless; CHELSA bio3).
 #'   \item `temperature_mean_daily_range`: Mean of monthly temperature ranges (degrees C; CHELSA bio2).
 #'   \item `temperature`: Mean annual air temperature (degrees C; CHELSA bio1).
@@ -75,36 +55,20 @@
 #'   \item `temperature_warmest_month_max`: Maximum temperature of warmest month (degrees C; CHELSA bio5).
 #'   \item `temperature_warmest_quarter`: Mean temperature of warmest quarter (degrees C; CHELSA bio10).
 #'   \item `temperature_wettest_quarter`: Mean temperature of wettest quarter (degrees C; CHELSA bio8).
-#' }
-#'
-#' **Predictor variables - Geography (4):**
-#' \itemize{
 #'   \item `distance_to_ocean`: Distance to nearest ocean coastline (km).
 #'   \item `elevation`: Elevation above sea level (m).
 #'   \item `latitude`: Latitude of cell centroid (degrees).
 #'   \item `longitude`: Longitude of cell centroid (degrees).
-#' }
-#'
-#' **Predictor variables - Soil properties (6):**
-#' \itemize{
 #'   \item `soil_clay`: Soil clay content (%).
 #'   \item `soil_nitrogen`: Soil nitrogen content (g kg-1).
 #'   \item `soil_organic_carbon`: Soil organic carbon content (g kg-1).
 #'   \item `soil_ph`: Soil pH in water.
 #'   \item `soil_sand`: Soil sand content (%).
 #'   \item `soil_silt`: Soil silt content (%).
-#' }
-#'
-#' **Predictor variables - Soil temperature (4):**
-#' \itemize{
 #'   \item `soil_temperature_max`: Maximum annual land surface temperature (degrees C).
 #'   \item `soil_temperature`: Mean annual land surface temperature (degrees C).
 #'   \item `soil_temperature_min`: Minimum annual land surface temperature (degrees C).
 #'   \item `soil_temperature_range`: Annual land surface temperature range (degrees C).
-#' }
-#'
-#' **Predictor variables - NDVI (4):**
-#' \itemize{
 #'   \item `ndvi_max`: Maximum annual NDVI (unitless, 0-1).
 #'   \item `ndvi`: Mean annual NDVI (unitless, 0-1).
 #'   \item `ndvi_min`: Minimum annual NDVI (unitless, 0-1).
@@ -124,8 +88,8 @@
 #'
 #' **Response variable (tree species richness):**
 #' \itemize{
-#'   \item GBIF: Global Biodiversity Information Facility. \url{https://www.gbif.org}
 #'   \item Cayuela, L., Gálvez-Bravo, L., Pérez Pérez, R., de Albuquerque, F.S., Golicher, D.J., Zahawi, R.A., et al. (2012). The Tree Biodiversity Network (BIOTREE-NET): prospects for biodiversity research and conservation in the Neotropics. \emph{Biodiversity & Ecology}, 4, 211--224. \doi{10.7809/b-e.00078}
+#'   \item GBIF: Global Biodiversity Information Facility. \url{https://www.gbif.org}
 #' }
 #'
 #' **Climate predictors (temperature, precipitation, air humidity, cloud cover, evapotranspiration):**
@@ -160,20 +124,16 @@
 #' @family trees
 "trees"
 
-#' @title Response variable name for trees dataset
+#' @title Response variable name for the dataset `trees`
 #' @description Character vector of length 1 containing the name of the
-#' response variable in [trees]: `"trees"` (integer count of tree species
-#' richness per hexagonal cell).
+#' response variable in [trees].
 #' @usage data(trees_response)
 #' @format A character vector of length 1.
 #' @family trees
 "trees_response"
 
-#' @title Predictor variable names for trees dataset
-#' @description Character vector of 50 predictor variable names from [trees],
-#' covering air humidity (4), aridity (1), cloud cover (4),
-#' evapotranspiration (4), precipitation (8), temperature (11),
-#' geography (4), soil properties (6), soil temperature (4), and NDVI (4).
+#' @title Predictor variable names for the dataset `trees`
+#' @description Character vector of 50 predictor variable names from [trees].
 #' @usage data(trees_predictors)
 #' @format A character vector of length 50.
 #' @family trees
@@ -182,7 +142,7 @@
 #' Download Presence Records for trees
 #'
 #' @description
-#' Downloads and reads an `sf` dataframe with the tree species presence records associated with the [trees] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository.
+#' Downloads and reads an `sf` dataframe with the tree species presence records associated with the [trees] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `trees_presence.gpkg` to the working folder, and returns it as an `sf` dataframe.
 #'
 #' @autoglobal
 #' @return sf data frame with POINT geometry (WGS84, EPSG:4326) and columns `species` and `source`.

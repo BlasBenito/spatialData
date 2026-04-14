@@ -3,7 +3,7 @@
 \docType{data}
 \name{trees}
 \alias{trees}
-\title{Tree Species Richness and Environmental Predictors}
+\title{Mesoamerican tree species richness}
 \format{
 An sf data frame with 3373 rows (hexagonal cells) and 53 columns:
 
@@ -17,37 +17,21 @@ An sf data frame with 3373 rows (hexagonal cells) and 53 columns:
 \item \code{trees}: Integer count of tree species richness per hexagonal cell.
 }
 
-\strong{Predictor variables - Air humidity (4):}
+\strong{Predictor variables:}
 \itemize{
 \item \code{air_humidity_max}: Maximum monthly near-surface relative humidity (\%).
 \item \code{air_humidity}: Mean annual near-surface relative humidity (\%).
 \item \code{air_humidity_min}: Minimum monthly near-surface relative humidity (\%).
 \item \code{air_humidity_range}: Annual near-surface relative humidity range (\%).
-}
-
-\strong{Predictor variables - Aridity (1):}
-\itemize{
 \item \code{aridity}: Mean aridity index (unitless ratio; higher values indicate wetter conditions).
-}
-
-\strong{Predictor variables - Cloud cover (4):}
-\itemize{
 \item \code{cloud_cover_max}: Maximum monthly total cloud cover (\%).
 \item \code{cloud_cover}: Mean annual total cloud cover (\%).
 \item \code{cloud_cover_min}: Minimum monthly total cloud cover (\%).
 \item \code{cloud_cover_range}: Annual total cloud cover range (\%).
-}
-
-\strong{Predictor variables - Evapotranspiration (4):}
-\itemize{
 \item \code{evapotranspiration_max}: Maximum monthly potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
 \item \code{evapotranspiration}: Mean annual potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
 \item \code{evapotranspiration_min}: Minimum monthly potential evapotranspiration (kg m-2 month-1; Penman-Monteith).
 \item \code{evapotranspiration_range}: Annual potential evapotranspiration range (kg m-2 month-1; Penman-Monteith).
-}
-
-\strong{Predictor variables - Rainfall (8):}
-\itemize{
 \item \code{rainfall_seasonality}: Precipitation seasonality as coefficient of variation of monthly totals (CHELSA bio15).
 \item \code{rainfall}: Total annual precipitation (kg m-2; CHELSA bio12).
 \item \code{rainfall_coldest_quarter}: Precipitation of coldest quarter (kg m-2; CHELSA bio19).
@@ -56,10 +40,6 @@ An sf data frame with 3373 rows (hexagonal cells) and 53 columns:
 \item \code{rainfall_warmest_quarter}: Precipitation of warmest quarter (kg m-2; CHELSA bio18).
 \item \code{rainfall_wettest_month}: Precipitation of wettest month (kg m-2; CHELSA bio13).
 \item \code{rainfall_wettest_quarter}: Precipitation of wettest quarter (kg m-2; CHELSA bio16).
-}
-
-\strong{Predictor variables - Temperature (11):}
-\itemize{
 \item \code{temperature_isothermality}: Isothermality as ratio of mean daily range to annual range (unitless; CHELSA bio3).
 \item \code{temperature_mean_daily_range}: Mean of monthly temperature ranges (degrees C; CHELSA bio2).
 \item \code{temperature}: Mean annual air temperature (degrees C; CHELSA bio1).
@@ -71,36 +51,20 @@ An sf data frame with 3373 rows (hexagonal cells) and 53 columns:
 \item \code{temperature_warmest_month_max}: Maximum temperature of warmest month (degrees C; CHELSA bio5).
 \item \code{temperature_warmest_quarter}: Mean temperature of warmest quarter (degrees C; CHELSA bio10).
 \item \code{temperature_wettest_quarter}: Mean temperature of wettest quarter (degrees C; CHELSA bio8).
-}
-
-\strong{Predictor variables - Geography (4):}
-\itemize{
 \item \code{distance_to_ocean}: Distance to nearest ocean coastline (km).
 \item \code{elevation}: Elevation above sea level (m).
 \item \code{latitude}: Latitude of cell centroid (degrees).
 \item \code{longitude}: Longitude of cell centroid (degrees).
-}
-
-\strong{Predictor variables - Soil properties (6):}
-\itemize{
 \item \code{soil_clay}: Soil clay content (\%).
 \item \code{soil_nitrogen}: Soil nitrogen content (g kg-1).
 \item \code{soil_organic_carbon}: Soil organic carbon content (g kg-1).
 \item \code{soil_ph}: Soil pH in water.
 \item \code{soil_sand}: Soil sand content (\%).
 \item \code{soil_silt}: Soil silt content (\%).
-}
-
-\strong{Predictor variables - Soil temperature (4):}
-\itemize{
 \item \code{soil_temperature_max}: Maximum annual land surface temperature (degrees C).
 \item \code{soil_temperature}: Mean annual land surface temperature (degrees C).
 \item \code{soil_temperature_min}: Minimum annual land surface temperature (degrees C).
 \item \code{soil_temperature_range}: Annual land surface temperature range (degrees C).
-}
-
-\strong{Predictor variables - NDVI (4):}
-\itemize{
 \item \code{ndvi_max}: Maximum annual NDVI (unitless, 0-1).
 \item \code{ndvi}: Mean annual NDVI (unitless, 0-1).
 \item \code{ndvi_min}: Minimum annual NDVI (unitless, 0-1).
@@ -120,8 +84,8 @@ An sf data frame with 3373 rows (hexagonal cells) and 53 columns:
 
 \strong{Response variable (tree species richness):}
 \itemize{
-\item GBIF: Global Biodiversity Information Facility. \url{https://www.gbif.org}
 \item Cayuela, L., Gálvez-Bravo, L., Pérez Pérez, R., de Albuquerque, F.S., Golicher, D.J., Zahawi, R.A., et al. (2012). The Tree Biodiversity Network (BIOTREE-NET): prospects for biodiversity research and conservation in the Neotropics. \emph{Biodiversity & Ecology}, 4, 211--224. \doi{10.7809/b-e.00078}
+\item GBIF: Global Biodiversity Information Facility. \url{https://www.gbif.org}
 }
 
 \strong{Climate predictors (temperature, precipitation, air humidity, cloud cover, evapotranspiration):}

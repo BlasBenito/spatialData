@@ -3,7 +3,7 @@
 \docType{data}
 \name{communities_predictors}
 \alias{communities_predictors}
-\title{Predictor variable names for communities dataset}
+\title{Predictor variable names for the dataset \code{communities}}
 \format{
 A character vector of length 9.
 }
@@ -11,9 +11,7 @@ A character vector of length 9.
 data(communities_predictors)
 }
 \description{
-Character vector of 9 predictor variable names from \link{communities},
-covering climate (6: maximum and minimum summer/winter temperature, summer and
-winter rainfall) and topography (3: northness, slope, topographic wetness index).
+Character vector of 9 predictor variable names from \link{communities}.
 }
 \seealso{
 Other communities: 

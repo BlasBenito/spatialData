@@ -2,13 +2,12 @@
 % Please edit documentation in R/plantae.R
 \name{plantae_east}
 \alias{plantae_east}
-\title{Subset plantae to Eastern Hemisphere Ecoregions}
+\title{Subset \code{plantae} to Eastern Hemisphere Ecoregions}
 \usage{
 plantae_east()
 }
 \value{
-sf data.frame with non-American ecoregions and columns: 5
-identifiers, \code{richness_species}, 84 predictors, and point geometry (WGS84).
+sf data.frame with non-American ecoregions.
 }
 \description{
 Returns a subset of the \link{plantae} dataset filtered to non-American ecoregions

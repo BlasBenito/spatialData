@@ -3,7 +3,7 @@
 \docType{data}
 \name{vi_responses}
 \alias{vi_responses}
-\title{Response variable names for vi dataset}
+\title{Response variable names for the dataset \code{vi}}
 \format{
 A character vector of length 5.
 }
@@ -11,10 +11,7 @@ A character vector of length 5.
 data(vi_responses)
 }
 \description{
-Character vector containing the names of the 5 response variables in \link{vi},
-representing different encodings of NDVI: continuous (\code{vi_numeric}), integer counts
-(\code{vi_counts}), binary (\code{vi_binomial}), categorical (\code{vi_categorical}), and factor
-(\code{vi_factor}).
+Character vector containing the names of the 5 response variables in \link{vi}.
 }
 \seealso{
 Other vi: 
