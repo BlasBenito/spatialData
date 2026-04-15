@@ -9,42 +9,64 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19508673.svg)](https://doi.org/10.5281/zenodo.19508673)
 <!-- badges: end -->
 
-`spatialData` is a data-only R package providing ready-to-use spatial
-datasets for ecological modeling. Each dataset comes pre-processed with
-response variables and environmental predictors, so you can jump
-straight into the analysis without spending time on data preparation.
+The R package `spatialData` provides spatial ecological datasets from
+research papers as sf data frames ready for analysis and modeling. It
+was designed as example data for other spatial R packages, but works
+equally well for tutorials and teaching.
 
 ## Installation
 
 Install the development version from
-[GitHub](https://github.com/blasbenito/spatialData):
+[GitHub](https://github.com/blasbenito/spatialData).
 
 ``` r
-# Option 1: pak (recommended)
-# install.packages("pak")
+library(pak)
 pak::pkg_install("blasbenito/spatialData")
+```
 
-# Option 2: remotes
-# install.packages("remotes")
-remotes::install_github("blasbenito/spatialData")
+## Data Loading
+
+As with other example datasets in the R language, the different datasets
+in `spatialData` can be loaded with the function `data()`.
+
+``` r
+library(spatialData)
+#> 
+#> Attaching package: 'spatialData'
+#> The following object is masked from 'package:datasets':
+#> 
+#>     trees
+data(quercus)
+colnames(quercus)
+#>  [1] "species"               "bio1"                  "bio10"                
+#>  [4] "bio11"                 "bio12"                 "bio13"                
+#>  [7] "bio14"                 "bio15"                 "bio16"                
+#> [10] "bio17"                 "bio18"                 "bio19"                
+#> [13] "bio2"                  "bio3"                  "bio4"                 
+#> [16] "bio5"                  "bio6"                  "bio7"                 
+#> [19] "topographic_diversity" "human_footprint"       "landcover_veg_bare"   
+#> [22] "landcover_veg_herb"    "landcover_veg_tree"    "ndvi_average"         
+#> [25] "ndvi_maximum"          "ndvi_minimum"          "ndvi_range"           
+#> [28] "sun_rad_average"       "sun_rad_maximum"       "sun_rad_minimum"      
+#> [31] "sun_rad_range"         "topo_slope"            "geometry"
 ```
 
 ## Datasets
 
-All datasets are loaded lazily via `data()`. Most are `sf` data frames
-with point or polygon geometries; `interaction` is a plain data frame.
+The table below summarizes the `sf` dataframes currently available in
+`spatialData`:
 
-| Dataset                                                                             | Description                                                              | Spatial scope            | Temporal scope       |   Rows | Responses | Predictors | CRS        | Geometry          |
-|:------------------------------------------------------------------------------------|:-------------------------------------------------------------------------|:-------------------------|:---------------------|-------:|----------:|-----------:|:-----------|:------------------|
-| [`andalusia`](https://blasbenito.github.io/spatialData/articles/andalusia.html)     | Plant presences and environmental predictors                             | Andalusia, Spain         | 2000 - 2010          | 46,465 |         2 |         20 | EPSG:25830 | POINT             |
-| [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | Plant community presence and climate predictors                          | Sierra Nevada, SE Spain  | 2009                 |  7,300 |         6 |          9 | EPSG:25830 | POINT             |
-| [`interaction`](https://blasbenito.github.io/spatialData/articles/interaction.html) | Butterfly and host plant presence and environmental predictors           | Sierra Nevada, SE Spain  | 2014                 |  1,000 |         3 |         10 | EPSG:25830 | POINT             |
-| [`linaria`](https://blasbenito.github.io/spatialData/articles/linaria.html)         | *Linaria nigricans* and greenhouse records with environmental predictors | Eastern Andalusia, Spain |                      |  7,386 |         2 |         20 | EPSG:25830 | POINT             |
-| [`neanderthal`](https://blasbenito.github.io/spatialData/articles/neanderthal.html) | Neanderthal presence/absence and paleoclimate predictors                 | Europe                   | ~120,000 BP (MIS 5e) |    245 |         1 |         25 | EPSG:4326  | POINT             |
-| [`plantae`](https://blasbenito.github.io/spatialData/articles/plantae.html)         | Plant diversity of the global ecoregions                                 | Global                   | 2020                 |    662 |        53 |         84 | EPSG:4326  | POINT (centroids) |
-| [`quercus`](https://blasbenito.github.io/spatialData/articles/quercus.html)         | Distribution of European oaks and bioclimatic predictors                 | Europe                   | present              |  6,728 |         1 |         31 | EPSG:4326  | POINT             |
-| [`trees`](https://blasbenito.github.io/spatialData/articles/trees.html)             | Tree species richness and environmental predictors                       | Americas                 | 2012                 |  3,373 |         1 |         50 | EPSG:4326  | POLYGON           |
-| [`vi`](https://blasbenito.github.io/spatialData/articles/vi.html)                   | NDVI records with environmental predictors                               | Global                   | 1999–2019            |  9,265 |         5 |         58 | EPSG:4326  | POINT             |
+| Dataset | Description | Spatial scope | Temporal scope | Rows | Responses | Predictors | CRS | Geometry |
+|:---|:---|:---|:---|---:|---:|---:|:---|:---|
+| [`andalusia`](https://blasbenito.github.io/spatialData/articles/andalusia.html) | Plant presences and environmental predictors | Andalusia, Spain | 2000 - 2010 | 46,465 | 2 | 20 | EPSG:25830 | POINT |
+| [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | Plant communities | Sierra Nevada, SE Spain | 2009 | 7,300 | 6 | 9 | EPSG:25830 | POINT |
+| [`interaction`](https://blasbenito.github.io/spatialData/articles/interaction.html) | Butterfly & host plant | Sierra Nevada, SE Spain | 2014 | 1,000 | 3 | 10 | EPSG:25830 | POINT |
+| [`linaria`](https://blasbenito.github.io/spatialData/articles/linaria.html) | *Linaria nigricans* vs. greenhouses | Eastern Andalusia, Spain |  | 7,386 | 2 | 20 | EPSG:25830 | POINT |
+| [`neanderthal`](https://blasbenito.github.io/spatialData/articles/neanderthal.html) | Neanderthals during MIS 5e | Europe | ~120,000 BP (MIS 5e) | 245 | 1 | 25 | EPSG:4326 | POINT |
+| [`plantae`](https://blasbenito.github.io/spatialData/articles/plantae.html) | Plant diversity of the World’s Ecoregions | Global | 2020 | 662 | 53 | 84 | EPSG:4326 | POINT (centroids) |
+| [`quercus`](https://blasbenito.github.io/spatialData/articles/quercus.html) | European oaks | Europe | present | 6,728 | 1 | 31 | EPSG:4326 | POINT |
+| [`trees`](https://blasbenito.github.io/spatialData/articles/trees.html) | Tree richness in Mesoamerica | Americas | 2012 | 3,373 | 1 | 50 | EPSG:4326 | POLYGON |
+| [`vi`](https://blasbenito.github.io/spatialData/articles/vi.html) | Global NDVI records | Global | 1999–2019 | 9,265 | 5 | 58 | EPSG:4326 | POINT |
 
 ## Extra Data
 
@@ -52,19 +74,19 @@ Several datasets ship with companion download functions that retrieve
 larger or complementary files from
 [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra).
 
-| Dataset                                                                             | Function                   | Description                                         | Format     | Geometry / Bands | Resolution   | CRS        |
-|:------------------------------------------------------------------------------------|:---------------------------|:----------------------------------------------------|:-----------|:-----------------|:-------------|:-----------|
-| [`andalusia`](https://blasbenito.github.io/spatialData/articles/andalusia.html)     | `andalusia_extra()`        | 20-band environmental raster for Andalusia          | GeoTIFF    | 20 bands         | 400 m        | EPSG:25830 |
-| [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | `communities_extra_2010()` | Baseline (2010) climate raster for Sierra Nevada    | GeoTIFF    | 9 bands          | 100 m        | EPSG:25830 |
-| [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | `communities_extra_2050()` | Projected (2050) climate raster for Sierra Nevada   | GeoTIFF    | 9 bands          | 100 m        | EPSG:25830 |
-| [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | `communities_extra_2100()` | Projected (2100) climate raster for Sierra Nevada   | GeoTIFF    | 9 bands          | 100 m        | EPSG:25830 |
-| [`interaction`](https://blasbenito.github.io/spatialData/articles/interaction.html) | `interaction_extra()`      | 10-band environmental raster for Sierra Nevada      | GeoTIFF    | 10 bands         | 100 m        | EPSG:25830 |
-| [`linaria`](https://blasbenito.github.io/spatialData/articles/linaria.html)         | `linaria_extra()`          | 20-band environmental raster for Eastern Andalusia  | GeoTIFF    | 20 bands         | 400 m        | EPSG:25830 |
-| [`neanderthal`](https://blasbenito.github.io/spatialData/articles/neanderthal.html) | `neanderthal_extra()`      | 25-band palaeoclimate raster (bioclim + topography) | GeoTIFF    | 25 bands         | 0.18°        | EPSG:4326  |
-| [`plantae`](https://blasbenito.github.io/spatialData/articles/plantae.html)         | `plantae_extra()`          | Ecoregion polygons with full diversity data         | GeoPackage | MULTIPOLYGON     | 662 features | EPSG:4326  |
-| [`quercus`](https://blasbenito.github.io/spatialData/articles/quercus.html)         | `quercus_extra()`          | 31-band bioclimatic/environmental raster            | GeoTIFF    | 31 bands         | 0.167°       | EPSG:4326  |
-| [`trees`](https://blasbenito.github.io/spatialData/articles/trees.html)             | `trees_extra()`            | Individual tree species presence points             | GeoPackage | POINT            | 523,308 rows | EPSG:4326  |
-| [`vi`](https://blasbenito.github.io/spatialData/articles/vi.html)                   | `vi_extra()`               | Extended NDVI point dataset (30,000 records)        | GeoPackage | POINT            | 30,000 rows  | EPSG:4326  |
+| Dataset | Function | Description | Format | Geometry / Bands | Resolution | CRS |
+|:---|:---|:---|:---|:---|:---|:---|
+| [`andalusia`](https://blasbenito.github.io/spatialData/articles/andalusia.html) | `andalusia_extra()` | Environmental predictors | GeoTIFF | 20 bands | 400 m | EPSG:25830 |
+| [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | `communities_extra_2010()` | Baseline predictors (2010) | GeoTIFF | 9 bands | 100 m | EPSG:25830 |
+| [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | `communities_extra_2050()` | Projected predictors (2050) | GeoTIFF | 9 bands | 100 m | EPSG:25830 |
+| [`communities`](https://blasbenito.github.io/spatialData/articles/communities.html) | `communities_extra_2100()` | Projected predictors (2100) | GeoTIFF | 9 bands | 100 m | EPSG:25830 |
+| [`interaction`](https://blasbenito.github.io/spatialData/articles/interaction.html) | `interaction_extra()` | Environmental predictors | GeoTIFF | 10 bands | 100 m | EPSG:25830 |
+| [`linaria`](https://blasbenito.github.io/spatialData/articles/linaria.html) | `linaria_extra()` | Environmental predictors | GeoTIFF | 20 bands | 400 m | EPSG:25830 |
+| [`neanderthal`](https://blasbenito.github.io/spatialData/articles/neanderthal.html) | `neanderthal_extra()` | Palaeoclimate and topographic predictors | GeoTIFF | 25 bands | 0.18° | EPSG:4326 |
+| [`plantae`](https://blasbenito.github.io/spatialData/articles/plantae.html) | `plantae_extra()` | Ecoregion polygons with full diversity data | GeoPackage | MULTIPOLYGON | 662 features | EPSG:4326 |
+| [`quercus`](https://blasbenito.github.io/spatialData/articles/quercus.html) | `quercus_extra()` | Environmental predictors | GeoTIFF | 31 bands | 0.167° | EPSG:4326 |
+| [`trees`](https://blasbenito.github.io/spatialData/articles/trees.html) | `trees_extra()` | Individual tree species presence points | GeoPackage | POINT | 523,308 rows | EPSG:4326 |
+| [`vi`](https://blasbenito.github.io/spatialData/articles/vi.html) | `vi_extra()` | Extended NDVI dataset (30,000 records) | GeoPackage | POINT | 30,000 rows | EPSG:4326 |
 
 ## License
 

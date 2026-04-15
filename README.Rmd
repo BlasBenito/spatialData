@@ -27,9 +27,7 @@ The R package `spatialData` provides spatial ecological datasets from research p
 Install the development version from [GitHub](https://github.com/blasbenito/spatialData).
 
 ```{r, eval = FALSE}
-if (!requireNamespace("pak", quietly = TRUE)) {
-  install.packages("pak")
-}
+library(pak)
 pak::pkg_install("blasbenito/spatialData")
 ```
 
