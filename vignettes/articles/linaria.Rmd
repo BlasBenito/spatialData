@@ -200,7 +200,8 @@ linaria_risk <- terra::stretch(
 mapview(
   linaria_risk,
   col.regions  = viridis::turbo(100),
-  layer.name = "Relative risk (0–100)"
+  layer.name = "Relative risk (0–100)",
+  na.color = "transparent"
 ) + 
   mapview(
     linaria |> 

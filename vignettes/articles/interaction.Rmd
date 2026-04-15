@@ -313,7 +313,11 @@ host_plant_prediction <- terra::predict(
 )
 names(host_plant_prediction) <- "host_plant_suitability"
 
-mapview(host_plant_prediction, layer.name = "Host plant suitability")
+mapview(
+  host_plant_prediction, 
+  layer.name = "Host plant suitability",
+  na.color = "transparent"
+  )
 ```
 
 To predict the habitat suitability for the butterfly, we first need to add the raster prediction of the host plant to `sierra_nevada_env`, and then apply `terra::predict()`.
@@ -332,7 +336,11 @@ butterfly_prediction <- terra::predict(
 
 names(butterfly_prediction) <- "butterfly_suitability"
 
-mapview(butterfly_prediction, layer.name = "Butterfly suitability")
+mapview(
+  butterfly_prediction, 
+  layer.name = "Butterfly suitability",
+  na.color = "transparent"
+  )
 ```
 The habitat suitability maps of both species look very similar, but there are actual differences between them. The code below generates a map of differences between predicted suitabilities.
 
@@ -357,14 +365,16 @@ color_breaks <- seq(
   )
 
 #color palette
-color_palette <- grDevices::colorRampPalette(c("#2166AC", "white", "#B2182B"))(length(color_breaks))
+color_palette <- grDevices::colorRampPalette(
+  c("#2166AC", "white", "#B2182B"))(length(color_breaks))
 
 #differences map
 mapview(
   difference_predictions, 
   col.regions = color_palette, 
   at = color_breaks, 
-  layer.name = "Suitability difference"
+  layer.name = "Suitability difference",
+  na.color = "transparent"
   )
 ```
 

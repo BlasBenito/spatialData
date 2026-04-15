@@ -231,9 +231,21 @@ species_background <- background[background_outside_buffer, ]
 The map below shows the 10 km buffer around the species presences and the background points that remain after filtering.
 
 ```{r}
-mapview(species_data, layer.name = "Presence records", col.regions = "black") +
-mapview(species_data_buffer, col.regions = "gray50", layer.name = "Presence buffer") + 
-  mapview(species_background, col.regions = "red4", layer.name = "Background")
+mapview(
+  species_data, 
+  layer.name = "Presence records", 
+  col.regions = "black"
+  ) +
+mapview(
+  species_data_buffer, 
+  col.regions = "gray50", 
+  layer.name = "Presence buffer"
+  ) + 
+  mapview(
+    species_background, 
+    col.regions = "red4", 
+    layer.name = "Background"
+    )
 ```
 
 To finish the data preparation we combine the species presences and the filtered background into a single training data frame.
@@ -263,7 +275,6 @@ species_model <- ranger::ranger(
 We then predict the fitted binary model to every cell of the raster `andalusia_env` to produce a presence/absence raster.
 
 ```{r}
-#predict
 species_prediction <- terra::predict(
   object = andalusia_env,
   model = species_model,
@@ -283,8 +294,7 @@ mapview(
   mapview(
     species_prediction,
     layer.name = paste0("Prediction ", species_name),
-    maxpixels  = terra::ncell(species_prediction),
-    na.alpha   = 0
+    na.color = "transparent"
   )
 ```
 
@@ -361,7 +371,8 @@ species_predictions_sum <- sum(species_predictions)
 
 mapview(
   species_predictions_sum,
-  col.regions = viridis::turbo(n = 10)
+  col.regions = viridis::turbo(n = 10),
+  na.color = "transparent"
 )
 ```
 
