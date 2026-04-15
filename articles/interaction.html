@@ -137,25 +137,11 @@ this tutorial.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Executing `sudo sh -c apt-get -y update`</span></span>
 <span><span class="co">#&gt; Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]</span></span>
 <span><span class="co">#&gt; Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease</span></span>
-<span><span class="co">#&gt; Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]</span></span>
 <span><span class="co">#&gt; Hit:6 https://packages.microsoft.com/repos/azure-cli noble InRelease</span></span>
-<span><span class="co">#&gt; Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]</span></span>
-<span><span class="co">#&gt; Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]</span></span>
 <span><span class="co">#&gt; Hit:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease</span></span>
-<span><span class="co">#&gt; Get:8 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [177 kB]</span></span>
-<span><span class="co">#&gt; Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 c-n-f Metadata [16.9 kB]</span></span>
-<span><span class="co">#&gt; Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [386 kB]</span></span>
-<span><span class="co">#&gt; Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]</span></span>
-<span><span class="co">#&gt; Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]</span></span>
-<span><span class="co">#&gt; Get:13 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7364 B]</span></span>
-<span><span class="co">#&gt; Get:14 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [10.5 kB]</span></span>
-<span><span class="co">#&gt; Get:15 http://azure.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [216 B]</span></span>
-<span><span class="co">#&gt; Get:16 http://azure.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]</span></span>
-<span><span class="co">#&gt; Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [21.5 kB]</span></span>
-<span><span class="co">#&gt; Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [74.2 kB]</span></span>
-<span><span class="co">#&gt; Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Components [212 B]</span></span>
-<span><span class="co">#&gt; Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [212 B]</span></span>
-<span><span class="co">#&gt; Fetched 1074 kB in 0s (2577 kB/s)</span></span>
+<span><span class="co">#&gt; Hit:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease</span></span>
+<span><span class="co">#&gt; Hit:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease</span></span>
+<span><span class="co">#&gt; Hit:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease</span></span>
 <span><span class="co">#&gt; Reading package lists...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Executing `sudo sh -c apt-get -y install libgdal-dev gdal-bin libgeos-dev libproj-dev libsqlite3-dev libabsl-dev cmake libssl-dev libudunits2-dev make libuv1-dev zlib1g-dev pandoc libpng-dev libicu-dev libfontconfig1-dev libfreetype6-dev libfribidi-dev libharfbuzz-dev texlive libxml2-dev`</span></span>
 <span><span class="co">#&gt; Reading package lists...</span></span>
@@ -192,8 +178,8 @@ this tutorial.</p>
 <span><span class="co">#&gt;   texlive-fonts-recommended-doc texlive-latex-base-doc wp2latex</span></span>
 <span><span class="co">#&gt;   texlive-latex-recommended-doc texlive-luatex texlive-pstricks tipa-doc</span></span>
 <span><span class="co">#&gt; The following NEW packages will be installed:</span></span>
-<span><span class="co">#&gt; dvisvgm fonts-lmodern fonts-texgyre fonts-texgyre-math libgumbo2</span></span>
-<span><span class="co">#&gt;   libkpathsea6 libmujs3 libpotrace0 libptexenc1 libsynctex2 libteckit0</span></span>
+<span><span class="co">#&gt;   dvisvgm fonts-lmodern fonts-texgyre fonts-texgyre-math libgumbo2</span></span>
+<span><span class="co">#&gt; libkpathsea6 libmujs3 libpotrace0 libptexenc1 libsynctex2 libteckit0</span></span>
 <span><span class="co">#&gt;   libtexlua53-5 libwoff1 libzzip-0-13t64 lmodern mupdf-tools tex-gyre texlive</span></span>
 <span><span class="co">#&gt;   texlive-base texlive-binaries texlive-fonts-recommended texlive-latex-base</span></span>
 <span><span class="co">#&gt;   texlive-latex-recommended tipa</span></span>
@@ -226,7 +212,7 @@ this tutorial.</p>
 <span><span class="co">#&gt; Get:24 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 texlive all 2023.20240207-1 [14.0 kB]</span></span>
 <span><span class="co">#&gt; Get:25 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 tipa all 2:1.3-21 [2967 kB]</span></span>
 <span><span class="co">#&gt; Preconfiguring packages ...</span></span>
-<span><span class="co">#&gt; Fetched 131 MB in 3s (43.0 MB/s)</span></span>
+<span><span class="co">#&gt; Fetched 131 MB in 5s (28.0 MB/s)</span></span>
 <span><span class="co">#&gt; Selecting previously unselected package libkpathsea6:amd64.</span></span>
 <span><span class="co">#&gt; (Reading database ...</span></span>
 <span><span class="co">#&gt; (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%</span></span>
@@ -362,12 +348,13 @@ this tutorial.</p>
 <span><span class="co">#&gt;  systemctl restart hosted-compute-agent.service</span></span>
 <span><span class="co">#&gt;  systemctl restart systemd-logind.service</span></span>
 <span><span class="co">#&gt;  systemctl restart walinuxagent.service</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; No containers need to be restarted.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; User sessions running outdated binaries:</span></span>
-<span><span class="co">#&gt;  runner @ user manager service: systemd[1227]</span></span>
+<span><span class="co">#&gt; runner @ user manager service: systemd[1246]</span></span>
 <span><span class="co">#&gt; No VM guests are running outdated hypervisor (qemu) binaries on this host.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> 7 pkgs + 126 deps: kept 131 <span style="color: #B2B2B2;">[48.9s]</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> 7 pkgs + 126 deps: kept 131 <span style="color: #B2B2B2;">[43.6s]</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="data-structure">Data Structure<a class="anchor" aria-label="anchor" href="#data-structure"></a>
