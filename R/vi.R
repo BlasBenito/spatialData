@@ -185,7 +185,7 @@
 #' @description
 #' Downloads and reads the extended version of the [vi] dataset (30,000 rows) from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `vi.gpkg` to the working directory, and returns it as an `sf` dataframe. See [vi] for details on the response variables, predictors, and data sources.
 #'
-#' @autoglobal
+#' 
 #' @return sf data.frame with 30,000 rows and 64 columns (POINT geometry, WGS84).
 #' @family vi
 #' @export

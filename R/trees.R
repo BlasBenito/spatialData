@@ -155,7 +155,7 @@
 #' @description
 #' Downloads and reads an `sf` dataframe with the tree species presence records associated with the [trees] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `trees_presence.gpkg` to the working folder, and returns it as an `sf` dataframe.
 #'
-#' @autoglobal
+#' 
 #' @return sf data frame with POINT geometry (WGS84, EPSG:4326) and columns `species` and `source`.
 #' @family trees
 #' @export

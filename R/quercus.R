@@ -128,7 +128,7 @@
 #' @description
 #' Downloads and reads the environmental raster associated with the [quercus] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `quercus_env.tif` to the working directory, and returns it as a `spatRaster` object.
 #'
-#' @autoglobal
+#' 
 #' @return SpatRaster object.
 #' @family quercus
 #' @export

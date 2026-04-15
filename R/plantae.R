@@ -256,7 +256,7 @@
 #' Downloads and reads the extended version of the [plantae] dataset with original polygon geometries instead of point centroids, from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `plantae.gpkg` to the working directory and returns it as an `sf` dataframe.
 #' See [plantae] for details on the response variables, predictors, and data sources.
 #'
-#' @autoglobal
+#' 
 #' @return sf dataframe with 662 rows and 143 columns (MULTIPOLYGON geometry, WGS84).
 #' @family plantae
 #' @export

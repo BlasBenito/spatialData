@@ -81,7 +81,7 @@
 #' @description
 #' Downloads and reads the environmental raster associated with the [interaction] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Requires the \pkg{terra} package. Writes the file `sierra_nevada_env.tif` to the working directory and returns a `spatRaster` object.
 #'
-#' @autoglobal
+#' 
 #' @return SpatRaster object.
 #' @family interaction
 #' @export

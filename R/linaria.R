@@ -114,7 +114,7 @@
 #' @description
 #' Downloads and reads the 20-band environmental raster associated with the [linaria] dataset
 #' from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `linaria_env.tif` in the working directory and returns it as a `spatRaster` object.
-#' @autoglobal
+#' 
 #' @return SpatRaster object with 20 layers.
 #' @family linaria
 #' @export

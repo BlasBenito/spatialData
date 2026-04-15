@@ -73,7 +73,7 @@
 #' @description
 #' Downloads the baseline (2010) environmental raster associated with the [communities] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `communities_2010.tif` in the working directory and returns it as a `spatRaster` object.
 #'
-#' @autoglobal
+#' 
 #' @return spatRaster object.
 #' @family communities
 #' @export
@@ -116,7 +116,7 @@ communities_extra_2010 <- function() {
 #' @description
 #' Downloads the future climate (2050) raster associated with the [communities] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `communities_2050.tif` in the working directory and returns it as a `spatRaster` object.
 #'
-#' @autoglobal
+#' 
 #' @return SpatRaster object.
 #' @family communities
 #' @export
@@ -159,7 +159,7 @@ communities_extra_2050 <- function() {
 #' @description
 #' Downloads the future climate (2100) raster associated with the [communities] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. Writes the file `communities_2100.tif` in the working directory and returns it as a `spatRaster` object.
 #'
-#' @autoglobal
+#' 
 #' @return SpatRaster object.
 #' @family communities
 #' @export

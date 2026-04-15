@@ -67,7 +67,7 @@
 #'
 #' @description
 #' Downloads and reads the 20-band environmental raster associated with the [andalusia] dataset from the [spatialDataExtra](https://github.com/BlasBenito/spatialDataExtra) repository. The raster covers Andalusia, Spain, at 400 m resolution (EPSG:25830) and includes remote-sensing, climate, and topographic predictors (see [andalusia]).
-#' @autoglobal
+#' 
 #' @return SpatRaster object with 20 layers.
 #' @family andalusia
 #' @export
