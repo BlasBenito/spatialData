@@ -8,7 +8,7 @@ llm-docs: false
 
 template:
   bootstrap: 5
-  bootswatch: cosmo
+  bootswatch: minty
   fonts:
     heading: Montserrat
     body: Montserrat

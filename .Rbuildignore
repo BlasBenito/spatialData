@@ -149,3 +149,4 @@ spatialData.Rproj
 dev_scripts/
 extra_data/
 VOICE.md
+^\.dev_scripts$
