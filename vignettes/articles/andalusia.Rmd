@@ -263,9 +263,11 @@ species_model <- ranger::ranger(
 We then predict the fitted binary model to every cell of the raster `andalusia_env` to produce a presence/absence raster.
 
 ```{r}
+#predict
 species_prediction <- terra::predict(
   object = andalusia_env,
-  model = species_model
+  model = species_model,
+  na.rm = TRUE
 )
 
 mapview(
@@ -343,7 +345,8 @@ species_predictions <- lapply(
 
     terra::predict(
       object = andalusia_env,
-      model = species_model
+      model = species_model,
+      na.rm = TRUE
     )
   }
 ) |>
@@ -356,13 +359,9 @@ Because each model is a binary classifier, every per-species prediction is alrea
 ```{r}
 species_predictions_sum <- sum(species_predictions)
 
-species_predictions_sum <- terra::mask(
-  x = species_predictions_sum,
-  mask = andalusia_env[[1]]
-)
-
 mapview(
-  species_predictions_sum
+  species_predictions_sum,
+  col.regions = viridis::turbo(n = 10)
 )
 ```
 
