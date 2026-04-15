@@ -189,7 +189,7 @@ An sf data frame with 662 rows (ecoregions) and 143 columns:
 \source{
 \strong{Associated publications:}
 \itemize{
-\item Maestre, F.T., Benito, B.M., Berdugo, M., Concostrina-Zubiri, L., Delgado-Baquerizo, M., Eldridge, D.J., Guirado, E., Gross, N., Kefi, S., Le Bagousse-Pinguet, Y., et al. (2021). Biogeography of global drylands. \emph{New Phytologist}, 231(2), 540--558. \doi{10.1111/nph.17398}}
+\item Maestre, F.T., Benito, B.M., Berdugo, M., Concostrina-Zubiri, L., Delgado-Baquerizo, M., Eldridge, D.J., Guirado, E., Gross, N., Kefi, S., Le Bagousse-Pinguet, Y., et al. (2021). Biogeography of global drylands. \emph{New Phytologist}, 231(2), 540--558. \doi{10.1111/nph.17398}
 \item GBIF Plantae Dataset (September 15, 2020). \doi{10.15468/dl.xh5y5g}
 \item Dinerstein, E., et al. (2017). An Ecoregion-Based Approach to Protecting Half the Terrestrial Realm. \emph{BioScience}, 67(6), 534-545. \doi{10.1093/biosci/bix014}
 \item Karger, D.N., et al. (2021). Climatologies at high resolution for the earth's land surface areas. EnviDat. \doi{10.16904/envidat.228.v2.1}
@@ -210,8 +210,7 @@ An sf data frame with 662 rows (ecoregions) and 143 columns:
 data(plantae)
 }
 \description{
-Plant diversity metrics (richness, rarity, beta diversity) obtained from GBIF Plantae records for the World's Ecoregions. Includes metrics for all plants, trees, and grasses at species, genus, and family taxonomic levels. Ecoregion boundaries are derived from \href{https://ecoregions2017.appspot.com/}{Ecoregions 2017}. Original polygon geometries have been
-converted to point centroids to reduce file size while preserving spatial context. Use \code{\link[=plantae_extra]{plantae_extra()}} to download a full version with original polygon geometries.
+Plant diversity metrics (richness, rarity, beta diversity) obtained from GBIF Plantae records for the World's Ecoregions. Includes metrics for all plants, trees, and grasses at species, genus, and family taxonomic levels. Ecoregion boundaries are derived from \href{https://ecoregions2017.appspot.com/}{Ecoregions 2017}. Original polygon geometries have been converted to point centroids to reduce file size while preserving spatial context. Use \code{\link[=plantae_extra]{plantae_extra()}} to download a full version with original polygon geometries. The datasets \link{plantae_west} and \link{plantae_east} are subsets of \code{plantae} focused on overall plant richness of the western and easter hemispheres, respectively.
 
 The GBIF download comprised \strong{244,830,168 records from 4,741 datasets}, filtered to records with coordinates, no geospatial issues, and occurrence status "present".
 
@@ -234,11 +233,11 @@ Environmental predictors were extracted as mean pixel values per ecoregion from 
 }
 \seealso{
 Other plantae: 
-\code{\link{plantae_east}()},
+\code{\link{plantae_east}},
 \code{\link{plantae_extra}()},
 \code{\link{plantae_predictors}},
 \code{\link{plantae_responses}},
-\code{\link{plantae_west}()}
+\code{\link{plantae_west}}
 }
 \concept{plantae}
 \keyword{datasets}

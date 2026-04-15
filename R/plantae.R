@@ -1,6 +1,5 @@
 #' @title Plant diversity metrics for the World's Ecoregions
-#' @description Plant diversity metrics (richness, rarity, beta diversity) obtained from GBIF Plantae records for the World's Ecoregions. Includes metrics for all plants, trees, and grasses at species, genus, and family taxonomic levels. Ecoregion boundaries are derived from [Ecoregions 2017](https://ecoregions2017.appspot.com/). Original polygon geometries have been
-#' converted to point centroids to reduce file size while preserving spatial context. Use [plantae_extra()] to download a full version with original polygon geometries.
+#' @description Plant diversity metrics (richness, rarity, beta diversity) obtained from GBIF Plantae records for the World's Ecoregions. Includes metrics for all plants, trees, and grasses at species, genus, and family taxonomic levels. Ecoregion boundaries are derived from [Ecoregions 2017](https://ecoregions2017.appspot.com/). Original polygon geometries have been converted to point centroids to reduce file size while preserving spatial context. Use [plantae_extra()] to download a full version with original polygon geometries. The datasets [plantae_west] and [plantae_east] are subsets of `plantae` focused on overall plant richness of the western and easter hemispheres, respectively.
 #'
 #' The GBIF download comprised **244,830,168 records from 4,741 datasets**, filtered to records with coordinates, no geospatial issues, and occurrence status "present".
 #'
@@ -206,7 +205,7 @@
 #' @source
 #' **Associated publications:**
 #' \itemize{
-#'   \item Maestre, F.T., Benito, B.M., Berdugo, M., Concostrina-Zubiri, L., Delgado-Baquerizo, M., Eldridge, D.J., Guirado, E., Gross, N., Kefi, S., Le Bagousse-Pinguet, Y., et al. (2021). Biogeography of global drylands. \emph{New Phytologist}, 231(2), 540--558. \doi{10.1111/nph.17398}}
+#'   \item Maestre, F.T., Benito, B.M., Berdugo, M., Concostrina-Zubiri, L., Delgado-Baquerizo, M., Eldridge, D.J., Guirado, E., Gross, N., Kefi, S., Le Bagousse-Pinguet, Y., et al. (2021). Biogeography of global drylands. \emph{New Phytologist}, 231(2), 540--558. \doi{10.1111/nph.17398}
 #'   \item GBIF Plantae Dataset (September 15, 2020). \doi{10.15468/dl.xh5y5g}
 #'   \item Dinerstein, E., et al. (2017). An Ecoregion-Based Approach to Protecting Half the Terrestrial Realm. \emph{BioScience}, 67(6), 534-545. \doi{10.1093/biosci/bix014}
 #'   \item Karger, D.N., et al. (2021). Climatologies at high resolution for the earth's land surface areas. EnviDat. \doi{10.16904/envidat.228.v2.1}
@@ -222,6 +221,7 @@
 #'   \item Williams, P.H., et al. (1996). A comparison of richness hotspots, rarity hotspots, and complementary areas for conserving diversity of British birds. \emph{Conservation Biology}, 10(1), 155-174.
 #'   \item Venter, O., et al. (2016). Global terrestrial Human Footprint maps for 1993 and 2009. \emph{Scientific Data}, 3, 160067. \doi{10.1038/sdata.2016.67}
 #' }
+#'
 #' @family plantae
 "plantae"
 
@@ -281,64 +281,16 @@ plantae_extra <- function() {
   out
 }
 
-#' Subset `plantae` to Western Hemisphere Ecoregions
-#'
-#' @description
-#' Returns a subset of the [plantae] dataset filtered to American ecoregions
-#' (`ecoregion_continent == "Americas"`) with `richness_species`
-#' (overall plant species richness) as the only response variable. All 84
-#' predictor variables and identifier columns are retained.
-#'
-#' @autoglobal
-#' @return sf data.frame.
+#' @title Western Hemisphere subset of `plantae`
+#' @description Subset of the [plantae] dataset filtered to American ecoregions (`ecoregion_continent == "Americas"`) with `richness_species` (overall plant species richness) as the only response variable. All 84 predictor variables and identifier columns in [plantae] are retained.
+#' @usage data(plantae_west)
+#' @format `sf` dataframe.
 #' @family plantae
-#' @examples
-#' west <- plantae_west()
-#' nrow(west)
-#' names(west)
-#' @export
-plantae_west <- function() {
-  plantae[
-    plantae$ecoregion_continent == "Americas",
-    c(
-      "ecoregion_id",
-      "ecoregion_name",
-      "ecoregion_biome",
-      "ecoregion_realm",
-      "ecoregion_continent",
-      "richness_species",
-      plantae_predictors
-    )
-  ]
-}
+"plantae_west"
 
-#' Subset `plantae` to Eastern Hemisphere Ecoregions
-#'
-#' @description
-#' Returns a subset of the [plantae] dataset filtered to non-American ecoregions
-#' (`ecoregion_continent != "Americas"`) with `richness_species`
-#' (overall plant species richness) as the only response variable. All 84
-#' predictor variables and identifier columns are retained.
-#'
-#' @autoglobal
-#' @return sf data.frame with non-American ecoregions.
+#' @title Eastern Hemisphere subset of `plantae`
+#' @description Subset of the [plantae] dataset filtered to American ecoregions (`ecoregion_continent != "Americas"`) with `richness_species` (overall plant species richness) as the only response variable. All 84 predictor variables and identifier columns in [plantae] are retained.
+#' @usage data(plantae_east)
+#' @format `sf` dataframe.
 #' @family plantae
-#' @examples
-#' east <- plantae_east()
-#' nrow(east)
-#' names(east)
-#' @export
-plantae_east <- function() {
-  plantae[
-    plantae$ecoregion_continent != "Americas",
-    c(
-      "ecoregion_id",
-      "ecoregion_name",
-      "ecoregion_biome",
-      "ecoregion_realm",
-      "ecoregion_continent",
-      "richness_species",
-      plantae_predictors
-    )
-  ]
-}
+"plantae_east"

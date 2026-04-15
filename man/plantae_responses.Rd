@@ -16,10 +16,10 @@ Character vector containing the names of the 53 response variables in \code{plan
 \seealso{
 Other plantae: 
 \code{\link{plantae}},
-\code{\link{plantae_east}()},
+\code{\link{plantae_east}},
 \code{\link{plantae_extra}()},
 \code{\link{plantae_predictors}},
-\code{\link{plantae_west}()}
+\code{\link{plantae_west}}
 }
 \concept{plantae}
 \keyword{datasets}

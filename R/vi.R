@@ -1,7 +1,7 @@
 #' @title Global long-term NDVI records and environmental predictors
 #'
 #' @description
-#' `sf` data frame with `POINT` geometry representing 9,265 global locations with one response variable represented in five different encodings of the long-term average (1999-2019) of the Normalized Difference Vegetation Index (NDVI) and 58 environmental predictors (47 numeric, 11 categorical). Use [vi_extra()] to download an extended version with 30,000 rows.
+#' `sf` data frame with `POINT` geometry representing 9,265 global locations with one response variable represented in five different encodings of the long-term average (1999-2019) of the Normalized Difference Vegetation Index (NDVI) and 58 environmental predictors (47 numeric, 11 categorical). Use [vi_extra()] to download an extended version with 30,000 rows. There is a smaller version of this dataset (590) rows named [vi_smol]
 #'
 #' NDVI values are derived from the Copernicus Global Land Service Long Term Statistics product (1999-2019) at 1 km resolution. Locations were spatially thinned to reduce spatial autocorrelation.
 #'
@@ -138,6 +138,17 @@
 #' }
 #' @family vi
 "vi"
+
+#' Small version of `vi`
+#'
+#' @description Same as dataset [vi], but with only 580 rows.
+#'
+#' @usage data(vi_smol)
+#'
+#' @format sf dataframe with 580 rows and 65 columns.
+#' @seealso [vi]
+#' @family vi
+"vi_smol"
 
 #' @title Response variable names for the dataset `vi`
 #' @description Character vector containing the names of the 5 response variables in [vi].

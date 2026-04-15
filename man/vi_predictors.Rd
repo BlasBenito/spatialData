@@ -17,7 +17,8 @@ Character vector of 58 predictor variable names from \link{vi}.
 Other vi: 
 \code{\link{vi}},
 \code{\link{vi_extra}()},
-\code{\link{vi_responses}}
+\code{\link{vi_responses}},
+\code{\link{vi_smol}}
 }
 \concept{vi}
 \keyword{datasets}

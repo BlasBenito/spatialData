@@ -108,6 +108,7 @@ reference:
     desc: "Global NDVI records with climate, soil, and topographic predictors."
     contents:
       - vi
+      - vi_smol
       - vi_responses
       - vi_predictors
       - vi_extra

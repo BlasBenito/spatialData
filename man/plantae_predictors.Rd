@@ -16,10 +16,10 @@ Character vector of 84 predictor variable names from \code{plantae}.
 \seealso{
 Other plantae: 
 \code{\link{plantae}},
-\code{\link{plantae_east}()},
+\code{\link{plantae_east}},
 \code{\link{plantae_extra}()},
 \code{\link{plantae_responses}},
-\code{\link{plantae_west}()}
+\code{\link{plantae_west}}
 }
 \concept{plantae}
 \keyword{datasets}

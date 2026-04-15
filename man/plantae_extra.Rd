@@ -16,9 +16,9 @@ See \link{plantae} for details on the response variables, predictors, and data s
 \seealso{
 Other plantae: 
 \code{\link{plantae}},
-\code{\link{plantae_east}()},
+\code{\link{plantae_east}},
 \code{\link{plantae_predictors}},
 \code{\link{plantae_responses}},
-\code{\link{plantae_west}()}
+\code{\link{plantae_west}}
 }
 \concept{plantae}

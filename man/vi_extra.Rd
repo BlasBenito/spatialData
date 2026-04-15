@@ -16,6 +16,7 @@ Downloads and reads the extended version of the \link{vi} dataset (30,000 rows) 
 Other vi: 
 \code{\link{vi}},
 \code{\link{vi_predictors}},
-\code{\link{vi_responses}}
+\code{\link{vi_responses}},
+\code{\link{vi_smol}}
 }
 \concept{vi}
