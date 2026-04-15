@@ -78,6 +78,11 @@
 #' \itemize{
 #'   \item Instituto Geográfico Nacional. Modelo Digital del Terreno (MDT25). \url{https://www.ign.es}
 #' }
+#' @examples
+#' data(linaria)
+#' colnames(linaria)
+#' nrow(linaria)
+#' ncol(linaria)
 #' @family linaria
 "linaria"
 
@@ -86,6 +91,9 @@
 #' response variables in [linaria].
 #' @usage data(linaria_responses)
 #' @format A character vector of length 2.
+#' @examples
+#' data(linaria_responses)
+#' linaria_responses
 #' @family linaria
 "linaria_responses"
 
@@ -95,6 +103,9 @@
 #' temperature (4), and topography (5).
 #' @usage data(linaria_predictors)
 #' @format A character vector of length 20.
+#' @examples
+#' data(linaria_predictors)
+#' linaria_predictors
 #' @family linaria
 "linaria_predictors"
 

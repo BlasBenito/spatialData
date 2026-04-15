@@ -14,6 +14,10 @@ data(linaria_responses)
 Character vector of length 2 containing the names of the
 response variables in \link{linaria}.
 }
+\examples{
+data(linaria_responses)
+linaria_responses
+}
 \seealso{
 Other linaria: 
 \code{\link{linaria}},

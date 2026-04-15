@@ -222,6 +222,11 @@
 #'   \item Venter, O., et al. (2016). Global terrestrial Human Footprint maps for 1993 and 2009. \emph{Scientific Data}, 3, 160067. \doi{10.1038/sdata.2016.67}
 #' }
 #'
+#' @examples
+#' data(plantae)
+#' colnames(plantae)
+#' nrow(plantae)
+#' ncol(plantae)
 #' @family plantae
 "plantae"
 
@@ -229,6 +234,9 @@
 #' @description Character vector containing the names of the 53 response variables in `plantae`.
 #' @usage data(plantae_responses)
 #' @format A character vector of length 53.
+#' @examples
+#' data(plantae_responses)
+#' plantae_responses
 #' @family plantae
 "plantae_responses"
 
@@ -236,6 +244,9 @@
 #' @description Character vector of 84 predictor variable names from `plantae`.
 #' @usage data(plantae_predictors)
 #' @format A character vector of length 84.
+#' @examples
+#' data(plantae_predictors)
+#' plantae_predictors
 #' @family plantae
 "plantae_predictors"
 
@@ -284,13 +295,23 @@ plantae_extra <- function() {
 #' @title Western Hemisphere subset of `plantae`
 #' @description Subset of the [plantae] dataset filtered to American ecoregions (`ecoregion_continent == "Americas"`) with `richness_species` (overall plant species richness) as the only response variable. All 84 predictor variables and identifier columns in [plantae] are retained.
 #' @usage data(plantae_west)
-#' @format `sf` dataframe.
+#' @format An sf data frame with 228 rows and 91 columns.
+#' @examples
+#' data(plantae_west)
+#' colnames(plantae_west)
+#' nrow(plantae_west)
+#' ncol(plantae_west)
 #' @family plantae
 "plantae_west"
 
 #' @title Eastern Hemisphere subset of `plantae`
 #' @description Subset of the [plantae] dataset filtered to American ecoregions (`ecoregion_continent != "Americas"`) with `richness_species` (overall plant species richness) as the only response variable. All 84 predictor variables and identifier columns in [plantae] are retained.
 #' @usage data(plantae_east)
-#' @format `sf` dataframe.
+#' @format An sf data frame with 434 rows and 91 columns.
+#' @examples
+#' data(plantae_east)
+#' colnames(plantae_east)
+#' nrow(plantae_east)
+#' ncol(plantae_east)
 #' @family plantae
 "plantae_east"

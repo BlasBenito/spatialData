@@ -34,6 +34,11 @@
 #' \itemize{
 #'   \item Instituto Geográfico Nacional. Modelo Digital del Terreno (MDT25). \url{https://www.ign.es}
 #' }
+#' @examples
+#' data(andalusia)
+#' colnames(andalusia)
+#' nrow(andalusia)
+#' ncol(andalusia)
 #' @family andalusia
 "andalusia"
 
@@ -42,6 +47,9 @@
 #' response variables in [andalusia]: `"species"` (character, species name or `"background"` for 90 species plus background points) and `"presence"` (binary integer, 1 = confirmed species presence, 0 = background point).
 #' @usage data(andalusia_responses)
 #' @format Character vector of length 2.
+#' @examples
+#' data(andalusia_responses)
+#' andalusia_responses
 #' @family andalusia
 "andalusia_responses"
 
@@ -49,6 +57,9 @@
 #' @description Character vector of 20 predictor variable names corresponding to the layers of the environmental raster returned by [andalusia_extra()], covering Landsat reflectance (7), rainfall (2), solar radiation (2), temperature (4), and topography (5). These are **not** columns in [andalusia]; use `terra::extract()` to attach them to the point data.
 #' @usage data(andalusia_predictors)
 #' @format Character vector of length 20.
+#' @examples
+#' data(andalusia_predictors)
+#' andalusia_predictors
 #' @family andalusia
 "andalusia_predictors"
 

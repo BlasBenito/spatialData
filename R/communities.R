@@ -1,11 +1,11 @@
 #' @title Plant Communities of Sierra Nevada (Spain)
 #'
 #' @description
-#' `sf` data frame with `POINT` geometry containing 7,300 plant community records from the Sierra Nevada mountain range (SE Spain), with 6 response variables (see [communities_responses]) and 9 numeric predictors (see [communities_predictors]).
+#' `sf` data frame with `POINT` geometry containing 6,747 plant community records from the Sierra Nevada mountain range (SE Spain), with 6 response variables (see [communities_responses]) and 9 numeric predictors (see [communities_predictors]).
 #' Use [communities_extra_2010()], [communities_extra_2050()], and [communities_extra_2100()] to download the associated environmental rasters for the baseline (2010), 2050, and 2100 climate scenarios.
 #'
 #' @usage data(communities)
-#' @format An sf data frame with 7,300 rows and 16 columns:
+#' @format An sf data frame with 6,747 rows and 16 columns:
 #'
 #' **Response variables (6):**
 #' \itemize{
@@ -40,6 +40,11 @@
 #'   \item Benito, B., Lorite, J., & Peñas, J. (2011). Simulating potential effects of climatic warming on altitudinal patterns of key species in Mediterranean-alpine ecosystems. \emph{Climatic Change}, 108, 471–483. \doi{10.1007/s10584-010-0015-3}
 #' }
 #'
+#' @examples
+#' data(communities)
+#' colnames(communities)
+#' nrow(communities)
+#' ncol(communities)
 #' @family communities
 "communities"
 
@@ -47,6 +52,9 @@
 #' @description Character vector of 6 response variable names from [communities].
 #' @usage data(communities_responses)
 #' @format A character vector of length 6.
+#' @examples
+#' data(communities_responses)
+#' communities_responses
 #' @family communities
 "communities_responses"
 
@@ -54,6 +62,9 @@
 #' @description Character vector of 9 predictor variable names from [communities].
 #' @usage data(communities_predictors)
 #' @format A character vector of length 9.
+#' @examples
+#' data(communities_predictors)
+#' communities_predictors
 #' @family communities
 "communities_predictors"
 

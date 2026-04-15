@@ -42,6 +42,12 @@ data(andalusia)
 
 The dataset contains 3 columns (species, presence, geometry). Environmental predictors for each point can be extracted from the companion raster returned by \code{\link[=andalusia_extra]{andalusia_extra()}}. Predictor names are stored in \link{andalusia_predictors}.
 }
+\examples{
+data(andalusia)
+colnames(andalusia)
+nrow(andalusia)
+ncol(andalusia)
+}
 \seealso{
 Other andalusia: 
 \code{\link{andalusia_extra}()},

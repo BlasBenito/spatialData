@@ -13,6 +13,10 @@ data(interaction_responses)
 \description{
 Character vector of 3 response variable names from \link{interaction}.
 }
+\examples{
+data(interaction_responses)
+interaction_responses
+}
 \seealso{
 Other interaction: 
 \code{\link{interaction}()},

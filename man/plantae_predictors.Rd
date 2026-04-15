@@ -13,6 +13,10 @@ data(plantae_predictors)
 \description{
 Character vector of 84 predictor variable names from \code{plantae}.
 }
+\examples{
+data(plantae_predictors)
+plantae_predictors
+}
 \seealso{
 Other plantae: 
 \code{\link{plantae}},

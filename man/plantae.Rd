@@ -231,6 +231,12 @@ its number of spatial presence records in GBIF, then scores are summed per ecore
 Environmental predictors were extracted as mean pixel values per ecoregion from rasters at
 1 km resolution.
 }
+\examples{
+data(plantae)
+colnames(plantae)
+nrow(plantae)
+ncol(plantae)
+}
 \seealso{
 Other plantae: 
 \code{\link{plantae_east}},

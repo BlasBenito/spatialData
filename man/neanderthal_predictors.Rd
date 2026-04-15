@@ -13,6 +13,10 @@ data(neanderthal_predictors)
 \description{
 Character vector of 25 predictor variable names from \link{neanderthal}.
 }
+\examples{
+data(neanderthal_predictors)
+neanderthal_predictors
+}
 \seealso{
 Other neanderthal: 
 \code{\link{neanderthal}},

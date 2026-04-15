@@ -13,6 +13,10 @@ data(quercus_predictors)
 \description{
 Character vector of 31 predictor variable names from \link{quercus}.
 }
+\examples{
+data(quercus_predictors)
+quercus_predictors
+}
 \seealso{
 Other quercus: 
 \code{\link{quercus}},

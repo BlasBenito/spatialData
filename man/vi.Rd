@@ -138,11 +138,17 @@ An sf data frame with 9265 rows (locations) and 64 columns:
 data(vi)
 }
 \description{
-\code{sf} data frame with \code{POINT} geometry representing 9,265 global locations with one response variable represented in five different encodings of the long-term average (1999-2019) of the Normalized Difference Vegetation Index (NDVI) and 58 environmental predictors (47 numeric, 11 categorical). Use \code{\link[=vi_extra]{vi_extra()}} to download an extended version with 30,000 rows. There is a smaller version of this dataset (590) rows named \link{vi_smol}
+\code{sf} data frame with \code{POINT} geometry representing 9,265 global locations with one response variable represented in five different encodings of the long-term average (1999-2019) of the Normalized Difference Vegetation Index (NDVI) and 58 environmental predictors (47 numeric, 11 categorical). Use \code{\link[=vi_extra]{vi_extra()}} to download an extended version with 30,000 rows. There is a smaller version of this dataset (580 rows) named \link{vi_smol}
 
 NDVI values are derived from the Copernicus Global Land Service Long Term Statistics product (1999-2019) at 1 km resolution. Locations were spatially thinned to reduce spatial autocorrelation.
 
 Environmental predictors were extracted as pixel values from normalized raster data at 1 km resolution.
+}
+\examples{
+data(vi)
+colnames(vi)
+nrow(vi)
+ncol(vi)
 }
 \seealso{
 Other vi: 

@@ -13,6 +13,10 @@ data(quercus_response)
 \description{
 Character string with the name of the response variable in \link{quercus}.
 }
+\examples{
+data(quercus_response)
+quercus_response
+}
 \seealso{
 Other quercus: 
 \code{\link{quercus}},

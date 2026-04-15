@@ -13,6 +13,10 @@ data(vi_responses)
 \description{
 Character vector containing the names of the 5 response variables in \link{vi}.
 }
+\examples{
+data(vi_responses)
+vi_responses
+}
 \seealso{
 Other vi: 
 \code{\link{vi}},

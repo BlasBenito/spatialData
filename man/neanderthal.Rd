@@ -5,7 +5,7 @@
 \alias{neanderthal}
 \title{Neanderthal presence in the Last Interglacial}
 \format{
-An sf data frame with 245 rows (presence and pseudo-absence sites) and 27 columns:
+An sf data frame with 227 rows (presence and pseudo-absence sites) and 27 columns:
 
 \strong{Response variable (1):}
 \itemize{
@@ -75,7 +75,13 @@ Bioclimatic variables derived from a Last Interglacial GCM simulation
 data(neanderthal)
 }
 \description{
-\code{sf} data frame with \code{POINT} geometry containing records of Neanderthal presence from Marine Isotope Stage 5e (Last Interglacial) in Europe and the Near East, 1 response variable (see \link{neanderthal_response}), and 25 predictors (see \link{neanderthal_predictors}). Use \code{\link[=neanderthal_extra]{neanderthal_extra()}} to download the associated environmental raster.
+\code{sf} data frame with \code{POINT} geometry containing 227 records of Neanderthal presence from Marine Isotope Stage 5e (Last Interglacial) in Europe and the Near East, 1 response variable (see \link{neanderthal_response}), and 25 predictors (see \link{neanderthal_predictors}). Use \code{\link[=neanderthal_extra]{neanderthal_extra()}} to download the associated environmental raster.
+}
+\examples{
+data(neanderthal)
+colnames(neanderthal)
+nrow(neanderthal)
+ncol(neanderthal)
 }
 \seealso{
 Other neanderthal: 

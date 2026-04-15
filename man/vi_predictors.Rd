@@ -13,6 +13,10 @@ data(vi_predictors)
 \description{
 Character vector of 58 predictor variable names from \link{vi}.
 }
+\examples{
+data(vi_predictors)
+vi_predictors
+}
 \seealso{
 Other vi: 
 \code{\link{vi}},

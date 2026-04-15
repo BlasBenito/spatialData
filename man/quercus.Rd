@@ -103,6 +103,12 @@ Quercus (oak) species and absence points, 1 response variable (see \link{quercus
 and 31 numeric predictors (see \link{quercus_predictors}).
 Use \code{\link[=quercus_extra]{quercus_extra()}} to download the associated environmental raster.
 }
+\examples{
+data(quercus)
+colnames(quercus)
+nrow(quercus)
+ncol(quercus)
+}
 \seealso{
 Other quercus: 
 \code{\link{quercus_extra}()},

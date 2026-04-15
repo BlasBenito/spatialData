@@ -13,6 +13,10 @@ data(interaction_predictors)
 \description{
 Character vector of 10 predictor variable names from \link{interaction}.
 }
+\examples{
+data(interaction_predictors)
+interaction_predictors
+}
 \seealso{
 Other interaction: 
 \code{\link{interaction}()},

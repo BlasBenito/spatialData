@@ -13,6 +13,10 @@ data(neanderthal_response)
 \description{
 Character string with the name of the response variable in \link{neanderthal}.
 }
+\examples{
+data(neanderthal_response)
+neanderthal_response
+}
 \seealso{
 Other neanderthal: 
 \code{\link{neanderthal}},

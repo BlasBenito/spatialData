@@ -13,6 +13,10 @@ data(plantae_responses)
 \description{
 Character vector containing the names of the 53 response variables in \code{plantae}.
 }
+\examples{
+data(plantae_responses)
+plantae_responses
+}
 \seealso{
 Other plantae: 
 \code{\link{plantae}},

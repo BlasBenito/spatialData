@@ -13,6 +13,10 @@ data(andalusia_predictors)
 \description{
 Character vector of 20 predictor variable names corresponding to the layers of the environmental raster returned by \code{\link[=andalusia_extra]{andalusia_extra()}}, covering Landsat reflectance (7), rainfall (2), solar radiation (2), temperature (4), and topography (5). These are \strong{not} columns in \link{andalusia}; use \code{terra::extract()} to attach them to the point data.
 }
+\examples{
+data(andalusia_predictors)
+andalusia_predictors
+}
 \seealso{
 Other andalusia: 
 \code{\link{andalusia}},

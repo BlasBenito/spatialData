@@ -13,6 +13,10 @@ data(trees_predictors)
 \description{
 Character vector of 50 predictor variable names from \link{trees}.
 }
+\examples{
+data(trees_predictors)
+trees_predictors
+}
 \seealso{
 Other trees: 
 \code{\link{trees}},

@@ -95,6 +95,11 @@
 #' \itemize{
 #'   \item Venter, O., et al. (2016). Global terrestrial Human Footprint maps for 1993 and 2009. \emph{Scientific Data}, 3, 160067. \doi{10.1038/sdata.2016.67}
 #' }
+#' @examples
+#' data(quercus)
+#' colnames(quercus)
+#' nrow(quercus)
+#' ncol(quercus)
 #' @family quercus
 "quercus"
 
@@ -102,6 +107,9 @@
 #' @description Character string with the name of the response variable in [quercus].
 #' @usage data(quercus_response)
 #' @format A character string of length 1.
+#' @examples
+#' data(quercus_response)
+#' quercus_response
 #' @family quercus
 "quercus_response"
 
@@ -109,6 +117,9 @@
 #' @description Character vector of 31 predictor variable names from [quercus].
 #' @usage data(quercus_predictors)
 #' @format A character vector of length 31.
+#' @examples
+#' data(quercus_predictors)
+#' quercus_predictors
 #' @family quercus
 "quercus_predictors"
 

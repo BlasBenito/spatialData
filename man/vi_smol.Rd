@@ -5,13 +5,19 @@
 \alias{vi_smol}
 \title{Small version of \code{vi}}
 \format{
-sf dataframe with 580 rows and 65 columns.
+A data frame with 580 rows and 65 columns.
 }
 \usage{
 data(vi_smol)
 }
 \description{
 Same as dataset \link{vi}, but with only 580 rows.
+}
+\examples{
+data(vi_smol)
+colnames(vi_smol)
+nrow(vi_smol)
+ncol(vi_smol)
 }
 \seealso{
 \link{vi}

@@ -14,6 +14,10 @@ data(trees_response)
 Character vector of length 1 containing the name of the
 response variable in \link{trees}.
 }
+\examples{
+data(trees_response)
+trees_response
+}
 \seealso{
 Other trees: 
 \code{\link{trees}},

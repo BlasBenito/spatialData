@@ -4,7 +4,7 @@
 #' `sf` dataframe with co-occurrence records for a butterfly  and its host plant in Sierra Nevada (SE Spain). Contains 3 response variables (see [interaction_responses]) and 10 numeric predictors at 100 m resolution (see [interaction_predictors]). Use [interaction_extra()] to download the associated environmental raster.
 #'
 #' @usage data(interaction)
-#' @format An `sf` dataframe  with 1,000 rows (presence and background points) and 13 columns:
+#' @format An `sf` dataframe  with 1,000 rows (presence and background points) and 14 columns:
 #'
 #' **Response variables (3):**
 #' \itemize{
@@ -48,6 +48,11 @@
 #'   \item Benito, B., Lorite, J., & Peñas, J. (2011). Simulating potential effects of climatic warming on altitudinal patterns of key species in Mediterranean-alpine ecosystems. \emph{Climatic Change}, 108, 471–483. \doi{10.1007/s10584-010-0015-3}
 #' }
 #'
+#' @examples
+#' data(interaction)
+#' colnames(interaction)
+#' nrow(interaction)
+#' ncol(interaction)
 #' @family interaction
 "interaction"
 
@@ -55,6 +60,9 @@
 #' @description Character vector of 3 response variable names from [interaction].
 #' @usage data(interaction_responses)
 #' @format A character vector of length 3.
+#' @examples
+#' data(interaction_responses)
+#' interaction_responses
 #' @family interaction
 "interaction_responses"
 
@@ -62,6 +70,9 @@
 #' @description Character vector of 10 predictor variable names from [interaction].
 #' @usage data(interaction_predictors)
 #' @format A character vector of length 10.
+#' @examples
+#' data(interaction_predictors)
+#' interaction_predictors
 #' @family interaction
 "interaction_predictors"
 

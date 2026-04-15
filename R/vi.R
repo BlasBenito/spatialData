@@ -1,7 +1,7 @@
 #' @title Global long-term NDVI records and environmental predictors
 #'
 #' @description
-#' `sf` data frame with `POINT` geometry representing 9,265 global locations with one response variable represented in five different encodings of the long-term average (1999-2019) of the Normalized Difference Vegetation Index (NDVI) and 58 environmental predictors (47 numeric, 11 categorical). Use [vi_extra()] to download an extended version with 30,000 rows. There is a smaller version of this dataset (590) rows named [vi_smol]
+#' `sf` data frame with `POINT` geometry representing 9,265 global locations with one response variable represented in five different encodings of the long-term average (1999-2019) of the Normalized Difference Vegetation Index (NDVI) and 58 environmental predictors (47 numeric, 11 categorical). Use [vi_extra()] to download an extended version with 30,000 rows. There is a smaller version of this dataset (580 rows) named [vi_smol]
 #'
 #' NDVI values are derived from the Copernicus Global Land Service Long Term Statistics product (1999-2019) at 1 km resolution. Locations were spatially thinned to reduce spatial autocorrelation.
 #'
@@ -136,6 +136,11 @@
 #' \itemize{
 #'   \item Natural Earth. Free vector and raster map data. \url{https://www.naturalearthdata.com/}
 #' }
+#' @examples
+#' data(vi)
+#' colnames(vi)
+#' nrow(vi)
+#' ncol(vi)
 #' @family vi
 "vi"
 
@@ -145,7 +150,12 @@
 #'
 #' @usage data(vi_smol)
 #'
-#' @format sf dataframe with 580 rows and 65 columns.
+#' @format A data frame with 580 rows and 65 columns.
+#' @examples
+#' data(vi_smol)
+#' colnames(vi_smol)
+#' nrow(vi_smol)
+#' ncol(vi_smol)
 #' @seealso [vi]
 #' @family vi
 "vi_smol"
@@ -154,6 +164,9 @@
 #' @description Character vector containing the names of the 5 response variables in [vi].
 #' @usage data(vi_responses)
 #' @format A character vector of length 5.
+#' @examples
+#' data(vi_responses)
+#' vi_responses
 #' @family vi
 "vi_responses"
 
@@ -161,6 +174,9 @@
 #' @description Character vector of 58 predictor variable names from [vi].
 #' @usage data(vi_predictors)
 #' @format A character vector of length 58.
+#' @examples
+#' data(vi_predictors)
+#' vi_predictors
 #' @family vi
 "vi_predictors"
 

@@ -86,6 +86,12 @@ Background points were randomly sampled within the extent of the presence
 records. Environmental predictors were extracted from a Landsat/DEM-derived
 raster at 400 m resolution (EPSG:25830).
 }
+\examples{
+data(linaria)
+colnames(linaria)
+nrow(linaria)
+ncol(linaria)
+}
 \seealso{
 Other linaria: 
 \code{\link{linaria_extra}()},

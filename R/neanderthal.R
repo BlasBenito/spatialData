@@ -1,10 +1,10 @@
 #' @title Neanderthal presence in the Last Interglacial
 #'
 #' @description
-#' `sf` data frame with `POINT` geometry containing records of Neanderthal presence from Marine Isotope Stage 5e (Last Interglacial) in Europe and the Near East, 1 response variable (see [neanderthal_response]), and 25 predictors (see [neanderthal_predictors]). Use [neanderthal_extra()] to download the associated environmental raster.
+#' `sf` data frame with `POINT` geometry containing 227 records of Neanderthal presence from Marine Isotope Stage 5e (Last Interglacial) in Europe and the Near East, 1 response variable (see [neanderthal_response]), and 25 predictors (see [neanderthal_predictors]). Use [neanderthal_extra()] to download the associated environmental raster.
 #'
 #' @usage data(neanderthal)
-#' @format An sf data frame with 245 rows (presence and pseudo-absence sites) and 27 columns:
+#' @format An sf data frame with 227 rows (presence and pseudo-absence sites) and 27 columns:
 #'
 #' **Response variable (1):**
 #' \itemize{
@@ -69,6 +69,11 @@
 #' \itemize{
 #'   \item Jarvis, A., Guevara, E., Reuter, H. I., & Nelson, A. D. (2008). Hole-filled SRTM for the globe: version 4, data grid. Web publication/site, CGIAR Consortium for Spatial Information. \url{https://srtm.csi.cgiar.org}
 #' }
+#' @examples
+#' data(neanderthal)
+#' colnames(neanderthal)
+#' nrow(neanderthal)
+#' ncol(neanderthal)
 #' @family neanderthal
 "neanderthal"
 
@@ -76,6 +81,9 @@
 #' @description Character string with the name of the response variable in [neanderthal].
 #' @usage data(neanderthal_response)
 #' @format A character string of length 1.
+#' @examples
+#' data(neanderthal_response)
+#' neanderthal_response
 #' @family neanderthal
 "neanderthal_response"
 
@@ -83,6 +91,9 @@
 #' @description Character vector of 25 predictor variable names from [neanderthal].
 #' @usage data(neanderthal_predictors)
 #' @format A character vector of length 25.
+#' @examples
+#' data(neanderthal_predictors)
+#' neanderthal_predictors
 #' @family neanderthal
 "neanderthal_predictors"
 

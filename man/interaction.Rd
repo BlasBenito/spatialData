@@ -5,7 +5,7 @@
 \alias{interaction}
 \title{Butterfly and host plant presence in Sierra Nevada (SE Spain)}
 \format{
-An \code{sf} dataframe  with 1,000 rows (presence and background points) and 13 columns:
+An \code{sf} dataframe  with 1,000 rows (presence and background points) and 14 columns:
 
 \strong{Response variables (3):}
 \itemize{
@@ -54,6 +54,12 @@ data(interaction)
 }
 \description{
 \code{sf} dataframe with co-occurrence records for a butterfly  and its host plant in Sierra Nevada (SE Spain). Contains 3 response variables (see \link{interaction_responses}) and 10 numeric predictors at 100 m resolution (see \link{interaction_predictors}). Use \code{\link[=interaction_extra]{interaction_extra()}} to download the associated environmental raster.
+}
+\examples{
+data(interaction)
+colnames(interaction)
+nrow(interaction)
+ncol(interaction)
 }
 \seealso{
 Other interaction: 

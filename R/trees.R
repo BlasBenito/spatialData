@@ -121,6 +121,11 @@
 #' \itemize{
 #'   \item Jarvis, A., Guevara, E., Reuter, H. I., & Nelson, A. D. (2008). Hole-filled SRTM for the globe: version 4, data grid. Web publication/site, CGIAR Consortium for Spatial Information. \url{https://srtm.csi.cgiar.org}
 #' }
+#' @examples
+#' data(trees)
+#' colnames(trees)
+#' nrow(trees)
+#' ncol(trees)
 #' @family trees
 "trees"
 
@@ -129,6 +134,9 @@
 #' response variable in [trees].
 #' @usage data(trees_response)
 #' @format A character vector of length 1.
+#' @examples
+#' data(trees_response)
+#' trees_response
 #' @family trees
 "trees_response"
 
@@ -136,6 +144,9 @@
 #' @description Character vector of 50 predictor variable names from [trees].
 #' @usage data(trees_predictors)
 #' @format A character vector of length 50.
+#' @examples
+#' data(trees_predictors)
+#' trees_predictors
 #' @family trees
 "trees_predictors"
 

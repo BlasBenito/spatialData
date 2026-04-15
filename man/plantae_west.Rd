@@ -5,13 +5,19 @@
 \alias{plantae_west}
 \title{Western Hemisphere subset of \code{plantae}}
 \format{
-\code{sf} dataframe.
+An sf data frame with 228 rows and 91 columns.
 }
 \usage{
 data(plantae_west)
 }
 \description{
 Subset of the \link{plantae} dataset filtered to American ecoregions (\code{ecoregion_continent == "Americas"}) with \code{richness_species} (overall plant species richness) as the only response variable. All 84 predictor variables and identifier columns in \link{plantae} are retained.
+}
+\examples{
+data(plantae_west)
+colnames(plantae_west)
+nrow(plantae_west)
+ncol(plantae_west)
 }
 \seealso{
 Other plantae: 

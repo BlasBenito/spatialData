@@ -13,6 +13,10 @@ data(communities_responses)
 \description{
 Character vector of 6 response variable names from \link{communities}.
 }
+\examples{
+data(communities_responses)
+communities_responses
+}
 \seealso{
 Other communities: 
 \code{\link{communities}},

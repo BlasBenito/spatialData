@@ -14,6 +14,10 @@ data(andalusia_responses)
 Character vector of length 2 containing the names of the
 response variables in \link{andalusia}: \code{"species"} (character, species name or \code{"background"} for 90 species plus background points) and \code{"presence"} (binary integer, 1 = confirmed species presence, 0 = background point).
 }
+\examples{
+data(andalusia_responses)
+andalusia_responses
+}
 \seealso{
 Other andalusia: 
 \code{\link{andalusia}},

@@ -13,6 +13,10 @@ data(communities_predictors)
 \description{
 Character vector of 9 predictor variable names from \link{communities}.
 }
+\examples{
+data(communities_predictors)
+communities_predictors
+}
 \seealso{
 Other communities: 
 \code{\link{communities}},

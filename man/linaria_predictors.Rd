@@ -15,6 +15,10 @@ Character vector of 20 predictor variable names from \link{linaria},
 covering Landsat reflectance (7), rainfall (2), solar radiation (2),
 temperature (4), and topography (5).
 }
+\examples{
+data(linaria_predictors)
+linaria_predictors
+}
 \seealso{
 Other linaria: 
 \code{\link{linaria}},

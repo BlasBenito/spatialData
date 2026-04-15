@@ -129,6 +129,12 @@ Cayuela et al. 2012). These tree species were later used as input for a search q
 
 The hexagonal grid was constructed using \code{sf::st_make_grid(..., cellsize = 1, square = FALSE)} at 1-degree resolution (WGS84, EPSG:4326), covering longitudes -125.3° to -34.3° and latitudes -34.4° to 49.9°.
 }
+\examples{
+data(trees)
+colnames(trees)
+nrow(trees)
+ncol(trees)
+}
 \seealso{
 Other trees: 
 \code{\link{trees_extra}()},
