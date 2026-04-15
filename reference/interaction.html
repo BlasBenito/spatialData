@@ -58,7 +58,7 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>An <code>sf</code> dataframe  with 1,000 rows (presence and background points) and 13 columns:</p>
+    <p>An <code>sf</code> dataframe  with 1,000 rows (presence and background points) and 14 columns:</p>
 <p><strong>Response variables (3):</strong></p><ul><li><p><code>butterfly</code>: Integer with three possible values: 1 (presence of <em>Agriades zullichi</em>), 0 (background), and NA (host plant observation site, where butterfly was not surveyed).</p></li>
 <li><p><code>host_plant</code>: Integer with three possible values: 1 (presence of <em>Androsace vitaliana</em>), 0 (background), and NA (butterfly observation site, where the plant was not surveyed).</p></li>
 <li><p><code>class</code>: Factor with three levels: <code>"butterfly"</code>, <code>"host_plant"</code>, and <code>"background"</code>, indicating the observation type of each record.</p></li>
@@ -88,6 +88,23 @@
 <code><a href="interaction_responses.html">interaction_responses</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">interaction</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">interaction</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "butterfly"               "host_plant"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "class"                   "landsat_ndvi"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "landsat_pca_bands_123"   "landsat_pca_bands_457"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "rainfall_annual"         "solar_radiation"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "temperature_annual_mean" "temperature_summer_max" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "temperature_winter_min"  "topographic_complexity" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "topographic_position"    "geometry"               </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">interaction</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1000</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">interaction</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 14</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

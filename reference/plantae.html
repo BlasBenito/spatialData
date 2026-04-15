@@ -264,6 +264,159 @@ its number of spatial presence records in GBIF, then scores are summed per ecore
 <code><a href="plantae_west.html">plantae_west</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">plantae</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">plantae</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "ecoregion_id"                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2] "ecoregion_name"                          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [3] "ecoregion_biome"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [4] "ecoregion_realm"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [5] "ecoregion_continent"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [6] "richness_species"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [7] "richness_genera"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [8] "richness_families"                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [9] "richness_classes"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [10] "richness_species_trees"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [11] "richness_genera_trees"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [12] "richness_families_trees"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [13] "richness_species_grasses"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [14] "richness_genera_grasses"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [15] "rarity_weighted_richness_species"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [16] "rarity_weighted_richness_genera"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [17] "rarity_weighted_richness_species_trees"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] "rarity_weighted_richness_genera_trees"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [19] "rarity_weighted_richness_species_grasses"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [20] "rarity_weighted_richness_genera_grasses" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [21] "mean_rarity_species"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [22] "mean_rarity_genera"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [23] "mean_rarity_species_trees"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [24] "mean_rarity_genera_trees"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [25] "mean_rarity_species_grasses"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [26] "mean_rarity_genera_grasses"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [27] "betadiversity_R_species"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [28] "betadiversity_R_percent_species"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [29] "betadiversity_R_genera"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [30] "betadiversity_R_percent_genera"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [31] "betadiversity_R_families"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [32] "betadiversity_R_percent_families"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [33] "betadiversity_R_species_trees"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [34] "betadiversity_R_percent_species_trees"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] "betadiversity_R_genera_trees"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [36] "betadiversity_R_percent_genera_trees"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [37] "betadiversity_R_families_trees"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [38] "betadiversity_R_percent_families_trees"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [39] "betadiversity_R_species_grasses"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [40] "betadiversity_R_percent_species_grasses" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [41] "betadiversity_R_genera_grasses"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [42] "betadiversity_R_percent_genera_grasses"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [43] "betadiversity_sorensen_species"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [44] "betadiversity_sorensen_genera"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [45] "betadiversity_sorensen_families"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [46] "betadiversity_sorensen_species_trees"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [47] "betadiversity_sorensen_genera_trees"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [48] "betadiversity_sorensen_families_trees"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [49] "betadiversity_sorensen_species_grasses"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [50] "betadiversity_sorensen_genera_grasses"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [51] "betadiversity_simpson_species"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] "betadiversity_simpson_genera"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [53] "betadiversity_simpson_families"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [54] "betadiversity_simpson_species_trees"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [55] "betadiversity_simpson_genera_trees"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] "betadiversity_simpson_families_trees"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [57] "betadiversity_simpson_species_grasses"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [58] "betadiversity_simpson_genera_grasses"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [59] "bias_log_records"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [60] "geo_neighbors_count"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [61] "geo_neighbors_area_km2"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [62] "geo_neighbors_aridity_mean"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [63] "geo_area_km2"                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [64] "geo_polygons_count"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [65] "geo_perimeter_km"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [66] "geo_shared_perimeter_km"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [67] "geo_shared_perimeter_fraction"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [68] "geo_distance_to_ocean"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] "geo_elevation_mean"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [70] "human_population"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [71] "human_population_density"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [72] "human_footprint_mean"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [73] "climate_velocity_lgm_mean"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [74] "climate_hypervolume"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [75] "landcover_bare_percent_mean"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [76] "landcover_herbs_percent_mean"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [77] "landcover_trees_percent_mean"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] "fragmentation_ai"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [79] "fragmentation_area_mn"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [80] "fragmentation_ca"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [81] "fragmentation_clumpy"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [82] "fragmentation_cohesion"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [83] "fragmentation_contig_mn"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [84] "fragmentation_core_mn"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [85] "fragmentation_cpland"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] "fragmentation_dcore_mn"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [87] "fragmentation_division"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [88] "fragmentation_ed"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [89] "fragmentation_lsi"                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [90] "fragmentation_mesh"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] "fragmentation_ndca"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [92] "fragmentation_nlsi"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [93] "fragmentation_np"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [94] "fragmentation_shape_mn"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [95] "fragmentation_tca"                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [96] "fragmentation_te"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [97] "air_humidity_max"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [98] "air_humidity_mean"                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [99] "air_humidity_min"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [100] "air_humidity_range"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [101] "aridity_mean"                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [102] "cloud_cover_max"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [103] "cloud_cover_mean"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [104] "cloud_cover_min"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [105] "cloud_cover_range"                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [106] "evapotranspiration_max"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [107] "evapotranspiration_mean"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [108] "evapotranspiration_min"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [109] "evapotranspiration_range"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [110] "precipitation_seasonality"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [111] "precipitation_total"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [112] "precipitation_coldest_quarter"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [113] "precipitation_driest_month"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [114] "precipitation_driest_quarter"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [115] "precipitation_warmest_quarter"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [116] "precipitation_wettest_month"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [117] "precipitation_wettest_quarter"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [118] "temperature_isothermality"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [119] "temperature_mean_daily_range"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [120] "temperature_mean"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [121] "temperature_range"                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [122] "temperature_seasonality"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [123] "temperature_coldest_month"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [124] "temperature_coldest_quarter"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [125] "temperature_driest_quarter"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [126] "temperature_warmest_month"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [127] "temperature_warmest_quarter"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [128] "temperature_wettest_quarter"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [129] "soil_clay"                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [130] "soil_nitrogen"                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [131] "soil_organic_carbon"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [132] "soil_ph"                                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [133] "soil_sand"                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [134] "soil_silt"                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [135] "soil_temperature_max"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [136] "soil_temperature_mean"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [137] "soil_temperature_min"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [138] "soil_temperature_range"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [139] "ndvi_max"                                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [140] "ndvi_mean"                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [141] "ndvi_min"                                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [142] "ndvi_range"                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [143] "geometry"                                </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">plantae</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 662</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">plantae</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 143</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

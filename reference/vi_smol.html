@@ -58,7 +58,7 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>sf dataframe with 580 rows and 65 columns.</p>
+    <p>A data frame with 580 rows and 65 columns.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -70,6 +70,49 @@
 <code><a href="vi_responses.html">vi_responses</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">vi_smol</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">vi_smol</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "longitude"                  "latitude"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "vi_numeric"                 "vi_counts"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "vi_binomial"                "vi_categorical"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "vi_factor"                  "koppen_zone"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "koppen_group"               "koppen_description"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "soil_type"                  "topo_slope"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "topo_diversity"             "topo_elevation"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "swi_mean"                   "swi_max"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "swi_min"                    "swi_range"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "soil_temperature_mean"      "soil_temperature_max"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "soil_temperature_min"       "soil_temperature_range"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [23] "soil_sand"                  "soil_clay"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "soil_silt"                  "soil_ph"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [27] "soil_soc"                   "soil_nitrogen"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "solar_rad_mean"             "solar_rad_max"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "solar_rad_min"              "solar_rad_range"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "growing_season_length"      "growing_season_temperature"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [35] "growing_season_rainfall"    "growing_degree_days"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "temperature_mean"           "temperature_max"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [39] "temperature_min"            "temperature_range"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "temperature_seasonality"    "rainfall_mean"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "rainfall_min"               "rainfall_max"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "rainfall_range"             "evapotranspiration_mean"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [47] "evapotranspiration_max"     "evapotranspiration_min"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "evapotranspiration_range"   "cloud_cover_mean"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [51] "cloud_cover_max"            "cloud_cover_min"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [53] "cloud_cover_range"          "aridity_index"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [55] "humidity_mean"              "humidity_max"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [57] "humidity_min"               "humidity_range"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [59] "biogeo_ecoregion"           "biogeo_biome"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [61] "biogeo_realm"               "country_name"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [63] "continent"                  "region"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [65] "subregion"                 </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">vi_smol</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 580</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">vi_smol</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 65</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

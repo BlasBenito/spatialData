@@ -58,7 +58,7 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p><code>sf</code> dataframe.</p>
+    <p>An sf data frame with 228 rows and 91 columns.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -70,6 +70,62 @@
 <code><a href="plantae_responses.html">plantae_responses</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">plantae_west</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">plantae_west</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "ecoregion_id"                  "ecoregion_name"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "ecoregion_biome"               "ecoregion_realm"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "ecoregion_continent"           "richness_species"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "bias_log_records"              "geo_neighbors_count"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "geo_neighbors_area_km2"        "geo_neighbors_aridity_mean"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "geo_area_km2"                  "geo_polygons_count"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "geo_perimeter_km"              "geo_shared_perimeter_km"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "geo_shared_perimeter_fraction" "geo_distance_to_ocean"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "geo_elevation_mean"            "human_population"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "human_population_density"      "human_footprint_mean"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "climate_velocity_lgm_mean"     "climate_hypervolume"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [23] "landcover_bare_percent_mean"   "landcover_herbs_percent_mean" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "landcover_trees_percent_mean"  "fragmentation_ai"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [27] "fragmentation_area_mn"         "fragmentation_ca"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "fragmentation_clumpy"          "fragmentation_cohesion"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "fragmentation_contig_mn"       "fragmentation_core_mn"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "fragmentation_cpland"          "fragmentation_dcore_mn"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [35] "fragmentation_division"        "fragmentation_ed"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "fragmentation_lsi"             "fragmentation_mesh"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [39] "fragmentation_ndca"            "fragmentation_nlsi"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "fragmentation_np"              "fragmentation_shape_mn"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "fragmentation_tca"             "fragmentation_te"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "air_humidity_max"              "air_humidity_mean"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [47] "air_humidity_min"              "air_humidity_range"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "aridity_mean"                  "cloud_cover_max"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [51] "cloud_cover_mean"              "cloud_cover_min"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [53] "cloud_cover_range"             "evapotranspiration_max"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [55] "evapotranspiration_mean"       "evapotranspiration_min"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [57] "evapotranspiration_range"      "precipitation_seasonality"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [59] "precipitation_total"           "precipitation_coldest_quarter"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [61] "precipitation_driest_month"    "precipitation_driest_quarter" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [63] "precipitation_warmest_quarter" "precipitation_wettest_month"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [65] "precipitation_wettest_quarter" "temperature_isothermality"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [67] "temperature_mean_daily_range"  "temperature_mean"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [69] "temperature_range"             "temperature_seasonality"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [71] "temperature_coldest_month"     "temperature_coldest_quarter"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [73] "temperature_driest_quarter"    "temperature_warmest_month"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [75] "temperature_warmest_quarter"   "temperature_wettest_quarter"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [77] "soil_clay"                     "soil_nitrogen"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [79] "soil_organic_carbon"           "soil_ph"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [81] "soil_sand"                     "soil_silt"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [83] "soil_temperature_max"          "soil_temperature_mean"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [85] "soil_temperature_min"          "soil_temperature_range"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [87] "ndvi_max"                      "ndvi_mean"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [89] "ndvi_min"                      "ndvi_range"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [91] "geometry"                     </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">plantae_west</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 228</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">plantae_west</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 91</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
