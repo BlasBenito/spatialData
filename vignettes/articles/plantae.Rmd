@@ -125,11 +125,8 @@ mapview::mapview(
 Smaller subsets filtered by hemisphere with `richness_species` as the only response variable are also available via [`plantae_west`] (Americas) and [`plantae_east`] (Old World).
 
 ```{r}
-plantae_w <- spatialData::plantae_west()
-nrow(plantae_w)
-
-plantae_e <- spatialData::plantae_east()
-nrow(plantae_e)
+nrow(plantae_west)
+nrow(plantae_east)
 ```
 
 ## Response Variables
