@@ -11,7 +11,7 @@ An sf data frame with 434 rows and 91 columns.
 data(plantae_east)
 }
 \description{
-Subset of the \link{plantae} dataset filtered to American ecoregions (\code{ecoregion_continent != "Americas"}) with \code{richness_species} (overall plant species richness) as the only response variable. All 84 predictor variables and identifier columns in \link{plantae} are retained.
+Subset of the \link{plantae} dataset filtered to non-American ecoregions (\code{ecoregion_continent != "Americas"}) with \code{richness_species} (overall plant species richness) as the only response variable. All 84 predictor variables and identifier columns in \link{plantae} are retained.
 }
 \examples{
 data(plantae_east)

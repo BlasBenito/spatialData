@@ -1,6 +1,11 @@
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+── R CMD check results ───────────────────────────────── spatialData 1.0.0 ────
+Duration: 53.8s
+
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
+R CMD check succeeded
 
 * This is a new submission.
 
@@ -21,14 +26,11 @@
 
 ## Test environments
 
-* rhub (Linux containers): atlas, c23, clang16, clang17, clang18, gcc13, gcc14,
-  intel, mkl, nold, nosuggests, ubuntu-clang, ubuntu-gcc12, ubuntu-release —
-  all passed (0 errors, 0 warnings, 0 notes)
+* winbuilder: 1 NOTE, New submission
+* rhub (Linux containers): atlas, c23, clang16, clang17, clang18, gcc13, gcc14, intel, mkl, nold, nosuggests, ubuntu-clang, ubuntu-gcc12, ubuntu-release — all passed (0 errors, 0 warnings, 0 notes)
 * rhub: linux (R-devel) — passed
 * rhub: macos-arm64 (R-devel) — passed
-* rhub: ubuntu-next, clang-asan, clang19, windows (R-devel) — failed during
-  dependency setup (r-hub infrastructure issue unrelated to the package;
-  identical step, same exit code 1 on all four)
+* rhub: ubuntu-next, clang-asan, clang19, windows (R-devel) — failed during dependency setup (r-hub infrastructure issue unrelated to the package; identical step, same exit code 1 on all four)
 
 ## Downstream dependencies
 
