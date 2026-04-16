@@ -1,8 +1,6 @@
 # spatialData 1.0.0
 
-First release of `spatialData` on CRAN.
-
-### Datasets
+First release of `spatialData` on CRAN, with the following datasets:
 
 - `neanderthal`: Neanderthal presence/pseudo-absence records with 25 palaeoclimatic and topographic predictors (`neanderthal_response`, `neanderthal_predictors`).
 - `vi`: Global NDVI records with 58 environmental predictors (`vi_responses`, `vi_predictors`, `vi_extra()`).
