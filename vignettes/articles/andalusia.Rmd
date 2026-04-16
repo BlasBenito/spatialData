@@ -18,13 +18,17 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Source Code
+
+You can download the Rmarkdown notebook used to render this article [here](https://github.com/BlasBenito/spatialData/blob/main/vignettes/articles/andalusia.Rmd). To download the file, use the button *Download raw file* on the upper-right hand of the `Code` panel.
+
 ## Overview
 
-The `andalusia` dataset is an `sf` data frame  containing presence records for 90 plant species and  background points from Andalusia, Spain. 
+The `andalusia` dataset is an `sf` data frame  containing presence records for 90 plant species and background points from Andalusia, Spain. The background points were generated randomly across the entire study area to sample the combinations of environmental conditions available.
 
-Environmental predictors are in the companion raster downloaded via `andalusia_extra()`, and their names are stored in `andalusia_predictors`.
+Due to its large number of records, this dataset only contains species identities and pairs of coordinates. The environmental predictors are in the companion raster downloaded via `andalusia_extra()`, while the predictor names are stored in `andalusia_predictors`.
 
-This dataset is well suited for multi-species SDMs, multiclass classification, and spatial richness mapping.
+This dataset is well suited for species distribution modelling, clustering, multiclass classification, and spatial operations involving large-ish numbers of records.
 
 ## Setup
 
@@ -65,6 +69,8 @@ data(
   andalusia_predictors,
   package = "spatialData"
 )
+
+colors <- viridis::turbo(n = 100)
 ```
 
 ## Data Structure
@@ -77,11 +83,11 @@ dplyr::glimpse(andalusia)
 
 The data frame has 3 columns: 
 
-- `species` (character): species names.
-- `presence` (integer): with value 1 for plant species and 0 for background points.
+- `species` (character): species names, with `r length(unique(andalusia$species))` different values.
+- `presence` (integer): with value 1 for plant species and 0 for background records.
 - `geometry` (POINT): with coordinate reference system ETRS89 / UTM zone 30N (EPSG:25830).
 
-The `species` column identifies each record as a named species or `"background"`. The table below shows the number of records per species or group.
+The table below shows the number of records per group.
 
 ```{r}
 andalusia |>
@@ -91,11 +97,9 @@ andalusia |>
   dplyr::arrange(dplyr::desc(n))
 ```
 
-Background points were generated randomly across the entire study area to sample the combinations of environmental conditions available.
-
 The map below shows all species presences. Background points were excluded for clarity.
 
-```{r map, message = FALSE}
+```{r map, message = FALSE, warning = FALSE}
 mapview::mapview(
   andalusia |>
     dplyr::filter(
@@ -103,7 +107,7 @@ mapview::mapview(
     ),
   zcol = "species",
   layer.name = "Species",
-  col.regions = viridis::turbo(n = 90),
+  col.regions = colors,
   legend = FALSE
 )
 ```
@@ -112,7 +116,7 @@ The environmental raster matching this dataset is downloaded via `andalusia_extr
 
 ```{r load_raster, message = FALSE}
 andalusia_env <- spatialData::andalusia_extra()
-plot(andalusia_env)
+plot(andalusia_env, col = colors)
 ```
 
 The `spatRaster` object contains `r length(andalusia_predictors)` layers, all named in the vector `andalusia_predictors`.
@@ -127,7 +131,7 @@ Each cell of the raster dataset represents 400 × 400 meters on the ground.
 terra::res(andalusia_env)
 ```
 
-To pair records in `andalusia` with the cell values in `andalusia_env` we use `terra::extract()`.
+We pair each record in `andalusia` with its corresponding cell values in `andalusia_env` via `terra::extract()`.
 
 
 ```{r}
@@ -160,34 +164,35 @@ res(andalusia_env)
 
 ## Example Usage
 
-In this section we use the `andalusia` dataset to build a plant richness model by adding per-species binary predictions predicted from random forest models trained with [`ranger::ranger()`](https://cran.r-project.org/package=ranger).
+In this section we use the `andalusia` dataset to build a plant richness model by adding habitat suitability predictions from binary random forest models trained with [`ranger::ranger()`](https://cran.r-project.org/package=ranger).
 
-Before fitting models, we convert `presence` to a factor (required by `ranger` for classification modelling) and split the data into two objects: `species` (presence records) and `background`.
+Before fitting models, we convert `presence` to a factor (required by `ranger` for classification modelling) and split the data into two objects: `species` (presence records) and `background`. This step will make sense soon!
 
 ```{r}
 #convert to factor
-andalusia <- andalusia |>
-  dplyr::mutate(
-    presence = factor(presence)
+andalusia <- dplyr::mutate(
+  andalusia,
+  presence = factor(presence)
   )
 
 #separate background data
-background <- andalusia |>
-  dplyr::filter(
-    species == "background"
+background <- dplyr::filter(
+  andalusia,
+  species == "background"
   )
 
 #separate species data
-species <- andalusia |>
-  dplyr::filter(
-    species != "background"
+presence <- dplyr::filter(
+  andalusia,
+  species != "background"
   )
 ```
 
 
 ### Modelling steps for one species
 
-This section shows the modelling steps for a single species.
+In this section we define the individual modelling steps for the species *Pinus halepensis*.
+
 
 ```{r}
 species_name <- "Pinus_halepensis"
@@ -196,83 +201,91 @@ species_name <- "Pinus_halepensis"
 First, we filter the records belonging to the target species.
 
 ```{r}
-species_data <- species |>
-  dplyr::filter(
-    species == species_name
-    )
+species_presence <- dplyr::filter(
+  presence,
+  species == species_name
+  )
 ```
 
-Next, we build a 10 km buffer around the species presences to exclude background points too close to presences. This operation helps enhance the contrast between environmental conditions the model needs to learn habitat boundaries.
+Next, we build a 10 km buffer around the species presences to exclude background points too close to presences. This step helps enhance the contrast between the environmental conditions of presence and background points the model needs to learn from.
 
 ```{r}
-species_data_buffer <- sf::st_buffer(
-  x = species_data,
-  dist = 10000
+species_presence_buffer <- sf::st_buffer(
+  x = species_presence,
+  dist = 10000 #in meters
 ) |> 
   sf::st_union()
 ```
 
 
-We then identify which background points fall outside the buffer using `sf::st_contains()` and retain only those.
+We use the buffer to identify which background points fall inside of it using `sf::st_contains()` to remove them.
 
 ```{r}
-#identify background outside the presence buffer
-background_outside_buffer <- !sf::st_contains(
-  x = species_data_buffer,
+#identify background points contained by the buffer
+background_inside_buffer <- sf::st_contains(
+  x = species_presence_buffer,
   y = background,
   sparse = FALSE
 ) |>
   as.vector()
 
 #select background outside the presence buffer
-species_background <- background[background_outside_buffer, ]
+species_background <- background[!background_inside_buffer, ]
 ```
 
 The map below shows the 10 km buffer around the species presences and the background points that remain after filtering.
 
 ```{r}
 mapview(
-  species_data, 
-  layer.name = "Presence records", 
-  col.regions = "black"
+  species_presence, 
+  layer.name = "Presence", 
+  col.regions = colors[75]
   ) +
 mapview(
-  species_data_buffer, 
-  col.regions = "gray50", 
-  layer.name = "Presence buffer"
+  species_presence_buffer, 
+  col.regions = "gray20", 
+  layer.name = "Buffer"
   ) + 
   mapview(
     species_background, 
-    col.regions = "red4", 
+    col.regions = colors[25], 
     layer.name = "Background"
     )
 ```
 
-To finish the data preparation we combine the species presences and the filtered background into a single training data frame.
+To finish the data preparation we combine the species presences and the filtered background into a single training data frame, remove the geometry, and select only the response and the predictors
 
 ```{r}
-species_data <- dplyr::bind_rows(
-  species_data,
+species_training <- dplyr::bind_rows(
+  species_presence,
   species_background
-)
+) |> 
+  sf::st_drop_geometry() |> 
+  dplyr::select(
+    dplyr::all_of(c("presence", andalusia_predictors))
+  )
 ```
 
 
-We train a binary random forest using all predictors and class weights to account for the imbalance between presences and background records. `num.trees = 100` and `min.node.size = 30` are set below their defaults (500 and 5, respectively) to reduce computation time. It's recommended to increase them for production models!
+We train a binary random forest using all predictors, and class weights to account for the imbalance between presences and background records. 
+
+The hyperparameters `num.trees = 100` and `min.node.size = 30` are set below their defaults (500 and 5, respectively) to reduce computation time. 
 
 ```{r}
 species_model <- ranger::ranger(
-  formula = presence ~ .,
-  data = sf::st_drop_geometry(species_data)[, c("presence", andalusia_predictors)],
+  dependent.variable.name = "presence",
+  data = species_training,
   case.weights = collinear::case_weights(
-    x = species_data$presence
+    x = species_training$presence
   ),
   num.trees = 100,
   min.node.size = 30
 )
 ```
 
-We then predict the fitted binary model to every cell of the raster `andalusia_env` to produce a presence/absence raster.
+At this point we could evalate this model via spatial cross-validation, assess variable importance, and even check the response curves to understand how it's working. However, these steps are omitted here to keep the article light of content and computationally efficient.
+
+We predict the fitted binary model to every cell of the raster `andalusia_env` to produce a binary raster.
 
 ```{r}
 species_prediction <- terra::predict(
@@ -280,29 +293,35 @@ species_prediction <- terra::predict(
   model = species_model,
   na.rm = TRUE
 )
+```
 
+Cells with value 1 in the map below represent environmental conditions where it is more likely to find a presence than a background point.
+
+
+```{r, warning = FALSE}
 mapview(
-  species_data |> 
+  species_presence |> 
     dplyr::filter(
       species == species_name
     ),
   layer.name  = paste0("Presence ", species_name),
   alpha.regions = 0,
-  color       = "black",
-  col.regions = "black"
+  color       = "gray20",
+  col.regions = "gray20"
 ) +
   mapview(
     species_prediction,
     layer.name = paste0("Prediction ", species_name),
+    col.regions = c(colors[25], colors[75]),
     na.color = "transparent"
   )
 ```
 
 ### Modelling all species
 
-In this section we apply the steps above to the 90 plant species in `andalusia`.
+In this section we apply the steps learned in the previous section to the 90 plant species in `andalusia`.
 
-First we extract their names to iterate over them.
+We can start extracting their names to iterate over them.
 
 ```{r}
 species_names <- andalusia |>
@@ -313,41 +332,45 @@ species_names <- andalusia |>
 species_names
 ```
 
-We now apply the same modelling pipeline to all 90 species. The result is a list of per-species binary rasters, stacked into a single `spatRaster` with `terra::rast()`.
+To iterate across these species we wrap our modelling steps in a `lapply()` call, which will apply the same modelling pipeline to all 90 species. The result is a list of per-species binary rasters, stacked into a single `spatRaster` with `terra::rast()`.
 
 ```{r}
 species_predictions <- lapply(
   X = species_names,
   FUN = function(species_name) {
 
-    species_data <- species |>
+    species_presence <- presence |>
       dplyr::filter(species == species_name)
 
-    species_data_buffer <- sf::st_buffer(
-      x = species_data,
+    species_presence_buffer <- sf::st_buffer(
+      x = species_presence,
       dist = 10000
     ) |>
       sf::st_union()
 
-    background_outside_buffer <- !sf::st_contains(
-      x = species_data_buffer,
+    background_inside_buffer <- sf::st_contains(
+      x = species_presence_buffer,
       y = background,
       sparse = FALSE
     ) |>
       as.vector()
 
-    species_background <- background[background_outside_buffer, ]
+    species_background <- background[!background_inside_buffer, ]
 
-    species_data <- dplyr::bind_rows(
-      species_data,
+    species_training <- dplyr::bind_rows(
+      species_presence,
       species_background
-    )
+    ) |> 
+      sf::st_drop_geometry() |> 
+      dplyr::select(
+        dplyr::all_of(c("presence", andalusia_predictors))
+      )
 
     species_model <- ranger::ranger(
-      formula = presence ~ .,
-      data = sf::st_drop_geometry(species_data[, c("presence", andalusia_predictors)]),
+      dependent.variable.name = "presence",
+      data = species_training,
       case.weights = collinear::case_weights(
-        x = species_data$presence
+        x = species_training$presence
       ),
       num.trees = 100,
       min.node.size = 30
@@ -364,23 +387,26 @@ species_predictions <- lapply(
 ```
 
 
-Because each model is a binary classifier, every per-species prediction is already a 0/1 raster: 1 where the model predicts suitable habitat, 0 elsewhere. Summing these layers gives a species richness raster where each pixel counts how many of the 90 species have predicted suitable habitat at that location.
+Adding these binary predictions together results in a "species richness" raster where each pixel counts how many of the 90 species have predicted suitable habitat at that location.
 
 ```{r}
 species_predictions_sum <- sum(species_predictions)
+```
 
+Let's give it a look!
+
+```{r}
 mapview(
   species_predictions_sum,
-  col.regions = viridis::turbo(n = 10),
+  layer.name = "Plant richness",
+  col.regions = viridis::turbo(n = 5),
   na.color = "transparent"
 )
 ```
 
-## Conclusion
+We got a pretty one here, didn't we?
 
-This vignette demonstrated a complete multi-species modelling workflow using the `andalusia` dataset. After extracting environmental predictors from the companion raster via `terra::extract()`, we fitted `ranger::ranger()` binary random forest models for all 90 plant species using background points outside a 10 km buffer around each species' presences, and summed the per-species binary predictions into a species richness raster where each pixel value counts how many species have predicted suitable habitat at that location. Areas of high predicted richness correspond to climatically and topographically heterogeneous zones in Andalusia. Beyond the SDM workflow shown here, the dataset supports multiclass classification (using the `species` column), habitat connectivity analysis, and spatial conservation prioritisation.
-
-Happy modelling!
+That's all folks, I hope you had as much fun as I did while writing this article!
 
 ## References
 
