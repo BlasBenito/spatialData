@@ -1,14 +1,10 @@
 ## R CMD check results
 
-<!-- Fill in after running devtools::check(), devtools::check_win_devel(), and rhub checks -->
-
 0 errors | 0 warnings | 1 note
 
 * This is a new submission.
 
 ## Notes
-
-<!-- Paste any NOTEs from R CMD check here and explain them. Example: -->
 
 * checking CRAN incoming feasibility ... NOTE
   Maintainer: 'Blas M. Benito <blasbenito@gmail.com>'
@@ -25,11 +21,14 @@
 
 ## Test environments
 
-<!-- Fill in after running checks -->
-
-* Local: [OS] R [version]
-* win-builder (devel): R-devel [date]
-* rhub: [platforms tested]
+* rhub (Linux containers): atlas, c23, clang16, clang17, clang18, gcc13, gcc14,
+  intel, mkl, nold, nosuggests, ubuntu-clang, ubuntu-gcc12, ubuntu-release —
+  all passed (0 errors, 0 warnings, 0 notes)
+* rhub: linux (R-devel) — passed
+* rhub: macos-arm64 (R-devel) — passed
+* rhub: ubuntu-next, clang-asan, clang19, windows (R-devel) — failed during
+  dependency setup (r-hub infrastructure issue unrelated to the package;
+  identical step, same exit code 1 on all four)
 
 ## Downstream dependencies
 

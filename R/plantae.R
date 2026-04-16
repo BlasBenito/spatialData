@@ -305,7 +305,7 @@ plantae_extra <- function() {
 "plantae_west"
 
 #' @title Eastern Hemisphere subset of `plantae`
-#' @description Subset of the [plantae] dataset filtered to American ecoregions (`ecoregion_continent != "Americas"`) with `richness_species` (overall plant species richness) as the only response variable. All 84 predictor variables and identifier columns in [plantae] are retained.
+#' @description Subset of the [plantae] dataset filtered to non-American ecoregions (`ecoregion_continent != "Americas"`) with `richness_species` (overall plant species richness) as the only response variable. All 84 predictor variables and identifier columns in [plantae] are retained.
 #' @usage data(plantae_east)
 #' @format An sf data frame with 434 rows and 91 columns.
 #' @examples
