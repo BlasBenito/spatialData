@@ -70,7 +70,7 @@ data(
   package = "spatialData"
 )
 
-colors <- viridis::turbo(n = 100)
+colors <- viridis::turbo(n = 10)
 ```
 
 ## Data Structure
@@ -97,26 +97,14 @@ andalusia |>
   dplyr::arrange(dplyr::desc(n))
 ```
 
-The map below shows all species presences. Background points were excluded for clarity.
-
-```{r map, message = FALSE, warning = FALSE}
-mapview::mapview(
-  andalusia |>
-    dplyr::filter(
-      species != "background"
-    ),
-  zcol = "species",
-  layer.name = "Species",
-  col.regions = colors,
-  legend = FALSE
-)
-```
-
 The environmental raster matching this dataset is downloaded via `andalusia_extra()`, which returns a multilayer `spatRaster` object (R package [`terra`](https://cran.r-project.org/package=terra)).
 
 ```{r load_raster, message = FALSE}
 andalusia_env <- spatialData::andalusia_extra()
-plot(andalusia_env, col = colors)
+plot(
+  x = andalusia_env, 
+  col = colors
+  )
 ```
 
 The `spatRaster` object contains `r length(andalusia_predictors)` layers, all named in the vector `andalusia_predictors`.
@@ -239,7 +227,7 @@ The map below shows the 10 km buffer around the species presences and the backgr
 mapview(
   species_presence, 
   layer.name = "Presence", 
-  col.regions = colors[75]
+  col.regions = colors[8]
   ) +
 mapview(
   species_presence_buffer, 
@@ -248,7 +236,7 @@ mapview(
   ) + 
   mapview(
     species_background, 
-    col.regions = colors[25], 
+    col.regions = colors[2], 
     layer.name = "Background"
     )
 ```
@@ -283,9 +271,9 @@ species_model <- ranger::ranger(
 )
 ```
 
-At this point we could evalate this model via spatial cross-validation, assess variable importance, and even check the response curves to understand how it's working. However, these steps are omitted here to keep the article light of content and computationally efficient.
+At this point we could evaluate this model via spatial cross-validation, assess variable importance, and even check the response curves to understand how it's working. However, we will skip these steps here to keep the article light of content and computationally efficient.
 
-We predict the fitted binary model to every cell of the raster `andalusia_env` to produce a binary raster.
+Below we predict the fitted binary model to every cell of the raster `andalusia_env`.
 
 ```{r}
 species_prediction <- terra::predict(
@@ -293,29 +281,44 @@ species_prediction <- terra::predict(
   model = species_model,
   na.rm = TRUE
 )
+
+names(species_prediction) <- species_name
 ```
 
-Cells with value 1 in the map below represent environmental conditions where it is more likely to find a presence than a background point.
+The result is a binary raster with values 0 (absence) and 1 (presence). The presence records of the target species are plotted in black.
+  
+```{r}
+plot(
+  x = species_prediction,
+  col = c(colors[2], colors[8])
+  )
+points(species_presence)
+```
+But **careful here** The values 0 and 1 in the map above do not represent pixel values, they are category labels!
 
+```{r}
+levels(x = species_prediction)[[1]]
+```
 
-```{r, warning = FALSE}
-mapview(
-  species_presence |> 
-    dplyr::filter(
-      species == species_name
-    ),
-  layer.name  = paste0("Presence ", species_name),
-  alpha.regions = 0,
-  color       = "gray20",
-  col.regions = "gray20"
-) +
-  mapview(
-    species_prediction,
-    layer.name = paste0("Prediction ", species_name),
-    col.regions = c(colors[25], colors[75]),
-    na.color = "transparent"
+To convert the map to numeric with pixel value 0 for label "0" and 1 for label "1" we remove the levels, and subtract 1 to shift pixel values.
+
+```{r}
+#remove levels
+levels(x = species_prediction) <- NULL
+
+#shift pixel values
+species_prediction <- species_prediction - 1
+```
+
+Now we have the kind of map we need for the next section!
+
+```{r}
+plot(
+  x = species_prediction,
+  col = c(colors[2], colors[8])
   )
 ```
+
 
 ### Modelling all species
 
@@ -376,35 +379,55 @@ species_predictions <- lapply(
       min.node.size = 30
     )
 
-    terra::predict(
+    species_prediction <- terra::predict(
       object = andalusia_env,
       model = species_model,
       na.rm = TRUE
     )
+    
+    levels(x = species_prediction) <- NULL
+    
+    species_prediction <- species_prediction - 1
+    
+    names(species_prediction) <- species_name
+    
+    return(species_prediction)
   }
 ) |>
   terra::rast()
 ```
 
+The resulting multilayer raster contains the individual presence/absence predictions.
+
+```{r, fig.height = 8}
+plot(
+  x = species_predictions,
+  col = c(colors[2], colors[8])
+  )
+```
+
 
 Adding these binary predictions together results in a "species richness" raster where each pixel counts how many of the 90 species have predicted suitable habitat at that location.
 
+
 ```{r}
-species_predictions_sum <- sum(species_predictions)
+species_richness <- sum(species_predictions)
 ```
 
 Let's give it a look!
 
 ```{r}
 mapview(
-  species_predictions_sum,
+  species_richness,
   layer.name = "Plant richness",
-  col.regions = viridis::turbo(n = 5),
+  col.regions = colors,
   na.color = "transparent"
 )
 ```
 
-We got a pretty one here, didn't we?
+It looks pretty, doesn't it?
+
+However, it is important to acknowledge that we took some shortcuts to get there, so we should interpret this "richness" map with care. 
 
 That's all folks, I hope you had as much fun as I did while writing this article!
 
