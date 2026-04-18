@@ -1,3 +1,8 @@
+## Resubmission
+
+- removed the file LICENSE from the package.
+- edited the "License" section in DESCRIPTION to: License: CC BY 4.0
+
 ## R CMD check results
 
 ── R CMD check results ───────────────────────────────── spatialData 1.0.0 ────
