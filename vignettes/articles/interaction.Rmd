@@ -18,11 +18,13 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Source Code
+
+You can download the Rmarkdown notebook used to render this article [here](https://github.com/BlasBenito/spatialData/blob/main/vignettes/articles/interaction.Rmd). To download the file, use the button *Download raw file* on the upper-right hand of the `Code` panel.
+
 ## Overview
 
-Species distribution models (SDMs) typically rely on abiotic predictors — climate, topography, remote sensing — but many species are shaped just as strongly by who they live with. Obligate specialists, in particular, cannot persist where their host is absent, no matter how suitable the climate. A sequential modelling approach captures this by first modelling the host species and then feeding those predictions as a biotic predictor into the dependent species' model.
-
-The `interaction` dataset is designed for exactly this workflow. It contains occurrence records for two Sierra Nevada (SE Spain) species: the host plant *Androsace vitaliana* (`host_plant`) and the obligate specialist butterfly *Agriades zullichi* (`butterfly`), together with random background points.
+The `interaction` dataset contains occurrence records for two Sierra Nevada (SE Spain) species: the host plant *Androsace vitaliana* (`host_plant`) and the obligate specialist butterfly *Agriades zullichi* (`butterfly`), together with random background points.
 
 The dataset includes 3 response variables and 10 environmental predictors derived from remote sensing, climate, and topographic data at 100 m resolution.
 
@@ -63,6 +65,33 @@ data(
   interaction_predictors,
   package = "spatialData"
 )
+
+interaction_colors <- grDevices::palette.colors(
+  n = length(unique(interaction$class))
+  ) |> 
+  stats::setNames(
+    levels(interaction$class)
+    )
+
+host_plant_colors <- grDevices::colorRampPalette(
+  colors = c(
+    "white", 
+    interaction_colors["host_plant"],
+    "black"
+    )
+)
+
+butterfly_colors <- grDevices::colorRampPalette(
+  colors = c(
+    "white", 
+    interaction_colors["butterfly"],
+    "black"
+    )
+)
+
+raster_colors <- grDevices::colorRampPalette(
+  colors = rev(interaction_colors)
+)
 ```
 
 
@@ -83,13 +112,6 @@ The three response variables are:
 table(interaction$class)
 ```
 
-The map below shows a spatial representation of this column.
-
-```{r}
-mapview::mapview(interaction, zcol = "class")
-```
-
-
 - `butterfly`: integer with values 1 and 0 representing butterfly and background records, and `NA` for the host plant records (to simplify subsetting).
 
 ```{r}
@@ -102,6 +124,18 @@ table(na.omit(interaction$butterfly))
 
 ```{r}
 table(na.omit(interaction$host_plant))
+```
+
+The map below shows a spatial representation of the `class` column.
+
+```{r}
+mapview::mapview(
+  interaction,
+  zcol = "class",
+  layer.name = "class",
+  col.regions = interaction_colors,
+  color = NULL
+)
 ```
 
 The dataset includes 10 environmental predictors covering remote sensing, climate, and topography at 100m resolution.
@@ -119,10 +153,6 @@ In this example we train two models:
 - *Butterfly model*: Random forest model of the butterfly using the prediction of the host plant model as a biotic predictor along with the abiotic ones.
 
 ### Host plant model
-
-In this section we train and analyze a habitat suitability model for the host plant based on the abiotic predictors.
-
-#### Data Preparation
 
 To train the host plant model we first prepare a training data frame with the plant and background records, and a data frame with case coordinates to be used in spatial cross-validation.
 
@@ -143,29 +173,24 @@ host_plant_xy <- host_plant_df |>
 ```
 
 
-#### Multicollinearity Filtering
-
-The function [`collinear::collinear()`](https://blasbenito.github.io/collinear/reference/collinear.html) selects a non-redundant subset of the most relevant predictors. The function ranks all predictors by the AUC of univariate binomial random forest models with case weights, and then applies a multicollinearity filtering that preserves the most important ones.
+The function [`collinear::collinear()`](https://blasbenito.github.io/collinear/reference/collinear.html) selects a non-correlated subset of the most relevant predictors. The function ranks all predictors by the AUC of univariate binomial random forest models with case weights, and then applies a multicollinearity filtering that preserves the most important ones.
 
 ```{r}
 host_plant_selection <- collinear::collinear(
   df = host_plant_df,
   responses = "host_plant",
   predictors = interaction_predictors,
-  f = collinear::f_binomial_rf,
-  quiet = TRUE
+  f = collinear::f_binomial_rf
 )
 ```
 
-Here are the selected predictors for the host plant:
+The names of the selected predictors are stored in the vector below.
 
 ```{r}
 host_plant_selection$host_plant$selection
 ```
 
-#### Model Training
-
-Here we train a random forest model with `spatialRF::rf()`, which computes case weights internally to control for class imbalance.
+Here we train a random forest model with [`spatialRF::rf()`](https://blasbenito.github.io/spatialRF/reference/rf.html), which computes case weights internally to control for class imbalance.
 
 ```{r, fig.width=6, fig.height=6}
 host_plant_model <- spatialRF::rf(
@@ -176,7 +201,7 @@ host_plant_model <- spatialRF::rf(
 )
 ```
 
-To understand how well the model works on unseen data, we perform spatial cross-validation via `spatialRF::rf_evaluate()`, which partitions the data into spatially disjunct training and testing folds, providing an honest assessment of the model's ability to predict habitat suitability for the host plant.
+To understand how well the model works on unseen data, we perform spatial cross-validation via [`spatialRF::rf_evaluate()`](https://blasbenito.github.io/spatialRF/reference/rf_evaluate.html), which partitions the data into spatially disjunct training and testing folds, providing an honest assessment of the model's ability to predict habitat suitability for the host plant on unseen data.
 
 ```{r, fig.width=4, fig.height=3}
 host_plant_model <- spatialRF::rf_evaluate(
@@ -200,16 +225,13 @@ interaction$host_plant_suitability <- predict(
   host_plant_model,
   data = sf::st_drop_geometry(interaction)
 )$predictions
+
+head(interaction$host_plant_suitability)
 ```
 
+### Butterfly model
 
-### Butterfly Model
-
-Now that we have a trained and evaluated host plant model, let's use its predictions as a biotic predictor for the butterfly.
-
-#### Data Preparation
-
-We prepare `butterfly_df` and `butterfly_xy` in the same way we did for the host plant. Additionally, we add the new biotic predictor `host_plant_suitability` to the vector `interaction_predictors`.
+To model the distribution of the butterfly, we prepare `butterfly_df` and `butterfly_xy` in the same way we did for the host plant, but in this case we add the new biotic predictor `host_plant_suitability` to the vector `interaction_predictors`.
 
 
 ```{r}
@@ -233,29 +255,25 @@ butterfly_predictors <- c(
   )
 ```
 
-#### Multicollinearity Filtering
-
-Here we use `collinear::collinear()` again to select the best subset of non-collinear predictors for the butterfly.
+We use `collinear::collinear()` again to select the best subset of non-collinear predictors for the butterfly.
  
 ```{r}
 butterfly_selection <- collinear::collinear(
   df = butterfly_df,
   responses = "butterfly",
   predictors = butterfly_predictors,
-  f = collinear::f_binomial_rf,
-  quiet = TRUE
+  f = collinear::f_binomial_rf
 )
 ```
 
-The selected non-collinear predictors include the host plant's suitability.
+Notice how the selected non-collinear predictors include the new predictor `host_plant_suitability`!
+
 
 ```{r}
 butterfly_selection$butterfly$selection
 ```
 
-#### Model Training
-
-We use the same modelling pattern we used with the host plant to model the suitability of the butterfly and evaluate the model via cross-validation.
+Below we use the same modelling pattern we used with the host plant to model the suitability of the butterfly.
 
 ```{r}
 butterfly_model <- spatialRF::rf(
@@ -276,34 +294,41 @@ butterfly_model$evaluation$aggregated |>
   dplyr::filter(model == "Testing") |> 
   dplyr::glimpse()
 ```
-The cross-validation shows that the model has an almost perfect ability to discriminate between butterfly and background records.
+These cross-validation scores are pretty good! 
+
+Let's take a look at the predictor importance scores.
 
 ```{r, fig.width=4.5, fig.height=3.5}
-spatialRF::plot_importance(butterfly_model)
+spatialRF::plot_importance(
+  model = butterfly_model,
+  fill.color = interaction_colors["butterfly"]
+  )
 ```
 
-The permutation importance scores plotted above indicate that `host_plant_suitability` contributes most to model error when permuted.
+The importance scores indicate very clearly that `host_plant_suitability` contributes most to model error when permuted.
+
+The code below plots the response curve of the butterfly's model against `host_plant_suitability`.
 
 ```{r, fig.width=5.5, fig.height=3.5}
 spatialRF::plot_response_curves(
   model = butterfly_model,
-  variables = "host_plant_suitability"
+  variables = "host_plant_suitability",
+  line.color = unname(interaction_colors)
   )
 ```
 
-The response curves show a clear sigmoidal increase in butterfly suitability as host plant suitability increases, with little variation across the quantiles of the remaining predictors — consistent with an obligate dependency.
+The figure shows a clear sigmoidal increase in butterfly suitability as host plant suitability increases, with little variation across the quantiles all other predictors, meaning that there is little interaction between `host_plant_suitability` and the other predictors.
 
-### Habitat Suitability Maps
+### Habitat suitability maps
 
 With both models trained, we can now project habitat suitability across the Sierra Nevada. The package `spatialData` provides the raster dataset `sierra_nevada_env` for exactly this purpose.
 
-```{r}
+```{r, fig.width=8, fig.height=8}
 sierra_nevada_env <- spatialData::interaction_extra()
-class(sierra_nevada_env)
-names(sierra_nevada_env)
+plot(sierra_nevada_env, nc = 2, col = raster_colors(100))
 ```
 
-We can project the model onto this raster dataset using `terra::predict()`.
+We can project a model onto this raster dataset using `terra::predict()`.
 
 ```{r}
 host_plant_prediction <- terra::predict(
@@ -312,15 +337,22 @@ host_plant_prediction <- terra::predict(
   na.rm = TRUE
 )
 names(host_plant_prediction) <- "host_plant_suitability"
+```
+
+Let's take a look at the habitat suitability map.
+
+```{r}
 
 mapview(
   host_plant_prediction, 
   layer.name = "Host plant suitability",
-  na.color = "transparent"
+  na.color = "transparent",
+  col.regions = host_plant_colors(n = 5)
   )
 ```
 
-To predict the habitat suitability for the butterfly, we first need to add the raster prediction of the host plant to `sierra_nevada_env`, and then apply `terra::predict()`.
+
+To do the same with the butterflye we first need to add the raster prediction of the host plant to `sierra_nevada_env`, and then apply `terra::predict()`.
 
 ```{r}
 sierra_nevada_env <- c(
@@ -335,22 +367,31 @@ butterfly_prediction <- terra::predict(
 )
 
 names(butterfly_prediction) <- "butterfly_suitability"
+```
 
+Let's take a look at the result.
+
+```{r}
 mapview(
   butterfly_prediction, 
   layer.name = "Butterfly suitability",
-  na.color = "transparent"
+  na.color = "transparent",
+  col.regions = butterfly_colors(n = 10)
   )
 ```
-The habitat suitability maps of both species look very similar, but there are actual differences between them. The code below generates a map of differences between predicted suitabilities.
+
+The habitat suitability maps of both species look as similar as expected, but there are some differences between them worth looking at. 
+
+The code below generates a map of differences between their predicted suitabilities.
 
 ```{r}
-#raster of prediction differences
-difference_predictions <- butterfly_prediction - host_plant_prediction
+suitability_difference <- butterfly_prediction - host_plant_prediction
+```
 
-#compute maximum absolute value
-difference_predictions_max <- terra::global(
-  x = difference_predictions, 
+```{r}
+#compute maximum absolute value to build breaks
+suitability_difference_max <- terra::global(
+  x = suitability_difference, 
   fun = range, 
   na.rm = TRUE
   ) |> 
@@ -358,38 +399,57 @@ difference_predictions_max <- terra::global(
   max()
 
 #compute breaks for color palette
-color_breaks <- seq(
-  from = -difference_predictions_max, 
-  to = difference_predictions_max, 
+suitability_difference_breaks <- seq(
+  from = -suitability_difference_max, 
+  to = suitability_difference_max, 
   length.out = 9
   )
 
-#color palette
-color_palette <- grDevices::colorRampPalette(
-  c("#2166AC", "white", "#B2182B"))(length(color_breaks))
+#divergent color palette
+suitability_difference_colors <- grDevices::colorRampPalette(
+  colors = c(
+    interaction_colors["host_plant"], 
+    "white", 
+    interaction_colors["butterfly"]
+    )
+  )
 
-#differences map
 mapview(
-  difference_predictions, 
-  col.regions = color_palette, 
-  at = color_breaks, 
+  suitability_difference, 
+  col.regions = suitability_difference_colors(n = length(suitability_difference_breaks)), 
+  at = suitability_difference_breaks, 
   layer.name = "Suitability difference",
   na.color = "transparent"
+  ) + 
+  mapview(
+    interaction |> 
+      dplyr::filter(
+        class == "butterfly"
+      ),
+    layer.name = "Butterfly",
+    col.regions = interaction_colors["butterfly"]
+  ) + 
+  mapview(
+    interaction |> 
+      dplyr::filter(
+        class == "host_plant"
+      ),
+    layer.name = "Host plant",
+    col.regions = interaction_colors["host_plant"]
   )
 ```
 
-The divergent palette shows three distinct zones:
 
-- **Blue (negative values)**: indicating areas where the habitat is more suitable for the plant than the butterfly.
+The suitability differences map shows three distinct zones:
+
+- **Cyan (negative values)**: indicating areas where the habitat is more suitable for the host plant than for the butterfly.
 - **White (values near zero)**: areas where both species show similar predicted suitability.
-- **Red (positive values)**: areas where butterfly suitability exceeds host plant suitability, which may reflect the butterfly's mobility, or just be a model extrapolation artefact.
+- **Orange (positive values)**: areas where butterfly suitability exceeds host plant suitability, which may be the result of the butterfly's mobility, differences in survey areas, a model extrapolation artifact, or any combination of those.
 
 
 ## Conclusion
 
-The `interaction` dataset illustrates a two-stage species distribution modelling workflow in which the output of one model becomes a predictor for another. By first modelling the host plant *Androsace vitaliana* from abiotic predictors and then using those predictions as a biotic input for the butterfly *Agriades zullichi*, we showed how obligate ecological dependencies can be encoded in a sequential modelling framework.
-
-The resulting suitability maps and difference raster make `interaction` well suited for tutorials on biotic interactions, predictor engineering, spatial cross-validation, and divergent palette visualization in R.
+The `interaction` dataset is designed to help illustrate a two-stage species distribution modelling workflow in which the output of one model becomes a predictor for another. The nature of the data, its resulting suitability maps, and the suitability differences raster make `interaction` well suited for tutorials on biotic interactions, predictor engineering, spatial cross-validation, and divergent palette visualization in R.
 
 ## References
 

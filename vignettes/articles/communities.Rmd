@@ -81,10 +81,12 @@ data(
   package = "spatialData"
 )
 
-communities_colors <- stats::setNames(
-  grDevices::palette.colors(n = length(levels(communities$community))),
-  levels(communities$community)
-)
+communities_colors <- grDevices::palette.colors(
+  n = length(levels(communities$community))
+  ) |> 
+  stats::setNames(
+    levels(communities$community)
+    )
 
 raster_colors <- grDevices::hcl.colors(
   n = 100,
