@@ -416,24 +416,23 @@ terra::plet(prediction_2050)
 terra::plet(prediction_2100)
 ```
 
-### Model Analysis
+Let's transforme these pixels into a plot to get a better picture of changes in habitat suitability for each plant community.
 
-The number of pixels per plant community over time can be converted to hectares and plotted together to get a sense of how much the climate envelope of each community is going to shrink or expand in the future.
 
 ```{r, fig.width=8, fig.height=4}
-area_df <- dplyr::bind_rows(
+#resolution is 100x100 meters = 1 ha per cell
+communities_area_df <- dplyr::bind_rows(
   terra::freq(prediction_2010) |> dplyr::mutate(year = 2010),
   terra::freq(prediction_2050) |> dplyr::mutate(year = 2050),
   terra::freq(prediction_2100) |> dplyr::mutate(year = 2100)
 ) |>
   dplyr::rename(community = value) |>
-  #resolution is 100x100 meters = 1 ha per cell
   dplyr::mutate(hectares = count) |>
   dplyr::select(year, community, hectares) |> 
   dplyr::filter(community != "none")
 
 ggplot2::ggplot(
-  data = area_df,
+  data = communities_area_df,
   ggplot2::aes(
     x = year,
     y = hectares,
@@ -456,18 +455,15 @@ ggplot2::ggplot(
 
 Rather than actual community surface at a given time, these curves can be interpreted as a proxy for *climatic stress*: the smaller the community's predicted area with respect to the initial area, the higher the climate stress the community may undergo.
 
-We can also obtain a proxy for *biotic stress* by assessing the fraction of the original area of each community that will become suitable for another community.
-
-
+We can also obtain a proxy for *community transitions* by assessing the fraction of the original area of each community that will become suitable for another community.
 
 ```{r, fig.width=8, fig.height=5, message=FALSE, warning=FALSE}
 #stack together projections for 2010 and 2100
-transition_df <- terra::as.data.frame(
+communities_transition_df <- terra::as.data.frame(
   x = c(prediction_2010, prediction_2050), 
   na.rm = TRUE
   ) |>
   setNames(c("communities_2010", "communities_2050")) |>
-  #count pixels transitioning from one community to another
   dplyr::count(
     from = communities_2010, 
     to = communities_2050, 
@@ -494,20 +490,22 @@ transition_df <- terra::as.data.frame(
     Community = from
   )
 
-knitr::kable(transition_df)
+knitr::kable(communities_transition_df)
 ```
 
 The transition matrix shows the source community (year 2010) in the first column, the resulting community as columns, and the values represent the percentage of the original area of the source community becoming suitable for a different community in 2050.
 
-For example, the 87.1% of the area of *Alpine pastures* transitioning to *Juniper-broom shrublands* can be interpreted as an indicator of biological pressure. Future conditions may facilitate the upwards migration of Juniper-broom species, resulting in a heightened competition with pasture species, leading to the eventual replacement of this community.
+For example, most of the area of *Alpine pastures* transitioning to *Juniper-broom shrublands* can be interpreted as an indicator of biological pressure. Environmental change may facilitate the upwards migration of Juniper-broom species, resulting in a heightened competition with pastures, leading to the eventual replacement of this community.
 
 ## Things to think about
 
-These maps and projections look cute and all that, but they don't represent reality in any meaninful way. Many processes that govern vegetation dynamics are not captured here, including species dispersal limitations, biotic interactions, and community resilience or adaptation. On top of that, the nature of random forest prevents it from predicting increased suitability even under improving conditions, unlike parametric models such as GLMs or GAMs.
+The habitat suitability projections here don't represent the future reality of the plant communities of Sierra Nevada for at least three reasons:
 
-An interesting exercise here is repeating these projections using different models and seeing what happens. If that doesn't break your faith in ability of distribution models to predict distribution changes under climate change, nothing will!
+- The future climate data used here is the result of an old climate model running on one of many possible scenarios.
 
-## Conclusion
+- The model used cannot capture many processes that govern vegetation dynamics, including species dispersal limitations, biotic interactions, and community resilience or adaptation. 
+
+- Random forest cannot predict increased suitability even under improving conditions, unlike parametric models such as GLMs or GAMs.
 
 The `communities` dataset offers a rich testbed for multi-class classification and ecological niche modelling in a real Mediterranean mountain system. The random forest workflow above demonstrates how a single trained multi-class model can be projected across climate scenarios, while underscoring the importance of interpreting such projections with caution.
 
