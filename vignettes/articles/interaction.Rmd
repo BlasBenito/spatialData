@@ -39,12 +39,13 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 pak::pkg_install(
   c(
     "dplyr",
-    "terra",
     "sf",
-    "stars",
     "mapview",
+    "terra",
+    "stars",
     "collinear",
-    "spatialRF"
+    "spatialRF",
+    "spatialData"
   ),
   ask = FALSE
 )
@@ -52,13 +53,12 @@ pak::pkg_install(
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
 library(dplyr)
-library(terra)
 library(sf)
 library(mapview)
+library(terra)
 library(collinear)
 library(spatialRF)
 library(spatialData)
-library(grDevices)
 
 data(
   interaction,

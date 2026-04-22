@@ -40,14 +40,15 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 }
 pak::pkg_install(
   c(
-    "sf",
     "dplyr",
+    "sf",
+    "mapview",
     "terra",
     "stars",
-    "collinear",
     "ranger",
-    "mapview",
-    "viridis"
+    "viridis",
+    "collinear",
+    "spatialData"
   ),
   ask = FALSE
 )
@@ -55,12 +56,12 @@ pak::pkg_install(
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
 library(dplyr)
-library(terra)
 library(sf)
-library(collinear)
-library(ranger)
 library(mapview)
+library(terra)
+library(ranger)
 library(viridis)
+library(collinear)
 library(spatialData)
 
 data(

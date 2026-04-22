@@ -18,7 +18,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-Tree species richness in the Americas is not evenly distributed — Mesoamerican forests are global hotspots of tree diversity, yet that richness declines sharply toward drier or colder regions. Understanding what drives those gradients calls for a dataset with both broad geographic coverage and diverse climate predictors.
+## Source Code
+
+You can download the Rmarkdown notebook used to render this article [here](https://github.com/BlasBenito/spatialData/blob/main/vignettes/articles/trees.Rmd). To download the file, use the button *Download raw file* on the upper-right hand of the `Code` panel.
 
 ## Overview
 
@@ -40,12 +42,13 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 }
 pak::pkg_install(
   c(
+    "dplyr",
     "sf",
     "mapview",
-    "dplyr",
-    "collinear",
     "partykit",
-    "viridis"
+    "viridis",
+    "collinear",
+    "spatialData"
   ),
   ask = FALSE
 )
@@ -54,13 +57,13 @@ pak::pkg_install(
 The following R libraries and example data are required to run this tutorial.
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
-library(spatialData)
+library(dplyr)
 library(sf)
 library(mapview)
-library(dplyr)
-library(collinear)
 library(partykit)
 library(viridis)
+library(collinear)
+library(spatialData)
 
 data(
   trees,

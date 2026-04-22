@@ -43,16 +43,15 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 }
 pak::pkg_install(
   c(
-    "sf",
-    "mapview",
     "dplyr",
     "tidyr",
+    "sf",
     "terra",
+    "mapview",
     "ggplot2",
-    "viridis",
     "ranger",
     "collinear",
-    "knitr"
+    "spatialData"
   ),
   ask = FALSE
 )
@@ -61,16 +60,15 @@ pak::pkg_install(
 The following R libraries and example data are required to run this tutorial.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
-library(spatialData)
-library(sf)
-library(mapview)
 library(dplyr)
 library(tidyr)
+library(sf)
+library(mapview)
 library(terra)
 library(ggplot2)
-library(viridis)
-library(collinear)
 library(ranger)
+library(collinear)
+library(spatialData)
 ```
 
 ```{r setup}

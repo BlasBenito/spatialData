@@ -18,7 +18,9 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Source Code
 
+You can download the Rmarkdown notebook used to render this article [here](https://github.com/BlasBenito/spatialData/blob/main/vignettes/articles/vi.Rmd). To download the file, use the button *Download raw file* on the upper-right hand of the `Code` panel.
 
 ## Overview
 
@@ -44,25 +46,26 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 }
 pak::pkg_install(
   c(
+    "dplyr",
     "sf",
     "mapview",
-    "dplyr",
+    "viridis",
     "spatialRF",
     "collinear",
-    "viridis"
+    "spatialData"
   ),
   ask = FALSE
 )
 ```
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
-library(spatialData)
+library(dplyr)
 library(sf)
 library(mapview)
-library(dplyr)
+library(viridis)
 library(spatialRF)
 library(collinear)
-library(viridis)
+library(spatialData)
 ```
 
 The code below loads the example data.

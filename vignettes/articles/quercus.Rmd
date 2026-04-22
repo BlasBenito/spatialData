@@ -18,6 +18,9 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Source Code
+
+You can download the Rmarkdown notebook used to render this article [here](https://github.com/BlasBenito/spatialData/blob/main/vignettes/articles/quercus.Rmd). To download the file, use the button *Download raw file* on the upper-right hand of the `Code` panel.
 
 ## Overview
 
@@ -42,29 +45,30 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 }
 pak::pkg_install(
   c(
+    "dplyr",
     "sf",
     "mapview",
-    "dplyr",
-    "collinear",
+    "terra",
     "rpart",
     "rpart.plot",
     "viridis",
-    "terra"
+    "collinear",
+    "spatialData"
   ),
   ask = FALSE
 )
 ```
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
-library(spatialData)
-library(sf)
-library(terra)
-library(mapview)
 library(dplyr)
-library(collinear)
+library(sf)
+library(mapview)
+library(terra)
 library(rpart)
 library(rpart.plot)
 library(viridis)
+library(collinear)
+library(spatialData)
 ```
 
 The code below loads the example data.

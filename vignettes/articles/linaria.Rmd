@@ -34,15 +34,13 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 }
 pak::pkg_install(
   c(
+    "dplyr",
     "sf",
     "stars",
     "mapview",
-    "dplyr",
     "terra",
-    "ggplot2",
-    "patchwork",
-    "viridis",
-    "maxnet"
+    "maxnet",
+    "spatialData"
   ),
   ask = FALSE
 )
@@ -50,15 +48,11 @@ pak::pkg_install(
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
 library(dplyr)
-library(terra)
 library(sf)
 library(mapview)
-library(ggplot2)
-library(patchwork)
-library(viridis)
+library(terra)
 library(maxnet)
 library(spatialData)
-library(grDevices)
 
 data(
   linaria,

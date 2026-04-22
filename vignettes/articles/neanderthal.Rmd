@@ -18,11 +18,13 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Source Code
+
+You can download the Rmarkdown notebook used to render this article [here](https://github.com/BlasBenito/spatialData/blob/main/vignettes/articles/neanderthal.Rmd). To download the file, use the button *Download raw file* on the upper-right hand of the `Code` panel.
+
 ## Overview
 
-Neanderthals survived for hundreds of thousands of years across diverse environments, yet their distribution during warm interglacials remains debated — partly because high-resolution palaeoclimate reconstructions have only recently become available. This dataset lets you explore that question with modern SDM tools.
-
-The `neanderthal` dataset contains presence and pseudo-absence records of Neanderthal archaeological sites from Marine Isotope Stage 5e (Last Interglacial, ~130,000-115,000 years ago), combined with 25 paleoclimate and topographic predictor variables. This dataset was sourced from [Benito et al. (2017)](https://doi.org/10.1111/jbi.12845) and built to support binary classification, species distribution modelling, and habitat suitability analysis.
+The `neanderthal` dataset contains records of Neanderthal archaeological sites from Marine Isotope Stage 5e (Last Interglacial, ~130,000-115,000 years ago), combined with 25 paleoclimate and topographic predictor variables. This dataset was built to support binary classification, species distribution modelling, and habitat suitability analysis.
 
 ## Setup
 
@@ -34,15 +36,16 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 }
 pak::pkg_install(
   c(
+    "dplyr",
     "sf",
     "mapview",
-    "dplyr",
-    "collinear",
-    "viridis",
     "terra",
+    "viridis",
     "mgcv",
     "ggplot2",
-    "patchwork"
+    "patchwork",
+    "collinear",
+    "spatialData"
   ),
   ask = FALSE
 )
@@ -50,16 +53,14 @@ pak::pkg_install(
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
 library(dplyr)
-library(terra)
 library(sf)
-library(collinear)
-library(mgcv)
 library(mapview)
+library(terra)
+library(mgcv)
 library(ggplot2)
 library(patchwork)
 library(viridis)
-
-#spatial data
+library(collinear)
 library(spatialData)
 
 data(

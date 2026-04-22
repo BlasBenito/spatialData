@@ -18,6 +18,10 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Source Code
+
+You can download the Rmarkdown notebook used to render this article [here](https://github.com/BlasBenito/spatialData/blob/main/vignettes/articles/plantae.Rmd). To download the file, use the button *Download raw file* on the upper-right hand of the `Code` panel.
+
 ## Overview
 
 Plant species richness is not randomly distributed — it peaks in tropical regions, tracks climate gradients, and is shaped by biogeographic history and human impact. Understanding those drivers requires datasets with both broad geographic scope and many predictors, which is exactly what `plantae` provides.
@@ -44,15 +48,14 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 }
 pak::pkg_install(
   c(
+    "dplyr",
     "sf",
     "mapview",
-    "dplyr",
-    "ggplot2",
-    "collinear",
-    "patchwork",
-    "spatialRF",
     "units",
-    "viridis"
+    "viridis",
+    "collinear",
+    "spatialRF",
+    "spatialData"
   ),
   ask = FALSE
 )
@@ -61,16 +64,14 @@ pak::pkg_install(
 The following R libraries and example data are required to run this tutorial.
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
-library(spatialData)
+library(dplyr)
 library(sf)
 library(mapview)
-library(dplyr)
-library(collinear)
-library(spatialRF)
 library(units)
 library(viridis)
-library(ggplot2)
-library(patchwork)
+library(collinear)
+library(spatialRF)
+library(spatialData)
 
 data(
   plantae,
