@@ -147,7 +147,7 @@ andalusia_env <- terra::aggregate(
   fun = mean
 )
 
-res(andalusia_env)
+terra::res(andalusia_env)
 ```
 
 ## Example Usage
@@ -177,7 +177,7 @@ presence <- dplyr::filter(
 ```
 
 
-### Modelling steps for one species
+### Modelling Steps
 
 In this section we define the individual modelling steps for the species *Pinus halepensis*.
 
@@ -320,7 +320,7 @@ plot(
 ```
 
 
-### Modelling all species
+### Full Modelling Workflow
 
 In this section we apply the steps learned in the previous section to the 90 plant species in `andalusia`.
 

@@ -58,6 +58,7 @@ library(mapview)
 library(collinear)
 library(spatialRF)
 library(spatialData)
+library(grDevices)
 
 data(
   interaction,
@@ -89,7 +90,7 @@ butterfly_colors <- grDevices::colorRampPalette(
     )
 )
 
-raster_colors <- grDevices::colorRampPalette(
+env_colors <- grDevices::colorRampPalette(
   colors = rev(interaction_colors)
 )
 ```
@@ -152,7 +153,7 @@ In this example we train two models:
 
 - *Butterfly model*: Random forest model of the butterfly using the prediction of the host plant model as a biotic predictor along with the abiotic ones.
 
-### Host plant model
+### Host Plant Model
 
 To train the host plant model we first prepare a training data frame with the plant and background records, and a data frame with case coordinates to be used in spatial cross-validation.
 
@@ -229,7 +230,7 @@ interaction$host_plant_suitability <- predict(
 head(interaction$host_plant_suitability)
 ```
 
-### Butterfly model
+### Butterfly Model
 
 To model the distribution of the butterfly, we prepare `butterfly_df` and `butterfly_xy` in the same way we did for the host plant, but in this case we add the new biotic predictor `host_plant_suitability` to the vector `interaction_predictors`.
 
@@ -319,13 +320,13 @@ spatialRF::plot_response_curves(
 
 The figure shows a clear sigmoidal increase in butterfly suitability as host plant suitability increases, with little variation across the quantiles all other predictors, meaning that there is little interaction between `host_plant_suitability` and the other predictors.
 
-### Habitat suitability maps
+### Habitat Suitability Maps
 
 With both models trained, we can now project habitat suitability across the Sierra Nevada. The package `spatialData` provides the raster dataset `sierra_nevada_env` for exactly this purpose.
 
 ```{r, fig.width=8, fig.height=8}
 sierra_nevada_env <- spatialData::interaction_extra()
-plot(sierra_nevada_env, nc = 2, col = raster_colors(100))
+plot(sierra_nevada_env, nc = 2, col = env_colors(100))
 ```
 
 We can project a model onto this raster dataset using `terra::predict()`.

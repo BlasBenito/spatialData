@@ -88,7 +88,7 @@ communities_colors <- grDevices::palette.colors(
     levels(communities$community)
     )
 
-raster_colors <- grDevices::hcl.colors(
+env_colors <- grDevices::hcl.colors(
   n = 100,
   palette = "Zissou 1"
 )
@@ -172,7 +172,7 @@ These functions download the data as multi-band GeoTIFF files. The files are loa
 ```{r}
 plot(
   x = communities_2010,
-  col = raster_colors
+  col = env_colors
   )
 ```
 
@@ -353,7 +353,7 @@ plot(
   probabilities_2010, 
   nc = 2, 
   axes = NULL,
-  col = raster_colors
+  col = env_colors
   )
 ```
 To transform these probabilities into class predictions, we apply `terra::which.max()` to retrieve the index of the layer with the maximum probability.

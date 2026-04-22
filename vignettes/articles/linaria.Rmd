@@ -18,15 +18,13 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Source Code
+
+You can download the Rmarkdown notebook used to render this article [here](https://github.com/BlasBenito/spatialData/blob/main/vignettes/articles/linaria.Rmd). To download the file, use the button *Download raw file* on the upper-right hand of the `Code` panel.
+
 ## Overview
 
-The `linaria` dataset, built from *Benito et al. (2009)*, contains three types of records:
-
-- **Species presences** (*Linaria nigricans* occurrence sites)
-- **Greenhouse presences** (competing land-use sites)
-- **Background points** (random samples from the study extent)
-
-Combined with 21 environmental predictors (Landsat reflectance, climate, topography) at 400 m resolution, the dataset is well suited for binary classification, multi-response SDMs, and habitat suitability analysis.
+The `linaria` dataset is an `sf` data frame containing presence records of [*Linaria nigricans*](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:804793-1) and greenhouses in eastern Andalusia (Spain). The plant's habitat is threatened by the expansion of greenhouses in the region. The dataset also includes 21 environmental predictors and a companion raster data at 400m resolution. `linaria` is well suited for binary classification, multi-response SDMs, and habitat suitability analysis.
 
 ## Setup
 
@@ -60,12 +58,40 @@ library(patchwork)
 library(viridis)
 library(maxnet)
 library(spatialData)
+library(grDevices)
 
 data(
   linaria,
   linaria_responses,
   linaria_predictors,
   package = "spatialData"
+)
+
+linaria_color <- "#BF3EFF"
+linaria_colors <- grDevices::colorRampPalette(
+  colors = c(
+    "white", 
+    linaria_color,
+    "black"
+    )
+)
+
+greenhouses_color <- "#97FFFF"
+greenhouses_colors <- grDevices::colorRampPalette(
+  colors = c(
+    "white", 
+    greenhouses_color,
+    "black"
+    )
+)
+
+env_colors <- colorRampPalette(
+  colors = c(
+    "white",
+    greenhouses_color,
+    linaria_color,
+    "black"
+  )
 )
 ```
 
@@ -90,21 +116,23 @@ Both response variables encode binary outcomes: 1 for confirmed presence, 0 for 
 The map below shows all three record types by colour.
 
 ```{r map, message = FALSE}
-linaria_mapped <- linaria |>
-  dplyr::mutate(
-    record_type = dplyr::case_when(
-      linaria_nigricans == 1L ~ "Linaria nigricans",
-      greenhouses == 1L      ~ "Greenhouse",
-      TRUE                   ~ "Background"
-    )
-  )
-
 mapview::mapview(
-  linaria_mapped,
-  zcol = "record_type",
-  layer.name = "Record type",
-  col.regions = c("gray60", "darkgreen", "violet")
+  linaria |> 
+    dplyr::filter(
+      linaria_nigricans == 1
+    ),
+  layer.name = "Linaria nigricans",
+  col.regions = linaria_color
+) + 
+  mapview::mapview(
+  linaria |> 
+    dplyr::filter(
+      greenhouses == 1
+    ),
+  layer.name = "Greenhouses",
+  col.regions = greenhouses_color
 )
+  
 ```
 
 The dataset includes `r length(linaria_predictors)` remote sensing, topographic, and climate predictors.
@@ -112,50 +140,50 @@ The dataset includes `r length(linaria_predictors)` remote sensing, topographic,
 ```{r}
 linaria_predictors
 ```
+These variables are available as a raster file at 400 m resolution (EPSG:25830), which is loaded with `linaria_extra()`. 
+
+```{r load_raster, message = FALSE, fig.width=6, fig.height=8}
+linaria_env <- spatialData::linaria_extra()
+
+plot(
+  x = linaria_env, 
+  nc = 3,
+  col = env_colors(n = 100)
+  )
+```
+
 
 ## Example Usage
 
-Greenhouse agriculture and *Linaria nigricans* compete for the same lowland territory in eastern Andalusia. Following an approach similar to *Benito et al. (2009)*, we fit two separate habitat suitability models using [`maxnet`](https://cran.r-project.org/package=maxnet), one for *L. nigricans* and one for greenhouses, predict them across the study region, and combine them into an extinction-risk surface by multiplying the two suitability layers and rescaling to 0–100.
+Greenhouse agriculture expands over the habitat of *Linaria nigricans* in eastern Andalusia. Here we assess potential impacts of such expansion on the plant populations by training two separate habitat suitability models using [`maxnet`](https://cran.r-project.org/package=maxnet), one for *L. nigricans* and one for greenhouses, predicting them across the study region, and combining them into a relative risk surface.
 
-### Environmental raster
+### Model Training and Prediction
 
-The environmental raster (same extent, 400 m resolution, EPSG:25830) is loaded with `linaria_extra()`. When the vignette renders, the raster file `linaria_env.tif` is read from disk without re-downloading.
-
-```{r load_raster, message = FALSE}
-linaria_env <- spatialData::linaria_extra()
-```
-
-```{r}
-plot(linaria_env)
-```
-
-### Fitting SDMs with `maxnet`
-
-Each `maxnet()` call treats rows where the response equals 1 as presences and all other rows (including the opposite response's presences and background points) as background. This pseudo-absence design lets us model each response against the full environmental backdrop of the study region.
+The code below applies the R version of the popular [MaxEnt](https://biodiversityinformatics.amnh.org/open_source/maxent/) software to model the distribution of *Linaria nigricans* and greenhouses against background data representing the full environmental backdrop of the study region.
 
 ```{r fit_sdms}
-training_df <- sf::st_drop_geometry(linaria)
+linaria_training <- sf::st_drop_geometry(linaria)
 
 linaria_model <- maxnet::maxnet(
-  p = training_df[["linaria_nigricans"]],
-  data = training_df[, linaria_predictors]
+  p = linaria_training[["linaria_nigricans"]],
+  data = linaria_training[, linaria_predictors],
+  addsamplestobackground = TRUE #default
 )
 
 greenhouses_model <- maxnet::maxnet(
-  p = training_df[["greenhouses"]],
-  data = training_df[, linaria_predictors]
+  p = linaria_training[["greenhouses"]],
+  data = linaria_training[, linaria_predictors]
 )
 ```
 
 
-We project each model onto the environmental raster using `terra::predict()` with `type = "cloglog"`, which returns values bounded between 0 and 1 that can be interpreted as occurrence probability. The option `clamp = TRUE` restricts predictions to the environmental envelope seen during training.
+We project each model onto the environmental raster using `terra::predict()` with `type = "cloglog"`, which returns values bounded between 0 and 1 that can be interpreted as occurrence probability.
 
 ```{r predict_sdms, message = FALSE}
 linaria_prediction <- terra::predict(
   object = linaria_env,
   model  = linaria_model,
   type   = "cloglog",
-  clamp  = TRUE,
   na.rm  = TRUE
 )
 names(linaria_prediction) <- "linaria"
@@ -164,62 +192,185 @@ greenhouses_prediction <- terra::predict(
   object = linaria_env,
   model  = greenhouses_model,
   type   = "cloglog",
-  clamp  = TRUE,
   na.rm  = TRUE
 )
 names(greenhouses_prediction) <- "greenhouses"
 ```
 
-```{r plot_suitability}
-plot(
-  linaria_prediction,
-  col  = viridis::turbo(100),
-  main = "Linaria nigricans suitability"
-)
-
-plot(
-  greenhouses_prediction,
-  col  = viridis::turbo(100),
-  main = "Greenhouse suitability"
-)
-```
-
-### Extinction-risk composite
-
-The relative extinction-risk surface is the product of the two suitability layers. Areas with high scores represent places where *L. nigricans* is likely to occur *and* where greenhouses are likely to expand, indicating high-risk zones.
-
-```{r linaria_risk}
-linaria_risk <- terra::stretch(
-  x = linaria_prediction * greenhouses_prediction, 
-  minv = 0, 
-  maxv = 100
-  )
-```
-
-```{r plot_risk, fig.height = 5}
-mapview(
-  linaria_risk,
-  col.regions  = viridis::turbo(100),
-  layer.name = "Relative risk (0–100)",
+```{r linaria_suitability}
+mapview::mapview(
+  x = linaria_prediction,
+  col.regions  = linaria_colors(n = 5),
+  layer.name = "Linaria suitability",
   na.color = "transparent"
-) + 
+) +
   mapview(
     linaria |> 
       dplyr::filter(
         linaria_nigricans == 1
       ),
+    color = "gray60",
     layer.name = "Linaria presence",
     alpha.regions = 0
   )
 ```
-The original data is from 2008. Notice how several presence records in the high-risk areas are already covered by greenhouses.
+
+```{r linaria_suitability}
+mapview::mapview(
+  x = greenhouses_prediction,
+  col.regions  = greenhouses_colors(n = 5),
+  layer.name = "Greenhouses suitability",
+  na.color = "transparent"
+) +
+  mapview(
+    linaria |> 
+      dplyr::filter(
+        greenhouses == 1
+      ),
+    color = "gray60",
+    layer.name = "Greenhouses presence",
+    alpha.regions = 0
+  )
+```
+
+### Habitat-Loss Risk
+
+We can use these models to obtain a proxy of habitat-destruction risk for the populations *Linaria nigricans* we know about (presence records) and the ones we don't (high suitability regions in `linaria_prediction`).
+
+Let's start with the ones we know about. 
+
+Below we extract the greenhouse suitability scores for all presences of *Linaria nigricans*.
+
+```{r}
+risk_sf <- terra::extract(
+  x = greenhouses_prediction,
+  y = linaria |> 
+    dplyr::filter(
+      linaria_nigricans == 1
+    ) |> 
+    dplyr::select(
+      geometry
+      ),
+  bind = TRUE
+) |> 
+  sf::st_as_sf() 
+
+dplyr::glimpse(risk_sf)
+```
+
+The map below uses the output of `terra::extract()` to highlight the known populations at a higher risk by color and size.
+
+```{r, warning = FALSE}
+mapview::mapview(
+  risk_sf,
+  zcol = "greenhouses",
+  layer.name = "Risk",
+  cex = "greenhouses",
+  col.regions = greenhouses_colors(n = 5),
+  map.types = c("Esri.WorldImagery")
+)
+```
+
+Take in mind that the training data represents the 2010's, while the background satellite image is much more recent.
+
+We need to follow several steps to assess potential risks at unknown populations:
+
+- Identify the cell IDs of the known populations.
+- Convert the linaria and greenhouse predictions to a data frame with cell IDs.
+- Remove the cell IDs of the known populations.
+
+
+
+```{r}
+#create buffer of 500m around presences
+linaria_presence_buffer <- terra::buffer(
+  x = linaria |> 
+    dplyr::filter(
+      linaria_nigricans == 1
+    ) |> 
+    terra::vect(),
+  width = 500
+)
+
+#extract cell IDs inside the buffer
+linaria_presence_cells <- terra::extract(
+  x = linaria_prediction,
+  y = linaria_presence_buffer,
+  cells = TRUE,
+  ID = FALSE,
+  na.rm = TRUE
+) |> 
+  na.omit()
+
+dplyr::glimpse(linaria_presence_cells)
+```
+
+Below we create a data frame with cell IDs and their coordinates, and predicted suitabilities for linaria and greenhouses.
+
+```{r}
+potential_risk <- dplyr::bind_cols(
+  as.data.frame(
+    x = linaria_prediction,
+    cells = TRUE,
+    xy = TRUE
+  ),
+  as.data.frame(
+    x = greenhouses_prediction
+  )
+)
+
+dplyr::glimpse(potential_risk)
+```
+
+We can now remove the cells belonging to known populations, and filter the data frame to those cases with high sutiability for linaria and greenhouses.
+
+```{r}
+potential_risk <- potential_risk |> 
+  #remove cells with known populations
+  dplyr::filter(
+    !cell %in% linaria_presence_cells$cell
+  ) |> 
+  #remove cases with low linaria and greenhouse suitability
+  dplyr::filter(
+    linaria > 0.5,
+    greenhouses > stats::median(greenhouses)
+  ) |> 
+  #to sf
+  sf::st_as_sf(
+    coords = c("x", "y"),
+    crs = sf::st_crs(linaria)
+  )
+```
+
+The resulting map highlights sites with high-suitability for *Linaria nigricans* that might be at risk due to greenhouse expansion.
+
+```{r, warning = FALSE}
+mapview::mapview(
+  potential_risk,
+  zcol = "greenhouses",
+  layer.name = "Potential risk",
+  cex = "greenhouses",
+  col.regions = greenhouses_colors(n = 5),
+  map.types = c("Esri.WorldImagery")
+) + 
+  mapview::mapview(
+    linaria |> 
+      dplyr::filter(
+        linaria_nigricans == 1
+      ),
+    layer.name = "Known populations",
+    alpha.regions = 0,
+    col.regions = "white",
+    col = "white",
+    cex = 0.5
+  )
+```
 
 
 ## Conclusion
 
-The `linaria` dataset provides a compact but ecologically rich testbed for multi-response binary classification: one response captures species habitat suitability, the other captures the spatial footprint of the main threatening land use. This structure is ideal for comparative SDM workflows, land-use conflict analyses, or any task requiring simultaneous modelling of species and threat distributions.
+The `linaria` dataset provides a rich testbed for multi-response binary classification: one response captures species habitat suitability, the other captures the spatial footprint of the main threatening land use. This structure is ideal for comparative SDM workflows, land-use conflict analyses, or any task requiring simultaneous modelling of species and threat distributions.
 
-The extinction-risk analysis above shows how combining two MaxEnt predictions into a spatially explicit composite can pinpoint the areas where conservation action is most urgent — the approach introduced by Benito et al. (2009) for *Linaria nigricans* in Andalusia.
 
 ```{r, echo = FALSE}
 unlink("linaria_env.tif")
