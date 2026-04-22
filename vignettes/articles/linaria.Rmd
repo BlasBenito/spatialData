@@ -197,7 +197,7 @@ greenhouses_prediction <- terra::predict(
 names(greenhouses_prediction) <- "greenhouses"
 ```
 
-```{r linaria_suitability}
+```{r}
 mapview::mapview(
   x = linaria_prediction,
   col.regions  = linaria_colors(n = 5),
@@ -215,7 +215,7 @@ mapview::mapview(
   )
 ```
 
-```{r linaria_suitability}
+```{r}
 mapview::mapview(
   x = greenhouses_prediction,
   col.regions  = greenhouses_colors(n = 5),

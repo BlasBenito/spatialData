@@ -7,6 +7,9 @@
 
 [![R-CMD-check](https://github.com/BlasBenito/spatialData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/BlasBenito/spatialData/actions/workflows/R-CMD-check.yaml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19508673.svg)](https://doi.org/10.5281/zenodo.19508673)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/spatialData)](https://cran.r-project.org/package=spatialData)
+[![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/grand-total/spatialData)](https://CRAN.R-project.org/package=spatialData)
 <!-- badges: end -->
 
 The R package `spatialData` provides spatial ecological datasets from
@@ -15,6 +18,12 @@ was designed as example data for other spatial R packages, but works
 equally well for tutorials and teaching.
 
 ## Installation
+
+Install from CRAN.
+
+``` r
+install.packages("spatialData")
+```
 
 Install the development version from
 [GitHub](https://github.com/blasbenito/spatialData).
