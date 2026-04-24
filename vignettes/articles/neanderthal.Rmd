@@ -69,6 +69,17 @@ data(
   neanderthal_predictors,
   package = "spatialData"
 )
+
+neanderthal_colors <- grDevices::hcl.colors(
+  palette = "Zissou 1",
+  n = 10
+)
+neanderthal_color <- neanderthal_colors[5]
+
+env_colors <- grDevices::hcl.colors(
+  palette = "YlGnBu",
+  n = 10
+)
 ```
 
 
@@ -81,11 +92,12 @@ The dataset is an `sf` data frame with `r nrow(neanderthal)` rows and `r ncol(ne
 dplyr::glimpse(neanderthal)
 ```
 
-The response is `presence` (see `neanderthal_response`), a integer binary variable indicating Neanderthal presence (1) or pseudo-absence (0):
+The response variable is `presence` (see `neanderthal_response`), a integer binary variable indicating Neanderthal presence (1) or pseudo-absence (0).
 
 ```{r}
 table(neanderthal$presence)
 ```
+The locations of the presence and background records are mapped below. 
 
 ```{r map, message = FALSE}
 mapview::mapview(
@@ -95,7 +107,7 @@ mapview::mapview(
     ),
   zcol = "presence",
   layer.name = "Presence",
-  col.regions = c("gray50", "red4")
+  col.regions = c("gray50", neanderthal_color)
 )
 ```
 
@@ -104,60 +116,72 @@ The dataset includes 25 palaeoclimatic (last interglacial) and topographic predi
 ```{r}
 neanderthal_predictors
 ```
-You can find descriptions of the palaeoclimatic predictors [here](https://www.worldclim.org/data/bioclim.html).
+There is a companion raster dataset loaded via `neanderthal_extra()`.
+
+```{r load_raster, message = FALSE, fig.width=6, fig.height=8}
+neanderthal_env <- spatialData::neanderthal_extra()
+
+plot(
+  x = neanderthal_env, 
+  nc = 3,
+  col = env_colors,
+  )
+```
 
 ## Example Usage
 
-This example shows how to use `neanderthal` model Neanderthal habitat suitability during the Last Interglacial using GAM models. It is divided in the following sections:
+In this section we use `neanderthal` to model habitat suitability using an ensemble of univariate GAM models.
 
-- *Multicollinearity Filtering*: selects non-collinear predictors.
-- *Modelling Rationale*: explains the modelling choices.
-- *Model Fitting*: fits an ensemble of univariate GAM models and plots the response curves.
-- *Model Evaluation*: computes partial AUC scores for the univariate models and a global AUC score for the weighted ensemble.
-- *Habitat Suitability Map*: predicts the ensemble over raster predictors to build the target map.
+Each univariate GAM model in our ensemble is going to look like this:
 
-### Multicollinearity Filtering
-
-The function [`collinear::collinear()`](https://blasbenito.github.io/collinear/reference/collinear.html) selects a non-redundant subset of the most relevant predictors. The function ranks all predictors by the AUC of univariate binomial GAM models with case weights, and then applies a multicollinearity filtering that preserves the most important ones.
-
-```{r}
-selection <- collinear::collinear(
-  df = neanderthal,
-  responses = neanderthal_response,
-  predictors = neanderthal_predictors,
-  f = collinear::f_binomial_gam,  
-  quiet = TRUE
+```{r, eval = FALSE}
+m <- mgcv::gam(
+  formula = presence ~ s(bio1, k = ceiling(sum(neanderthal$presence)/10)),
+  data = sf::st_drop_geometry(neanderthal),
+  family = stats::quasibinomial(link = "logit"),
+  weights = collinear::case_weights(neanderthal$presence),
+  REML = TRUE,
+  select = TRUE
 )
 ```
 
-Here is the predictor ranking:
+- `mgcv::gam()`: GAM models replace the linear terms used in GLMs with smoothing splines (`s()`) that better represent non-linear relationships between presence and environment.
 
-```{r}
-selection$presence$preference_order[, c("response", "predictor", "score")]
-```
+- `k = ceiling(sum(neanderthal$presence)/10)`: The basis dimension ensures that each smooth well within the budget allowed by the number of presences. 
 
-The function has selected the following predictors:
+- `family = stats::quasibinomial(link = "logit")`: The quasibinomial family accounts for the overdispersion introduced by pseudo-absences and case weights.
 
-```{r}
-selection$presence$selection
-```
+- `REML = TRUE` and `select = TRUE`: the actual complexity is penalized further, and uninformative terms can be shrunk to zero.
 
-Before fitting anything, let's think about the modelling choices.
-
-### Modelling Rationale
-
-In this section we fit a weighted ensemble of quasibinomial GAM models with case weights. Let's unpack all that!
-
-**Case weights**: The `neanderthal` dataframe has `r sum(neanderthal$presence)` and `r sum(neanderthal$presence == 0)` absences, an imbalance that might result in an overprediction of zeros. To mitigate this issue, the function [`collinear::case_weights()`](https://blasbenito.github.io/collinear/reference/case_weights.html) generates inverse-frequency weights so that both classes contribute equally to the model fit.
+- `weights = collinear::case_weights(neanderthal$presence)`: inverse-frequency weights so that both classes, no matter how imbalanced, contribute equally to the model fit.
 
 ```{r}
 sample_weights <- collinear::case_weights(x = neanderthal$presence)
 table(sample_weights)
 ```
 
-**Quasibinomial GAM**: GAM models replace the linear terms used in GLMs with smoothing splines (`s()`) that better represent non-linear relationships between presence and environment. We use the `quasibinomial` family because it accounts for the overdispersion introduced by pseudo-absence data and case weights. The basis dimension is set to `k = floor(n_presences/4)` to capture the unimodal or monotonic responses expected from niche theory while keeping each smooth well within the budget allowed by the number of presences. Combined with `REML = TRUE` and `select = TRUE`, the actual complexity is penalized further, and uninformative terms can be shrunk to zero.
 
 **Weighted Ensemble**: The `neanderthal` data has `r sum(neanderthal$presence)` presences. Fitting a model with all predictors at once might lead to overparameterization and overfitting. To avoid this potential issue, we will fit univariate GAM models between presence and each environmental predictor, and then **ensemble** their predictions via weighted average, using the models' AUC scores as weights.
+
+
+### Multicollinearity Filtering
+
+There are many redundant predictors in `neanderthal`. To mitigate this issue, here we apply [`collinear::collinear()`](https://blasbenito.github.io/collinear/reference/collinear.html) to select a non-redundant subset of the most relevant predictors. The function ranks all predictors by the AUC of univariate binomial GAM models with case weights (very similar to the ones we'll use for the habitat suitability model!), and then applies a multicollinearity filtering that preserves the most important ones.
+
+```{r}
+neanderthal_selection <- collinear::collinear(
+  df = neanderthal,
+  responses = neanderthal_response,
+  predictors = neanderthal_predictors,
+  f = collinear::f_binomial_gam
+)
+```
+
+The names of the selected predictors are in the vector below.
+
+```{r}
+neanderthal_selection$presence$selection
+```
 
 ### Model Fitting
 
@@ -165,7 +189,7 @@ The code below fits the ensemble of univariate GAM models.
 
 ```{r}
 models <- lapply(
-  X = selection$presence$selection,
+  X = neanderthal_selection$presence$selection,
   FUN = function(x){
     
     mgcv::gam(
@@ -188,7 +212,7 @@ models <- lapply(
   }
 )
 
-names(models) <- selection$presence$selection
+names(models) <- neanderthal_selection$presence$selection
 ```
 
 The following plots show the predicted probability of Neanderthal presence for each univariate GAM model. Rug marks along the x-axis indicate observed data values.
@@ -278,7 +302,7 @@ model_weights <- lapply(
 ) |> 
   unlist()
 
-names(model_weights) <- selection$presence$selection
+names(model_weights) <- neanderthal_selection$presence$selection
 ```
 
 ```{r, echo = FALSE}
@@ -320,14 +344,6 @@ With a validated ensemble in hand, we can now map Neanderthal habitat across the
 
 ### Habitat Suitability Map
 
-The package `spatialData` provides the raster dataset `neanderthal_env` to predict models based on the `neanderthal` data.
-
-
-```{r}
-neanderthal_env <- spatialData::neanderthal_extra()
-class(neanderthal_env)
-names(neanderthal_env)
-```
 
 The code below predicts the univariate GAMs over `neanderthal_env`, and then computes their weighted mean to produce the habitat suitability map.
 
