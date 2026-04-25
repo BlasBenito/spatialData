@@ -42,8 +42,7 @@ pak::pkg_install(
     "terra",
     "viridis",
     "mgcv",
-    "ggplot2",
-    "patchwork",
+    "plotmo",
     "collinear",
     "spatialData"
   ),
@@ -57,8 +56,7 @@ library(sf)
 library(mapview)
 library(terra)
 library(mgcv)
-library(ggplot2)
-library(patchwork)
+library(plotmo)
 library(viridis)
 library(collinear)
 library(spatialData)
@@ -70,15 +68,29 @@ data(
   package = "spatialData"
 )
 
+#colors for environmental variables and uncertainty layer
+env_colors <- grDevices::hcl.colors(
+  palette = "YlGnBu",
+  n = 10
+)
+
+#colors for neanderthal suitability
 neanderthal_colors <- grDevices::hcl.colors(
   palette = "Zissou 1",
   n = 10
 )
-neanderthal_color <- neanderthal_colors[5]
 
-env_colors <- grDevices::hcl.colors(
-  palette = "YlGnBu",
-  n = 10
+#colors for presences and background records
+neanderthal_color <- neanderthal_colors[10]
+background_color <- neanderthal_colors[1]
+
+neanderthal <- dplyr::mutate(
+  neanderthal,
+  color = ifelse(
+    test = presence == 1,
+    yes = neanderthal_color,
+    no = background_color
+  )
 )
 ```
 
@@ -107,7 +119,7 @@ mapview::mapview(
     ),
   zcol = "presence",
   layer.name = "Presence",
-  col.regions = c("gray50", neanderthal_color)
+  col.regions = neanderthal$color
 )
 ```
 
@@ -118,7 +130,7 @@ neanderthal_predictors
 ```
 There is a companion raster dataset loaded via `neanderthal_extra()`.
 
-```{r load_raster, message = FALSE, fig.width=6, fig.height=8}
+```{r load_raster, message = FALSE, fig.width=8, fig.height=10}
 neanderthal_env <- spatialData::neanderthal_extra()
 
 plot(
@@ -130,39 +142,49 @@ plot(
 
 ## Example Usage
 
-In this section we use `neanderthal` to model habitat suitability using an ensemble of univariate GAM models.
+In this section we use `neanderthal` to model habitat suitability via an ensemble of univariate GAMs, one per predictor.
 
-Each univariate GAM model in our ensemble is going to look like this:
+The `neanderthal` data has `r sum(neanderthal$presence)` presences. Fitting a model with all predictors at once might lead to overparameterization and overfitting. To avoid this potential issue, we will fit univariate GAM models between presence and each environmental predictor. Each model in the ensemble follows this structure:
 
-```{r, eval = FALSE}
+```{r}
 m <- mgcv::gam(
-  formula = presence ~ s(bio1, k = ceiling(sum(neanderthal$presence)/10)),
+  formula = presence ~ s(
+    bio1, 
+    k = ceiling(sum(neanderthal$presence)/10)
+    ),
   data = sf::st_drop_geometry(neanderthal),
   family = stats::quasibinomial(link = "logit"),
-  weights = collinear::case_weights(neanderthal$presence),
-  REML = TRUE,
+  weights = collinear::case_weights(
+    x = neanderthal$presence
+    ),
   select = TRUE
 )
 ```
 
-- `mgcv::gam()`: GAM models replace the linear terms used in GLMs with smoothing splines (`s()`) that better represent non-linear relationships between presence and environment.
+- **`mgcv::gam()`**: GAM models replace the linear terms used in GLMs with smoothing splines that better represent non-linear relationships between presence and environment.
 
-- `k = ceiling(sum(neanderthal$presence)/10)`: The basis dimension ensures that each smooth well within the budget allowed by the number of presences. 
+- **`s(..., k = ceiling(sum(neanderthal$presence)/10)`**: smoothing splines capture non-linear relationships between presence and each predictor. The basis dimension `k` is set relative to the number of presences, keeping the smooth complexity well within the data budget.
 
-- `family = stats::quasibinomial(link = "logit")`: The quasibinomial family accounts for the overdispersion introduced by pseudo-absences and case weights.
+- **`quasibinomial(link = "logit")`**: handles the overdispersion introduced by pseudo-absences and the fractional case weights, which a standard `binomial` family would reject.
 
-- `REML = TRUE` and `select = TRUE`: the actual complexity is penalized further, and uninformative terms can be shrunk to zero.
-
-- `weights = collinear::case_weights(neanderthal$presence)`: inverse-frequency weights so that both classes, no matter how imbalanced, contribute equally to the model fit.
+- **`weights = case_weights(...)`**: inverse-frequency weights ensure that presences and pseudo-absences contribute equally to model fit regardless of their imbalance.
 
 ```{r}
 sample_weights <- collinear::case_weights(x = neanderthal$presence)
 table(sample_weights)
 ```
 
+- **`select = TRUE`**: adds a shrinkage penalty so that uninformative smooths can be penalized to zero, acting as automatic term selection.
 
-**Weighted Ensemble**: The `neanderthal` data has `r sum(neanderthal$presence)` presences. Fitting a model with all predictors at once might lead to overparameterization and overfitting. To avoid this potential issue, we will fit univariate GAM models between presence and each environmental predictor, and then **ensemble** their predictions via weighted average, using the models' AUC scores as weights.
 
+After all relevant models are fitted, we will **ensemble** their predictions using their *intrinsic AUC* (probability of giving a higher suitability to a presence than to a background point) as weights.
+
+```{r}
+collinear::score_auc(
+  o = neanderthal$presence,
+  p = stats::predict(m, type = "response")
+)
+```
 
 ### Multicollinearity Filtering
 
@@ -185,176 +207,105 @@ neanderthal_selection$presence$selection
 
 ### Model Fitting
 
-The code below fits the ensemble of univariate GAM models. 
+The code below fits the univariate GAM models. Notice that models with an intrinsic AUC below 0.75 are ignored.
+
 
 ```{r}
-models <- lapply(
+neanderthal_models <- lapply(
   X = neanderthal_selection$presence$selection,
-  FUN = function(x){
+  FUN = \(x) {
     
-    mgcv::gam(
-      formula = as.formula(
+    model_formula <- as.formula(
         paste0(
-          "presence ~ s(", 
-          x, ", 
-          k = ", 
-          floor(sum(neanderthal$presence)/10), 
+          "presence ~ s(",
+          x,
+          ", k = ",
+          ceiling(sum(neanderthal$presence) / 10),
           ")"
-          )
-        ),
+        )
+      )
+    
+    model <- mgcv::gam(
+      formula = model_formula,
       data = sf::st_drop_geometry(neanderthal),
       family = stats::quasibinomial(link = "logit"),
-      weights = sample_weights,
-      REML = TRUE,
+      weights = collinear::case_weights(
+        x = neanderthal$presence
+      ),
       select = TRUE
     )
     
+    auc <- collinear::score_auc(
+      o = neanderthal$presence,
+      p = stats::predict(
+        object = model, 
+        type = "response"
+        )
+      )
+    
+    model$auc <- auc
+    
+    model
+    
   }
 )
 
-names(models) <- neanderthal_selection$presence$selection
+names(neanderthal_models) <- neanderthal_selection$presence$selection
 ```
 
-The following plots show the predicted probability of Neanderthal presence for each univariate GAM model. Rug marks along the x-axis indicate observed data values.
+Let's take a look at the performance of these univariate models.
 
-```{r, fig.width=7, fig.height=8}
-response_plots <- lapply(names(models), function(var) {
-
-  #extract individual univariate model
-  model <- models[[var]]
-  df <- sf::st_drop_geometry(neanderthal)
-
-  #prediction grid
-  newdata <- data.frame(
-    x = seq(
-      from = min(df[[var]]), 
-      to = max(df[[var]]), 
-      length.out = 200)
-    )
-  names(newdata) <- var
-
-  #predict on link scale with standard errors
-  pred <- predict(
-    object = model,
-    newdata = newdata, 
-    type = "link", 
-    se.fit = TRUE
-    )
-
-  #back-transform to probability scale with 95% CI
-  newdata$fit <- stats::plogis(pred$fit)
-  newdata$lower <- stats::plogis(pred$fit - 1.96 * pred$se.fit)
-  newdata$upper <- stats::plogis(pred$fit + 1.96 * pred$se.fit)
-
-  #plot response curve
-  ggplot(newdata, aes(x = .data[[var]])) +
-    geom_ribbon(
-      aes(ymin = lower, ymax = upper),
-      fill = "gray50",
-      alpha = 0.25
-    ) +
-    geom_line(
-      aes(y = fit),
-      color = "red4",
-      linewidth = 0.8
-    ) +
-    geom_rug(
-      data = df[df$presence == 1, ],
-      aes(x = .data[[var]]),
-      sides = "t",
-      color = "red4",
-      alpha = 0.3,
-      length = unit(0.1, "npc")
-    ) +
-    geom_rug(
-      data = df[df$presence == 0, ],
-      aes(x = .data[[var]]),
-      sides = "b",
-      color = "gray50",
-      alpha = 0.3,
-      length = unit(0.05, "npc")
-    ) +
-    scale_y_continuous(limits = c(0, 1)) +
-    labs(x = var, y = "P(presence)") +
-    theme_minimal(base_size = 11)
-})
-
-patchwork::wrap_plots(response_plots, ncol = 2)
-```
-
-### Model Evaluation
-
-In this section we compute the partial AUC scores of each univariate model, and the global AUC of the ensemble. A more honest cross-validation evaluation would work better here, but it is left out for simplicity.
-
-The partial AUC scores will be used as weights when building the ensemble. Here these scores are computed via [collinear::score_auc()](https://blasbenito.github.io/collinear/reference/score_auc.html), but any other function able to compute AUC will do here.
 
 ```{r}
-model_weights <- lapply(
+neanderthal_auc <- lapply(
   X = models,
-  FUN = function(x){
-    
-    collinear::score_auc(
-      o = neanderthal[["presence"]],
-      p = stats::predict(x, type = "response")
-    )
-    
-  }
+  FUN = \(x) x$auc
 ) |> 
   unlist()
 
-names(model_weights) <- neanderthal_selection$presence$selection
+neanderthal_auc
 ```
-
-```{r, echo = FALSE}
-round(as.data.frame(model_weights), digits = 4)
-```
-
-To compute the intrinsic AUC of the model, we first generate the predictions of the univariate GAM models, and then average these predictions weighted by their partial AUC scores, and finally compare them with the observations.
-
+Several of these models have very low intrinsic AUC scores, meaning that they lack the ability to discriminate properly between presences and background points. We are going to ignore all models with an AUC below 0.75.
 
 ```{r}
-#extract predictions from each model
-predictions <- sapply(
-  X = models,
-  FUN = function(x) {
-    stats::predict(x, type = "response")
-  }
-)
+#keep models with AUC >= 0.75
+neanderthal_auc <- neanderthal_auc[neanderthal_auc >= 0.75]
 
-#compute weighted average predictions
-weighted_predictions <- apply(
-  X = predictions,
-  MARGIN = 1,
-  FUN = stats::weighted.mean,
-  w = model_weights
-)
-
-#compute ensemble AUC
-auc <- collinear::score_auc(
-  o = neanderthal[["presence"]],
-  p = weighted_predictions
-)
-
-auc
+#remove bad models from the models list
+neanderthal_models <- neanderthal_models[names(neanderthal_auc)]
 ```
 
-The global AUC score indicates the probability of any presence to have a higher habitat suitability than any pseudoabsence.
+The response curves below show the predicted probability of Neanderthal presence for the selected univariate models.
 
-With a validated ensemble in hand, we can now map Neanderthal habitat across the region.
-
+```{r, warning = FALSE}
+lapply(
+  X = names(neanderthal_models),
+  FUN = \(x) {
+  x <- plotmo::plotmo(
+    object = models[[x]],
+    type = "response",
+    level = 0.95,
+    level.shade = "gray80",
+    main = x,
+    caption = "",
+    pt.col = neanderthal$color,
+    jitter = 0.3,
+    smooth.col = 0
+  )
+}) |> 
+  invisible()
+```
 ### Habitat Suitability Map
 
+To build the weighted ensemble of univariate models we first need to predict each univariate model over the `spatRaster` object `neanderthal_env`.
 
-The code below predicts the univariate GAMs over `neanderthal_env`, and then computes their weighted mean to produce the habitat suitability map.
-
-```{r, fig.width=8, fig.height=4}
-#predict each model on a separate raster object
-univariate_predictions <- lapply(
-  X = names(models),
-  FUN = function(x) {
+```{r}
+neanderthal_predictions <- lapply(
+  X = names(neanderthal_models),
+  FUN = \(x) {
     terra::predict(
       object = neanderthal_env,
-      model = models[[x]],
+      model = neanderthal_models[[x]],
       type = "response",
       na.rm = TRUE
     )
@@ -362,128 +313,66 @@ univariate_predictions <- lapply(
 ) |> 
   terra::rast()
 
-#compute weighted mean of individual predictions
-ensemble_average <- terra::weighted.mean(
-  x = univariate_predictions,
-  w = model_weights
-)
-
-#weighted standard deviation of the ensemble
-ensemble_deviation <- terra::app(
-  x = univariate_predictions,
-  fun = function(x) {
-    sqrt(sum(model_weights * (x - weighted.mean(x, model_weights))^2) / sum(model_weights))
-    }
-  )
-
-#plot suitability map
-par(mfrow = c(1, 2))
-plot(
-  x = ensemble_average,
-  col = viridis::turbo(n = 100),
-  main = "Weighted Average"
-)
-plot(
-  x = ensemble_deviation,
-  main = "Weighted Standard Deviation"
-)
+names(neanderthal_predictions) <- names(neanderthal_models)
 ```
 
-Finally, we combine both maps into a single visualization using a **whitening** approach: the suitability color scale is progressively bleached toward white as uncertainty increases. Vivid colors indicate confident predictions, while pale or white areas flag regions where models disagree.
+The resulting object is a `spatRaster` where each layer represents a univariate suitability map.
 
-```{r, fig.width=7, fig.height=5}
-
-#combine into a data frame
-bi_df <- terra::as.data.frame(
-  x = c(ensemble_average, ensemble_deviation),
-  xy = TRUE
-)
-names(bi_df)[3:4] <- c("suitability", "uncertainty")
-
-#normalize both variables to [0, 1]
-bi_df$suit_norm <- (bi_df$suitability - min(bi_df$suitability)) /
-  (max(bi_df$suitability) - min(bi_df$suitability))
-bi_df$unc_norm <- (bi_df$uncertainty - min(bi_df$uncertainty)) /
-  (max(bi_df$uncertainty) - min(bi_df$uncertainty))
-
-#map suitability to turbo colors
-turbo_palette <- viridis::turbo(100)
-base_colors <- col2rgb(
-  turbo_palette[ceiling(bi_df$suit_norm * 99) + 1]
-) / 255
-
-#blend toward white based on uncertainty
-r <- base_colors["red", ] * (1 - bi_df$unc_norm) + bi_df$unc_norm
-g <- base_colors["green", ] * (1 - bi_df$unc_norm) + bi_df$unc_norm
-b <- base_colors["blue", ] * (1 - bi_df$unc_norm) + bi_df$unc_norm
-bi_df$fill_color <- rgb(r, g, b)
-
-#build map
-bi_map <- ggplot2::ggplot(
-  data = bi_df,
-  mapping = ggplot2::aes(x = x, y = y, fill = fill_color)
-) +
-  ggplot2::geom_raster() +
-  ggplot2::scale_fill_identity() +
-  ggplot2::coord_quickmap() +
-  ggplot2::theme_minimal() +
-  ggplot2::labs(x = "", y = "")
-
-#build whitening legend
-n <- 100
-legend_df <- expand.grid(
-  suitability = seq(0, 1, length.out = n),
-  uncertainty = seq(0, 1, length.out = n)
-)
-leg_colors <- col2rgb(
-  turbo_palette[ceiling(legend_df$suitability * 99) + 1]
-) / 255
-legend_df$fill <- rgb(
-  leg_colors["red", ] * (1 - legend_df$uncertainty) + legend_df$uncertainty,
-  leg_colors["green", ] * (1 - legend_df$uncertainty) + legend_df$uncertainty,
-  leg_colors["blue", ] * (1 - legend_df$uncertainty) + legend_df$uncertainty
-)
-
-bi_legend <- ggplot2::ggplot(
-  data = legend_df,
-  mapping = ggplot2::aes(
-    x = suitability,
-    y = uncertainty,
-    fill = fill
+```{r, fig.width=8, fig.height=6}
+plot(
+  x = neanderthal_predictions,
+  col = neanderthal_colors
   )
-) +
-  ggplot2::geom_raster() +
-  ggplot2::scale_fill_identity() +
-  ggplot2::scale_x_continuous(expand = c(0, 0)) +
-  ggplot2::scale_y_continuous(expand = c(0, 0)) +
-  ggplot2::labs(
-    x = "Suitability \u2192",
-    y = "Uncertainty \u2192"
-  ) +
-  ggplot2::theme_minimal(base_size = 8) +
-  ggplot2::theme(
-    axis.text = ggplot2::element_blank(),
-    axis.ticks = ggplot2::element_blank(),
-    panel.grid = ggplot2::element_blank(),
-    panel.border = ggplot2::element_rect(fill = NA, color = "black", linewidth = 0.5)
-  )
-
-#compose map and legend
-bi_map + patchwork::inset_element(
-  p = bi_legend,
-  left = 0.70,
-  bottom = -0.1,
-  right = 1,
-  top = 0.25
-)
-
 ```
 
-The map suggests that during the Last Interglacial, the most suitable Neanderthal habitat was concentrated in southern Europe and parts of the Near East, with model confidence decreasing toward range margins and data-sparse regions.
+To build the ensemble, we apply `terra::weighted.mean()` to the individual model predictions and their intrinsic AUCs. 
+
+```{r}
+neanderthal_suitability <- terra::weighted.mean(
+  x = neanderthal_predictions,
+  w = neanderthal_auc
+)
+
+names(neanderthal_suitability) <- "suitability"
+```
+
+The map below shows the high-suitability values in warmer colors.
+
+```{r}
+mapview(
+  x = neanderthal_suitability,
+  layer.name = "Suitability",
+  col.regions = neanderthal_colors,
+  na.color = "transparent"
+)
+```
+To finish, we can 
+
+```{r}
+#extract predicted values for all records
+neanderthal$prediction <- terra::extract(
+    x = neanderthal_suitability,
+    y = neanderthal,
+    ID = FALSE
+  ) |> 
+    dplyr::pull(
+      suitability
+    )
+
+#remove NA data (not supported by score_auc())
+neanderthal <- na.omit(neanderthal)
+
+#compute intrinsic AUC
+collinear::score_auc(
+  o = neanderthal$presence,
+  p = neanderthal$prediction
+)
+```
+That's good, the AUC of the ensemble is better than any AUC of the univariate models!
 
 ## Conclusion
 
-The ensemble of univariate GAMs, weighted by cross-validated AUC, provides a robust picture of Neanderthal habitat suitability during the Last Interglacial. Whitening the ensemble predictions with their standard deviation surfaces the areas of genuine uncertainty. SDM tools developed for modern species translate naturally to palaeontological data — and `neanderthal` is a good place to experiment with that.
+The ensemble of univariate GAMs, weighted by cross-validated AUC, provides a robust picture of Neanderthal habitat suitability during the Last Interglacial. 
 
 ```{r, echo = FALSE}
 unlink("neanderthal_env.tif")
