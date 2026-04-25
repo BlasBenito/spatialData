@@ -40,7 +40,6 @@ pak::pkg_install(
     "sf",
     "mapview",
     "terra",
-    "viridis",
     "mgcv",
     "plotmo",
     "collinear",
@@ -57,7 +56,6 @@ library(mapview)
 library(terra)
 library(mgcv)
 library(plotmo)
-library(viridis)
 library(collinear)
 library(spatialData)
 
@@ -258,7 +256,7 @@ Let's take a look at the performance of these univariate models.
 
 ```{r}
 neanderthal_auc <- lapply(
-  X = models,
+  X = neanderthal_models,
   FUN = \(x) x$auc
 ) |> 
   unlist()
@@ -277,12 +275,12 @@ neanderthal_models <- neanderthal_models[names(neanderthal_auc)]
 
 The response curves below show the predicted probability of Neanderthal presence for the selected univariate models.
 
-```{r, warning = FALSE}
+```{r, warning = FALSE, fig.width=3, fig.height=2.5}
 lapply(
   X = names(neanderthal_models),
   FUN = \(x) {
   x <- plotmo::plotmo(
-    object = models[[x]],
+    object = neanderthal_models[[x]],
     type = "response",
     level = 0.95,
     level.shade = "gray80",
@@ -295,6 +293,8 @@ lapply(
 }) |> 
   invisible()
 ```
+
+
 ### Habitat Suitability Map
 
 To build the weighted ensemble of univariate models we first need to predict each univariate model over the `spatRaster` object `neanderthal_env`.
