@@ -75,9 +75,10 @@ data(
   package = "spatialData"
   )
 
-colors_richness <- viridis::turbo(
-  n = 10
-)
+colors_richness <- viridis::rocket(
+    n = 10,
+    direction = -1
+  )
 ```
 
 
@@ -97,7 +98,13 @@ The map below represents total plant richness (column `richness_species`).
 
 ```{r, warning = FALSE}
 mapview::mapview(
-  plantae,
+  plantae |> 
+    dplyr::select(
+      ecoregion_name,
+      ecoregion_biome,
+      ecoregion_realm,
+      richness_species
+    ),
   zcol = "richness_species",
   layer.name = "Species richness",
   col.regions = colors_richness,
@@ -111,7 +118,13 @@ A much larger version of `plantae` with the original ecoregion geometries instea
 plantae_polygons <- spatialData::plantae_extra()
 
 mapview::mapview(
-  plantae_polygons,
+  plantae_polygons |> 
+    dplyr::select(
+      ecoregion_name,
+      ecoregion_biome,
+      ecoregion_realm,
+      richness_species
+    ),
   zcol = "richness_species",
   layer.name = "Species richness",
   col.regions = colors_richness
