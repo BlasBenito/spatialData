@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">spatialData</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,8 +109,8 @@ this tutorial.</p>
 <div class="section level2">
 <h2 id="data-structure">Data Structure<a class="anchor" aria-label="anchor" href="#data-structure"></a>
 </h2>
-<p>The dataset is an <code>sf</code> data frame with 227 rows and 28
-columns, and no missing data.</p>
+<p>The dataset is an <code>sf</code> POINT dataframe (EPSG 4326) with
+227 rows and 28 columns, and no missing data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">neanderthal</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 227</span></span>
@@ -454,8 +454,9 @@ to the individual model predictions and their intrinsic AUCs.</p>
 <span>  p <span class="op">=</span> <span class="va">neanderthal</span><span class="op">$</span><span class="va">prediction</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.9091353</span></span></code></pre></div>
-<p>That’s good, the AUC of the ensemble is better than any AUC of the
-univariate models!</p>
+<p>That’s good to see: the AUC of the ensemble is better than any AUC of
+the univariate models, which is the whole point of building this kind of
+ensemble modelling.</p>
 </div>
 </div>
 <div class="section level2">
@@ -464,6 +465,17 @@ univariate models!</p>
 <p>The ensemble of univariate GAMs, weighted by cross-validated AUC,
 provides a robust picture of Neanderthal habitat suitability during the
 Last Interglacial.</p>
+</div>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<p>Benito, B.M., et al. (2017). The ecological niche and distribution of
+Neanderthals during the Last Interglacial. <em>Journal of
+Biogeography</em>, 44, 51–61. <a href="https://doi.org/10.1111/jbi.12845" class="external-link uri">https://doi.org/10.1111/jbi.12845</a></p>
+<p>Nielsen, T.K., Benito, B.M., Svenning, J.-C., Sandel, B.,
+McKerracher, L., Riede, F., &amp; Kjærgaard, P.C. (2017). Investigating
+Neanderthal dispersal above 55°N in Europe during the Last Interglacial
+Complex. <em>Quaternary International</em>, 431, 88–103. <a href="https://doi.org/10.1016/j.quaint.2015.10.039" class="external-link uri">https://doi.org/10.1016/j.quaint.2015.10.039</a></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
