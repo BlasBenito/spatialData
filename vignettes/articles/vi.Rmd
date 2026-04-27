@@ -44,6 +44,7 @@ The following R libraries are required to run this tutorial:
 if (!requireNamespace("pak", quietly = TRUE)) {
   install.packages("pak")
 }
+library(pak)
 pak::pkg_install(
   c(
     "dplyr",

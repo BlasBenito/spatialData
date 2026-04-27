@@ -1,3 +1,7 @@
+# spatialData 1.0.1
+
+- Fixed wrong doi in `R/plantae.R` and `README.md`.
+
 # spatialData 1.0.0
 
 First release of `spatialData` on CRAN, with the following datasets:

@@ -43,6 +43,7 @@ The following R libraries are required to run this tutorial:
 if (!requireNamespace("pak", quietly = TRUE)) {
   install.packages("pak")
 }
+library(pak)
 pak::pkg_install(
   c(
     "dplyr",
@@ -210,7 +211,7 @@ mapview::mapview(
 
 ### Species Probability Map
 
-The package provides the raster dataset `quercus_env`, downloaded via `spatialData::quercus_extra()`, useful to generate continuous predictions from models trained with the `quercus` data.
+The function `spatialData::quercus_extra()` returns a `spatRaster` object, named `quercus_env` below, useful to generate continuous predictions from models trained with the `quercus` data.
 
 ```{r}
 quercus_env <- spatialData::quercus_extra()
@@ -244,9 +245,6 @@ plot(
 
 ## Conclusion
 
-The decision tree above gives interpretable climate rules for each oak species — but it is just one entry point into `quercus`. More flexible methods like random forests or gradient boosting can push accuracy further while the multi-class structure and 31 predictors keep the dataset interesting.
+The decision tree above gives interpretable climate rules for each oak species, but it is just one entry point into `quercus`. More flexible methods like random forests or gradient boosting can push accuracy further while the multi-class structure and 31 predictors keep the dataset interesting.
 
-```{r, echo = FALSE}
-unlink("quercus_env.tif")
-```
 

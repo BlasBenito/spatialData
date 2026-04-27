@@ -32,6 +32,7 @@ The `linaria` dataset is an `sf` data frame containing presence records of [*Lin
 if (!requireNamespace("pak", quietly = TRUE)) {
   install.packages("pak")
 }
+library(pak)
 pak::pkg_install(
   c(
     "dplyr",
@@ -365,9 +366,11 @@ mapview::mapview(
 
 The `linaria` dataset provides a rich testbed for multi-response binary classification: one response captures species habitat suitability, the other captures the spatial footprint of the main threatening land use. This structure is ideal for comparative SDM workflows, land-use conflict analyses, or any task requiring simultaneous modelling of species and threat distributions.
 
+## References
 
-```{r, echo = FALSE}
-unlink("linaria_env.tif")
+Benito, B.M., Martínez-Ortega, M.M., Munoz, L.M., Lorite, J. & Penas, J. (2009). Assessing extinction-risk of endangered plants using species distribution models: a case study of habitat depletion caused by the spread of greenhouses. *Biodiversity and Conservation*, 18(9), 2509–2520. https://doi.org/10.1007/s10531-009-9604-8
 
-```
+Peñas, J., Benito, B., Lorite, J., et al. (2011). Habitat fragmentation in arid zones: a case study of *Linaria nigricans* under land use changes (SE Spain). *Environmental Management*, 48, 168–176. https://doi.org/10.1007/s00267-011-9663-y
+
+Benito, B.P.d., Peñas, J.G.d. (2008). Greenhouses, land use change, and predictive models: MaxEnt and Geomod working together. In: Paegelow, M., Olmedo, M.T.C. (eds) Modelling Environmental Dynamics. Environmental Science and Engineering. Springer, Berlin, Heidelberg. https://doi.org/10.1007/978-3-540-68498-5_11
 

@@ -34,6 +34,7 @@ The code below loads the R libraries and example data required to run this tutor
 if (!requireNamespace("pak", quietly = TRUE)) {
   install.packages("pak")
 }
+library(pak)
 pak::pkg_install(
   c(
     "dplyr",
@@ -96,7 +97,7 @@ neanderthal <- dplyr::mutate(
 
 ## Data Structure
 
-The dataset is an `sf` data frame with `r nrow(neanderthal)` rows and `r ncol(neanderthal)` columns, and no missing data.
+The dataset is an `sf` POINT dataframe (EPSG 4326) with `r nrow(neanderthal)` rows and `r ncol(neanderthal)` columns, and no missing data.
 
 ```{r}
 dplyr::glimpse(neanderthal)
@@ -126,6 +127,7 @@ The dataset includes 25 palaeoclimatic (last interglacial) and topographic predi
 ```{r}
 neanderthal_predictors
 ```
+
 There is a companion raster dataset loaded via `neanderthal_extra()`.
 
 ```{r load_raster, message = FALSE, fig.width=8, fig.height=10}
@@ -368,14 +370,17 @@ collinear::score_auc(
   p = neanderthal$prediction
 )
 ```
-That's good, the AUC of the ensemble is better than any AUC of the univariate models!
+
+That's good to see: the AUC of the ensemble is better than any AUC of the univariate models, which is the whole point of building this kind of ensemble modelling.
+
 
 ## Conclusion
 
 The ensemble of univariate GAMs, weighted by cross-validated AUC, provides a robust picture of Neanderthal habitat suitability during the Last Interglacial. 
 
-```{r, echo = FALSE}
-unlink("neanderthal_env.tif")
+## References
 
-```
+Benito, B.M., et al. (2017). The ecological niche and distribution of Neanderthals during the Last Interglacial. *Journal of Biogeography*, 44, 51–61. https://doi.org/10.1111/jbi.12845
+
+Nielsen, T.K., Benito, B.M., Svenning, J.-C., Sandel, B., McKerracher, L., Riede, F., & Kjærgaard, P.C. (2017). Investigating Neanderthal dispersal above 55°N in Europe during the Last Interglacial Complex. *Quaternary International*, 431, 88–103. https://doi.org/10.1016/j.quaint.2015.10.039
 

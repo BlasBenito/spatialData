@@ -38,6 +38,7 @@ The code below loads the `R` packages and example data required for this tutoria
 if (!requireNamespace("pak", quietly = TRUE)) {
   install.packages("pak")
 }
+library(pak)
 pak::pkg_install(
   c(
     "dplyr",
@@ -435,7 +436,3 @@ That's all folks, I hope you had as much fun as I did while writing this article
 ## References
 
 Benito, B.M., Lorite, J., Pérez-Pérez, R., Gómez-Aparicio, L., & Peñas, J. (2014). Forecasting plant range collapse in a mediterranean hotspot: when dispersal uncertainties matter. *Diversity and Distributions*, 20(1), 72–83. https://doi.org/10.1111/ddi.12148
-
-```{r, echo = FALSE}
-unlink("andalusia_env.tif")
-```

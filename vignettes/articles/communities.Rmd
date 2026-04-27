@@ -41,6 +41,7 @@ The code below loads the `R` packages and example data required for this tutoria
 if (!requireNamespace("pak", quietly = TRUE)) {
   install.packages("pak")
 }
+library(pak)
 pak::pkg_install(
   c(
     "dplyr",
@@ -509,9 +510,7 @@ The habitat suitability projections here don't represent the future reality of t
 
 The `communities` dataset offers a rich testbed for multi-class classification and ecological niche modelling in a real Mediterranean mountain system. The random forest workflow above demonstrates how a single trained multi-class model can be projected across climate scenarios, while underscoring the importance of interpreting such projections with caution.
 
-```{r, echo = FALSE}
-unlink("communities_2010.tif")
-unlink("communities_2050.tif")
-unlink("communities_2100.tif")
-```
+## References
+
+Benito, B., Lorite, J., & Peñas, J. (2011). Simulating potential effects of climatic warming on altitudinal patterns of key species in Mediterranean-alpine ecosystems. *Climatic Change*, 108, 471–483. https://doi.org/10.1007/s10584-010-0015-3
 

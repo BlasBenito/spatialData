@@ -165,6 +165,12 @@ citations as well:
   land use changes (SE Spain). *Environmental Management*, 48, 168–176.
   <https://doi.org/10.1007/s00267-011-9663-y>
 
+Benito, B.P.d., Peñas, J.G.d. (2008). Greenhouses, land use change, and
+predictive models: MaxEnt and Geomod working together. In: Paegelow, M.,
+Olmedo, M.T.C. (eds) Modelling Environmental Dynamics. Environmental
+Science and Engineering. Springer, Berlin, Heidelberg.
+<https://doi.org/10.1007/978-3-540-68498-5_11>
+
 ### **`neanderthal`**
 
 - Benito, B.M., et al. (2017). The ecological niche and distribution of
@@ -181,7 +187,7 @@ citations as well:
 
 - Maestre, F.T., Benito, B.M., Berdugo, M., et al. (2021). Biogeography
   of global drylands. *New Phytologist*, 231(2), 540–558.
-  <https://doi.org/10.1111/nph.17398>
+  <https://doi.org/10.1111/nph.17395>
 
 ### **`trees`**
 
