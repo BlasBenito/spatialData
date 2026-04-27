@@ -176,6 +176,32 @@ rm(
 ```
 
 
+## Known Issues
+
+Several significant ecoregions are missing from `plantae`:
+
+- Western Ecuador moist forests
+- Ecuadorian dry forests
+- Northwest Andean montane forests
+- Eastern Cordillera Real montane forests
+- Tumbes-Piura dry forests
+- Sechura desert 
+- Isthmian-Pacific moist forests (several patches missing)
+- Jamaican moist forests
+- Puerto Rican moist forests
+- Veracruz dry forests
+- Sierra de la Laguna dry forests
+- Northern Mesoamerican Pacific mangroves
+- Santa Lucia Montane Chaparral & Woodlands 
+- Cyprus Mediterranean forests
+- Crete Mediterranean forests 
+- Kalaallit Nunaat Arctic steppe
+- Buru rain forests
+- Banda Sea Islands moist deciduous forests 
+- Fiji tropical dry forests
+
+There are no plans to bring them to the dataset.
+
 ## Example Usage
 
 In this example we use `plantae` to identify the predictors driving plant richness across the World's ecoregions. 
