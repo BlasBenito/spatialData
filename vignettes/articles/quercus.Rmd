@@ -24,7 +24,7 @@ You can download the Rmarkdown notebook used to render this article [here](https
 
 ## Overview
 
-The `quercus` dataset contains presence and absence records of eight European Quercus (oak) species combined with 31 environmental predictor variables covering bioclimatic, topographic, vegetation, and human impact dimensions.
+The `quercus` dataset contains presence and absence records of eight European *Quercus* (oak) species combined with 31 environmental predictor variables covering bioclimatic, topographic, vegetation, and human impact dimensions.
 
 Its main features are:
 
@@ -33,7 +33,7 @@ Its main features are:
 - *European scope* - Records spanning western, central, and southern Europe.
 - *Ecological predictors* - Climate, topography, vegetation indices, land cover, and human footprint.
 
-We built this dataset to support a range of analytical approaches, such as binary and multi-class classification, niche modelling, and niche overlap analysis.
+This dataset was built to support a range of analytical approaches, such as binary and multi-class classification, niche modelling, and niche overlap analysis.
 
 ## Setup
 
@@ -52,7 +52,6 @@ pak::pkg_install(
     "terra",
     "rpart",
     "rpart.plot",
-    "viridis",
     "collinear",
     "spatialData"
   ),
@@ -67,25 +66,39 @@ library(mapview)
 library(terra)
 library(rpart)
 library(rpart.plot)
-library(viridis)
 library(collinear)
 library(spatialData)
-```
 
-The code below loads the example data.
-
-```{r setup}
 data(
   quercus,
   quercus_response,
   quercus_predictors,
   package = "spatialData"
 )
+
+#convert `species` to factor
+quercus <- dplyr::mutate(
+  quercus,
+  species = as.factor(species)
+)
+
+quercus_colors <- grDevices::palette.colors(
+  n = length(levels(quercus$species)),
+  palette = "Okabe-Ito",
+  alpha = 0.6
+  ) |> 
+  rev() |> 
+  stats::setNames(levels(quercus$species))
+
+env_colors <- grDevices::hcl.colors(
+  n = 100,
+  palette = "Zissou 1"
+)
 ```
 
 ## Data Structure
 
-The dataset is an `sf` data frame with `r nrow(quercus)` rows and `r ncol(quercus)` columns, and no missing data. The first 10 records and all columns but `geometry` are shown below.
+The dataset is an `sf` POINT dataframe with EPSG 4326, `r nrow(quercus)` rows and `r ncol(quercus)` columns, and no missing data. The first 10 records and all columns but `geometry` are shown below.
 
 ```{r}
 quercus |> 
@@ -93,8 +106,6 @@ quercus |>
   head() |> 
   dplyr::glimpse()
 ```
-
-## Response Variable
 
 The response variable is `species`, a categorical variable with 9 levels (8 species + absence):
 
@@ -110,8 +121,6 @@ quercus |>
     )
 ```
 
-## Predictor Variables
-
 The dataset includes **31 predictor variables** organized into six categories:
 
 | Category | Variables | Source |
@@ -124,16 +133,28 @@ The dataset includes **31 predictor variables** organized into six categories:
 | Human impact (1) | `human_footprint` | Venter et al. 2016 |
 
 
-## Interactive Map
-
 The map below shows the spatial distribution of oak species and absence points across Europe:
 
 ```{r map, message = FALSE}
 mapview::mapview(
   quercus,
   zcol = "species",
-  layer.name = "Species"
+  layer.name = "Species",
+  col.regions = quercus_colors,
+  color = NULL
 )
+```
+
+The function `spatialData::quercus_extra()` returns a `spatRaster` object, named `quercus_env` below, useful to generate continuous predictions from models trained with the `quercus` data.
+
+```{r, fig.height=12, fig.width=8}
+quercus_env <- spatialData::quercus_extra()
+plot(
+  x = quercus_env,
+  col = env_colors,
+  maxnl = length(names(quercus_env)),
+  nc = 4
+  )
 ```
 
 ## Example Usage
@@ -142,7 +163,7 @@ In this example we use `quercus` to identify the environmental conditions that d
 
 ### Multicollinearity Filtering
 
-Many predictors in this dataset are correlated (e.g., `bio5`, `bio6`, `bio7` are all derived from temperature extremes). The `collinear::collinear()` function from the R package [`collinear`](https://blasbenito.github.io/collinear/) selects a non-redundant subset that maximizes predictive power for the response variable.
+Many predictors in this dataset are correlated (e.g., `bio5`, `bio6`, `bio7` are all derived from temperature extremes). The [`collinear::collinear()`](https://blasbenito.github.io/collinear/reference/collinear.html) function from the R package [`collinear`](https://blasbenito.github.io/collinear/) selects a non-redundant subset that maximizes predictive power for the response variable.
 
 ```{r}
 quercus_selection <- collinear::collinear(
@@ -152,13 +173,24 @@ quercus_selection <- collinear::collinear(
   f = collinear::f_categorical_rf,
   quiet = TRUE
 )
+```
 
+The function generates a vector with selected predictor names...
+
+```{r}
 quercus_selection$species$selection
 ```
 
+... and a classification formula ready for use.
+
+```{r}
+quercus_selection$species$formulas$classification
+```
+
+
 ### Decision Tree Model
 
-Species occurrence counts are imbalanced — *Q. robur* has 1,660 records while *Q. suber* has only 58. Without correction, rare species get absorbed into leaves dominated by common ones. To fix this, we use the `collinear::case_weights()` function, which generates inverse-frequency weights so that each species contributes equally to the tree splits.
+Species occurrence counts are imbalanced — *Q. robur* has 1,660 records while *Q. suber* has only 58. Without correction, rare species get absorbed into leaves dominated by common ones. To mitigate this issue, we use the [`collinear::case_weights()`](https://blasbenito.github.io/collinear/reference/case_weights.html) function to generate inverse-frequency weights so that each species contributes equally to the tree splits.
 
 ```{r}
 quercus_rpart <- rpart::rpart(
@@ -168,7 +200,6 @@ quercus_rpart <- rpart::rpart(
   weights = collinear::case_weights(x = quercus$species)
 )
 ```
-
 
 The decision tree below shows which environmental variables and thresholds best separate oak species. Each split represents a condition (e.g., "bio6 < -2.3"), and each leaf shows the most likely species at that combination of conditions.
 
@@ -180,56 +211,18 @@ rpart.plot::rpart.plot(
   fallen.leaves = TRUE,
   roundint = FALSE,
   cex = 0.7,
-  box.palette = as.list(viridis::turbo(n = 9, alpha = 0.5)),
+  box.palette = as.list(quercus_colors),
   main = "Decision Tree: European Oak Species Classification"
 )
 ```
 
-The figure shows how different combinations of environmental conditions lead to the dominance of a different *Quercus* species.
+The figure shows how different combinations of environmental conditions lead to the dominance of a different *Quercus* species in each terminal node.
 
-### Prediction Map
+### Spatial Prediction
 
-Assigning predictions back to the spatial data reveals where each species is most likely to occur according to the recursive partition model.
+The prediction of the model `quercus_rpart` over  `quercus_env` generates a `spatRaster` where each layer represents the presence probability for a single species.
 
-
-```{r, message = FALSE}
-quercus$predicted <- predict(
-  object = quercus_rpart,
-  newdata = sf::st_drop_geometry(quercus),
-  type = "class"
-)
-
-mapview::mapview(
-  quercus,
-  zcol = "predicted",
-  layer.name = "Predicted species",
-  col.regions = viridis::turbo(
-    n = length(unique(quercus$predicted))
-  )
-)
-```
-
-### Species Probability Map
-
-The function `spatialData::quercus_extra()` returns a `spatRaster` object, named `quercus_env` below, useful to generate continuous predictions from models trained with the `quercus` data.
-
-```{r}
-quercus_env <- spatialData::quercus_extra()
-class(quercus_env)
-names(quercus_env)
-```
-
-
-```{r, fig.width=5, fig.height=5}
-plot(
-  x = quercus_env[["bio1"]],
-  col = viridis::turbo(n = 100)
-  )
-```
-
-The map below shows the fitted probability of *Quercus petraea* across Europe.
-
-```{r, fig.width=5, fig.height=5}
+```{r, fig.width=8, fig.height=7}
 quercus_probability <- predict(
   object = quercus_env,
   model = quercus_rpart,
@@ -238,9 +231,45 @@ quercus_probability <- predict(
 )
 
 plot(
-  x = quercus_probability[["Quercus.petraea"]],
-  col = viridis::viridis(n = 5)
+  x = quercus_probability,
+  col = env_colors
   )
+```
+We can extract the class with the highest probability on each cell.
+
+```{r}
+quercus_class <- terra::which.max(
+  x = quercus_probability
+)
+```
+
+```{r, fig.width=6, fig.height=2.5}
+plot(
+  x = quercus_class, 
+  col = quercus_colors
+  )
+```
+To facilitate the identification of class labels, we need to add category names with `terra::categories()` and colors per category using `terra::coltab()`.
+
+```{r}
+quercus_categories_df <- data.frame(
+  ID = seq_along(quercus_colors),
+  category = names(quercus_colors)
+)
+
+communities_colors_df <- data.frame(
+  value = seq_along(quercus_colors),
+  col = quercus_colors
+)
+
+levels(quercus_class) <- quercus_categories_df
+terra::coltab(quercus_class) <- communities_colors_df
+```
+
+Now we can replot the map with the correct class labels.
+
+```{r}
+terra::plet(quercus_class)
 ```
 
 ## Conclusion

@@ -70,9 +70,7 @@ library(ggplot2)
 library(ranger)
 library(collinear)
 library(spatialData)
-```
 
-```{r setup}
 data(
   communities,
   communities_responses,
@@ -498,7 +496,7 @@ The transition matrix shows the source community (year 2010) in the first column
 
 For example, most of the area of *Alpine pastures* transitioning to *Juniper-broom shrublands* can be interpreted as an indicator of biological pressure. Environmental change may facilitate the upwards migration of Juniper-broom species, resulting in a heightened competition with pastures, leading to the eventual replacement of this community.
 
-## Things to think about
+## Things to Think About
 
 The habitat suitability projections here don't represent the future reality of the plant communities of Sierra Nevada for at least three reasons:
 
