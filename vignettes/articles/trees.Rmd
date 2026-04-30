@@ -72,6 +72,12 @@ data(
   trees_predictors,
   package = "spatialData"
 )
+
+trees_colors <- grDevices::hcl.colors(
+  n = 7,
+  palette = "Hawaii",
+  rev = TRUE
+)
 ```
 
 ## Description
@@ -91,12 +97,9 @@ mapview::mapview(
   trees,
   zcol = "trees",
   layer.name = "trees",
-  col.regions = viridis::turbo(
-    n = 100,
-    direction = 1
-  ),
+  col.regions = trees_colors,
   color = NULL,
-  at = c(1, 10, 100, 1000, 10000, 20000)
+  at = c(1, 10, 100, 1000, 5000, 10000, 20000)
 )
 ```
 
@@ -109,21 +112,17 @@ summary(trees$trees)
 ```
 
 
-The dataset includes **50 numeric predictors**, named in the vector `trees_predictors`.
+The dataset includes 50 numeric predictors, named in the vector `trees_predictors`.
 
 ```{r}
-trees |> 
-  sf::st_drop_geometry() |> 
-  dplyr::select(
-    dplyr::all_of(trees_predictors)
-  ) |> 
-  head(n = 5) |> 
-  dplyr::glimpse()
+trees_predictors
 ```
+
+Please check the documentation of [trees](https://blasbenito.github.io/spatialData/reference/trees.html) to find out their descriptions.
 
 ## Raw Data
 
-You can download the raw presence data with `trees_extra()`.
+You can download the full raw presence data with `trees_extra()`.
 
 ```{r}
 trees_presence <- spatialData::trees_extra()
@@ -155,11 +154,7 @@ trees <- trees |>
 
 ### Variable Selection
 
-Now let's identify which extreme-climate predictors are worth keeping.
-
-The predictors indicating climate extreme values are identified with the suffixes `_min` and `_max` in `trees_predictors`, with the exception of rainfall, where `rainfall_driest_month` and `rainfall_wettest_month` represent the monthly minimum and maximum respectively. 
-
-The code below selects these predictors, and excludes `ndvi_*`.
+Here we want to focus on the predictors indicating extreme environmental values. These are identified with the suffixes `_min` and `_max` in `trees_predictors`, with the exception of rainfall, where `rainfall_driest_month` and `rainfall_wettest_month` represent the monthly minimum and maximum respectively. The code below selects these predictors, and excludes `ndvi_*`.
 
 
 ```{r}
@@ -173,7 +168,7 @@ trees_extremes <- grep(
 trees_extremes
 ```
 
-Once the candidate pool of variables is selected, we use [`collinear::collinear()`](https://blasbenito.github.io/collinear/reference/collinear.html) to select a non-redundant subset by prioritizing predictors by their predictive power for the response.
+We apply [`collinear::collinear()`](https://blasbenito.github.io/collinear/reference/collinear.html) to select a non-redundant subset of predictors by prioritizing predictors by their predictive power for the response.
 
 ```{r}
 trees_selection <- collinear::collinear(
@@ -182,7 +177,7 @@ trees_selection <- collinear::collinear(
   predictors = trees_extremes,
   f = collinear::f_numeric_rf,
   max_vif = 2.5,
-  quiet = TRUE
+  quiet = FALSE
 )
 ```
 
@@ -200,9 +195,7 @@ trees_selection$log_trees$formulas$linear
 
 ### Conditional Inference Tree
 
-With a clean predictor set, we can fit an interpretable regression tree.
-
-A conditional inference tree provides an interpretable summary of how the selected predictors interact to explain tree species richness. The model is fitted with [`partykit::ctree()`](https://cran.r-project.org/package=partykit), which uses permutation tests to select splits without overfitting bias.
+Conditional inference trees provide an interpretable summary of how the selected predictors interact to explain tree species richness. The model is fitted with [`partykit::ctree()`](https://cran.r-project.org/package=partykit), which uses permutation tests to select splits without overfitting bias.
 
 ```{r}
 trees_model <- partykit::ctree(
@@ -216,63 +209,66 @@ trees_model <- partykit::ctree(
 )
 ```
 
-The conditional inference tree below shows the sequence of environmental thresholds that best explain differences in tree species richness. Each internal node shows the splitting variable, threshold, and p-value of the permutation test; each terminal node (leaf) shows a boxplot with the richness values of the samples it contains.
+The conditional inference tree below shows the sequence of environmental thresholds that best explain differences in tree species richness. Each internal node shows the splitting variable, threshold, and p-value of the permutation test; each terminal node (leaf) shows a boxplot describing the distribution of tree richness of the samples it contains.
 
 ```{r, fig.width = 15, fig.height = 10}
 plot(x = trees_model)
 ```
-**Interpretation examples**
+The results of conditional inference trees are easy to interpret when the model has a reasonable number of terminal nodes. This is the reason behind our aggressive predictor selection above!
 
-The results of conditional inference trees are easy to interpret when the model has a reasonable number of terminal nodes. Below I discuss the climate conditions leading to the highest and lowest predicted richness according to the model.
-
-**Node 15**, at the right, has the highest predicted median richness. The relevant climate thresholds leading to maximum tree richness are:
+For example, **Node 15**, at the right, has the highest predicted median richness. The relevant climate thresholds leading to maximum tree richness are:
 
 + Minimum air humidity higher than 53%.
-+ Rainfall of the wettest month higher than 115mm.
++ Rainfall of the wettest month higher than 114mm.
 + Rainfall of the wettest month higher than 451mm.
 
-**Node 7**, third from the left, shows the lowest predicted tree richness, and features these climate thresholds:
+This is the subset of climate extremes leading to a maximum richness in this dataset.
+
+On the other hand, **Node 7**, third from the left, shows the lowest predicted tree richness, and features these climate thresholds:
 
 + Minimum air humidity smaller than 53%.
-+ Rainfall of the wettest month higher than 104mm.
++ Rainfall of the wettest month lower than 104mm.
 + Maximum cloud cover higher than 36%.
 
+Let's map the model predictions back onto the hexagonal grid to see how these combinations of environmental conditions look in space.
 
 ### Prediction Map
 
-Let's map the model predictions back onto the hexagonal grid.
+The code below predicts and maps the conditional inference tree. 
 
-Assigning predictions back to the grid reveals how well this simple model captures geographic variation in richness. Notice that the prediction of `partykit::ctree()` can be expressed as a quantile of the cases within each terminal node. Below we show the prediction for the quantile 0.75.
+Notice that the prediction of `partykit::ctree()` can be expressed as a quantile of the cases within each terminal node, and below we generate the prediction for the quantile 0.75. This number isn't better than others, but it's selected here to show the capabilities of conditional inference trees.
 
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE}
 trees$predicted <- predict(
   object = trees_model,
   newdata = sf::st_drop_geometry(trees),
   type = "quantile",
   at = 0.75 #prediction at quantile 0.75
-) |> 
+) |>
   exp() |> #convert log(trees) to natural range
-  as.integer() |> 
+  as.integer() |>
   as.factor()
 
 mapview::mapview(
   trees,
   zcol = "predicted",
   layer.name = "Predicted richness",
-    col.regions = viridis::turbo(
-    n = 8,
-    direction = 1
-  ),
-  color = NULL
+  col.regions = trees_colors,
+  color = NULL,
+  at = as.numeric(levels(trees$predicted))
 )
 ```
 
+Notice that our prediction filled all NA cases in `trees$trees`!
+
 ## Conclusion
 
-This example walked through extreme-climate predictor selection, a conditional inference tree, and spatial prediction onto a hexagonal grid, a simple but interpretable pipeline for exploring tree richness gradients.
+This example uses the `trees` dataset to explore how a conditional inference tree can  be fitted with extreme climate predictors to explain and predict Mesoamerican tree richness across the Americas. It is a simple yet interpretable model useful to assess richness gradients, but there many other approaches to test with this rich dataset.
 
 ## References
 
 Benito, B.M., Cayuela, L., & Albuquerque, F.S. (2013). The impact of modelling choices in the predictive performance of richness maps derived from species-distribution models: Guidelines to build better diversity models. *Methods in Ecology and Evolution*, 4(4), 327–335. https://doi.org/10.1111/2041-210X.12022
+
+Cayuela, L., Gálvez-Bravo, L., Pérez Pérez, R., de Albuquerque, F.S., Golicher, D.J., Zahawi, R.A., et al. (2012). The Tree Biodiversity Network (BIOTREE-NET): prospects for biodiversity research and conservation in the Neotropics. *Biodiversity & Ecology*, 4, 211–224. https://doi.org/10.7809/b-e.00078
 
 
