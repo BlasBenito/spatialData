@@ -272,6 +272,8 @@ Now we can replot the map with the correct class labels.
 terra::plet(quercus_class)
 ```
 
+Notice how binary splits in `rpart` generate box-like artifacts in the map, which represent specific map splits. For example, the horizontal limit between *Quercus cerris* and *Quercus robur* corresponds to the split `sun_rad_minimum >= 773`. Recursive partition trees are fast to train, and really good at offering a simple and intuitive explanation on why these species are where they are, but is not the best possible method to generate accurate spatial predictions.
+
 ## Conclusion
 
 The decision tree above gives interpretable climate rules for each oak species, but it is just one entry point into `quercus`. More flexible methods like random forests or gradient boosting can push accuracy further while the multi-class structure and 31 predictors keep the dataset interesting.
