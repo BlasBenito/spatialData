@@ -24,7 +24,7 @@ You can download the Rmarkdown notebook used to render this article [here](https
 
 ## Overview
 
-The Normalized Difference Vegetation Index (NDVI) is one of the most widely used proxies for vegetation activity, yet its relationship with climate, soil, and human impact varies enormously across biomes. The `vi` dataset captures that variation at global scale, with ~10 000 records spanning 6 continents and 12 biomes, and a large set of numeric and categorical predictors (see `vi_predictors`) with consistent naming patterns (e.g., `temperature_*`, `rainfall_*`, `swi_*`).
+The `vi` dataset captures the variation of the Normalized Difference Vegetation Index (NDVI) at global scale, with ~10 000 records spanning 6 continents and 12 biomes, and a large set of numeric and categorical predictors (see `vi_predictors`) with consistent naming patterns (e.g., `temperature_*`, `rainfall_*`, `swi_*`).
 
 Its main features are:
 
@@ -34,7 +34,7 @@ Its main features are:
 
 This dataset has several versions of the same response (see [vi_responses]) to support a wide range of analytical approaches: linear, count and ordinal regression, binary and multiclass classification, and mixed-effects models. 
 
-It's large number of predictors allows testing dimensionality reduction and multicollinearity filtering methods, while it's dense point cloud helps test thinning, interpolation, spatial cross-validation, and spatial autocorrelation analyses.
+Its large number of predictors allows testing dimensionality reduction and multicollinearity filtering methods, while its dense point cloud helps test thinning, interpolation, spatial cross-validation, and spatial autocorrelation analyses.
 
 ## Setup
 
@@ -50,7 +50,8 @@ pak::pkg_install(
     "dplyr",
     "sf",
     "mapview",
-    "viridis",
+    "ggplot2",
+    "mgcv",
     "spatialRF",
     "collinear",
     "spatialData"
@@ -63,27 +64,24 @@ pak::pkg_install(
 library(dplyr)
 library(sf)
 library(mapview)
-library(viridis)
+library(ggplot2)
+library(mgcv)
 library(spatialRF)
 library(collinear)
 library(spatialData)
-```
 
-The code below loads the example data.
-
-```{r setup}
 data(
   vi,
   vi_responses,
   vi_predictors,
   package = "spatialData"
   )
-```
 
-If you wish to work with a larger version (~30k) records of `vi`, you can download it with [vi_extra()].
-
-```{r, eval = FALSE}
-vi <- spatialData::vi_extra()
+vi_colors <- grDevices::hcl.colors(
+  n = 5,
+  palette = "Fall",
+  rev = TRUE
+)
 ```
 
 
@@ -98,21 +96,36 @@ vi |>
   dplyr::glimpse()
 ```
 
-Notice that the spatial distribution is irregular — records are limited to vegetated areas (`vi$vi_numeric > 0`).
+A larger version of the dataset (~30k records) with data for non-vegetated regions can be loaded via `vi_extra()`.
 
+```{r, eval = FALSE}
+vi_large <- spatialData::vi_extra()
+nrow(vi_large)
+```
+
+The difference between `vi` and its large version is that the records in `vi` are limited to vegetated areas (`vi$vi_numeric > 0`).
+
+There is also a smaller version of the dataset, `vi_smol`, ideal for testing ideas before scaling up to the full dataset.
 
 ```{r}
-mapview::mapview(
-  vi,
-  zcol = "vi_numeric",
-  layer.name = "vi"
-)
+data(vi_smol)
+nrow(vi_smol)
 ```
 
 
-## Response Variables
+The map below shows `vi` and its main response variable, `vi_numeric`.
 
-The dataset provides **5 different encodings** (see `vi_responses`) of the same underlying vegetation index, enabling different modeling approaches:
+
+```{r, warning = FALSE}
+mapview::mapview(
+  vi,
+  zcol = "vi_numeric",
+  layer.name = "vi_numeric",
+  col.regions = vi_colors
+)
+```
+
+There are **5 different encodings** (see `vi_responses`) of the same underlying vegetation index in `vi`, enabling different modeling approaches:
 
 | Variable | Type | Description | Use Case |
 |----------|------|-------------|----------|
@@ -122,27 +135,77 @@ The dataset provides **5 different encodings** (see `vi_responses`) of the same 
 | `vi_categorical` | Character | 5 categories based on quantiles | Multinomial models |
 | `vi_factor` | Factor | `vi_categorical` as ordered factor | Ordinal regression |
 
-## Predictor Variables
-
-The dataset includes **58 predictor variables from 11 datasources**, of which 47 are numeric and 11 are categorical.
+The dataset also includes **58 predictor variables from 11 datasources**, of which 47 are numeric and 11 are categorical.
 
 ```{r}
+vi_predictors
+```
+The data in `vi` provides a comprehensive insight into the relationship between soil, climate, and plant health and productivity across the world's biomes. A good example is the plot below, which shows how NDVI is limited by maximum soil temperature and the minimum soil water index in similar ways across very different biomes.
+
+```{r, fig.width=8, fig.height=10, warning = FALSE}
 vi |> 
-  sf::st_drop_geometry() |> 
-  dplyr::select(
-    dplyr::all_of(vi_predictors)
-  ) |> 
-  head(n = 5) |> 
-  dplyr::glimpse()
+  ggplot2::ggplot() +
+  ggplot2::aes(
+    x = soil_temperature_max,
+    y = swi_min,
+    color = vi_numeric
+  ) + 
+  ggplot2::facet_wrap(
+    facets = ~biogeo_biome, 
+    ncol = 2,
+    scales = "free"
+    ) + 
+  ggplot2::geom_point() + 
+  ggplot2::scale_color_continuous(
+    palette = vi_colors
+  ) + 
+  ggplot2::labs(
+    x = "Maximum Land Surface Temperature (Cº)",
+    y = "Minimum Soil Water Index (%)",
+    color = "NDVI"
+  ) +
+  ggplot2::theme_bw()
 ```
 
 ## Example Usage
 
-This brief example shows how `vi` can be used to train a random forest model.
+This brief example shows how `vi` can be used to fit a spatially-aware Generalized Additive Model (GAM) that explicitly accounts for spatial autocorrelation in global NDVI data.
 
-### Selection of Numeric Predictors
+### Spatial Components
 
-The `vi_predictors` vector contains both numeric and categorical variables. Let's start by narrowing the predictor pool to numeric variables. In this example we focus on the numeric ones, which can be extracted using `collinear::identify_numeric_variables()`.
+The code below computes the distance matrix between locations in `vi` we need to assess the spatial auto-correlation (SAC) in the model residuals.
+
+```{r}
+vi_distance_matrix_meters <- vi |> 
+  sf::st_distance() |> 
+  unclass() #removes units (meters)
+
+vi_distance_matrix_km <- vi_distance_matrix_meters / 1000
+rm(vi_distance_matrix_meters)
+```
+
+
+We also need the geographic coordinates of the cases, which are encoded as well-known text in the `geometry` column.
+
+```{r}
+vi_coordinates <- vi |> 
+  sf::st_coordinates() |> 
+  as.data.frame() |> 
+  dplyr::rename(
+    latitude = Y,
+    longitude = X
+  )
+
+vi <- dplyr::bind_cols(
+  vi,
+  vi_coordinates
+)
+```
+
+
+### Multicollinearity Filtering
+
+The `vi_predictors` vector contains both numeric and categorical variables. To simplify our modelling approach we will focus on numeric predictors only, which can be extracted using `collinear::identify_numeric_variables()`.
 
 
 ```{r}
@@ -154,95 +217,124 @@ vi_predictors_numeric <- collinear::identify_numeric_variables(
 vi_predictors_numeric
 ```
 
-### Multicollinearity Filtering
-
-Many predictors in this dataset are highly correlated (e.g., `temperature_mean`, `temperature_max`, `temperature_min`). The `collinear::collinear()` function from the R package [`collinear`](https://blasbenito.github.io/collinear/) selects a non-redundant subset that maximizes predictive power for the response variable.
+Many predictors in `vi_predictors_numeric` are highly correlated (e.g., `temperature_mean`, `temperature_max`, `temperature_min`). The [`collinear::collinear()`](https://blasbenito.github.io/collinear/reference/collinear.html) function selects a non-redundant subset from a ranking based on univariate GAM models.
 
 ```{r}
-predictors_selection <- collinear::collinear(
+vi_selection <- collinear::collinear(
   df = vi,
   responses = "vi_numeric",
   predictors = vi_predictors_numeric,
-  f = collinear::f_numeric_rf,
-  quiet = TRUE
+  f = collinear::f_numeric_gam,
+  quiet = FALSE
 )
-
-predictors_selection$vi_numeric$selection
 ```
 
-### Random Forest Model
-
-Now let's train a model and see what drives NDVI globally.
-
-The response `vi_numeric` and the selected predictors are used below to train a random forest model using the R package [`spatialRF`](https://blasbenito.github.io/spatialRF/).
+The names of the selected predictors are stored in this vector.
 
 ```{r}
-m <- spatialRF::rf(
+vi_selection$vi_numeric$selection
+```
+The function also returns a GAM formula ready for use.
+
+```{r}
+vi_formula <- vi_selection$vi_numeric$formulas$smooth
+vi_formula
+```
+
+### Non-spatial GAM Model
+
+Let's use the formula above to fit a regular GAM model with environmental predictors only.
+
+
+```{r}
+vi_model_non_spatial <- mgcv::gam(
+  formula = vi_formula,
   data = sf::st_drop_geometry(vi),
-  dependent.variable.name = "vi_numeric",
-  predictor.variable.names = predictors_selection$vi_numeric$selection,
-  verbose = FALSE
+  select = TRUE
 )
 
-spatialRF::print_performance(model = m)
+summary(vi_model_non_spatial)
 ```
 
-### Global Variable Importance
+The model looks impressive, but let's take a look at the SAC of the model residuals.
 
-The permutation importance plot below indicates the variables that increase model errors the most when permuted.
-
-
-```{r, fig.width=6, fig.height=4}
-spatialRF::plot_importance(
-  m = m,
-  fill.color = viridis::viridis(n = 100)
+```{r, fig.width=6, fig.height=3}
+vi_model_non_spatial_sac <- spatialRF::moran_multithreshold(
+  x = stats::residuals(vi_model_non_spatial),
+  distance.matrix = vi_distance_matrix_km,
+  distance.thresholds = c(100, 500, 1000, 2500, 5000)
 )
 ```
 
-### Local Variable Importance
+The SAC in this model's residuals is quite high! This indicates that the model is achieving a good fit partly by exploiting spatial proximity rather than genuine environmental signal. SAC is likely compressing standard errors and pushing p-values down, making smooth terms look more significant than they truly are.
 
-Here we assign to each observation the predictor that matters most for its specific location, revealing geographic patterns in variable relevance.
+Let's take a look at an approach that might help mitigate this problem.
+
+### Spatially-aware GAM
+
+The idea here is to provide the GAM Model with a predictor representing spatial proximity between records. This predictor will absorb part of the overall explained variance, resulting in more honest effect estimates for the environmental predictors.
+ 
+For this approach we add the term `s(latitude, longitude, bs = "sos")` to the original model formula. This is a smooth-on-a-sphere interaction of the original latitudes and longitudes in degrees. 
+
+This term needs also an argument `k` (number of knots) with a value high enough to give the GAM the flexibility required to match the autocorrelation structure of the data. In the case of `vi`, with a width of about 40000km, and a height of about 12000km (check `sf::st_bbox(vi)`), and a SAC still significant at 1000km, we can think of an imaginary grid with a cell size of about 1000x1000km, with `40 * 12` cells for a total of 480.
+ 
+To compose the new formula, first we need to convert the original formula to character (`paste(deparse(...))`), and then add the new term.
 
 ```{r}
-local_importance <- m$importance$local
-vi$most_important <- colnames(local_importance)[max.col(local_importance)]
+vi_formula_spatial <- formula(
+  paste(
+    paste(deparse(vi_formula), collapse  = " "),
+    "+ s(latitude, longitude, bs = 'sos', k = 480)"
+  )
+)
+
+vi_formula_spatial
+```
+
+Let's take a look at the new model!
+
+```{r}
+vi_model_spatial <- mgcv::gam(
+  formula = vi_formula_spatial, 
+  data = sf::st_drop_geometry(vi),
+  select = TRUE
+  )
+
+summary(vi_model_spatial)
+```
+
+Notice that individual smooth terms explain less variance than in the non-spatial model. The `s(latitude, longitude)` term is absorbing part of the geographic structure that the environmental predictors were capturing before, so this is expected. The goal here is not to maximize R², but to get effect estimates that reflect genuine environmental signal rather than spatial proximity.
+
+```{r, fig.width=6, fig.height=3}
+vi_model_spatial_sac <- spatialRF::moran_multithreshold(
+  x = stats::residuals(vi_model_spatial),
+  distance.matrix = vi_distance_matrix_km,
+  distance.thresholds = c(100, 500, 1000, 2500, 5000)
+)
+```
+
+SAC in the residuals is lower now, especially at short and medium distances. Some residual SAC remains at longer distances (2500 km and beyond), but that is common for global models — broad biogeographic patterns are hard to capture with a finite set of environmental predictors.
+
+```{r, warning = FALSE}
+vi$spatial_effect_sos <- mgcv::predict.gam(
+  object = vi_model_spatial,
+  type = "terms",
+  terms = "s(latitude,longitude)"
+)[, 1]
 
 mapview::mapview(
   vi,
-  zcol = "most_important",
-  layer.name = "Most important predictor",
-  col.regions = viridis::turbo(n = length(unique(vi$most_important)))
+  zcol = "spatial_effect_sos",
+  layer.name = "Spatial component",
+  col.regions = viridis::turbo(n = 10)
 )
 ```
 
-### Response Curves and Surfaces
+The map shows the spatial smooth's contribution to predicted NDVI with the environmental predictors factored out. Positive values mark areas where vegetation is more productive than local conditions alone would predict; negative values mark the opposite. The likely causes are things the predictors don't measure: land use history, soil legacy effects, or limits on plant dispersal.
 
-With the model trained, we can explore how NDVI responds to the most important predictors.
+## Conclusions
 
-The response curves below show how the response `vi_numeric` changes across the values of the most important predictors when all other predictors are set to their quantile 0.5.
+The example above separates the environmental signal in NDVI from the geographic structure of the data. Multicollinearity filtering first reduces the predictors to a non-redundant set, and the spatial smooth then absorbs the remaining geographic structure without competing with correlated predictors for variance.
 
+When adapting this to a new dataset, the main thing to check is SAC in the residuals of both models. If the spatial smooth has not reduced it at short distances, `k` is probably too low. The calculation above — grid cells roughly the size of the autocorrelation range — is a reasonable starting point for choosing `k`.
 
-```{r, fig.width=8, fig.height=6}
-spatialRF::plot_response_curves(
-  model = m,
-  quantiles = 0.5
-)
-```
-
-Finally, the response surface below shows how `rainfall_mean` and `soil_temperature_max` interact with each other to predict `vi_numeric`. The grey dots represent the actual observations of `vi_numeric`.
-
-
-```{r, fig.width=5, fig.height=3.5}
-spatialRF::plot_response_surface(
-  m = m,
-  a = "rainfall_mean",
-  b = "soil_temperature_max",
-  fill.color = viridis::viridis(n = 100),
-  point.alpha = 0.05,
-  point.size.range = c(0.05, 1)
-)
-```
-
-## Conclusion
-
-The usage example above is only one of the many modelling approaches that can be applied to `vi`. This workflow walked through random forest regression, permutation-based importance, local variable relevance, and response curves and surfaces — all with a single global dataset.
