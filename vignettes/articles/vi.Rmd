@@ -47,11 +47,13 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 library(pak)
 pak::pkg_install(
   c(
+    "tidyr",
     "dplyr",
     "sf",
     "mapview",
     "ggplot2",
     "mgcv",
+    "plotmo",
     "spatialRF",
     "collinear",
     "spatialData"
@@ -61,11 +63,13 @@ pak::pkg_install(
 ```
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
+library(tidyr)
 library(dplyr)
 library(sf)
 library(mapview)
 library(ggplot2)
 library(mgcv)
+library(plotmo)
 library(spatialRF)
 library(collinear)
 library(spatialData)
@@ -313,7 +317,9 @@ vi_model_spatial_sac <- spatialRF::moran_multithreshold(
 )
 ```
 
-SAC in the residuals is lower now, especially at short and medium distances. Some residual SAC remains at longer distances (2500 km and beyond), but that is common for global models — broad biogeographic patterns are hard to capture with a finite set of environmental predictors.
+SAC in the residuals is much lower now, indicating that the spatial term of our model is doing a great job!
+
+Now, if you are curious about how the spatial term looks like, the map below shows its contribution to predicted NDVI with the environmental predictors factored out. 
 
 ```{r, warning = FALSE}
 vi$spatial_effect_sos <- mgcv::predict.gam(
@@ -326,15 +332,69 @@ mapview::mapview(
   vi,
   zcol = "spatial_effect_sos",
   layer.name = "Spatial component",
-  col.regions = viridis::turbo(n = 10)
+  col.regions = grDevices::hcl.colors(
+    n = 10,
+    palette = "Green-Brown",
+    rev = TRUE
+  )
 )
 ```
 
-The map shows the spatial smooth's contribution to predicted NDVI with the environmental predictors factored out. Positive values mark areas where vegetation is more productive than local conditions alone would predict; negative values mark the opposite. The likely causes are things the predictors don't measure: land use history, soil legacy effects, or limits on plant dispersal.
+Positive values (teal) mark areas where vegetation is more productive than local conditions alone would predict, while negative values (brown) mark the opposite. The likely causes are things the predictors don't measure, such as land use history, soil legacy effects, or plant adaptations to specific climates.
+
+
+### Model Fit
+
+The code below predicts both models on `vi` to plot observed vs predicted NDVI. 
+
+```{r, fig.width=8, fig.height=4}
+vi_long <- vi |>
+  dplyr::mutate(
+    non_spatial = stats::fitted(vi_model_non_spatial),
+    spatial = stats::fitted(vi_model_spatial)
+  ) |>
+  tidyr::pivot_longer(
+    cols = c("non_spatial", "spatial"),
+    names_to = "model",
+    values_to = "prediction"
+  )
+
+ggplot2::ggplot(vi_long) +
+  ggplot2::aes(
+    x = vi_numeric,
+    y = prediction,
+    color = vi_numeric
+  ) +
+  ggplot2::facet_wrap(
+    facets = ~model,
+    ncol = 2
+  ) +
+  ggplot2::geom_point(
+    alpha = 0.5,
+    size = 0.5
+  ) +
+  ggplot2::scale_color_continuous(
+    palette = vi_colors
+  ) +
+  ggplot2::geom_abline(
+    slope = 1,
+    intercept = 0,
+    linetype = "dashed"
+  ) +
+  ggplot2::labs(
+    title = "Observations vs. Predictions",
+    x = "Observed NDVI",
+    y = "Predicted NDVI"
+  ) +
+  ggplot2::coord_equal() +
+  ggplot2::theme_bw() + 
+  ggplot2::theme(legend.position = "none")
+```
+Both models do a pretty good job at matching predictions with observations, but the spatial model shows a narrower band tightly grouped around the diagonal.
 
 ## Conclusions
 
-The example above separates the environmental signal in NDVI from the geographic structure of the data. Multicollinearity filtering first reduces the predictors to a non-redundant set, and the spatial smooth then absorbs the remaining geographic structure without competing with correlated predictors for variance.
+The example above uses `vi` to demonstrate how how incorporating the geographic structure of the data along with the environmental predictors results in a better and more realistic model. But this is only the beginning! `vi` is large and rich enough to support many other modelling approaches, such as structural equation modelling, spatial clustering, mixed modelling, and many others. 
 
-When adapting this to a new dataset, the main thing to check is SAC in the residuals of both models. If the spatial smooth has not reduced it at short distances, `k` is probably too low. The calculation above — grid cells roughly the size of the autocorrelation range — is a reasonable starting point for choosing `k`.
+Enjoy it!
 
