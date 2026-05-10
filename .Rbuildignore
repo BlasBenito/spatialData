@@ -152,3 +152,4 @@ extra_data/
 VOICE.md
 ^\.dev_scripts$
 ^CRAN-SUBMISSION$
+^man/figures/logo\.png$
