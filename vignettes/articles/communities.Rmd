@@ -57,7 +57,7 @@ pak::pkg_install(
 
 The following R libraries and example data are required to run this tutorial.
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE}
+```{r, message = FALSE, warning = FALSE}
 library(dplyr)
 library(tidyr)
 library(sf)

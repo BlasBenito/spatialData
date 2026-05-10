@@ -54,7 +54,7 @@ pak::pkg_install(
 
 The following R libraries and example data are required to run this tutorial.
 
-```{r, message = FALSE, warning = FALSE, echo = FALSE}
+```{r, message = FALSE, warning = FALSE}
 library(dplyr)
 library(sf)
 library(mapview)

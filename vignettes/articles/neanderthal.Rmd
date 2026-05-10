@@ -47,7 +47,7 @@ pak::pkg_install(
 )
 ```
 
-```{r, message = FALSE, warning = FALSE, echo = FALSE}
+```{r, message = FALSE, warning = FALSE}
 library(dplyr)
 library(sf)
 library(mapview)
