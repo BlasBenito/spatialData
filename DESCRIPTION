@@ -9,7 +9,6 @@ BugReports: https://github.com/BlasBenito/spatialData/issues
 License: CC BY 4.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd"))
-RoxygenNote: 7.3.3
 Imports:
     sf,
     terra
@@ -22,3 +21,4 @@ Depends:
     R (>= 4.1.0)
 LazyData: true
 LazyDataCompression: xz 
+Config/roxygen2/version: 8.0.0

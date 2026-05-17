@@ -238,9 +238,9 @@ nrow(plantae)
 ncol(plantae)
 }
 \seealso{
-Other plantae: 
+Other plantae:
 \code{\link{plantae_east}},
-\code{\link{plantae_extra}()},
+\code{\link[=plantae_extra]{plantae_extra()}},
 \code{\link{plantae_predictors}},
 \code{\link{plantae_responses}},
 \code{\link{plantae_west}}
