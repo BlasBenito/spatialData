@@ -172,16 +172,10 @@ quercus_selection <- collinear::collinear(
 )
 ```
 
-The function generates a vector with selected predictor names...
+The function generates a vector with selected predictor names.
 
 ```{r}
 quercus_selection$species$selection
-```
-
-... and a classification formula ready for use.
-
-```{r}
-quercus_selection$species$formulas$classification
 ```
 
 
@@ -191,7 +185,10 @@ Species occurrence counts are imbalanced — *Q. robur* has 1,660 records while 
 
 ```{r}
 quercus_rpart <- rpart::rpart(
-  formula = quercus_selection$species$formulas$classification,
+  formula = reformulate(
+      termlabels = quercus_selection$species$selection,
+      response   = "species"
+    ),
   data = sf::st_drop_geometry(quercus),
   method = "class",
   weights = collinear::case_weights(x = quercus$species)
