@@ -22,8 +22,8 @@ authors:
     href: https://blasbenito.com
 
 articles:
-- title: "Tutorials"
-  navbar: "Tutorials"
+- title: Tutorials
+  navbar: Tutorials
   contents:
   - articles/andalusia
   - articles/communities
@@ -34,6 +34,10 @@ articles:
   - articles/quercus
   - articles/trees
   - articles/vi
+- title: Impact
+  navbar: Impact
+  contents:
+  - articles/download_history
 
 
 reference:
