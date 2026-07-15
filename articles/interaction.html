@@ -50,6 +50,9 @@
     <li><a class="dropdown-item" href="../articles/quercus.html">quercus</a></li>
     <li><a class="dropdown-item" href="../articles/trees.html">trees</a></li>
     <li><a class="dropdown-item" href="../articles/vi.html">vi</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Impact</h6></li>
+    <li><a class="dropdown-item" href="../articles/download_history.html">Download history</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -130,32 +133,53 @@ this tutorial.</p>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Loading metadata database ... done</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; → Package library at <span style="color: #0000BB;">/home/runner/work/_temp/Library</span>.</span></span>
+<span><span class="co">#&gt; → Will <span style="font-style: italic;">install</span> 7 packages.</span></span>
+<span><span class="co">#&gt; → Will <span style="font-style: italic;">download</span> 7 CRAN packages (9.30 MB).</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">+ </span><span style="color: #0000BB;">assertthat</span>   0.2.1  [bld][dl] <span style="color: #555555;">(12.74 kB)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">+ </span><span style="color: #0000BB;">doParallel</span>   1.0.17 [bld][dl] <span style="color: #555555;">(164.25 kB)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">+ </span><span style="color: #0000BB;">foreach</span>      1.5.2  [bld][dl] <span style="color: #555555;">(89.76 kB)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">+ </span><span style="color: #0000BB;">huxtable</span>     5.8.0  [bld][dl] <span style="color: #555555;">(1.81 MB) + </span><span style="color: #BB0000;">✖</span><span style="color: #00BBBB;"> texlive</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">+ </span><span style="color: #0000BB;">iterators</span>    1.0.14 [bld][dl] <span style="color: #555555;">(300.27 kB)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">+ </span><span style="color: #0000BB;">patchwork</span>    1.3.2  [bld][dl] <span style="color: #555555;">(3.32 MB)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">+ </span><span style="color: #0000BB;">spatialRF</span>    1.1.5  [bld][dl] <span style="color: #555555;">(3.60 MB)</span></span></span>
 <span><span class="co">#&gt; → Will <span style="font-style: italic;">install</span> 1 system package:</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">+ </span><span style="color: #00BBBB;">texlive</span>  <span style="color: #555555;">- </span><span style="color: #0000BB;">huxtable</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No downloads are needed</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Getting 7 pkgs (9.30 MB)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Got <span style="color: #0000BB;">assertthat</span> 0.2.1 (source) (12.74 kB)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Got <span style="color: #0000BB;">foreach</span> 1.5.2 (source) (89.76 kB)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Got <span style="color: #0000BB;">doParallel</span> 1.0.17 (source) (164.25 kB)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Got <span style="color: #0000BB;">iterators</span> 1.0.14 (source) (300.27 kB)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Got <span style="color: #0000BB;">huxtable</span> 5.8.0 (source) (1.81 MB)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Got <span style="color: #0000BB;">patchwork</span> 1.3.2 (source) (3.32 MB)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Got <span style="color: #0000BB;">spatialRF</span> 1.1.5 (source) (3.60 MB)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Installing system requirements</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Executing `sudo sh -c apt-get -y update`</span></span>
 <span><span class="co">#&gt; Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]</span></span>
-<span><span class="co">#&gt; Hit:6 https://packages.microsoft.com/repos/azure-cli noble InRelease</span></span>
-<span><span class="co">#&gt; Hit:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease</span></span>
-<span><span class="co">#&gt; Hit:8 https://dl.google.com/linux/chrome-stable/deb stable InRelease</span></span>
 <span><span class="co">#&gt; Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease</span></span>
+<span><span class="co">#&gt; Hit:6 https://packages.microsoft.com/repos/azure-cli noble InRelease</span></span>
 <span><span class="co">#&gt; Hit:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease</span></span>
 <span><span class="co">#&gt; Hit:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease</span></span>
 <span><span class="co">#&gt; Hit:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease</span></span>
+<span><span class="co">#&gt; Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]</span></span>
+<span><span class="co">#&gt; Hit:8 https://dl.google.com/linux/chrome-stable/deb stable InRelease</span></span>
+<span><span class="co">#&gt; Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [192 kB]</span></span>
+<span><span class="co">#&gt; Get:10 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [11.7 kB]</span></span>
+<span><span class="co">#&gt; Get:11 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [224 kB]</span></span>
+<span><span class="co">#&gt; Fetched 432 kB in 0s (950 kB/s)</span></span>
 <span><span class="co">#&gt; Reading package lists...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Executing `sudo sh -c apt-get -y install libabsl-dev cmake libssl-dev libgdal-dev gdal-bin libgeos-dev libproj-dev libsqlite3-dev libudunits2-dev make libuv1-dev zlib1g-dev pandoc libpng-dev libicu-dev libfontconfig1-dev libfreetype6-dev libfribidi-dev libharfbuzz-dev texlive libxml2-dev`</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Executing `sudo sh -c apt-get -y install texlive libabsl-dev cmake libssl-dev libgdal-dev gdal-bin libgeos-dev libproj-dev libsqlite3-dev libudunits2-dev make libuv1-dev zlib1g-dev pandoc libpng-dev libicu-dev libfontconfig1-dev libfreetype6-dev libfribidi-dev libharfbuzz-dev libxml2-dev`</span></span>
 <span><span class="co">#&gt; Reading package lists...</span></span>
 <span><span class="co">#&gt; Building dependency tree...</span></span>
 <span><span class="co">#&gt; Reading state information...</span></span>
 <span><span class="co">#&gt; libabsl-dev is already the newest version (20220623.1-3.1ubuntu3.2).</span></span>
 <span><span class="co">#&gt; cmake is already the newest version (3.28.3-1build7).</span></span>
-<span><span class="co">#&gt; libssl-dev is already the newest version (3.0.13-0ubuntu3.9).</span></span>
+<span><span class="co">#&gt; libssl-dev is already the newest version (3.0.13-0ubuntu3.11).</span></span>
 <span><span class="co">#&gt; libgdal-dev is already the newest version (3.8.4+dfsg-3ubuntu3).</span></span>
 <span><span class="co">#&gt; gdal-bin is already the newest version (3.8.4+dfsg-3ubuntu3).</span></span>
 <span><span class="co">#&gt; libgeos-dev is already the newest version (3.12.1-3build1).</span></span>
 <span><span class="co">#&gt; libproj-dev is already the newest version (9.4.0-1build2).</span></span>
-<span><span class="co">#&gt; libsqlite3-dev is already the newest version (3.45.1-1ubuntu2.5).</span></span>
+<span><span class="co">#&gt; libsqlite3-dev is already the newest version (3.45.1-1ubuntu2.6).</span></span>
 <span><span class="co">#&gt; libudunits2-dev is already the newest version (2.2.28-7build1).</span></span>
 <span><span class="co">#&gt; make is already the newest version (4.3-4.1build2).</span></span>
 <span><span class="co">#&gt; libuv1-dev is already the newest version (1.48.0-1.1build1).</span></span>
@@ -167,7 +191,7 @@ this tutorial.</p>
 <span><span class="co">#&gt; libfreetype-dev is already the newest version (2.13.2+dfsg-1ubuntu0.1).</span></span>
 <span><span class="co">#&gt; libfribidi-dev is already the newest version (1.0.13-3build1).</span></span>
 <span><span class="co">#&gt; libharfbuzz-dev is already the newest version (8.3.0-2build2).</span></span>
-<span><span class="co">#&gt; libxml2-dev is already the newest version (2.9.14+dfsg-1.3ubuntu3.7).</span></span>
+<span><span class="co">#&gt; libxml2-dev is already the newest version (2.9.14+dfsg-1.3ubuntu3.8).</span></span>
 <span><span class="co">#&gt; The following additional packages will be installed:</span></span>
 <span><span class="co">#&gt;   dvisvgm fonts-lmodern fonts-texgyre fonts-texgyre-math libgumbo2</span></span>
 <span><span class="co">#&gt; libkpathsea6 libmujs3 libpotrace0 libptexenc1 libsynctex2 libteckit0</span></span>
@@ -179,12 +203,12 @@ this tutorial.</p>
 <span><span class="co">#&gt;   texlive-fonts-recommended-doc texlive-latex-base-doc wp2latex</span></span>
 <span><span class="co">#&gt;   texlive-latex-recommended-doc texlive-luatex texlive-pstricks tipa-doc</span></span>
 <span><span class="co">#&gt; The following NEW packages will be installed:</span></span>
-<span><span class="co">#&gt;   dvisvgm fonts-lmodern fonts-texgyre fonts-texgyre-math libgumbo2</span></span>
-<span><span class="co">#&gt; libkpathsea6 libmujs3 libpotrace0 libptexenc1 libsynctex2 libteckit0</span></span>
+<span><span class="co">#&gt; dvisvgm fonts-lmodern fonts-texgyre fonts-texgyre-math libgumbo2</span></span>
+<span><span class="co">#&gt;   libkpathsea6 libmujs3 libpotrace0 libptexenc1 libsynctex2 libteckit0</span></span>
 <span><span class="co">#&gt;   libtexlua53-5 libwoff1 libzzip-0-13t64 lmodern mupdf-tools tex-gyre texlive</span></span>
 <span><span class="co">#&gt;   texlive-base texlive-binaries texlive-fonts-recommended texlive-latex-base</span></span>
 <span><span class="co">#&gt;   texlive-latex-recommended tipa</span></span>
-<span><span class="co">#&gt; 0 upgraded, 24 newly installed, 0 to remove and 7 not upgraded.</span></span>
+<span><span class="co">#&gt; 0 upgraded, 24 newly installed, 0 to remove and 12 not upgraded.</span></span>
 <span><span class="co">#&gt; Need to get 131 MB of archives.</span></span>
 <span><span class="co">#&gt; After this operation, 322 MB of additional disk space will be used.</span></span>
 <span><span class="co">#&gt; Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]</span></span>
@@ -213,11 +237,10 @@ this tutorial.</p>
 <span><span class="co">#&gt; Get:24 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 texlive all 2023.20240207-1 [14.0 kB]</span></span>
 <span><span class="co">#&gt; Get:25 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 tipa all 2:1.3-21 [2967 kB]</span></span>
 <span><span class="co">#&gt; Preconfiguring packages ...</span></span>
-<span><span class="co">#&gt; Fetched 131 MB in 5s (27.4 MB/s)</span></span>
+<span><span class="co">#&gt; Fetched 131 MB in 1s (94.9 MB/s)</span></span>
 <span><span class="co">#&gt; Selecting previously unselected package libkpathsea6:amd64.</span></span>
 <span><span class="co">#&gt; (Reading database ...</span></span>
-<span><span class="co">#&gt; (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%</span></span>
-<span><span class="co">#&gt; (Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%</span></span>
+<span><span class="co">#&gt; (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%</span></span>
 <span><span class="co">#&gt; (Reading database ... 60%</span></span>
 <span><span class="co">#&gt; (Reading database ... 65%</span></span>
 <span><span class="co">#&gt; (Reading database ... 70%</span></span>
@@ -226,7 +249,7 @@ this tutorial.</p>
 <span><span class="co">#&gt; (Reading database ... 85%</span></span>
 <span><span class="co">#&gt; (Reading database ... 90%</span></span>
 <span><span class="co">#&gt; (Reading database ... 95%</span></span>
-<span><span class="co">#&gt; (Reading database ... 100%(Reading database ... 239095 files and directories currently installed.)</span></span>
+<span><span class="co">#&gt; (Reading database ... 100%(Reading database ... 239314 files and directories currently installed.)</span></span>
 <span><span class="co">#&gt; Preparing to unpack .../00-libkpathsea6_2023.20230311.66589-9build3_amd64.deb ...</span></span>
 <span><span class="co">#&gt; Unpacking libkpathsea6:amd64 (2023.20230311.66589-9build3) ...</span></span>
 <span><span class="co">#&gt; Selecting previously unselected package libpotrace0:amd64.</span></span>
@@ -352,7 +375,28 @@ this tutorial.</p>
 <span><span class="co">#&gt; No user sessions are running outdated binaries.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; No VM guests are running outdated hypervisor (qemu) binaries on this host.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> 8 pkgs + 126 deps: kept 132 <span style="color: #B2B2B2;">[43.7s]</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Building <span style="color: #0000BB;">assertthat</span> 0.2.1</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Building <span style="color: #0000BB;">iterators</span> 1.0.14</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Building <span style="color: #0000BB;">patchwork</span> 1.3.2</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Built <span style="color: #0000BB;">assertthat</span> 0.2.1 <span style="color: #9E9E9E;">(1.4s)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Installed <span style="color: #0000BB;">assertthat</span> 0.2.1  <span style="color: #9E9E9E;">(32ms)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Building <span style="color: #0000BB;">huxtable</span> 5.8.0</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Built <span style="color: #0000BB;">iterators</span> 1.0.14 <span style="color: #9E9E9E;">(1.5s)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Installed <span style="color: #0000BB;">iterators</span> 1.0.14  <span style="color: #9E9E9E;">(32ms)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Building <span style="color: #0000BB;">foreach</span> 1.5.2</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Built <span style="color: #0000BB;">foreach</span> 1.5.2 <span style="color: #9E9E9E;">(1.8s)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Installed <span style="color: #0000BB;">foreach</span> 1.5.2  <span style="color: #9E9E9E;">(32ms)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Building <span style="color: #0000BB;">doParallel</span> 1.0.17</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Built <span style="color: #0000BB;">doParallel</span> 1.0.17 <span style="color: #9E9E9E;">(1.5s)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Installed <span style="color: #0000BB;">doParallel</span> 1.0.17  <span style="color: #9E9E9E;">(27ms)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Built <span style="color: #0000BB;">huxtable</span> 5.8.0 <span style="color: #9E9E9E;">(7.4s)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Installed <span style="color: #0000BB;">huxtable</span> 5.8.0  <span style="color: #9E9E9E;">(55ms)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Built <span style="color: #0000BB;">patchwork</span> 1.3.2 <span style="color: #9E9E9E;">(10s)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Installed <span style="color: #0000BB;">patchwork</span> 1.3.2  <span style="color: #9E9E9E;">(56ms)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Building <span style="color: #0000BB;">spatialRF</span> 1.1.5</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Built <span style="color: #0000BB;">spatialRF</span> 1.1.5 <span style="color: #9E9E9E;">(56.9s)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Installed <span style="color: #0000BB;">spatialRF</span> 1.1.5  <span style="color: #9E9E9E;">(79ms)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> 8 pkgs + 126 deps: kept 125, added 7, dld 7 (9.30 MB) <span style="color: #B2B2B2;">[1m 53.3s]</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
@@ -878,7 +922,7 @@ nevadensis</em>). <em>Biodiversity and Conservation</em>, 23(4),
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

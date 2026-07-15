@@ -1,9 +1,10 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   articles/andalusia: andalusia.html
   articles/communities: communities.html
+  articles/download_history: download_history.html
   articles/interaction: interaction.html
   articles/linaria: linaria.html
   articles/neanderthal: neanderthal.html
@@ -11,7 +12,7 @@ articles:
   articles/quercus: quercus.html
   articles/trees: trees.html
   articles/vi: vi.html
-last_built: 2026-05-17T08:43Z
+last_built: 2026-07-15T13:31Z
 urls:
   reference: https://blasbenito.github.io/spatialData/reference
   article: https://blasbenito.github.io/spatialData/articles
