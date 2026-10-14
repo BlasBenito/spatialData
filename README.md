@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/BlasBenito/spatialData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/BlasBenito/spatialData/actions/workflows/R-CMD-check.yaml)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19508673.svg)](https://doi.org/10.5281/zenodo.19508673)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23357624.svg)](https://doi.org/10.5281/zenodo.23357624)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/spatialData)](https://cran.r-project.org/package=spatialData)
 [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/grand-total/spatialData)](https://CRAN.R-project.org/package=spatialData)
@@ -111,7 +111,7 @@ citation("spatialData")
 #> 
 #>   Benito B (2025). "spatialData: Spatial Datasets for Ecological
 #>   Modeling." doi:10.5281/zenodo.19508673
-#>   <https://doi.org/10.5281/zenodo.19508673>, R package version 1.0.0,
+#>   <https://doi.org/10.5281/zenodo.19508673>, R package version 1.0.1,
 #>   <https://blasbenito.github.io/spatialData/>.
 #> 
 #> A BibTeX entry for LaTeX users is
@@ -120,7 +120,7 @@ citation("spatialData")
 #>     title = {spatialData: Spatial Datasets for Ecological Modeling},
 #>     author = {Blas M. Benito},
 #>     year = {2025},
-#>     note = {R package version 1.0.0},
+#>     note = {R package version 1.0.1},
 #>     url = {https://blasbenito.github.io/spatialData/},
 #>     doi = {10.5281/zenodo.19508673},
 #>   }
